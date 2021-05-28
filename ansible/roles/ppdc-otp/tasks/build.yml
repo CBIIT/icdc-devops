@@ -35,10 +35,10 @@
     dest: "{{workspace}}/ppdc-otp-frontend/nginx-entrypoint.sh"
     mode: 0755
 
-- name: run yarn install in {{workspace}}/ppdc-otp-frontend
-  command: yarn install
-  args:
-    chdir: "{{workspace}}/ppdc-otp-frontend"
+#- name: run yarn install in {{workspace}}/ppdc-otp-frontend
+#  command: yarn install
+#  args:
+#    chdir: "{{workspace}}/ppdc-otp-frontend"
 
 - name: run yarn build in {{workspace}}/ppdc-otp-frontend
   command: yarn build
