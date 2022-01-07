@@ -1,0 +1,28 @@
+---
+- name: log into DockerHub
+  docker_login:
+    username: "{{ docker_user }}"
+    password: "{{ docker_password }}"
+    
+- name: remove frontend container
+  docker_container:
+    name: "{{stack_name}}-backend"
+    state: absent
+
+- name: clean up 
+  command: docker system prune -a -f
+
+- name: launch the new ppdc-otp
+  docker_container:
+    name: "{{stack_name}}-backend"
+    image: cbiitssrepo/{{stack_name}}-backend:{{backend_version}}-{{build_number}}
+    restart_policy: always
+    ports:
+     - "8080:8080"
+    env:
+      SLICK_CLICKHOUSE_URL: jdbc:clickhouse://{{slick_clickhouse_url}}:8123
+      ELASTICSEARCH_HOST: "{{elasticsearch_host}}"
+      PLAY_PORT: "{{play_port}}"
+      NEW_RELIC_APP_NAME: "{{newrelic_appname}}"
+      NEW_RELIC_LICENSE_KEY: "{{newrelic_license}}"
+      NEW_RELIC_HOST: "{{newrelic_host}}"

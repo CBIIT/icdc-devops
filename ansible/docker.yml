@@ -1,8 +1,13 @@
 ---
 - name: setup jenkins server
-  hosts: all
+  hosts: docker
+  gather_facts: no
+  connection: local
   become: yes
 
-
   roles:
-    - setup-docker
+    - common
+    - docker
+   
+   
+

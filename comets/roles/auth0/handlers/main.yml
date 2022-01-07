@@ -1,0 +1,12 @@
+---
+# handlers file for auth0
+
+- name: restart_firewalld
+  service:
+    name: firewalld
+    state: restarted
+
+- name: restart_apache
+  service:
+    name: firewalld
+    state: restarted

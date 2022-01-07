@@ -1,0 +1,75 @@
+---
+
+- name: create task definition 
+  ecs_taskdefinition:
+    containers:
+    - name: icdc
+      essential: true
+      # image: "{{ecr}}:icdc"
+      image: cbiitssrepo/icdc:{{build_number}}
+      environment:
+        - name: NEW_RELIC_LICENSE_KEY
+          value: "{{ newrelic_license_key }}"
+        - name: NEW_RELIC_APP_NAME
+          value: "{{ app_name }}"
+        - name: NEW_RELIC_DISTRIBUTED_TRACING_ENABLED
+          value: true
+        - name: NEW_RELIC_HOST
+          value: "gov-collector.newrelic.com"
+      portMappings:
+      - containerPort: "8080"
+        hostPort: "8080"
+    network_mode: bridge
+    family: icdc-{{tier}}-task-definition
+    memory: '1024'
+    cpu: '512'
+    state: present
+    region: "{{region}}"
+  register: task_output
+
+
+- name: query task definition
+  ecs_taskdefinition_info:
+    task_definition: icdc-{{tier}}-task-definition
+    region: "{{region}}" 
+  register: task_icdc
+
+
+- name: query demo service
+  ecs_service_info:
+    cluster: nci-cbiit-icdc-dev
+    service: icdc-{{tier}}-service
+    details: true
+    region: "{{region}}"
+  register: service_icdc
+
+
+- name: set facts
+  set_fact:
+    icdc_revision: "{{task_icdc.revision}}"
+    task_icdc_name: "{{task_icdc.family}}"
+  
+    # lb_icdc: "{{service_icdc.services[0].loadBalancers}}"
+    # role_arn: "{{service_icdc.services[0].roleArn}}"
+
+
+- name: update icdc service
+  ecs_service:
+    state: present
+    name: icdc-{{tier}}-service
+    cluster: nci-cbiit-icdc-dev
+    task_definition: "{{task_icdc_name}}:{{icdc_revision}}"
+    role: "{{service_role_arn}}"
+    force_new_deployment: yes
+    
+    deployment_configuration:
+      minimum_healthy_percent: 0
+      maximum_percent: 100
+    placement_constraints:
+      - type: memberOf
+        expression: 'attribute:project==icdc'
+    desired_count: 1
+    load_balancers: 
+      - { "containerName": "icdc", "containerPort": "8080", "targetGroupArn" : "{{alb_target_arn}}" }
+    region: "{{region}}"
+  

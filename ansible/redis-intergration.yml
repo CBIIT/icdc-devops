@@ -1,0 +1,11 @@
+---
+- name: check file microservice status
+  hosts: "{{env}}"
+  gather_facts: yes
+  become: yes
+ 
+  tasks:
+    - name: get url status
+      include_role:
+        name: redis-intergration
+    

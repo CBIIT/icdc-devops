@@ -1,0 +1,130 @@
+
+import groovy.json.JsonOutput
+
+def sendSlackMessage() {
+  jenkins_image = ":jenkins:"
+  slack_image = ":sparkles:"
+  long epoch = System.currentTimeMillis()/1000
+  def BUILD_COLORS = ['SUCCESS': 'good', 'FAILURE': 'danger', 'UNSTABLE': 'danger', 'ABORTED': 'danger']
+  
+  def slack = JsonOutput.toJson(
+      [
+            icon_emoji: jenkins_image,
+            attachments: [[
+              title: "Jenkins Job Alert - ${currentBuild.currentResult}",
+              text:  "Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}  ${slack_image}\n Details at: ${env.BUILD_URL}console",
+              fallback: "Bento Jenkins Build",
+              color: "${BUILD_COLORS[currentBuild.currentResult]}",
+              footer: "bento devops",
+              ts: epoch,
+              mrkdwn_in: ["footer", "title"],
+           ]]
+        ]
+    )
+    try {
+        sh "curl -X POST -H 'Content-type: application/json' --data '${slack}'  '${SLACK_URL}'"
+    } catch (err) {
+        echo "${err} Slack notify failed"
+    }
+}
+
+
+pipeline {
+  agent {
+    node {
+	  label 'cicd_microservice'
+	}
+  }
+  
+  parameters {
+	string(
+	    defaultValue: '',
+		description: 'The project to search for',
+		name: 'Project')
+	string(
+	    defaultValue: '',
+		description: 'The tier to search for',
+		name: 'Tier')
+  }
+  
+  options {
+  	ansiColor('xterm')
+  }
+
+  stages{
+    stage('checkout'){
+  		steps {
+
+  			checkout( poll: false, 
+				changelog:false,
+				scm: [$class: 'GitSCM', 
+				branches: [[name: '*/master']], 
+				doGenerateSubmoduleConfigurations: false, 
+				extensions: [[$class: 'DisableRemotePoll'],
+				[$class: 'PathRestriction', excludedRegions: '*']], 
+				submoduleCfg: [], 
+				userRemoteConfigs: 
+				[[url: 'https://github.com/CBIIT/icdc-devops.git']]])
+
+        }
+ 
+  	}
+
+    stage('set-environment'){
+		steps {
+          script {
+		    def proj = ''
+            if (params.Project != ''){
+              proj = "-p ${params.Project}"
+            }
+
+            def tier = ''
+            if (params.Tier != ''){
+              tier = "-t ${params.Tier}"
+            }
+		    
+			env.PY_VARS = "${proj} ${tier}"
+          }
+        }
+    }
+
+    stage('Search Monitors'){
+	  steps {
+        script {
+
+          sh label: 'Env-Updates', script: '''#!/bin/bash
+
+		  yum -y install python3 curl
+		  
+		  cd monitoring
+		  pip3 install -r requirements.txt
+
+          '''
+		  
+		  withCredentials([string(credentialsId: 'newrelic_api_key', variable: 'API_KEY'),
+		    string(credentialsId: 'sumo_auth', variable: 'SUMO_AUTH')]) {
+			sh "python3 monitoring/monitor_query.py $PY_VARS -k $API_KEY -a \'$SUMO_AUTH\'"
+	      }
+
+        }
+
+      }
+	}
+
+  }
+  post {
+
+//	always {
+//
+//      sendSlackMessage()
+//
+//    }
+
+	cleanup {
+	
+	  cleanWs()
+    
+	}
+
+  }
+}

@@ -1,0 +1,14 @@
+---
+- name: setup icdc_demo server
+  hosts: demo
+  become: yes
+
+  vars_files:
+    - config/icdc_demo-env-vars.yaml
+    
+  roles:
+    - common
+    - icdc_demo
+    # - docker-as-service
+    # - sumologic
+    # - newrelic

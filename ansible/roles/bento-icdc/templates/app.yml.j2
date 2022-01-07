@@ -1,0 +1,82 @@
+version: '3.4'
+services:
+
+################################################
+# backend container
+################################################
+  bento-backend:
+    container_name: backend
+    image: ncidockerhub.nci.nih.gov/icdc/icdc-backend:{{backend_version}}
+    environment:
+      NEO4J_URL: bolt://{{ neo4j_ip }}:7687
+      NEO4J_USER: "{{ neo4j_user }}"
+      NEO4J_PASSWORD: "{{ neo4j_password }}"
+      NEO4J_GRAPHQL_ENDPOINT: http://{{ neo4j_ip }}:7474/graphql/
+      NEO4J_AUTHORIZATION: "{{ neo4j_bearer }}"
+      BENTO_API_VERSION: "{{backend_version}}"
+      REDIS_ENABLE: "{{ enable_redis }}"
+      REDIS_USE_CLUSTER: "{{ use_cluster }}"
+      REDIS_HOST: "{{ redis_host[tier] }}"
+      REDIS_PORT: "{{ redis_port }}"
+      REDIS_FILTER_ENABLE: "{{ enable_redis_filter }}"
+      NEW_RELIC_LICENSE_KEY: "{{ newrelic_license_key }}"
+      NEW_RELIC_APP_NAME: "{{ app_name }}-backend"
+      NEW_RELIC_DISTRIBUTED_TRACING_ENABLED: "true"
+      NEW_RELIC_HOST: "gov-collector.newrelic.com"
+      NEW_RELIC_LOG_FILE_NAME: "STDOUT"
+      NEW_RELIC_LABELS: "Project:{{ project }};Environment:{{ tier }}"
+      JAVA_OPTS: "-javaagent:/usr/local/tomcat/newrelic/newrelic.jar"
+    entrypoint: ["/bin/ash", "-c", 'if [ ! -f /usr/local/tomcat/newrelic/newrelic.jar ]; then wget "https://download.newrelic.com/newrelic/java-agent/newrelic-agent/current/newrelic-java.zip" -O newrelic-java.zip && unzip newrelic-java.zip; fi && bin/catalina.sh run']
+    #entrypoint: ["/bin/ash", "-c", 'wget "https://download.newrelic.com/newrelic/java-agent/newrelic-agent/current/newrelic-java.zip" -O newrelic-java.zip && unzip newrelic-java.zip && bin/catalina.sh run']
+    volumes:
+      - /local/content/k9dc/logs:/usr/local/tomcat/logs
+    ports:
+      - "8080:8080"
+    restart: always
+
+##########################################################
+# frontend container
+##########################################################   
+
+  bento-frontend:
+    container_name: frontend
+    image: ncidockerhub.nci.nih.gov/icdc/icdc-frontend:{{frontend_version}}
+    environment:
+      REACT_APP_BACKEND_GETUSERINFO_API: "{{ backend_user_info }}"
+      REACT_APP_LOGIN_URL: "{{ backend_fence_login }}"
+      REACT_APP_USER_LOGOUT_URL: "{{ backend_fence_logout }}"
+      REACT_APP_BACKEND_API: "{% if tier == 'prod' %}https://caninecommons.cancer.gov/v1/graphql/{% else %}https://caninecommons-{{ tier }}.cancer.gov/v1/graphql/{% endif %}"
+      REACT_APP_ABOUT_CONTENT_URL: "{{ backend_content_url }}"
+      REACT_APP_BE_VERSION: "{{ bento_api_version }}"
+      REACT_APP_FE_VERSION: "{{ backend_frontend_version }}"
+      REACT_APP_GA_TRACKING_ID: "{{ backend_google_analytics_id }}"
+      NEW_RELIC_LICENSE_KEY: "{{ newrelic_license_key }}"
+      NEW_RELIC_APP_NAME: "{{ app_name }}-frontend"
+      NEW_RELIC_DISTRIBUTED_TRACING_ENABLED: "true"
+      NEW_RELIC_HOST: "gov-collector.newrelic.com"
+      NEW_RELIC_NO_CONFIG_FILE: "true"
+      REACT_APP_DATA_MODEL: "https://raw.githubusercontent.com/CBIIT/icdc-model-tool/master/model-desc/icdc-model.yml"
+      REACT_APP_DATA_MODEL_PROPS: "https://raw.githubusercontent.com/CBIIT/icdc-model-tool/master/model-desc/icdc-model-props.yml"
+      NEW_RELIC_LABELS: "Project:{{ project }};Environment:{{ tier }}"
+      REACT_APP_FILE_SERVICE_API: "{% if tier == 'prod' %}https://caninecommons.cancer.gov/api/files/{% else %}https://caninecommons-{{ tier }}.cancer.gov/api/files/{% endif %}"        
+    volumes:
+      - "/local/content/k9dc/nginx:/var/log/nginx"
+    ports:
+      - "80:80"
+    restart: always
+    #links:
+    # - "data-dictionary:dictionary"
+
+  #data-dictionary:
+  #  container_name: data-dictionary
+  #  image: ncidockerhub.nci.nih.gov/icdc/data-dictionary:changedBaseRoute-28
+  #  environment:
+  #    REACT_APP_MODEL_URL: "{{react_app_model_url}}" 
+  #    REACT_APP_MODEL_PROPS_URL: "{{react_app_model_props_url}}"      
+  #  volumes:
+  #    - "/local/content/k9dc/data-dictionary:/var/log/nginx"
+  #  ports:
+  #    - "81:81"
+  #  restart: always
+    
+

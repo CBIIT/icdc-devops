@@ -1,0 +1,10 @@
+---
+# vars file for roles/newrelic
+hostname: "{{ inventory_hostname }}"
+collector_name: "{{ project }}-{{ env }}-{{ inventory_hostname }}"
+newrelic_license_key: "{{ newrelic_license_key }}"
+newrelic_collector_url: "https://gov-infra-api.newrelic.com"
+newrelic_identity_url: "https://gov-identity-api.newrelic.com"
+newrelic_command_channel_url: "https://gov-infrastructure-command-api.newrelic.com"
+nginx_lower_tier: "https://caninecommons-{{ env }}.cancer.gov/nginx_status"
+nginx_url: "{{ 'https://caninecommons.cancer.gov/nginx_status' if env == 'prod' else nginx_lower_tier }}"

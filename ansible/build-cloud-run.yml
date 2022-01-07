@@ -1,0 +1,11 @@
+---
+- name: bento cicd pipeline
+  hosts: gke
+  connection: local
+  gather_facts: yes
+    
+  tasks:
+    - name: This is a build stage
+      include_role:
+        name: bento-cloud-run
+        tasks_from: build

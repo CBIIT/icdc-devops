@@ -1,0 +1,44 @@
+---
+
+- name: create a {{tier}} namespace
+  k8s:
+    name: "{{tier}}"
+    api_version: v1
+    kind: Namespace
+    state: present
+
+- name: deploy frontend and backend bento applications
+  k8s:
+    state: present
+    definition: "{{ lookup('template', '{{item}}') | from_yaml }}"
+    validate_certs: no
+    namespace: "{{tier}}"
+    force: yes
+  loop:
+    - bento-backend.yml.j2
+    - bento-frontend.yml.j2
+
+- name: deploy frontend and backend services
+  k8s:
+    state: present
+    definition: "{{ lookup('template', '{{item}}') | from_yaml }}"
+    validate_certs: no
+    namespace: "{{tier}}"
+    apply: yes
+  loop:
+    - backend.yml.j2
+    - frontend.yml.j2
+
+- name: deploy ingress and certificate
+  k8s:
+    state: present
+    definition: "{{ lookup('template', '{{item}}') | from_yaml }}"
+    validate_certs: no
+    namespace: "{{tier}}"
+    apply: yes
+  loop:
+    - ingress.yml.j2
+    - managedcert.yml.j2
+    
+    
+

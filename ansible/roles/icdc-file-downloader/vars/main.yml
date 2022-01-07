@@ -1,0 +1,21 @@
+---
+# vars file for cicd
+docker_host: "{{ lookup('env','DOCKER_HOST') }}"
+tls_hostname: "{{ lookup('env','TLS_HOSTNAME') }}"
+indexd_url: "{{ indexd_url }}"
+url_src: CLOUD_FRONT
+stack_name: icdc
+tier: "{{ lookup('env','TIER') }}"
+workspace: "{{ lookup('env','WORKSPACE') }}"
+docker_user: "{{ lookup('env','DOCKER_USER') }}"
+docker_password: "{{ lookup('env','DOCKER_PASSWORD') }}"
+build_number: "{{ lookup('env','BUILD_NUMBER')}"
+downloader_version: "{{ lookup('env','DOWNLOADER_VERSION') }}"
+license_key: "{{ lookup('env','NEWRELIC_LIC_KEY') }}"
+#cloudfront variables
+cloudfront_origin_id: icdc_files_origin_id
+cloudfront_key_group_name: icdc-{{tier}}-key-group
+cloudfront_key_group_id: "{{cloudfront_key_group_id}}"
+cloudfront_private_key: "{{ lookup('file','{{workspace}}/icdc-devops/ansible/cloudfront_private_key')}}"
+cloudfront_domain_name: "{{ cloudfront_domain_name }}"
+

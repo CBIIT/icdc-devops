@@ -1,0 +1,47 @@
+{% if tier == "prod"  %}
+[
+  {
+      "Field": "source-ip",
+      "SourceIpConfig": {
+          "Values": [
+          "128.231.0.0/16"
+          ]
+      }
+  },
+  {
+      "Field": "host-header",
+      "HostHeaderConfig": {
+          "Values": ["caninecommons.cancer.gov"]
+      }
+  },
+  {
+        "Field": "path-pattern",
+        "PathPatternConfig": {
+            "Values": ["/*"]
+        }
+    }
+]
+{% else %}
+[
+  {
+      "Field": "source-ip",
+      "SourceIpConfig": {
+          "Values": [
+          "128.231.0.0/16"
+          ]
+      }
+  },
+  {
+      "Field": "host-header",
+      "HostHeaderConfig": {
+          "Values": ["caninecommons-{{tier}}.cancer.gov"]
+      }
+  },
+  {
+        "Field": "path-pattern",
+        "PathPatternConfig": {
+            "Values": ["/*"]
+        }
+    }
+]
+{% endif %}

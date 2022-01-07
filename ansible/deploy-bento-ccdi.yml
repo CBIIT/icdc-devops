@@ -1,0 +1,12 @@
+---
+- name: deploy stage of bento pipeline
+  hosts: ccdi
+  gather_facts: yes
+  become: yes
+    
+  tasks:
+    - name: deploy bento-ccdi
+      include_role:
+        name: bento-ccdi
+        tasks_from: deploy
+  

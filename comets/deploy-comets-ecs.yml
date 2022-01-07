@@ -1,0 +1,17 @@
+---
+- name: setup ecs agent
+  hosts: all
+  connection: local
+  become: yes
+  gather_facts: yes
+
+  tasks:
+    - name: build comets
+      include_role:
+        name: deploy-comets
+        tasks_from: build
+    - name: deploy comets
+      include_role:
+        name: deploy-comets
+        tasks_from: deploy
+

@@ -1,0 +1,27 @@
+---
+# tasks file for redis-intergration
+
+- name: install redis
+  yum:
+    name:
+      - redis
+    state: latest
+    
+- name: start and enable redis
+  service: 
+    name: redis
+    state: started 
+    enabled: yes
+    
+- name: configure redis to listen on host ip
+  template: 
+    src: redis.conf.j2 
+    dest: /etc/redis.conf 
+    owner: root 
+    group: root 
+    mode: 0644
+  notify: restart redis
+
+
+
+    

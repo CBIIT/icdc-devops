@@ -1,0 +1,15 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: bento-frontend-service-{{tier}}
+spec:
+  type: NodePort
+  ports:
+  - name: http
+    port: 80
+    targetPort: 80
+    protocol: TCP
+  selector:
+    app: bento
+    role: frontend
+    env: {{tier}}

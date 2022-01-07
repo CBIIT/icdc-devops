@@ -1,0 +1,12 @@
+---
+- name: upgrade neo4j server
+  hosts: localhost
+  become: yes
+  connection: local
+  #become_method: sudo
+  
+#  vars_files:
+#    - config/icdc-env-vars.yaml
+    
+  roles:
+    - neo4j-version-update

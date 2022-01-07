@@ -1,0 +1,118 @@
+pipeline {
+	agent {
+		node {
+			label 'slave-ncias-d2320-c'
+		}
+	}
+	parameters {
+    gitParameter(branchFilter: 'origin/(.*)', 
+        defaultValue: 'master', 
+        name: 'Tag', 
+        type: 'PT_BRANCH_TAG',
+        quickFilterEnabled: false, 
+        selectedValue: 'DEFAULT', 
+        sortMode: 'ASCENDING_SMART', 
+        tagFilter: '*', 
+        useRepository: 'https://github.com/CBIIT/ctdc-data-processing')
+    string(defaultValue: "EAY131-XXX", 
+        description: 'Enter ArmID Here:', 
+        name: 'ArmID')
+    string(defaultValue: "phs00xxxx", 
+        description: 'Enter PhsID Here:', 
+        name: 'PhsID')
+    string(defaultValue: "", 
+        description: 'S3 Bucket to load file from', 
+        name: 'S3Bucket')
+    extendedChoice( 
+        defaultValue: 'uat', 
+        name: 'MatchEnv', 
+        description: 'Choose environment to file to',
+        quoteValue: false,
+        multiSelectDelimiter: ',',
+        value: 'uat,prod',
+        type: 'PT_RADIO')
+    extendedChoice( 
+        defaultValue: '3', 
+        name: 'CipheyKey', 
+        description: 'Choose Cipher Key to Use',
+        quoteValue: false,
+        multiSelectDelimiter: ',',
+        value: '0,1,2,3,4,5,6,7,8,9',
+        type: 'PT_SINGLE_SELECT')      
+  }
+  // options {
+  // 	ansiColor('xterm')
+  // }
+  tools {
+  	maven 'Default' 
+    jdk 'Default' 
+  }
+  stages{
+  	stage('checkout'){
+  		steps {
+  			checkout([$class: 'GitSCM', 
+  				branches: [[name: "${params.Tag}"]], 
+  				doGenerateSubmoduleConfigurations: 
+  				false, extensions: [], submoduleCfg: [], 
+          recursiveSubmodules: true,
+  				userRemoteConfigs: 
+  				[[url: 'https://github.com/CBIIT/ctdc-data-processing']]])
+          sh 'git submodule update --init'
+          sh 'git lfs pull'
+  			dir('icdc-devops'){
+  				git branch: 'master',
+    				url: 'https://github.com/CBIIT/icdc-devops.git'
+  			}
+  		}
+    }
+    stage('set-environment'){
+        steps {
+          script {
+            switch("${params.MatchEnv}") {
+              case "uat":
+                withCredentials([string(credentialsId: 'okta_key_uat', variable: 'oktaSecret')]){
+                  env.MATCH_BASE_URL  = "https://api.match-uat.nci.nih.gov/api/v1"
+                  env.USE_PROD    =   "false"
+                  env.OKTA_KEY  =   "${oktaSecret}"
+                  env.SECRET_NAME = "Okta-Match-UAT-Secrets"
+                  env.META_DATA_PATH = "UAT"
+                  env.META_DATA_BUCKET = "nci-cbiit-ctdc-dev"
+                  env.CIPHER_KEY = "${params.CipheyKey}"
+                }
+              break
+              case "prod":
+                withCredentials([string(credentialsId: 'okta_key_prod', variable: 'oktaSecret')]){
+                  env.MATCH_BASE_URL  = "https://api.match.nci.nih.gov/api/v1"
+                  env.USE_PROD    =   "true"
+                  env.OKTA_KEY  =   "${oktaSecret}"
+                  env.SECRET_NAME = "Okta-Match-Prod-Secrets"
+                  env.META_DATA_PATH = "PROD"
+                  env.META_DATA_BUCKET = "nci-cbiit-ctdc-prod"
+                  env.CIPHER_KEY = "${params.CipheyKey}"
+                }
+              break
+              default:
+                println "Select valid MatchEnv"
+              break
+              }
+          }
+        }
+    }
+  	stage('loader-data'){
+ 		environment {
+ 			SLACK_URL   =   "${SLACK_URL}"
+      S3_BUCKET   =   "${params.S3Bucket}"
+      ARM_ID      =   "${params.ArmID}"
+      PHS_ID      =   "${params.PhsID}"
+ 		}
+ 		steps {
+ 			wrap([$class: 'AnsiColorBuildWrapper', colorMapName: "xterm"]) {
+ 					ansiblePlaybook( 
+            			playbook: '${WORKSPACE}/icdc-devops/ansible/ctdc-file-loader.yml', 
+            			inventory: '${WORKSPACE}/icdc-devops/ansible/hosts', 
+            			colorized: true) 
+ 			}
+ 		}
+  }
+ }
+}

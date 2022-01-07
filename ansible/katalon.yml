@@ -1,0 +1,9 @@
+---
+- name: execute katalon tests
+  hosts: localhost
+  connection: local
+  gather_facts: no
+
+  roles:
+    - katalon
+

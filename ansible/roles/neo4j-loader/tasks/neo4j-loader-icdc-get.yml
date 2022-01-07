@@ -1,0 +1,18 @@
+---
+# tasks file for neo4j-loader
+
+- name: download dump file
+  aws_s3:
+    bucket: "{{ s3_bucket_name }}"
+    object: "/dump_files/{{ dump_file_name }}"
+    dest: "{{ dump_file_name }}"
+    mode: get
+
+- name: verify file is copied
+  stat:
+     path: "{{ dump_file_name }}"
+  register: file_status
+
+#- name: stat output
+#  debug:
+#    msg: "{{ file_status }}"

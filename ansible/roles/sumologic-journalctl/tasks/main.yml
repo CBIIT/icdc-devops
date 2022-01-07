@@ -1,0 +1,25 @@
+---
+# tasks file for sumo-journalctl
+#
+# this task updates journalctl to forward logs to rsyslog
+#
+#
+
+#- name: disable, stop journal_syslog.service
+#  systemd:
+#    state: stopped
+#    name: journal_syslog.service
+#    enabled: no
+
+- name: update journald configuration
+  lineinfile:
+    path: /etc/systemd/journald.conf
+    regexp: 'ForwardToSyslog='
+    line: ForwardToSyslog=yes
+
+- name: restart journald service
+  systemd:
+    state: restarted
+    daemon_reload: yes
+    name: systemd-journald
+    enabled: yes

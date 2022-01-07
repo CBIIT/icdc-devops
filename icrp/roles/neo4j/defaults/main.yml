@@ -1,0 +1,5 @@
+---
+# defaults file for neo4j
+newrelic: yes
+neo4j_home: /var/lib/neo4j
+graphql_version: 3.5.0.4

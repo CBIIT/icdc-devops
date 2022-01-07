@@ -1,0 +1,125 @@
+---
+- name: gather instance facts
+  ec2_instance_facts:
+    region: us-east-1
+    filters:
+      "tag:Name": "{{project}}-{{tier}}-neo4j-4"
+      "instance-state-name": running
+      "tag:Environment": "{{tier}}"
+  register: neo4j
+
+- name: set instance name
+  set_fact:
+    neo4j_ip: "{{ neo4j.instances[0].network_interfaces[0].private_ip_address }}"
+
+- name: show db 
+  debug:
+    msg: "{{neo4j_ip}}"
+
+- name: set model files location for icdc
+  set_fact:
+    model_file1: "{{workspace}}/icdc-model/model-desc/icdc-model.yml"
+    model_file2: "{{workspace}}/icdc-model/model-desc/icdc-model-props.yml"
+    property_file: "config/props-icdc-pmvp.yml"
+  when: project == "icdc"
+
+- name: set model files location for bento
+  set_fact:
+    model_file1: "{{workspace}}/bento-model/model-desc/bento_tailorx_model_file.yaml"
+    model_file2: "{{workspace}}/bento-model/model-desc/bento_tailorx_model_properties.yaml"
+    property_file: "config/props-bento-ext.yml"
+  when: project == "bento"
+
+- name: set model files location for github
+  set_fact:
+    model_file1: "{{workspace}}/bento-model/model-desc/bento_tailorx_model_file.yaml"
+    model_file2: "{{workspace}}/bento-model/model-desc/bento_tailorx_model_properties.yaml"
+    property_file: "config/props-bento-ext.yml"
+  when: project == "github-actions"
+
+- name: set model files location for ctdc
+  set_fact:
+    model_file1: "{{workspace}}/ctdc-model/model-desc/ctdc_model_file.yaml"
+    model_file2: "{{workspace}}/ctdc-model/model-desc/ctdc_model_properties_file.yaml"
+    property_file: "config/props-ctdc.yml"
+  when: project == "ctdc"
+
+- name: set model files location for gmb
+  set_fact:
+    model_file1: "{{workspace}}/gmb-model/model-desc/000048_Model.yml"
+    model_file2: "{{workspace}}/gmb-model/model-desc/000048_Model_Props.yml"
+    property_file: "config/props-gmb-mock.yml"
+  when: project == "gmb"
+
+
+- name: set model files location for pcdc
+  set_fact:
+    model_file1: "{{workspace}}/c3dc-model/model-desc/c3dc_Model.yml"
+    model_file2: "{{workspace}}/c3dc-model/model-desc/c3dc_Model_Props.yml"
+    property_file: "config/props-pcdc-mock.yml"
+  when: project == "c3dc"
+
+- name: set model files location for ccdi
+  set_fact:
+    model_file1: "{{workspace}}/ccdi-model/model-desc/ccdi_portal_model_file.yaml"
+    model_file2: "{{workspace}}/ccdi-model/model-desc/ccdi_portal_model_properties.yaml"
+    property_file: "{{workspace}}/ccdi-model/model-desc/props-ccdi-portal.yml"
+  when: project == "ccdi"
+
+- name: set model files location for ins
+  set_fact:
+    model_file1: "{{workspace}}/ins-model/data_loading/model-desc/ins_model_file.yaml"
+    model_file2: "{{workspace}}/ins-model/data_loading/model-desc/ins_model_properties.yaml"
+    property_file: "{{workspace}}/ins-model/data_loading/model-desc/props-ins.yml"
+  when: project == "ins"
+
+- name: Check if tmp directory exist
+  stat:
+    path: "{{workspace}}/tmp"
+  register: stat_result
+
+- name: Check if tmp {{s3_folder}} exist
+  stat:
+    path: "{{workspace}}/{{s3_folder}}"
+  register: s3folder_result
+
+- name: remove the tmp if exists
+  file:
+    path: "{{workspace}}/tmp"
+    state: absent
+  when: stat_result.stat.exists
+
+- name: remove the {{s3_folder}} if exists
+  file:
+    path: "{{workspace}}/{{s3_folder}}"
+    state: absent
+  when: stat_result.stat.exists
+
+- name: update settings
+  template:
+    dest: "{{workspace}}/config/config.yml"
+    src: "{{workspace}}/config/config.yml.j2"
+
+- name: install python3
+  yum:
+    name: python3
+    state: installed
+
+- name: pip install requirements
+  pip:
+    requirements: "{{workspace}}/requirements.txt"
+    executable: pip3
+
+
+- name: loader data
+  shell:
+    cmd: >
+      python3
+      loader.py 
+      {{workspace}}/config/config.yml
+    chdir: "{{workspace}}"
+  register: data_loader
+
+- name: show dataloader output
+  debug:
+    msg: "{{data_loader}}"

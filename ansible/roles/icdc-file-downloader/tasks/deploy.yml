@@ -1,0 +1,52 @@
+---
+- name: log into DockerHub
+  docker_login:
+    username: "{{ docker_user }}"
+    password: "{{ docker_password }}"
+    registry: https://ncidockerhub.nci.nih.gov
+
+- name: remove frontend container
+  docker_container:
+    name: file-downloader
+    state: absent
+
+- name: clean up 
+  command: docker system prune -a -f
+
+- name: ensure log and docker directory exists
+  file: 
+    path: /local/content/k9dc/file-downloader
+    state: directory
+
+- name: launch the new file-downloader
+  docker_container:
+    name: file-downloader
+    image: ncidockerhub.nci.nih.gov/icdc/icdc-filedownloader:{{downloader_version}}
+    env:
+      CF_URL: "https://{{cloudfront_domain_name}}"
+      # URL_SRC: "indexd"
+      # INDEXD_URL: "{{indexd_url}}"
+      CF_PRIVATE_KEY: "{{cloudfront_private_key}}"
+      CF_KEY_PAIR_ID: "{{cloudfront_key_group_id}}"
+      URL_SRC: "{{url_src}}"
+      BACKEND_URL: "{% if tier == 'prod' %}https://caninecommons.cancer.gov/v1/graphql/{% else %}https://caninecommons-{{ tier }}.cancer.gov/v1/graphql/{% endif %}"
+      VERSION: "{{downloader_version}}" 
+      DATE: "{{ansible_date_time.date}}"
+      PROJECT: "ICDC"
+      NEW_RELIC_APP_NAME: "{{stack_name}}-{{tier}}-file-downloader-{{ansible_hostname}}"
+      NEW_RELIC_LICENSE_KEY: "{{license_key}}"
+    restart_policy: always
+    ports:
+      - "8081:8081"
+    volumes:
+      - "/local/content/k9dc/file-downloader:/var/log"
+
+- name: "wait for file-downloader service to become available"
+  uri:
+   url: "{% if tier == 'prod' %}https://caninecommons.cancer.gov/api/files/ping{% else %}https://caninecommons-{{ tier }}.cancer.gov/api/files/ping{% endif %}"
+   follow_redirects: none
+   method: GET
+  register: _result
+  until: ('status' in _result) and (_result.status == 200)
+  retries: 100
+  delay: 10

@@ -1,0 +1,60 @@
+---
+#- name: get python version
+#  shell: "python3 --version"
+#  args:
+#    chdir: "{{ workspace }}"
+#  register: python_ver
+
+#- name: echo python version
+#  debug:
+#    msg: "{{ python_ver.stdout_lines }}"
+
+- name: clone docs repo
+  shell: git clone https://github.com/CBIIT/bento-docs.git
+  args:
+    chdir: "{{ workspace }}"
+
+- name: get repo commit ID
+  shell: git rev-parse HEAD
+  args:
+    chdir: "{{ workspace }}/bento-docs"
+  register: repo_commit
+
+- name: echo repo commit
+  debug:
+    msg: "{{ repo_commit.stdout_lines }}"
+
+- name: get additional branches
+  shell: git branch -r | grep -v '\->' | while read remote; do git branch --track "${remote#origin/}" "$remote"; done
+  args:
+    chdir: "{{ workspace }}/bento-docs"
+
+- name: pull all branches
+  shell: git pull
+  args:
+    chdir: "{{ workspace }}/bento-docs"
+
+- name: get python requirements
+  shell: "pip3 install -r requirements.txt"
+  args:
+    chdir: "{{ workspace }}/bento-docs"
+
+- name: build latest docs
+  shell: "sphinx-multiversion source docs"
+  args:
+    chdir: "{{ workspace }}/bento-docs"
+  register: sphinx_out
+
+- name: echo sphinx output
+  debug:
+    msg: "{{ sphinx_out.stdout_lines }}"
+
+- name: show changes in git status
+  shell: "git status -s"
+  args:
+    chdir: "{{ workspace }}/bento-docs/docs"
+  register: git_status
+
+- name: echo git status
+  debug:
+    msg: "{{ git_status.stdout_lines }}"

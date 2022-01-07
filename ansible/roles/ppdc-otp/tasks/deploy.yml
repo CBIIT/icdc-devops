@@ -1,0 +1,35 @@
+---
+- name: log into DockerHub
+  docker_login:
+    username: "{{ docker_user }}"
+    password: "{{ docker_password }}"
+    # registry: https://ncidockerhub.nci.nih.gov
+  
+- name: remove frontend container
+  docker_container:
+    name: ppdc-otp
+    state: absent
+
+- name: clean up 
+  command: docker system prune -a -f
+
+- name: ensure /local/content/docker exists
+  file: 
+    path: /local/content/docker
+    state: directory
+
+- name: launch the new ppdc-otp
+  docker_container:
+    name: ppdc-otp
+    image: cbiitssrepo/ppdc-otp-frontend:{{frontend_version}}-{{build_number}}
+    env:
+      CONFIG_URL_API: "{% if  tier == 'prod' %}https://{{stack_name}}.bento-tools.org/api/v4/graphql{% else %}https://{{stack_name}}-{{ tier }}.bento-tools.org/api/v4/graphql{% endif %}"
+      CONFIG_URL_API_BETA: "{% if tier == 'prod' %}https://{{stack_name}}.bento-tools.org/api/v4/graphql{% else %}https://{{stack_name}}-{{ tier }}.bento-tools.org/api/v4/graphql{% endif %}"
+    restart_policy: always
+    ports:
+     - "80:80"
+
+
+
+
+

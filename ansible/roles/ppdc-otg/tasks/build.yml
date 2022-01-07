@@ -1,0 +1,86 @@
+---
+- name: set dev environment facts
+  set_fact:
+    neo4j_ip: "{{ lookup('env','NEO4J_DEV_IP') }}"
+    bearer: "{{ lookup('env','BEARER') }}"
+  when: tier == "dev"
+
+- name: set qa environment facts
+  set_fact:
+    neo4j_ip: "{{ lookup('env','NEO4J_QA_IP') }}"
+    bearer: "{{ lookup('env','BEARER') }}"
+  when: tier == "qa"
+
+- name: set stage environment facts
+  set_fact:
+    neo4j_ip: "{{ lookup('env','NEO4J_PERF_IP') }}"
+    bearer: "{{ lookup('env','BEARER') }}"
+  when: tier == "perf"
+
+- name: set prod environment facts
+  set_fact:
+    neo4j_ip: "{{ lookup('env','NEO4J_PROD_IP') }}"
+    bearer: "{{ lookup('env','BEARER') }}"
+  when: tier == "prod"
+
+- name: copy  nginx conf
+  copy:
+    remote_src: yes
+    src: '{{workspace}}/icdc-devops/docker/dockerfiles/nginx-ppdc.conf'
+    dest: '{{workspace}}/ppdc-otg-frontend/nginx.conf'
+
+- name: copy entrypoint.sh to workspace
+  copy:
+    src: "nginx-entrypoint.sh"
+    dest: "{{workspace}}/ppdc-otg-frontend/nginx-entrypoint.sh"
+    mode: 0755
+
+- name: run yarn install in {{workspace}}/ppdc-otg-frontend
+  command: yarn install
+  args:
+    chdir: "{{workspace}}/ppdc-otg-frontend"
+
+- name: run yarn build in {{workspace}}/ppdc-otg-frontend
+  command: yarn build
+  args:
+    chdir: "{{workspace}}/ppdc-otg-frontend"
+
+- name: copy env to build
+  copy:
+    src: inject.template.js
+    dest: "{{workspace}}/ppdc-otg-frontend/build/inject.template.js"
+    mode: 0755
+
+- name: rename build to dist to avoid .dockerignore problem with build directory
+  command: mv build dist
+  args:
+    chdir: "{{workspace}}/ppdc-otg-frontend"
+          
+- name: log into DockerHub
+  docker_login:
+    username: "{{docker_user}}"
+    password: "{{docker_password}}"
+
+- name: build cbiitssrepo/ppdc-otg-frontend image
+  docker_image:
+    build:
+      path: "{{workspace}}/ppdc-otg-frontend"
+
+      dockerfile: "{{workspace}}/icdc-devops/docker/dockerfiles/frontend-ppdc-dockerfile"
+      pull: yes
+      nocache: yes
+    name: cbiitssrepo/ppdc-otg-frontend
+    tag: "{{frontend_version}}-{{build_number}}"
+    push: yes
+    force_source: yes
+    source: build
+
+- name: Add tag latest to cbiitssrepo/ppdc-otg-frontend image
+  docker_image:
+    name: "cbiitssrepo/ppdc-otg-frontend:{{frontend_version}}-{{build_number}}"
+    repository: cbiitssrepo/ppdc-otg-frontend:latest
+    force_tag: yes
+    push: yes
+    source: local
+
+    

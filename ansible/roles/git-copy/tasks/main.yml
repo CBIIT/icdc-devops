@@ -1,0 +1,51 @@
+---
+- name: clean up local folders
+  file:
+    path: "{{ git_home }}"
+    state: absent
+
+- name: set icdc git_url
+  set_fact:
+    git_url: "{{git_base}}/bento-icdc-frontend"
+  when: project == "icdc"
+
+- name: set fact
+  set_fact:
+    git_url: "{{git_base}}/bento-frontend"
+  when: project == "bento"
+
+- name: checkout common codebase
+  git:
+    repo: "{{git_url}}"
+    dest: "{{ git_home }}"
+    update: yes
+    version: master
+
+- name: copy content {{copy_from}} to {{copy_to}}
+  command: rsync -rcCivh {{copy_from}}/ {{copy_to}}/ --delete
+  args:
+    chdir: "{{ git_home}}/src/content"
+  register: git_copy
+
+- debug:
+    msg: "{{git_copy.stdout_lines}}"
+
+- name: git add contents
+  command: git add -A .
+  args:
+    chdir: "{{ git_home }}"
+    warn: false
+
+- name: commit changes 
+  command: git commit -m "copy content from {{copy_from}} to {{copy_to}} on {{git_date}}" --allow-empty
+  args:
+    chdir: "{{ git_home }}"
+    warn: false
+
+- name: 
+  command: git push 
+  args:
+    chdir: "{{ git_home }}"
+    warn: false
+  
+

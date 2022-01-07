@@ -1,0 +1,11 @@
+---
+- name: ppdc cicd pipeline
+  hosts: ppdc-otp
+  connection: local
+  gather_facts: no
+    
+  tasks:
+    - name: This is a build stage
+      include_role:
+        name: ppdc-otp
+        tasks_from: build

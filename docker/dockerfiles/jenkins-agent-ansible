@@ -1,0 +1,9 @@
+FROM vdonkor/jenkins-agent
+
+MAINTAINER vincent donkor
+
+USER root
+RUN dnf -y install python3 python3-pip && pip3 install ansible
+USER jenkins
+  
+  

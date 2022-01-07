@@ -1,0 +1,12 @@
+---
+- name: dump data from neo4j db
+  hosts: icdc-neo4j
+  gather_facts: yes
+  become: yes
+    
+  tasks:
+    - name: perform data dump
+      include_role:
+        name: data-processing
+        tasks_from: icdc-data-dump
+        vars_from: icdc_data_dump

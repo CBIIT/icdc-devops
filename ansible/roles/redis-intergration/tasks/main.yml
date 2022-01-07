@@ -1,0 +1,9 @@
+--- 
+- name: ensure newrelic is installed
+  include_tasks: newrelic.yml
+  
+- name: install redis
+  include_tasks: redis.yml
+
+- name: install redis intergration
+  include_tasks: intergration.yml

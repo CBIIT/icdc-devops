@@ -1,0 +1,96 @@
+---
+# tasks file for roles/open-target-backend
+
+- name: add click house and elasticsearch public rpm gpg key
+  rpm_key:
+    state: present
+    key: "{{item}}"
+  loop:
+    - https://repo.clickhouse.tech/CLICKHOUSE-KEY.GPG
+    - https://artifacts.elastic.co/GPG-KEY-elasticsearch
+
+- name: add clickhouse repo
+  yum_repository:
+    name: "{{item.name}}"
+    description: Clickhouse repo
+    file: external_repos
+    baseurl: "{{item.repo}}"
+  loop:
+    - {repo: 'https://repo.clickhouse.tech/rpm/stable/x86_64/',name: clickhouse}
+    - {repo: 'https://artifacts.elastic.co/packages/7.x/yum/',name: elasticsearch}
+
+- name: install clickhouse and elasticsearch
+  yum:
+    name:
+      - clickhouse-server 
+      - clickhouse-client
+      - elasticsearch-7.9.0-1.x86_64
+
+- name: updating elasticsearch config files
+  lineinfile:
+    path: /etc/elasticsearch/elasticsearch.yml
+    line: "{{ item }}"
+  with_items:
+    - 'node.name: node-1'
+    - 'network.host: 0.0.0.0'
+    - 'http.port: 9200'
+    - 'cluster.initial_master_nodes: ["node-1"]'
+
+- name: updating clickhouse-server config files
+  replace:
+    path: /etc/clickhouse-server/config.xml
+    regexp: '<!-- <listen_host>::</listen_host> -->'
+    replace: '<listen_host>::</listen_host> '
+
+- name: updating elasticsearch memory configurations
+  lineinfile:
+    path: /etc/sysconfig/elasticsearch
+    line: "{{ item }}"
+  with_items:
+    - 'ES_HEAP_SIZE=2g'
+    - 'MAX_OPEN_FILES=65535'
+    - 'MAX_LOCKED_MEMORY=unlimited'
+
+- name: updating elasticsearch to increase initial memory configurations -Xms4g
+  replace:
+    path: /etc/elasticsearch/jvm.options
+    regexp: '-Xms1g'
+    replace: '-Xms4g'
+
+- name: updating elasticsearch to increase initial memory configurations -Xmx4g
+  replace:
+    path: /etc/elasticsearch/jvm.options
+    regexp: '-Xmx1g'
+    replace: '-Xmx4g'
+
+
+- name: updating Dlog4j2.formatMsgNoLookups=true in elasticsearch jvm.options
+  lineinfile:
+    path: /etc/elasticsearch/jvm.options
+    line: "{{ item }}"
+  with_items:
+    - '-Dlog4j2.formatMsgNoLookups=true'
+
+- name: reload systemd config
+  systemd: daemon_reload=yes
+
+- name: enable service elasticsearch and ensure it is not masked
+  systemd:
+    name: elasticsearch
+    enabled: yes
+    masked: no
+
+- name: start elasticsearch 
+  systemd: 
+    state: started 
+    name: elasticsearch
+
+- name: enable and start clickhouse
+  service:
+    name: clickhouse-server
+    enabled: yes
+    state: started
+
+
+
+    

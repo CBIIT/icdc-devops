@@ -1,0 +1,13 @@
+---
+- name: deploy stage of cicd pipeline
+  hosts: cicd
+  connection: local
+  gather_facts: no
+    
+  tasks:
+    - name: deploy stage
+      include_role:
+        name: cicd
+        tasks_from: deploy-backend
+      vars:
+        data_bucket: nci-cbiit-ctdc-{{tier}}

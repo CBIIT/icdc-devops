@@ -1,0 +1,13 @@
+---
+- name: build bento base images
+  hosts: all
+  connection: local
+  #become: yes
+  gather_facts: yes
+  
+  tasks:
+    - name: build bento image
+      include_role:
+        name: build-image-bento
+        tasks_from: bento
+        vars_from: bento

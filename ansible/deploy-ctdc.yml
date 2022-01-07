@@ -1,0 +1,9 @@
+---
+- name: build stage of cicd pipeline
+  hosts: cicd
+  connection: local
+  gather_facts: no
+    
+  roles:
+    - ctdc-pipeline
+        

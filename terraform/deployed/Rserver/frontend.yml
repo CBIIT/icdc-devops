@@ -1,0 +1,8 @@
+---
+- name: httpserver
+  image: cbiitssrepo/bento-frontend:latest
+  essential: true
+  portMappings:
+    - protocol: tcp
+      containerPort: 8080
+      hostPort: 8080

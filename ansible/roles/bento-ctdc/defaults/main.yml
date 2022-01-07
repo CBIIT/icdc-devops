@@ -1,0 +1,7 @@
+---
+# defaults file for cicd
+platform: aws
+release: fail
+project: ctdc
+prod: prod
+

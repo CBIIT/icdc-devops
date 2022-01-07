@@ -1,0 +1,23 @@
+---
+# vars file for deploy-comets
+sender: "{{ lookup('aws_ssm', 'sender', region='us-east-1' ) }}"
+host: "{{ lookup('aws_ssm', 'host', region='us-east-1' ) }}"
+s3_password: "{{ lookup('aws_ssm', 's3_password', region='us-east-1' ) }}"
+s3_username: "{{ lookup('aws_ssm', 's3_username', region='us-east-1' ) }}"
+admin_email: "{{ lookup('aws_ssm', 'admin_email', region='us-east-1' ) }}"
+username: "{{ lookup('aws_ssm', 'username', region='us-east-1' ) }}"
+password: "{{ lookup('aws_ssm', 'password', region='us-east-1' ) }}"
+token: "{{ lookup('aws_ssm', 'token', region='us-east-1' ) }}"
+app_base_directory: /local/content/docker/comets
+comets_repo: https://github.com/CBIIT/nci-webtools-comets-analytics
+R_repo: https://github.com/CBIIT/R-cometsAnalytics
+ecr: "{{ lookup('aws_ssm', 'ecr', region='us-east-1' ) }}"
+version: 1.9.0
+env: "{{env}}"
+region: us-east-1
+
+#openid
+open_id_issuer: "{{ lookup('aws_ssm', 'open_id_issuer', region='us-east-1' ) }}"
+open_client_id: "{{ lookup('aws_ssm', 'open_client_id', region='us-east-1' ) }}"
+open_client_secret: "{{ lookup('aws_ssm', 'open_client_secret', region='us-east-1' ) }}"
+open_passphrase: "{{ lookup('aws_ssm', 'open_passphrase', region='us-east-1' ) }}"

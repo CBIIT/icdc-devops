@@ -1,0 +1,9 @@
+---
+- name: copy git contents
+  hosts: localhost
+  connection: local
+  gather_facts: no
+
+  roles:
+    - git-copy
+   
