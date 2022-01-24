@@ -91,3 +91,7 @@ app_port = 80
 db_private_ip = "172.17.11.25"
 
 remote_state_bucket_name = "bento-demo-terraform-remote-state"
+
+downloader_container_port = 8081
+
+redis_node_group = 1
