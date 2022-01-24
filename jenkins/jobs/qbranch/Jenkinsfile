@@ -73,7 +73,7 @@ pipeline {
       steps{
         script{
           docker.image('cbiitssrepo/ccdc-etl').inside{
-            sh 'ls -l'
+            sh 'node scri'
           }
         }
       }
