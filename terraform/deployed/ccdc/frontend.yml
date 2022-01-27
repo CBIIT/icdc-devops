@@ -1,6 +1,6 @@
 ---
 - name: frontend
-  image: cbiitssrepo/bento-frontend:latest
+  image: cbiitssrepo/ccdc-webportal:latest
   essential: true
   portMappings:
     - protocol: tcp

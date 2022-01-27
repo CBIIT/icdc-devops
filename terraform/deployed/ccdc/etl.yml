@@ -1,8 +1,0 @@
----
-- name: etl
-  image: cbiitssrepo/ccdc-etl:latest
-  essential: true
-  portMappings:
-    - protocol: tcp
-      containerPort: 8081
-      hostPort: 8081
