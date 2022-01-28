@@ -99,7 +99,7 @@ resource "aws_elasticsearch_domain" "es" {
           "Action": "es:*",
           "Principal": "*",
           "Effect": "Allow",
-          "Resource": "arn:aws:es:${data.aws_region.region.name}:${data.aws_caller_identity.caller.account_id}:domain/${var.domain_name}/*"
+          "Resource": "arn:aws:es:${data.aws_region.region.name}:${data.aws_caller_identity.caller.account_id}:domain/${var.domain_name}-elastic/*"
       },
       {
           "Effect": "Allow",
