@@ -6,11 +6,6 @@ data "aws_acm_certificate" "cert" {
   most_recent = true
 }
 
-data "aws_subnet_ids" "example" {
-  vpc_id = var.vpc_id
-}
-
-
 data "aws_iam_policy_document" "s3_policy" {
   statement {
     sid = "allowalbaccount"
