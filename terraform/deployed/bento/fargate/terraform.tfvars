@@ -6,3 +6,9 @@ vpc_id = "vpc-08f154f94dc8a0e34"
 stack_name = "ccdi"
 app_name = "oasis"
 profile = "icdc"
+domain_name = "bento-tools.org"
+tags = {
+  Project = "CCDI"
+  CreatedWith = "Terraform"
+  POC = "user@example.com"
+}
