@@ -11,4 +11,4 @@ tags = {
   Project = "CCDI"
   CreatedWith = "Terraform"
   POC = "user@example.com"
-}
+}certificate_domain_name = "*.bento-to ols.org"

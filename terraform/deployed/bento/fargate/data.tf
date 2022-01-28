@@ -1,7 +1,7 @@
 data "aws_caller_identity" "current" {}
 
 data "aws_acm_certificate" "cert" {
-  domain      = var.domain_name
+  domain      = var.certificate_domain_name
   types       = ["AMAZON_ISSUED"]
   most_recent = true
 }
@@ -11,7 +11,7 @@ data "aws_iam_policy_document" "s3_policy" {
     sid = "allowalbaccount"
     effect = "Allow"
     principals {
-      identifiers = ["arn:aws:iam::${lookup(data.aws_caller_identity.current.account_id,var.region,"us-east-1" )}:root"]
+      identifiers = ["arn:aws:iam::${data.aws_caller_identity.current.account_id}:root"]
       type        = "AWS"
     }
     actions = ["s3:PutObject"]

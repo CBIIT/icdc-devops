@@ -91,6 +91,10 @@ variable "app_name" {
   default     = null
 }
 
+variable "certificate_domain_name" {
+  description = "domain name for the ssl cert"
+  type = string
+}
 
 #variable "app_port" {
 #  description = "port on which the app listens"
