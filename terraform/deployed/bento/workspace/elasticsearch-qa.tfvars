@@ -2,7 +2,7 @@
 tags = {
   ManagedBy = "terraform"
   Project = "Bento"
-  Environment = "prod"
+  Environment = "QA"
   Region = "us-east-1"
 }
 #enter the region in which your aws resources will be provisioned
@@ -14,8 +14,6 @@ profile = "icdc"
 #specify the name you will like to call this project.
 stack_name = "bento"
 
-#specify domain name
-domain_name = "bento-tools"
 #name of the application
 remote_state_bucket_name = "bento-terraform-remote-state"
 
