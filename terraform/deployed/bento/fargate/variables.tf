@@ -1,4 +1,3 @@
-
 variable "tags" {
   description = "tags to associate with this instance"
   type = map(string)
@@ -10,134 +9,32 @@ variable "stack_name" {
 variable "region" {
   description = "aws region to deploy"
   type = string
+  default = "us-east-1"
 }
 variable "profile" {
   description = "iam user profile to use"
   type = string
 }
-variable "app_port" {
-  description = "port on which the app listens"
+variable "s3_object_expiration_days" {
+  description = "number of days for object to live"
+  type = number
+  default = 720
+}
+variable "s3_object_nonactive_expiration_days" {
+  description = "number of days to retain non active objects"
+  type = number
+  default = 90
+}
+variable "s3_object_standard_ia_transition_days" {
+  description = "number of days for an object to transition to standard_ia storage class"
+  default = 120
   type = number
 }
-
-variable "domain_name" {
-  description = "domain name for the application"
-  type = string
-}
-variable "ecs_cluster_name" {
-  description = "name of the ecs cluster"
-}
-
-variable "container_replicas" {
-  description = "specify the number of container to run"
+variable "s3_object_glacier_transition_days" {
+  description = "number of days for an object to transition to glacier storage class"
+  default = 180
   type = number
 }
-variable "frontend_container_port" {
-  description = "port on which the container listens"
-  type = number
-}
-variable "backend_container_port" {
-  description = "port on which the container listens"
-  type = number
-}
-
-variable "downloader_container_port" {
-  description = "port on which the container listens"
-  type = number
-}
-variable "app_name" {
-  description = "name of the application"
-  type = string
-}
-
-variable "fronted_instance_type" {
-  description = "what size of instance to run"
-  type = string
-}
-variable "min_size" {
-  description = "minimum number of asg instances"
-  type = number
-}
-variable "max_size" {
-  description = "maximum number of asg instances"
-  type = number
-}
-variable "enable_autoscaling" {
-  description = "set to enable autoscaling"
-  type = bool
-  default = true
-}
-variable "health_check_type" {
-  description = "The type of health check to use"
-  type = string
-  default = "EC2"
-}
-variable "associate_public_ip_address" {
-  type = bool
-  default = false
-  description = "options to associate public ip to launched instances"
-}
-variable "evs_volume_type" {
-  description = "EVS volume type"
-  default = "standard"
-  type = string
-}
-variable "instance_volume_size" {
-  description = "volume size of the instances"
-  type = number
-}
-variable "ssh_key_name" {
-  description = "name of the ssh key to manage the instances"
-  type = string
-}
-variable "desired_ec2_instance_capacity" {
-  description = "number of ec2 to run workload ideally"
-  type = number
-}
-variable "alb_port" {
-  description = "Alb port to use in forwarding traffic to asg"
-  type = number
-  default = 80
-}
-variable "frontend_asg_name" {
-  description = "name of the autoscalling group"
-  type = string
-  default = "front"
-}
-
-variable "env" {
-  description = "environment"
-  type = string
-}
-
-variable "fronted_rule_priority" {
-  description = "priority number to assign to alb rule"
-  type = number
-  default = 100
-}
-
-variable "downloader_rule_priority" {
-  description = "priority number to assign to alb rule"
-  type = number
-  default = 91
-}
-variable "backend_rule_priority" {
-  description = "priority number to assign to alb rule"
-  type = number
-  default = 110
-}
-variable "platform" {
-  type = string
-  description = "name of the cloud platform e.g aws,gcp etc"
-  default = "aws"
-}
-
-variable "vpc_cidr_block" {
-  description = "CIDR Block for this  VPC. Example 10.0.0.0/16"
-  default = "10.10.0.0/16"
-  type = string
-}
-
 
 variable "alb_name" {
   description = "Name for the ALB"
@@ -165,9 +62,15 @@ variable "ssl_policy" {
   default = "ELBSecurityPolicy-2016-08"
   type = string
 }
+
 variable "default_message" {
   description = "default message response from alb when resource is not available"
   default = "The requested resource is not available"
+}
+
+variable "domain_name" {
+  description = "domain name for the application"
+  type = string
 }
 
 variable "public_subnets" {
@@ -176,164 +79,212 @@ variable "public_subnets" {
   type = list(string)
 }
 
-variable "private_subnets" {
-  description = "Provide list private subnets to use in this VPC. Example 10.0.10.0/24,10.0.11.0/24"
-  default     = []
-  type = list(string)
-}
-
-variable "availability_zones" {
-  description = "list of availability zones to use"
-  type = list(string)
-  default = []
-}
-
-variable "alb_rule_priority" {
-  description = "priority number to assign to alb rule"
-  type = number
-}
-
-
-variable "ssh_user" {
-  type = string
-  description = "name of the ec2 user"
-}
-variable "db_instance_volume_size" {
-  description = "volume size of the instances"
-  type = number
-}
-
-variable "database_name" {
-  description = "name of the database"
-  type = string
-}
-variable "database_instance_type" {
-  description = "ec2 instance type to use"
-  type = string
-}
-variable "database_password" {
-  description = "set database password"
-  type = string
-  default = "custodian"
-}
-variable "db_private_ip" {
-  description = "private ip of the db instance"
-  type = string
-}
-variable "remote_state_bucket_name" {
-  description = "name of the terraform remote state bucket"
-  type = string
-}
-variable "redis_node_group" {
-  description = "number of redis nodes"
-  type = string
-}
-variable "shutdown_schedule" {
-  type    = string
-  default = "0 5 * * *"
-}
-
-variable "startup_schedule" {
-  type    = string
-  default = "0 12 * * MON-FRI"
-}
-variable "redis_node_type" {
-  description = "redis instance type"
-  type = string
-  default =  "cache.t3.medium"
-}
-
-variable "alb_name" {
-  description = "Name for the ALB"
-  type        = string
-  default     = "alb"
-}
-variable "create_alb" {
-  description = "choose to create alb or not"
-  type        = bool
-  default     = true
-}
-variable "lb_type" {
-  description = "Type of loadbalance"
-  type        = string
-  default     = "application"
-}
-variable "internal_alb" {
-  description = "is this alb internal?"
-  default     = false
-  type        = bool
-}
-variable "subnets" {
-  description = "subnets to associate with this ALB"
-  type        = list(string)
-}
-variable "tags" {
-  description = "tags to label this ALB"
-  type        = map(string)
-  default     = {}
-}
-variable "stack_name" {
-  description = "Name of the project"
-  type        = string
-}
-variable "ssl_policy" {
-  description = "specify ssl policy to use"
-  default     = "ELBSecurityPolicy-2016-08"
-  type        = string
-}
-variable "default_message" {
-  description = "default message response from alb when resource is not available"
-  default     = "The request resource is not available"
-}
-variable "certificate_arn" {
-  description = "certificate arn to use for the https listner"
-  type        = string
-}
 variable "vpc_id" {
   description = "VPC Id to to launch the ALB"
   type        = string
 }
-variable "env" {
-  description = "environment"
-  type        = string
-}
 
 #added frontend app name to accomodate ppdc-otg and ppdc-otp
-variable "frontend_app_name" {
+variable "app_name" {
   description = "it will be either otp or otg"
   type        = string
-  default     = ""
+  default     = null
 }
-variable "s3_object_expiration_days" {
-  description = "number of days for object to live"
-  type = number
-  default = 720
-}
-variable "s3_object_nonactive_expiration_days" {
-  description = "number of days to retain non active objects"
-  type = number
-  default = 90
-}
-variable "s3_object_standard_ia_transition_days" {
-  description = "number of days for an object to transition to standard_ia storage class"
-  default = 120
-  type = number
-}
-variable "s3_object_glacier_transition_days" {
-  description = "number of days for an object to transition to glacier storage class"
-  default = 180
-  type = number
-}
-variable "aws_account_id" {
-  type = map(string)
-  description = "aws account to allow for alb s3 logging"
-  default = {
-    us-east-1 = "127311923021"
-  }
-}
-variable "region" {
-  type        = string
-  description = "AWS region"
-  default = "us-east-1"
-}
+
+
+#variable "app_port" {
+#  description = "port on which the app listens"
+#  type = number
+#}
+#
+
+#variable "ecs_cluster_name" {
+#  description = "name of the ecs cluster"
+#}
+#
+#variable "container_replicas" {
+#  description = "specify the number of container to run"
+#  type = number
+#}
+#variable "frontend_container_port" {
+#  description = "port on which the container listens"
+#  type = number
+#}
+#variable "backend_container_port" {
+#  description = "port on which the container listens"
+#  type = number
+#}
+#
+#variable "downloader_container_port" {
+#  description = "port on which the container listens"
+#  type = number
+#}
+#variable "app_name" {
+#  description = "name of the application"
+#  type = string
+#}
+#
+#variable "fronted_instance_type" {
+#  description = "what size of instance to run"
+#  type = string
+#}
+#variable "min_size" {
+#  description = "minimum number of asg instances"
+#  type = number
+#}
+#variable "max_size" {
+#  description = "maximum number of asg instances"
+#  type = number
+#}
+#variable "enable_autoscaling" {
+#  description = "set to enable autoscaling"
+#  type = bool
+#  default = true
+#}
+#variable "health_check_type" {
+#  description = "The type of health check to use"
+#  type = string
+#  default = "EC2"
+#}
+#variable "associate_public_ip_address" {
+#  type = bool
+#  default = false
+#  description = "options to associate public ip to launched instances"
+#}
+#variable "evs_volume_type" {
+#  description = "EVS volume type"
+#  default = "standard"
+#  type = string
+#}
+#variable "instance_volume_size" {
+#  description = "volume size of the instances"
+#  type = number
+#}
+#variable "ssh_key_name" {
+#  description = "name of the ssh key to manage the instances"
+#  type = string
+#}
+#variable "desired_ec2_instance_capacity" {
+#  description = "number of ec2 to run workload ideally"
+#  type = number
+#}
+#variable "alb_port" {
+#  description = "Alb port to use in forwarding traffic to asg"
+#  type = number
+#  default = 80
+#}
+#variable "frontend_asg_name" {
+#  description = "name of the autoscalling group"
+#  type = string
+#  default = "front"
+#}
+#
+#variable "env" {
+#  description = "environment"
+#  type = string
+#}
+#
+#variable "fronted_rule_priority" {
+#  description = "priority number to assign to alb rule"
+#  type = number
+#  default = 100
+#}
+#
+#variable "downloader_rule_priority" {
+#  description = "priority number to assign to alb rule"
+#  type = number
+#  default = 91
+#}
+#variable "backend_rule_priority" {
+#  description = "priority number to assign to alb rule"
+#  type = number
+#  default = 110
+#}
+#variable "platform" {
+#  type = string
+#  description = "name of the cloud platform e.g aws,gcp etc"
+#  default = "aws"
+#}
+#
+#variable "vpc_cidr_block" {
+#  description = "CIDR Block for this  VPC. Example 10.0.0.0/16"
+#  default = "10.10.0.0/16"
+#  type = string
+#}
+
+
+#variable "private_subnets" {
+#  description = "Provide list private subnets to use in this VPC. Example 10.0.10.0/24,10.0.11.0/24"
+#  default     = []
+#  type = list(string)
+#}
+#
+#variable "availability_zones" {
+#  description = "list of availability zones to use"
+#  type = list(string)
+#  default = []
+#}
+#
+#variable "alb_rule_priority" {
+#  description = "priority number to assign to alb rule"
+#  type = number
+#}
+#
+#
+#variable "ssh_user" {
+#  type = string
+#  description = "name of the ec2 user"
+#}
+#variable "db_instance_volume_size" {
+#  description = "volume size of the instances"
+#  type = number
+#}
+#
+#variable "database_name" {
+#  description = "name of the database"
+#  type = string
+#}
+#variable "database_instance_type" {
+#  description = "ec2 instance type to use"
+#  type = string
+#}
+#variable "database_password" {
+#  description = "set database password"
+#  type = string
+#  default = "custodian"
+#}
+#variable "db_private_ip" {
+#  description = "private ip of the db instance"
+#  type = string
+#}
+#variable "remote_state_bucket_name" {
+#  description = "name of the terraform remote state bucket"
+#  type = string
+#}
+#variable "redis_node_group" {
+#  description = "number of redis nodes"
+#  type = string
+#}
+#variable "shutdown_schedule" {
+#  type    = string
+#  default = "0 5 * * *"
+#}
+#
+#variable "startup_schedule" {
+#  type    = string
+#  default = "0 12 * * MON-FRI"
+#}
+#variable "redis_node_type" {
+#  description = "redis instance type"
+#  type = string
+#  default =  "cache.t3.medium"
+#}
+#
+#variable "subnets" {
+#  description = "subnets to associate with this ALB"
+#  type        = list(string)
+#}
+#
+
+
 

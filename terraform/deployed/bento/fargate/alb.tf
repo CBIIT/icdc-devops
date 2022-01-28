@@ -1,9 +1,9 @@
 
 resource "aws_lb" "alb" {
 
-  name               = "${var.stack_name}-${var.alb_name}-${var.env}"
+  name               = "${var.stack_name}-${var.alb_name}-${terraform.workspace}"
   load_balancer_type = var.lb_type
-  subnets            = var.subnets
+  subnets            = var.public_subnets
   security_groups    = [aws_security_group.alb-sg.id]
 
     access_logs  {
@@ -13,12 +13,12 @@ resource "aws_lb" "alb" {
     }
 
   timeouts {
-    create = "10m"
+    create = "15m"
   }
 
   tags = merge(
   {
-    "Name" = format("%s-%s", var.stack_name, var.env)
+    "Name" = format("%s-%s", var.stack_name, terraform.workspace)
   },
   var.tags,
   )
@@ -28,11 +28,11 @@ resource "aws_lb" "alb" {
 
 resource "aws_security_group" "alb-sg" {
 
-  name   = "${var.stack_name}-${var.frontend_app_name}${var.env}-alb-sg"
+  name   = "${var.stack_name}-${var.app_name}${terraform.workspace}-alb-sg"
   vpc_id = var.vpc_id
   tags = merge(
   {
-    "Name" = format("%s-%s", var.stack_name, var.env)
+    "Name" = format("%s-%s", var.stack_name, terraform.workspace)
   },
   var.tags,
   )
@@ -93,7 +93,8 @@ resource "aws_lb_listener" "listener_https" {
   port              = local.https_port
   protocol          = "HTTPS"
   ssl_policy        = var.ssl_policy
-  certificate_arn   = var.certificate_arn
+  certificate_arn   = data.aws_acm_certificate.cert.arn
+
   default_action {
     type = "fixed-response"
 
@@ -105,14 +106,6 @@ resource "aws_lb_listener" "listener_https" {
   }
 }
 
-locals {
-  http_port    = 80
-  any_port     = 0
-  any_protocol = "-1"
-  tcp_protocol = "tcp"
-  https_port   = "443"
-  all_ips      = ["0.0.0.0/0"]
-}
 
 resource "aws_s3_bucket" "alb_logs_bucket" {
   bucket = local.alb_s3_bucket_name
