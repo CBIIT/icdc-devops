@@ -24,6 +24,7 @@ locals {
   tcp_protocol = "tcp"
   https_port = "443"
   all_ips  = ["0.0.0.0/0"]
+  domain_name = "${var.stack_name}-${terraform.workspace}-elasticsearch"
 }
 
 resource "aws_security_group" "es" {
@@ -64,7 +65,7 @@ resource "aws_iam_service_linked_role" "es" {
 }
 
 resource "aws_elasticsearch_domain" "es" {
-  domain_name = "${var.stack_name}-${terraform.workspace}-elasticsearch"
+  domain_name = local.domain_name
   elasticsearch_version = var.elasticsearch_version
 
 #  cluster_config {
@@ -99,7 +100,7 @@ resource "aws_elasticsearch_domain" "es" {
           "Action": "es:*",
           "Principal": "*",
           "Effect": "Allow",
-          "Resource": "arn:aws:es:${data.aws_region.region.name}:${data.aws_caller_identity.caller.account_id}:domain/${var.domain_name}-elasticsearch/*"
+          "Resource": "arn:aws:es:${data.aws_region.region.name}:${data.aws_caller_identity.caller.account_id}:domain/${local.domain_name}/*"
       }
   ]
 }
@@ -119,26 +120,26 @@ resource "aws_cloudwatch_log_group" "cloudwatch_log_group" {
   name = "${var.stack_name}-${terraform.workspace}-es-log-group"
 }
 
-resource "aws_cloudwatch_log_resource_policy" "cloudwatch_policy" {
-  policy_name = "${var.stack_name}-${terraform.workspace}-es-log-policy"
-
-  policy_document = <<CONFIG
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "es.amazonaws.com"
-      },
-      "Action": [
-        "logs:PutLogEvents",
-        "logs:PutLogEventsBatch",
-        "logs:CreateLogStream"
-      ],
-      "Resource": "arn:aws:logs:*"
-    }
-  ]
-}
-CONFIG
-}
+#resource "aws_cloudwatch_log_resource_policy" "cloudwatch_policy" {
+#  policy_name = "${var.stack_name}-${terraform.workspace}-es-log-policy"
+#
+#  policy_document = <<CONFIG
+#{
+#  "Version": "2012-10-17",
+#  "Statement": [
+#    {
+#      "Effect": "Allow",
+#      "Principal": {
+#        "Service": "es.amazonaws.com"
+#      },
+#      "Action": [
+#        "logs:PutLogEvents",
+#        "logs:PutLogEventsBatch",
+#        "logs:CreateLogStream"
+#      ],
+#      "Resource": "arn:aws:logs:*"
+#    }
+#  ]
+#}
+#CONFIG
+#}

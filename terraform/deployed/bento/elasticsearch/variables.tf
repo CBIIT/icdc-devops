@@ -15,10 +15,10 @@ variable "profile" {
   type = string
 }
 
-variable "domain_name" {
-  description = "domain name for the application"
-  type = string
-}
+#variable "domain_name" {
+#  description = "domain name for the application"
+#  type = string
+#}
 variable "elasticsearch_instance_type" {
   description = "type of instance to be used to create the elasticsearch cluster"
   type = string
