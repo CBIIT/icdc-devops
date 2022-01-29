@@ -168,3 +168,9 @@ variable "backend_container_image_name" {
   description = "name of the frontend container image"
   type = string
 }
+
+variable "alb_target_type" {
+  type = string
+  description = "type of alb target - ip , instance, lambda"
+  default = "ip"
+}
