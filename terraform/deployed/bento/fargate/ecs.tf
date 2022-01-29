@@ -91,7 +91,8 @@ resource "aws_ecs_task_definition" "frontend" {
 
 resource "aws_ecs_task_definition" "backend" {
   family        = "${var.stack_name}-${terraform.workspace}-backend"
-  network_mode  = "bridge"
+  network_mode  = var.ecs_network_mode
+  requires_compatibilities = ["FARGATE"]
   cpu = "512"
   memory = "1024"
   execution_role_arn =  aws_iam_role.task_execution_role.arn
