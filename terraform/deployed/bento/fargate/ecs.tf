@@ -275,7 +275,7 @@ resource "aws_lb_listener_rule" "frontend_alb_listener_prod" {
 
   condition {
     host_header {
-      values = [var.app_url]
+      values = [local.app_url]
     }
   }
   condition {
@@ -295,7 +295,7 @@ resource "aws_lb_listener_rule" "bento_www" {
 
   condition {
     host_header {
-      values = ["www.${var.app_url}"]
+      values = ["www.${local.app_url}"]
     }
   }
   condition {
@@ -315,7 +315,7 @@ resource "aws_lb_listener_rule" "backend_alb_listener_prod" {
 
   condition {
     host_header {
-      values = [var.app_url]
+      values = [local.app_url]
     }
   }
   condition {

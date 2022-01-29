@@ -149,7 +149,7 @@ variable "backend_rule_priority" {
   default = 100
 }
 
-variable "app_url" {
+variable "app_sub_domain" {
   description = "url of the app"
   type = string
 }

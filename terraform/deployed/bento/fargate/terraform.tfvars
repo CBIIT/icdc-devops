@@ -19,6 +19,6 @@ tags = {
 certificate_domain_name = "*.bento-tools.org"
 backend_container_port = 8080
 frontend_container_port = 80
-app_url = "ccdi-test.bento-tools.org"
+app_sub_domain = "ccdi-test"
 frontend_container_image_name = "cbiitssrepo/bento-frontend"
 backend_container_image_name = "cbiitssrepo/bento-backend"
