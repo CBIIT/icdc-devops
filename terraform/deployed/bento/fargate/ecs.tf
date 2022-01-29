@@ -71,7 +71,7 @@ resource "aws_ecs_cluster" "ecs_cluster" {
    deployment_minimum_healthy_percent = 50
    deployment_maximum_percent         = 200
    network_configuration {
-     security_groups  = [aws_security_group.alb-sg.id]
+     security_groups  = [aws_security_group.app_sg.id]
      subnets          = var.private_subnets
      assign_public_ip = false
    }
@@ -95,7 +95,7 @@ resource "aws_ecs_service" "ecs_service_frontend" {
   deployment_minimum_healthy_percent = 50
   deployment_maximum_percent         = 200
   network_configuration {
-    security_groups  = [aws_security_group.alb-sg.id]
+    security_groups  = [aws_security_group.app_sg.id]
     subnets          = var.private_subnets
     assign_public_ip = false
   }

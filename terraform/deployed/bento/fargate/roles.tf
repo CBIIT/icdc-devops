@@ -15,7 +15,7 @@ resource "aws_iam_role_policy_attachment" "task-execution-role-policy-attachment
 
 resource "aws_iam_policy" "ecs_policy" {
   name   = "${var.stack_name}-${terraform.workspace}-ecs-policy"
-  policy = data.aws_iam_policy_document.ecr_policy_doc.json
+  policy = data.aws_iam_policy_document.ecs_policy_doc.json
 }
 resource "aws_iam_policy_attachment" "ecs_policy_attachment" {
   name  = "${var.stack_name}-${terraform.workspace}-ecs-policy-attachement"
