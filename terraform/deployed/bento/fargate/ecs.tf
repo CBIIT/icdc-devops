@@ -101,7 +101,7 @@ resource "aws_ecs_service" "ecs_service_frontend" {
   }
   load_balancer {
     target_group_arn = aws_lb_target_group.frontend_target_group.arn
-    container_name   = "backend"
+    container_name   = "frontend"
     container_port   = var.frontend_container_port
   }
   lifecycle {
