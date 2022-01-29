@@ -113,7 +113,7 @@ resource "aws_ecs_task_definition" "frontend" {
   family        = "${var.stack_name}-${terraform.workspace}-frontend"
   network_mode  = var.ecs_network_mode
   requires_compatibilities = ["FARGATE"]
-  cpu = "512"
+  cpu = "256"
   memory = "512"
   execution_role_arn =  aws_iam_role.task_execution_role.arn
   task_role_arn = aws_iam_role.task_role.arn
