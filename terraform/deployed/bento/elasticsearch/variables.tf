@@ -49,5 +49,5 @@ variable "vpc_id" {
 }
 variable "subnet_ip_block" {
   description = "subnet ip block"
-  type = string
+  type = list(string)
 }
