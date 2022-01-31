@@ -38,3 +38,16 @@ variable "create_es_service_role" {
   default = false
   description = "change this value to true if running this script for the first time"
 }
+variable "private_subnet_ids" {
+  description = "list of subnet ids to use"
+  type = list(string)
+  default = null
+}
+variable "vpc_id" {
+  description = "vpc id"
+  type = string
+}
+variable "subnet_ip_block" {
+  description = "subnet ip block"
+  type = string
+}

@@ -1,0 +1,6 @@
+- name: checkout frontend repo to use grapql
+  ansible.builtin.git:
+    repo: "{{frontend-app-repo}}"
+    dest: "{{workspace}}/frontend"
+    version: "{{frontend-app-version}}"
+

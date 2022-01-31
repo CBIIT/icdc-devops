@@ -1,0 +1,5 @@
+---
+# vars file for bento-app
+frontend-app-version: "{{ frontend-app-version | default('master') }}"
+frontend-app-repo: "{{ frontend-app-repo | default('git@github.com:CBIIT/bento-frontend.git') }}"
+workspace: "{{ lookup('env','WORKSPACE') }}"
