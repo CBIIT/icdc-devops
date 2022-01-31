@@ -35,9 +35,7 @@ resource "aws_security_group" "es" {
     from_port = local.https_port
     to_port = local.https_port
     protocol = local.tcp_protocol
-    cidr_blocks = [
-      var.private_subnet_ids
-    ]
+    cidr_blocks = var.private_subnet_ids
   }
 }
 
@@ -60,9 +58,7 @@ resource "aws_elasticsearch_domain" "es" {
   domain_name = local.domain_name
   elasticsearch_version = var.elasticsearch_version
   vpc_options {
-    subnet_ids = [
-      var.private_subnet_ids
-    ]
+    subnet_ids = var.private_subnet_ids
     security_group_ids = [aws_security_group.es.id]
   }
 
