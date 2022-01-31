@@ -35,7 +35,7 @@ resource "aws_security_group" "es" {
     from_port = local.https_port
     to_port = local.https_port
     protocol = local.tcp_protocol
-    cidr_blocks = var.private_subnet_ids
+    cidr_blocks = var.subnet_ip_block
   }
 }
 
