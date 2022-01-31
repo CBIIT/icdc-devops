@@ -23,4 +23,4 @@ private_subnet_ids = ["subnet-409a0424"]
 
 vpc_id = "vpc-29a12251"
 
-subnet_ip_block = "10.208.6.0/23"
+subnet_ip_block = ["10.208.6.0/23"]
