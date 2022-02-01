@@ -15,7 +15,6 @@ profile = "icdc"
 stack_name = "icdc"
 
 
-
 elasticsearch_instance_type = "t3.medium.elasticsearch"
 
 private_subnet_ids = ["subnet-409a0424"]
@@ -23,4 +22,4 @@ private_subnet_ids = ["subnet-409a0424"]
 vpc_id = "vpc-29a12251"
 
 subnet_ip_block = ["10.208.6.0/23"]
-create_es_service_role = true
+create_es_service_role = false

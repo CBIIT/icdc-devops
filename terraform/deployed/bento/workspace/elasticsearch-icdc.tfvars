@@ -21,4 +21,4 @@ private_subnet_ids = ["subnet-8832f6d5"]
 vpc_id = "vpc-dca724a4"
 
 subnet_ip_block = ["10.208.10.0/23"]
-create_es_service_role = false
+create_es_service_role = true
