@@ -27,6 +27,7 @@ variable "elasticsearch_instance_type" {
 variable "remote_state_bucket_name" {
   description = "name of the remote bucket to store or pull terraform state data"
   type = string
+  default = null
 }
 variable "elasticsearch_version" {
   type = string
