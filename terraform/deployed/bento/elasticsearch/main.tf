@@ -9,7 +9,8 @@ provider "aws" {
 #set the backend for state file
 terraform {
   backend "s3" {
-    bucket = "datacommons-terraform-state"
+    #bucket = "datacommons-terraform-state"
+    bucket = "icdc-prod-terraform-state"
     key = "icdc/elasticsearch/terraform.tfstate"
     workspace_key_prefix = "env"
     region = "us-east-1"
