@@ -2,7 +2,7 @@
 tags = {
   ManagedBy = "terraform"
   Project = "Bento"
-  Environment = "QA"
+  Environment = "Prod"
   Region = "us-east-1"
 }
 #enter the region in which your aws resources will be provisioned
