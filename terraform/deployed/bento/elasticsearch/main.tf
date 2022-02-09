@@ -24,6 +24,7 @@ locals {
   tcp_protocol = "tcp"
   https_port = "443"
   all_ips  = ["0.0.0.0/0"]
+  cider_block = terraform.workspace == "prod" ? "10.8.0.0/16" : data.terraform_remote_state.network.outputs.vpc_cidr_block
   domain_name = "${var.stack_name}-${terraform.workspace}-elasticsearch"
 }
 
@@ -36,7 +37,7 @@ resource "aws_security_group" "es" {
     to_port = local.https_port
     protocol = local.tcp_protocol
     cidr_blocks = [
-      data.terraform_remote_state.network.outputs.vpc_cidr_block
+      local.cider_block
     ]
   }
 }
