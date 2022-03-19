@@ -7,18 +7,18 @@ private_subnets = [
   "subnet-07d177a4d9df5cd32"
 ]
 vpc_id = "vpc-08f154f94dc8a0e34"
-stack_name = "ccdi"
-app_name = "oasis"
+stack_name = "cds"
+app_name = "cds"
 profile = "icdc"
 domain_name = "bento-tools.org"
 tags = {
-  Project = "CCDI"
+  Project = "CDS"
   CreatedWith = "Terraform"
-  POC = "user@example.com"
+  POC = "ye.wu@nih.gov"
 }
 certificate_domain_name = "*.bento-tools.org"
 backend_container_port = 8080
 frontend_container_port = 80
-app_sub_domain = "ccdi-test"
+app_sub_domain = "cds-dev"
 frontend_container_image_name = "cbiitssrepo/bento-frontend"
 backend_container_image_name = "cbiitssrepo/bento-backend"
