@@ -14,6 +14,7 @@ variable "region" {
 variable "profile" {
   description = "iam user profile to use"
   type = string
+  default = "default"
 }
 variable "s3_object_expiration_days" {
   description = "number of days for object to live"
