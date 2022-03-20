@@ -175,3 +175,14 @@ variable "alb_target_type" {
   description = "type of alb target - ip , instance, lambda"
   default = "ip"
 }
+variable "create_app_ecr_registry" {
+  default = true
+  description = "create list of registry defined in app_ecr_registry_names"
+  type = bool
+}
+
+variable "app_ecr_registry_names" {
+  type = list(string)
+  description = "names of app ecr regis"
+  default = ["backend","frontend","auth","files"]
+}

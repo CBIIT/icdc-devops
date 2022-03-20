@@ -1,5 +1,6 @@
 resource "aws_ecr_repository" "ecr" {
-  name = "${lower(var.stack_name)}-${terraform.workspace}-ecr"
+  for_each = toset(var.app_ecr_registry_names)
+  name = "${lower(var.stack_name)}-${each.key}"
   image_tag_mutability = "MUTABLE"
   tags = merge(
   {
