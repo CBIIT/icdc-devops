@@ -76,26 +76,26 @@ resource "aws_cloudwatch_log_group" "cloudwatch_log_group" {
   name = "${var.stack_name}-${terraform.workspace}-es-log-group"
 }
 
-resource "aws_cloudwatch_log_resource_policy" "cloudwatch_policy" {
-  policy_name = "${var.stack_name}-${terraform.workspace}-es-log-policy"
-
-  policy_document = <<CONFIG
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "es.amazonaws.com"
-      },
-      "Action": [
-        "logs:PutLogEvents",
-        "logs:PutLogEventsBatch",
-        "logs:CreateLogStream"
-      ],
-      "Resource": "arn:aws:logs:*"
-    }
-  ]
-}
-CONFIG
-}
+#resource "aws_cloudwatch_log_resource_policy" "cloudwatch_policy" {
+#  policy_name = "${var.stack_name}-${terraform.workspace}-es-log-policy"
+#
+#  policy_document = <<CONFIG
+#{
+#  "Version": "2012-10-17",
+#  "Statement": [
+#    {
+#      "Effect": "Allow",
+#      "Principal": {
+#        "Service": "es.amazonaws.com"
+#      },
+#      "Action": [
+#        "logs:PutLogEvents",
+#        "logs:PutLogEventsBatch",
+#        "logs:CreateLogStream"
+#      ],
+#      "Resource": "arn:aws:logs:*"
+#    }
+#  ]
+#}
+#CONFIG
+#}
