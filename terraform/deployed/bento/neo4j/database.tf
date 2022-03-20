@@ -28,7 +28,7 @@ resource "aws_instance" "db" {
   }
   tags = merge(
   {
-    "Name" = "${var.stack_name}-${terraform.workspacee}-${var.database_name}",
+    "Name" = "${var.stack_name}-${terraform.workspace}-${var.database_name}",
   },
   var.tags,
   )
@@ -36,8 +36,8 @@ resource "aws_instance" "db" {
 
 #create database security group
 resource "aws_security_group" "database-sg" {
-  name = "${var.stack_name}-${terraform.workspacee}-database-sg"
-  description = "${stack_name} database security group"
+  name = "${var.stack_name}-${terraform.workspace}-database-sg"
+  description = "${var.stack_name} database security group"
   vpc_id = data.terraform_remote_state.network.outputs.vpc_id
   tags = merge(
   {
@@ -128,7 +128,7 @@ resource "aws_security_group_rule" "katalon_http" {
 
 #create boostrap script to hook up the node to ecs cluster
 resource "aws_ssm_document" "ssm_neo4j_boostrap" {
-  name          = "${var.stack_name}-${terraform.workspacee}-setup-database"
+  name          = "${var.stack_name}-${terraform.workspace}-setup-database"
   document_type = "Command"
   document_format = "YAML"
   content = <<DOC
@@ -165,7 +165,7 @@ resource "aws_ssm_association" "database" {
   name = aws_ssm_document.ssm_neo4j_boostrap.name
   targets {
     key    = "tag:Name"
-    values = ["${var.stack_name}-${terraform.workspacee}-${var.database_name}"]
+    values = ["${var.stack_name}-${terraform.workspace}-${var.database_name}"]
   }
   depends_on = [aws_instance.db]
 }

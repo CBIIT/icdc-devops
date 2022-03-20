@@ -37,6 +37,11 @@ data "aws_ssm_parameter" "amz_linux" {
   name = "/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2"
 }
 
+#grab public ssh key
+data "aws_ssm_parameter" "sshkey" {
+  name = "ssh_public_key"
+}
+
 #grab vpc and other details
 data "terraform_remote_state" "network" {
   backend = "s3"
