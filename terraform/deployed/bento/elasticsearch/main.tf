@@ -1,16 +1,3 @@
-
-#set the backend for state file
-terraform {
-  backend "s3" {
-    #bucket = "datacommons-terraform-state"
-    bucket = "icdc-prod-terraform-state"
-    key = "icdc/elasticsearch/terraform.tfstate"
-    workspace_key_prefix = "env"
-    region = "us-east-1"
-    encrypt = true
-  }
-}
-
 locals {
   http_port = 80
   any_port = 0
