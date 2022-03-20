@@ -11,12 +11,14 @@ resource "aws_ecr_repository" "ecr" {
 }
 
 resource "aws_ecr_repository_policy" "ecr_policy" {
-  repository = aws_ecr_repository.ecr.name
+  for_each = toset(var.app_ecr_registry_names)
+  repository = aws_ecr_repository.ecr[each.key].name
   policy     = data.aws_iam_policy_document.ecr_policy_doc.json
 }
 
 resource "aws_ecr_lifecycle_policy" "ecr_life_cycle" {
-  repository = aws_ecr_repository.ecr.name
+  for_each = toset(var.app_ecr_registry_names)
+  repository = aws_ecr_repository.ecr[each.key].name
 
   policy = jsonencode({
     rules = [{
