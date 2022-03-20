@@ -4,7 +4,7 @@
   yum:
     name: 
       - firewalld
-      - epel-release
+      # - epel-release
       - unzip
       - wget
     state: latest
