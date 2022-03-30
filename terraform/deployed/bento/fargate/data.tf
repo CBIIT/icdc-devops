@@ -77,6 +77,19 @@ data "aws_iam_policy_document" "task_execution_policy" {
   }
 }
 
+
+data "aws_iam_policy_document" "task_logs_policy" {
+  statement {
+    actions = [
+      "logs:CreateLogGroup"
+    ]
+    effect = "Allow"
+    resources = [
+      "arn:aws:logs:*:*:*"
+    ]
+  }
+}
+
 data "aws_iam_policy_document" "ecs_policy_doc" {
   statement {
     effect = "Allow"
@@ -118,15 +131,5 @@ data "aws_iam_policy_document" "ecs_policy_doc" {
     ]
     resources = ["*"]
   }
-  statement {
-    effect = "Allow"
-    actions = [
-      "logs:CancelExportTask",
-      "logs:CreateExportTask",
-      "logs:CreateLogGroup",
-      "logs:CreateLogStream",
-      "logs:DeleteDestination"
-    ]
-    resources = ["*"]
-  }
+
 }
