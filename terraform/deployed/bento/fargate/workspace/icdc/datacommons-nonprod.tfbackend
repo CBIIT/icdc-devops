@@ -1,5 +1,5 @@
     bucket = "datacommons-terraform-state"
-    key = "gmb/infra/terraform.tfstate"
+    key = "icdc/ecs/terraform.tfstate"
     workspace_key_prefix = "env"
     region = "us-east-1"
     encrypt = true
