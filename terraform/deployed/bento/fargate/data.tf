@@ -118,4 +118,14 @@ data "aws_iam_policy_document" "ecs_policy_doc" {
     ]
     resources = ["*"]
   }
+  statement {
+    effect = "Allow"
+    actions = [
+      "logs:CancelExportTask",
+      "logs:CreateExportTask",
+      "logs:CreateLogGroup",
+      "logs:CreateLogStream",
+      "logs:DeleteDestination"
+    ]
+  }
 }
