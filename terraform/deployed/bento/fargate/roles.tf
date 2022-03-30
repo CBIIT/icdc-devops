@@ -1,5 +1,5 @@
 resource "aws_iam_role" "task_execution_role" {
-  name = "${var.stack_name}-${terraform.workspace}-task-exection-role"
+  name = "${var.stack_name}-${terraform.workspace}-task-execution-role"
   assume_role_policy = data.aws_iam_policy_document.task_execution_policy.json
 }
 
