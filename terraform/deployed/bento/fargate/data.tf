@@ -127,5 +127,6 @@ data "aws_iam_policy_document" "ecs_policy_doc" {
       "logs:CreateLogStream",
       "logs:DeleteDestination"
     ]
+    resources = ["*"]
   }
 }
