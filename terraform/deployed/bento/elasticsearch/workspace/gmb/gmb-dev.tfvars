@@ -17,6 +17,6 @@ private_subnet_ids = ["subnet-09b0c7407416d4730"]
 
 vpc_id = "vpc-08f154f94dc8a0e34"
 
-subnet_ip_block = ["172.18.0.0/16","172.16.0.219"]
+subnet_ip_block = ["172.18.0.0/16","172.16.0.219/32"]
 
 create_es_service_role = false
