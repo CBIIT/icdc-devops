@@ -13,6 +13,17 @@ resource "aws_iam_role_policy_attachment" "task-execution-role-policy-attachment
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
 
+resource "aws_iam_policy" "ecs_log_policy" {
+  name   = "${var.stack_name}-${terraform.workspace}-log-policy"
+  policy = data.aws_iam_policy_document.task_logs_policy.json
+}
+
+resource "aws_iam_role_policy_attachment" "task-log-policy-attachment" {
+  role       = aws_iam_role.task_execution_role.name
+  policy_arn = aws_iam_policy.ecs_log_policy.arn
+}
+
+
 resource "aws_iam_policy" "ecs_policy" {
   name   = "${var.stack_name}-${terraform.workspace}-ecs-policy"
   policy = data.aws_iam_policy_document.ecs_policy_doc.json
