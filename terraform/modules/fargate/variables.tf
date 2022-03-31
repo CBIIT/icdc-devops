@@ -167,30 +167,30 @@ variable "microservice_port" {
   description = "port on which microservice listens"
   default = 80
 }
-variable "microservice_cpu" {
-  type = number
-  description = "cpu requirement for the microservice"
-}
-variable "microservice_memory" {
-  type = number
-  description = "memory requirement for the microservice"
-}
-variable "microservice_health_check_path" {
-  type = string
-  description = "microservice health check path"
-}
-variable "microservice_path" {
-  description = "the path which traffic is routed to the microservice"
-  type = string
-}
-variable "microservice_container_image_name" {
-  description = "the name of the docker image to use for this microservice"
-  type = string
-}
-variable "microservice_priority_rule_number" {
-  description = "priority number to order alb listener rules"
-  type = number
-}
+#variable "microservice_cpu" {
+#  type = number
+#  description = "cpu requirement for the microservice"
+#}
+#variable "microservice_memory" {
+#  type = number
+#  description = "memory requirement for the microservice"
+#}
+#variable "microservice_health_check_path" {
+#  type = string
+#  description = "microservice health check path"
+#}
+#variable "microservice_path" {
+#  description = "the path which traffic is routed to the microservice"
+#  type = string
+#}
+#variable "microservice_container_image_name" {
+#  description = "the name of the docker image to use for this microservice"
+#  type = string
+#}
+#variable "microservice_priority_rule_number" {
+#  description = "priority number to order alb listener rules"
+#  type = number
+#}
 variable "microservice_url" {
   description = "url of the application"
   type = string
@@ -214,4 +214,16 @@ variable "create_dns_record" {
 variable "fargate_security_group_ports" {
   type = list(string)
   description = "list of ports to allow when using ECS"
+}
+variable "microservices" {
+  type = map(object({
+    name = string
+    port = number
+    health_check_path = string
+    priority_rule_number = number
+    image_url = string
+    cpu = number
+    memory = number
+    path = string
+  }))
 }

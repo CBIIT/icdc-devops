@@ -1,35 +1,37 @@
 #task definition
 resource "aws_ecs_task_definition" "task" {
-  family        = "${var.stack_name}-${var.env}-${var.microservice_name}"
+  for_each = var.microservices
+  family        = "${var.stack_name}-${var.env}-${each.value.name}"
   network_mode  = var.ecs_network_mode
   requires_compatibilities = ["FARGATE"]
-  cpu = var.microservice_cpu
-  memory = var.microservice_memory
+  cpu = each.value.cpu
+  memory = each.value.memory
   execution_role_arn =  aws_iam_role.task_execution_role.arn
   task_role_arn = aws_iam_role.task_role.arn
   container_definitions = jsonencode([
     {
-      name         =  var.microservice_name
-      image        =  var.microservice_container_image_name
+      name         =  each.value.name
+      image        =  each.value.image_url
       essential    = true
       portMappings = [
         {
           protocol      = "tcp"
-          containerPort = var.microservice_port
-          hostPort      = var.microservice_port
+          containerPort = each.value.port
+#          hostPort      = var.microservice_port
         }
       ]
     }])
   tags = merge(
   {
-    "Name" = format("%s-%s-%s",var.stack_name,var.env,"task-definition")
+    "Name" = format("%s-%s-%s-%s",var.stack_name,var.env,each.value.name,"task-definition")
   },
   var.tags,
   )
 }
 #ecs service
 resource "aws_ecs_service" "service" {
-  name              = "${var.stack_name}-${var.env}-${var.microservice_name}"
+  for_each = var.microservices
+  name              = "${var.stack_name}-${var.env}-${each.value.name}"
   cluster           = aws_ecs_cluster.ecs_cluster.id
   task_definition   = aws_ecs_task_definition.task.arn
   desired_count     = var.number_container_replicas
@@ -44,8 +46,8 @@ resource "aws_ecs_service" "service" {
   }
   load_balancer {
     target_group_arn = aws_lb_target_group.target_group.arn
-    container_name   =  var.microservice_name
-    container_port   = var.microservice_port
+    container_name   =  each.value.name
+    container_port   =  each.value.port
   }
   lifecycle {
     ignore_changes = [task_definition, desired_count]
@@ -152,8 +154,9 @@ resource "aws_security_group_rule" "all_outbound_frontend" {
 
 #create alb target group
 resource "aws_lb_target_group" "target_group" {
-  name = "${var.stack_name}-${var.env}-${var.microservice_name}"
-  port = var.microservice_port
+  for_each = var.microservices
+  name = "${var.stack_name}-${var.env}-${each.value.name}"
+  port = each.value.port
   protocol = "HTTP"
   vpc_id =  var.vpc_id
   target_type = var.alb_target_type
@@ -163,25 +166,26 @@ resource "aws_lb_target_group" "target_group" {
     enabled = true
   }
   health_check {
-    path = var.microservice_path
+    path = each.value.health_check_path
     protocol = "HTTP"
     matcher = "200"
     interval = 15
-    timeout = 3
+    timeout = 30
     healthy_threshold = 2
     unhealthy_threshold = 2
   }
   tags = merge(
   {
-    "Name" = format("%s-%s",var.stack_name,"${var.microservice_name}-alb-target-group")
+    "Name" = format("%s-%s",var.stack_name,"${each.value.name}-alb-target-group")
   },
   var.tags,
   )
 }
 
 resource "aws_lb_listener_rule" "alb_listener" {
+  for_each = var.microservices
   listener_arn = aws_lb_listener.listener_https.arn
-  priority = var.microservice_priority_rule_number
+  priority = each.value.priority_rule_number
   action {
     type = "forward"
     target_group_arn = aws_lb_target_group.target_group.arn
@@ -194,7 +198,7 @@ resource "aws_lb_listener_rule" "alb_listener" {
   }
   condition {
     path_pattern  {
-      values = [var.microservice_path]
+      values = [each.value.path]
     }
   }
 }
