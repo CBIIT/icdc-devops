@@ -24,13 +24,11 @@ variable "profile" {
 }
 variable "public_subnet_ids" {
   description = "Provide list of public subnets to use in this VPC. Example 10.0.1.0/24,10.0.2.0/24"
-  default     = []
   type = list(string)
 }
 
 variable "private_subnet_ids" {
   description = "Provide list private subnets to use in this VPC. Example 10.0.10.0/24,10.0.11.0/24"
-  default     = []
   type = list(string)
 }
 

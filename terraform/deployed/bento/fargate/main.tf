@@ -27,6 +27,8 @@ module "ecs" {
   app_sub_domain = var.app_sub_domain
   microservices = var.microservices
   app_ecr_registry_names = var.app_ecr_registry_names
+  private_subnet_ids = var.private_subnet_ids
+  public_subnet_ids = var.public_subnet_ids
 }
 
 #create opensearch

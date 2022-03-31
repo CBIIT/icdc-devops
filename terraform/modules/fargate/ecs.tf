@@ -40,7 +40,7 @@ resource "aws_ecs_service" "service" {
   deployment_minimum_healthy_percent = 50
   deployment_maximum_percent         = 200
   network_configuration {
-    security_groups  = [aws_security_group.app_sg.id]
+    security_groups  = [aws_security_group.app_sg.id,aws_security_group.fargate_sg.id]
     subnets          = var.private_subnet_ids
     assign_public_ip = false
   }
