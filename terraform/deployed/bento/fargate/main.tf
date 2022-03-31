@@ -29,6 +29,7 @@ module "ecs" {
   microservice_url = local.app_url
   create_dns_record = true
   internal_alb = var.internal_alb
+  fargate_security_group_ports = var.fargate_security_group_ports
 }
 
 #create opensearch

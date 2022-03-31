@@ -212,3 +212,7 @@ variable "create_dns_record" {
   type = bool
   description = "choose to create dns record"
 }
+variable "fargate_security_group_ports" {
+  type = list(string)
+  description = "list of ports to allow when using ECS"
+}
