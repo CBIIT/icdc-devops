@@ -33,7 +33,7 @@ resource "aws_ecs_service" "service" {
   for_each = var.microservices
   name              = "${var.stack_name}-${var.env}-${each.value.name}"
   cluster           = aws_ecs_cluster.ecs_cluster.id
-  task_definition   = aws_ecs_task_definition.task.arn
+  task_definition   = aws_ecs_task_definition.task[each.key].arn
   desired_count     = var.number_container_replicas
   launch_type       = var.ecs_launch_type
   scheduling_strategy = var.ecs_scheduling_strategy
@@ -45,7 +45,7 @@ resource "aws_ecs_service" "service" {
     assign_public_ip = false
   }
   load_balancer {
-    target_group_arn = aws_lb_target_group.target_group.arn
+    target_group_arn = aws_lb_target_group.target_group[each.key].arn
     container_name   =  each.value.name
     container_port   =  each.value.port
   }
@@ -188,7 +188,7 @@ resource "aws_lb_listener_rule" "alb_listener" {
   priority = each.value.priority_rule_number
   action {
     type = "forward"
-    target_group_arn = aws_lb_target_group.target_group.arn
+    target_group_arn = aws_lb_target_group.target_group[each.key].arn
   }
 
   condition {
