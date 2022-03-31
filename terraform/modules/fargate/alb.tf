@@ -28,7 +28,7 @@ resource "aws_lb" "alb" {
 
 resource "aws_security_group" "alb-sg" {
 
-  name   = "${var.stack_name}-${var.app_name}${var.env}-alb-sg"
+  name   = "${var.stack_name}-${var.env}-alb-sg"
   vpc_id = var.vpc_id
   tags = merge(
   {

@@ -95,7 +95,6 @@ variable "vpc_id" {
 variable "app_name" {
   description = "it will be either otp or otg"
   type        = string
-  default     = null
 }
 
 variable "certificate_domain_name" {
