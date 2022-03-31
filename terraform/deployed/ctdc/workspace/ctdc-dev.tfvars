@@ -2,14 +2,14 @@
 tags = {
   ManagedBy = "terraform"
   Project = "CTDC"
-  Environment = "DEV"
-  POC = "ye.wu@nih.gov"
+  Environment = "DEV2"
+  POC = ""
 }
 #enter the region in which your aws resources will be provisioned
 region = "us-east-1"
 
 #specify the name you will like to call this project.
-stack_name = "ctdc"
+stack_name = "ctdc2"
 
 private_subnet_ids = ["< UPDATE >"]
 
