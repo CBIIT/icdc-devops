@@ -48,7 +48,7 @@ microservices  = {
     memory = 1024
     path = "/v1/graphql/*"
   },
-  frontend = {
+  auth = {
     name = "auth"
     port = 8082
     health_check_path = "/api/auth/ping"
