@@ -49,7 +49,10 @@ variable "app_sub_domain" {
   type = string
   default = null
 }
-
+variable "app_ecr_registry_names" {
+  type = list(string)
+  description = "names of app ecr regis"
+}
 
 variable "microservices" {
   type = map(object({

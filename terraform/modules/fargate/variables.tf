@@ -155,13 +155,12 @@ variable "create_app_ecr_registry" {
 variable "app_ecr_registry_names" {
   type = list(string)
   description = "names of app ecr regis"
-  default = ["backend","frontend","auth","files"]
 }
 
-variable "microservice_name" {
-  type = string
-  description = "name of the microservice"
-}
+#variable "microservice_name" {
+#  type = string
+#  description = "name of the microservice"
+#}
 variable "microservice_port" {
   type = number
   description = "port on which microservice listens"

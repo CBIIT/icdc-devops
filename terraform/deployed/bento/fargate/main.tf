@@ -9,7 +9,7 @@ locals {
 
 #create ecs cluster
 module "ecs" {
-  for_each = var.microservices
+
   source = "../../../modules/fargate"
   alb_allowed_ip_range = local.alb_allowed_ip_range
   alb_subnets = local.alb_subnets
@@ -19,19 +19,14 @@ module "ecs" {
   tags =  var.tags
   vpc_id = var.vpc_id
   env = terraform.workspace
-  microservice_container_image_name = each.value["image_url"]
-  microservice_cpu = each.value["cpu"]
-  microservice_health_check_path = each.value["health_check_path"]
-  microservice_memory = each.value["memory"]
-  microservice_name = each.value["name"]
-  microservice_path = each.value["path"]
-  microservice_priority_rule_number = each.value["priority_rule_number"]
   microservice_url = local.app_url
   create_dns_record = true
   internal_alb = var.internal_alb
   fargate_security_group_ports = var.fargate_security_group_ports
   app_name                     = var.stack_name
   app_sub_domain = var.app_sub_domain
+  microservices = var.microservices
+  app_ecr_registry_names = var.app_ecr_registry_names
 }
 
 #create opensearch
