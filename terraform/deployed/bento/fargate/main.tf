@@ -19,7 +19,7 @@ module "ecs" {
   tags =  var.tags
   vpc_id = var.vpc_id
   env = terraform.workspace
-  microservice_container_image_name = each.value["image"]
+  microservice_container_image_name = each.value["image_url"]
   microservice_cpu = each.value["cpu"]
   microservice_health_check_path = each.value["health_check_path"]
   microservice_memory = each.value["memory"]
