@@ -39,6 +39,10 @@ resource "aws_ecs_service" "service" {
   scheduling_strategy = var.ecs_scheduling_strategy
   deployment_minimum_healthy_percent = 50
   deployment_maximum_percent         = 200
+  deployment_circuit_breaker {
+    enable   = true
+    rollback = true
+  }
   network_configuration {
     security_groups  = [aws_security_group.app_sg.id,aws_security_group.fargate_sg.id]
     subnets          = var.private_subnet_ids
@@ -135,9 +139,10 @@ resource "aws_security_group" "app_sg" {
 }
 
 resource "aws_security_group_rule" "inbound_alb" {
-  from_port = var.microservice_port
+  for_each = var.microservices
+  from_port = each.value.port
   protocol = local.tcp_protocol
-  to_port = var.microservice_port
+  to_port = each.value.port
   security_group_id = aws_security_group.app_sg.id
   source_security_group_id = aws_security_group.alb-sg.id
   type = "ingress"
@@ -171,8 +176,9 @@ resource "aws_lb_target_group" "target_group" {
     path = each.value.health_check_path
     protocol = "HTTP"
     matcher = "200"
-    interval = 60
-    timeout = 55
+    port = each.value.port
+    interval = 45
+    timeout = 30
     healthy_threshold = 2
     unhealthy_threshold = 2
   }
