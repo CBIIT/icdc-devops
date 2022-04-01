@@ -48,10 +48,10 @@ variable "vpc_id" {
   description = "VPC Id to to launch the ALB"
   type        = string
 }
-variable "env" {
-  description = "environment"
-  type        = string
-}
+//variable "env" {
+//  description = "environment"
+//  type        = string
+//}
 
 #added frontend app name to accomodate ppdc-otg and ppdc-otp
 variable "frontend_app_name" {
@@ -59,34 +59,27 @@ variable "frontend_app_name" {
   type        = string
   default     = ""
 }
-//variable "s3_object_expiration_days" {
-//  description = "number of days for object to live"
-//  type = number
-//  default = 720
-//}
-//variable "s3_object_nonactive_expiration_days" {
-//  description = "number of days to retain non active objects"
-//  type = number
-//  default = 90
-//}
-//variable "s3_object_standard_ia_transition_days" {
-//  description = "number of days for an object to transition to standard_ia storage class"
-//  default = 120
-//  type = number
-//}
-//variable "s3_object_glacier_transition_days" {
-//  description = "number of days for an object to transition to glacier storage class"
-//  default = 180
-//  type = number
-//}
-variable "aws_account_id" {
-  type = map(string)
-  description = "aws account to allow for alb s3 logging"
-  default = {
-    us-east-1 = ""
-  }
+variable "s3_object_expiration_days" {
+  description = "number of days for object to live"
+  type = number
+  default = 720
 }
-variable "region" {
-  type        = string
-  description = "AWS region"
+variable "s3_object_nonactive_expiration_days" {
+  description = "number of days to retain non active objects"
+  type = number
+  default = 90
+}
+variable "s3_object_standard_ia_transition_days" {
+  description = "number of days for an object to transition to standard_ia storage class"
+  default = 120
+  type = number
+}
+variable "s3_object_glacier_transition_days" {
+  description = "number of days for an object to transition to glacier storage class"
+  default = 180
+  type = number
+}
+variable "create_alb_s3_bucket" {
+  description = "do we create alb s3 bucket"
+  type = bool
 }

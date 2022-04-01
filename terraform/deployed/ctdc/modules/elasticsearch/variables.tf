@@ -17,9 +17,9 @@ variable "elasticsearch_version" {
   default = "7.10"
 }
 variable "create_es_service_role" {
+  description = "change this value to true if running this script for the first time"
   type = bool
   default = false
-  description = "change this value to true if running this script for the first time"
 }
 variable "private_subnet_ids" {
   description = "list of subnet ids to use"

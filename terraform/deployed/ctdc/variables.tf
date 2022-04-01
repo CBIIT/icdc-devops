@@ -28,7 +28,12 @@ variable "create_es_service_role" {
   description = "change this value to true if running this script for the first time"
 }
 variable "private_subnet_ids" {
-  description = "list of subnet ids to use"
+  description = "list of private subnet ids to use"
+  type = list(string)
+  default = null
+}
+variable "public_subnet_ids" {
+  description = "list of public subnet ids to use"
   type = list(string)
   default = null
 }
@@ -39,4 +44,13 @@ variable "vpc_id" {
 variable "subnet_ip_block" {
   description = "subnet ip block"
   type = list(string)
+}
+variable "alb_certificate_arn" {
+  description = "alb certificate arn"
+  type = string
+}
+variable "create_alb_s3_bucket" {
+  description = "do we create alb s3 bucket"
+  type = bool
+  default = false
 }

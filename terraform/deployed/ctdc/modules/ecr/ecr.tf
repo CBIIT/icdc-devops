@@ -1,38 +1,21 @@
-
-resource "aws_ecr_repository" "ecr" {
-  name = "${lower(var.stack_name)}-${terraform.workspace}"
+# create ecr frontend repository
+resource "aws_ecr_repository" "fe_ecr" {
+  name = "${lower(var.stack_name)}-${terraform.workspace}-frontend"
   tags = merge(
   {
-    "Name" = format("%s-%s-%s",var.stack_name,terraform.workspace,"ecr-registry")
+    "Name" = format("%s-%s-%s",var.stack_name,terraform.workspace,"frontend")
   },
   var.tags,
   )
 }
 
-resource "aws_ecr_repository_policy" "ecr_policy" {
-  repository = aws_ecr_repository.ecr.name
-  policy     = data.aws_iam_policy_document.ecr_policy_doc.json
+# create ecr backend repository
+resource "aws_ecr_repository" "be_ecr" {
+  name = "${lower(var.stack_name)}-${terraform.workspace}-backend"
+  tags = merge(
+  {
+    "Name" = format("%s-%s-%s",var.stack_name,terraform.workspace,"backend")
+  },
+  var.tags,
+  )
 }
-
-data "aws_iam_policy_document" "ecr_policy_doc" {
-
-  statement {
-    sid    = "ElasticContainerRegistryPushAndPull"
-    effect = "Allow"
-
-    principals {
-      identifiers = [local.my_account]
-      type        = "AWS"
-    }
-    actions = [
-      "ecr:GetDownloadUrlForLayer",
-      "ecr:BatchGetImage",
-      "ecr:BatchCheckLayerAvailability",
-      "ecr:PutImage",
-      "ecr:InitiateLayerUpload",
-      "ecr:UploadLayerPart",
-      "ecr:CompleteLayerUpload",
-    ]
-  }
-}
-
