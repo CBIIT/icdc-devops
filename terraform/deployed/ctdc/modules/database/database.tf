@@ -15,7 +15,7 @@ resource "aws_instance" "db" {
   }
   tags = merge(
   {
-    "Name" = "${var.stack_name}-${var.env}-${var.database_name}",
+    "Name" = "${var.stack_name}-${terraform.workspace}-${var.database_name}",
   },
   var.tags,
   )
@@ -23,7 +23,7 @@ resource "aws_instance" "db" {
 
 #create boostrap script to hook up the node to ecs cluster
 resource "aws_ssm_document" "ssm_neo4j_boostrap" {
-  name          = "${var.stack_name}-${var.env}-setup-database"
+  name          = "${var.stack_name}-${terraform.workspace}-setup-database"
   document_type = "Command"
   document_format = "YAML"
   content = <<DOC
@@ -60,7 +60,7 @@ resource "aws_ssm_association" "database" {
   name = aws_ssm_document.ssm_neo4j_boostrap.name
   targets {
     key    = "tag:Name"
-    values = ["${var.stack_name}-${var.env}-${var.database_name}"]
+    values = ["${var.stack_name}-${terraform.workspace}-${var.database_name}"]
   }
   depends_on = [aws_instance.db]
 }

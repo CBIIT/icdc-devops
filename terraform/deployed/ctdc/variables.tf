@@ -16,7 +16,6 @@ variable "profile" {
   type = string
   default = "default"
 }
-
 variable "remote_state_bucket_name" {
   description = "name of the remote bucket to store or pull terraform state data"
   type = string
@@ -53,4 +52,12 @@ variable "create_alb_s3_bucket" {
   description = "do we create alb s3 bucket"
   type = bool
   default = false
+}
+variable "ssh_key_name" {
+  description = "name of the ssh key to manage the instances"
+  type = string
+}
+variable "ssh_user" {
+  description = "name of the ssh user"
+  type = string
 }

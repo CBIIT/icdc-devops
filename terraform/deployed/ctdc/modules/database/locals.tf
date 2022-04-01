@@ -5,7 +5,7 @@ locals {
   tcp_protocol = "tcp"
   https_port = "443"
   all_ips = ["0.0.0.0/0"]
-  domain_name = "${var.stack_name}-${terraform.workspace}-elasticsearch"
+  ssh_user = var.ssh_user
 }
 
 

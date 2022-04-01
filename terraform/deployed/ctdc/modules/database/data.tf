@@ -24,3 +24,28 @@ data "aws_ami" "centos" {
   }
   owners   = ["679593333241"]
 }
+
+#define user data
+data "template_cloudinit_config" "user_data" {
+  gzip          = false
+  base64_encode = false
+  part {
+    content = <<EOF
+#cloud-config
+---
+users:
+  - name: "${local.ssh_user}"
+    gecos: "${local.ssh_user}"
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    groups: wheel
+    shell: /bin/bash
+    ssh_authorized_keys:
+    - "${data.aws_ssm_parameter.sshkey.value}"
+EOF
+  }
+
+  part {
+    content_type = "text/x-shellscript"
+    content      = file("ssm.sh")
+  }
+}

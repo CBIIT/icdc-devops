@@ -1,8 +1,8 @@
 #create database security group
 resource "aws_security_group" "database-sg" {
-  name = "${var.stack_name}-${var.env}-database-sg"
+  name = "${var.stack_name}-${terraform.workspace}-database-sg"
   description = "database security group"
-  vpc_id = data.terraform_remote_state.network.outputs.vpc_id
+  vpc_id = var.vpc_id
   tags = merge(
   {
     "Name" = format("%s-%s",var.stack_name,"database-sg")
