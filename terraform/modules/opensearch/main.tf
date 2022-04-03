@@ -39,7 +39,7 @@ resource "aws_elasticsearch_domain" "es" {
   domain_name = local.domain_name
   elasticsearch_version = var.elasticsearch_version
   vpc_options {
-    subnet_ids = element(var.private_subnet_ids,0)
+    subnet_ids = var.private_subnet_ids
     security_group_ids = [aws_security_group.es.id]
   }
 
