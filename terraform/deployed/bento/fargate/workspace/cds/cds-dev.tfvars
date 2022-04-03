@@ -19,7 +19,7 @@ tags = {
 }
 fargate_security_group_ports = ["80","443","3306","7473","7474","9200","7687"]
 certificate_domain_name = "*.bento-tools.org"
-allowed_subnet_ip_block = ["172.18.0.0/16"]
+allowed_subnet_ip_block = ["172.18.0.0/16","172.16.0.219/32"]
 app_sub_domain = "cds"
 elasticsearch_version = "1.1"
 region = "us-east-1"

@@ -33,14 +33,14 @@ module "ecs" {
 }
 
 #create opensearch
-#module "opensearch" {
-#  source = "../modules/opensearch"
-#  stack_name = var.stack_name
-#  tags = var.tags
-#  vpc_id = var.vpc_id
-#  elasticsearch_instance_type = var.elasticsearch_instance_type
-#  env = terraform.workspace
-#  private_subnet_ids = var.private_subnet_ids
-#  elasticsearch_version = var.elasticsearch_version
-#  allowed_subnet_ip_block = var.allowed_subnet_ip_block
-#}
+module "opensearch" {
+  source = "../../../modules/opensearch"
+  stack_name = var.stack_name
+  tags = var.tags
+  vpc_id = var.vpc_id
+  elasticsearch_instance_type = var.elasticsearch_instance_type
+  env = terraform.workspace
+  private_subnet_ids = var.private_subnet_ids
+  elasticsearch_version = var.elasticsearch_version
+  allowed_subnet_ip_block = var.allowed_subnet_ip_block
+}
