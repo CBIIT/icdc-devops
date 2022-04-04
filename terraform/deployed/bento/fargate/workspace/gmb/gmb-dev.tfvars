@@ -1,28 +1,38 @@
-public_subnets = []
-private_subnets = [
-  "subnet-4f35f112",
-  "subnet-409a0424"
+public_subnet_ids = [
+  "subnet-03bb1c845d35aacc5",
+  "subnet-0a575f7e0c97cad77"
 ]
-vpc_id = "vpc-29a12251"
+private_subnet_ids = [
+  "subnet-09b0c7407416d4730",
+  "subnet-07d177a4d9df5cd32"
+]
+vpc_id = "vpc-08f154f94dc8a0e34"
 stack_name = "gmb"
 app_name = "gmb"
-domain_name = "cancer.gov"
+domain_name = "bento-tools.org"
+
 tags = {
-  Project = "GMB"
+  Project = "gmb"
   CreatedWith = "Terraform"
   POC = "ye.wu@nih.gov"
+  Environment = "dev"
 }
-certificate_domain_name = "*.cancer.gov"
-internal_alb = true
-app_sub_domain = "prostatenaturalhistory"
+fargate_security_group_ports = ["80","443","3306","7473","7474","9200","7687"]
+certificate_domain_name = "*.bento-tools.org"
+allowed_subnet_ip_block = ["172.18.0.0/16","172.16.0.219/32"]
+app_sub_domain = "gmb"
+elasticsearch_version = "OpenSearch_1.1"
+region = "us-east-1"
 elasticsearch_instance_type = "t3.medium.elasticsearch"
-
+create_es_service_role = false
+internal_alb = "false"
+app_ecr_registry_names = ["backend","frontend","auth","files"]
 microservices  = {
   frontend = {
     name = "frontend"
     port = 80
     health_check_path = "/"
-    priority_rule_number = 20
+    priority_rule_number = 22
     image_url = "cbiitssrepo/bento-frontend:latest"
     cpu = 256
     memory = 512
@@ -38,11 +48,11 @@ microservices  = {
     memory = 1024
     path = "/v1/graphql/*"
   },
-  frontend = {
+  auth = {
     name = "auth"
     port = 8082
     health_check_path = "/api/auth/ping"
-    priority_rule_number = 20
+    priority_rule_number = 21
     image_url = "cbiitssrepo/bento-auth:latest"
     cpu = 256
     memory = 512
