@@ -1,4 +1,4 @@
-    bucket = "bento-terraform-remote-state"
+    bucket = "datacommons-terraform-state"
     key = "gmb/infra/terraform.tfstate"
     workspace_key_prefix = "env"
     region = "us-east-1"
