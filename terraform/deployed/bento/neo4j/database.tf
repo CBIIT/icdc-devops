@@ -28,7 +28,7 @@ resource "aws_instance" "db" {
   }
   tags = merge(
   {
-    "Name" = "${var.stack_name}-${terraform.workspace}-${var.database_name}",
+    "Name" = "${var.stack_name}-${terraform.workspace}-${var.database_name}-4",
   },
   var.tags,
   )
