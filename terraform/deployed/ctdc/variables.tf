@@ -36,6 +36,10 @@ variable "public_subnet_ids" {
   type = list(string)
   default = null
 }
+variable "db_private_ip" {
+  description = "private ip address to use for the database"
+  type = string
+}
 variable "vpc_id" {
   description = "vpc id"
   type = string

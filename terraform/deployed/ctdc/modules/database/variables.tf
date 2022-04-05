@@ -20,6 +20,10 @@ variable "private_subnet_ids" {
   type = list(string)
   default = null
 }
+variable "subnet_ip_block" {
+  description = "subnet ip block to use"
+  type = list(string)
+}
 variable "database_instance_type" {
   description = "ec2 instance type to use"
   type = string
@@ -29,6 +33,10 @@ variable "database_name" {
   description = "name of the database"
   type = string
   default = "neo4j"
+}
+variable "db_private_ip" {
+  description = "ip address of the database"
+  type = string
 }
 variable "evs_volume_type" {
   description = "EVS volume type"

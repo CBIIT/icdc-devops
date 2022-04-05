@@ -112,7 +112,7 @@ resource "aws_iam_policy" "ssm-policy" {
 resource "aws_iam_policy_attachment" "ssm-policy-attachement" {
   name       = "${var.stack_name}-${terraform.workspace}-ssm-attach-policy"
   roles      = [aws_iam_role.ecs-instance-role.name]
-  policy_arn = local.ssm_iam_policy_arn
+  policy_arn = aws_iam_policy.ssm-policy.arn
 }
 
 
