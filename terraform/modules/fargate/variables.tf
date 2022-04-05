@@ -196,3 +196,7 @@ variable "microservices" {
     path = string
   }))
 }
+variable "cloud_platform" {
+  description = "choose platform to use"
+  type = string
+}

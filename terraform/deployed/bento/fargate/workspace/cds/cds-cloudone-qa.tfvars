@@ -46,3 +46,4 @@ microservices  = {
     path = "/v1/graphql/*"
   }
 }
+cloud_platform = "cloudone"

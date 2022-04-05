@@ -56,3 +56,4 @@ microservices  = {
     path = "/api/auth/*"
   }
 }
+cloud_platform = "cloudone"

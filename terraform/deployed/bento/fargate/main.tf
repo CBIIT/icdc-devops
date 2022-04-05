@@ -30,6 +30,7 @@ module "ecs" {
   app_ecr_registry_names = var.app_ecr_registry_names
   private_subnet_ids = var.private_subnet_ids
   public_subnet_ids = var.public_subnet_ids
+  cloud_platform = var.cloud_platform
 }
 
 #create opensearch

@@ -7,7 +7,7 @@ data "aws_vpc" "vpc" {
 
 data "aws_acm_certificate" "cert" {
   domain      = var.certificate_domain_name
-  types       = ["AMAZON_ISSUED"]
+  types       = [local.cert_types]
   most_recent = true
 }
 

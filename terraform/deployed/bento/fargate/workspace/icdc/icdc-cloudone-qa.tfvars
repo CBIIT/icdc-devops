@@ -67,3 +67,4 @@ microservices  = {
   }
 
 }
+cloud_platform = "cloudone"

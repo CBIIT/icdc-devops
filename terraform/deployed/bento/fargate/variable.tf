@@ -89,6 +89,11 @@ variable "fargate_security_group_ports" {
   type = list(string)
   description = "list of ports to allow when using ECS"
 }
+variable "cloud_platform" {
+  description = "choose platform to use"
+  default = "leidos"
+  type = string
+}
 #variable "create_cloudfront" {
 #  type = bool
 #  default = false
