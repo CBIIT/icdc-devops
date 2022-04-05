@@ -84,5 +84,5 @@ alarms = {
   }
 }
 slack_secret_name = "gmb-cloudfront-slack"
-create_cloudfront = true
+create_cloudfront = false
 cloudfront_distribution_bucket_name = "gmb-dev-files"
