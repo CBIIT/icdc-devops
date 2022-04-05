@@ -20,7 +20,10 @@ variable "cloudfront_distribution_bucket_name" {
   description = "specify the name of s3 bucket for cloudfront"
   type = string
 }
-
+variable "region" {
+  default = "us-east-1"
+  description = "aws region"
+}
 variable "alarms" {
   description = "alarms to be configured"
   type = map(map(string))
