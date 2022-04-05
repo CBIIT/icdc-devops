@@ -85,4 +85,4 @@ alarms = {
 }
 slack_secret_name = "gmb-cloudfront-slack"
 create_cloudfront = true
-cloudfront_distribution_bucket_name = "bento-gmb-files"
+cloudfront_distribution_bucket_name = "gmb-dev-files"
