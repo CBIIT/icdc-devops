@@ -15,7 +15,7 @@ tags = {
   Environment = "dev"
 }
 fargate_security_group_ports = ["80","443","3306","7473","7474","9200","7687"]
-certificate_domain_name = "*.cancer.gov"
+certificate_domain_name = "cancer.gov"
 allowed_subnet_ip_block = ["10.208.0.0/21","10.210.0.0/24"]
 app_sub_domain = "caninecommons"
 elasticsearch_version = "OpenSearch_1.1"
