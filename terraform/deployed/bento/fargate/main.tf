@@ -46,15 +46,15 @@ module "opensearch" {
 }
 
 #create cloudfront
-module "cloudfront" {
-  count = var.create_cloudfront ?  1 : 0
-  source = "../../../modules/cloudfront"
-  alarms = var.alarms
-  cloudfront_distribution_bucket_name = var.cloudfront_distribution_bucket_name
-  cloudfront_slack_channel_name = var.cloudfront_slack_channel_name
-  domain_name = var.domain_name
-  env =  terraform.workspace
-  slack_secret_name = var.slack_secret_name
-  stack_name = var.stack_name
-  tags = var.tags
-}
+#module "cloudfront" {
+#  count = var.create_cloudfront ?  1 : 0
+#  source = "../../../modules/cloudfront"
+#  alarms = var.alarms
+#  cloudfront_distribution_bucket_name = var.cloudfront_distribution_bucket_name
+#  cloudfront_slack_channel_name = var.cloudfront_slack_channel_name
+#  domain_name = var.domain_name
+#  env =  terraform.workspace
+#  slack_secret_name = var.slack_secret_name
+#  stack_name = var.stack_name
+#  tags = var.tags
+#}
