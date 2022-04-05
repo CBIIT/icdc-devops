@@ -164,7 +164,7 @@ resource "aws_ssm_association" "database" {
   name = aws_ssm_document.ssm_neo4j_boostrap.name
   targets {
     key    = "tag:Name"
-    values = ["${var.stack_name}-${terraform.workspace}-${var.database_name}"]
+    values = ["${var.stack_name}-${terraform.workspace}-${var.database_name}-4"]
   }
   depends_on = [aws_instance.db]
 }
