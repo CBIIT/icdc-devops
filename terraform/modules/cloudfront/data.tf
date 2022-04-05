@@ -64,6 +64,10 @@ data "aws_secretsmanager_secret_version" "slack_url" {
   secret_id = var.slack_secret_name
 }
 
+data "aws_secretsmanager_secret_version" "public_key" {
+  secret_id = var.cloudfront_public_key_secret_name
+}
+
 data "aws_iam_policy_document" "lambda_assume_policy" {
   statement {
     sid = ""

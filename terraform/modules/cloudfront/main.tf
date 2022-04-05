@@ -143,7 +143,8 @@ resource "aws_wafv2_regex_pattern_set" "api_files_pattern" {
 #create public key
 resource "aws_cloudfront_public_key" "public_key" {
   comment     = "bento files public key"
-  encoded_key = file("${path.module}/cloudfront_public_key.pem")
+#  encoded_key = file("${path.module}/cloudfront_public_key.pem")
+  encoded_key = jsondecode(data.aws_secretsmanager_secret_version.public_key.secret_string)[var.cloudfront_slack_channel_name]
   name        = "${var.stack_name}-${var.env}-pub-key"
 }
 

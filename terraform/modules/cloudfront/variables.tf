@@ -34,5 +34,9 @@ variable "cloudfront_slack_channel_name" {
   type = string
   description = "cloudfront slack name"
 }
-
+variable "cloudfront_public_key_secret_name" {
+  type = string
+  description = "cloudfront public key name"
+  default = "cloudfront-public-key"
+}
 
