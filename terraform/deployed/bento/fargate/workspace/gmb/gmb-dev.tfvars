@@ -70,3 +70,19 @@ microservices  = {
   }
 
 }
+#cloudfront
+cloudfront_slack_channel_name = "gmb-cloudfront-wafv2"
+
+alarms = {
+  error4xx = {
+    name = "4xxErrorRate"
+    threshold = 10
+  }
+  error5xx = {
+    name = "5xxErrorRate"
+    threshold = 10
+  }
+}
+slack_secret_name = "gmb-cloudfront-slack"
+create_cloudfront = true
+cloudfront_distribution_bucket_name = "bento-gmb-files"

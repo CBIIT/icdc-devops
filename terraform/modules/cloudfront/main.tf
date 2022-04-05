@@ -1,5 +1,5 @@
 //resource "aws_s3_bucket" "files_bucket" {
-//  bucket = "${var.stack_name}-${terraform.workspace}-files"
+//  bucket = "${var.stack_name}-${var.env}-files"
 //  acl    = "private"
 //}
 
@@ -85,7 +85,7 @@ resource "aws_wafv2_web_acl" "waf" {
   }
 
   rule {
-    name     = "${var.stack_name}-${terraform.workspace}-ip-rate-rule"
+    name     = "${var.stack_name}-${var.env}-ip-rate-rule"
     priority = 1
 
     action {
@@ -113,7 +113,7 @@ resource "aws_wafv2_web_acl" "waf" {
 
     visibility_config {
       cloudwatch_metrics_enabled = true
-      metric_name                = "${var.stack_name}-${terraform.workspace}-ip-rate-metrics"
+      metric_name                = "${var.stack_name}-${var.env}-ip-rate-metrics"
       sampled_requests_enabled   = true
     }
   }
@@ -122,7 +122,7 @@ resource "aws_wafv2_web_acl" "waf" {
 
   visibility_config {
     cloudwatch_metrics_enabled = true
-    metric_name                = "${var.stack_name}-${terraform.workspace}files-request-ip"
+    metric_name                = "${var.stack_name}-${var.env}files-request-ip"
     sampled_requests_enabled   = true
   }
 
@@ -130,7 +130,7 @@ resource "aws_wafv2_web_acl" "waf" {
 
 
 resource "aws_wafv2_regex_pattern_set" "api_files_pattern" {
-  name        =  "${var.stack_name}-${terraform.workspace}-api-files-pattern"
+  name        =  "${var.stack_name}-${var.env}-api-files-pattern"
   scope       = "CLOUDFRONT"
 
   regular_expression {
@@ -179,7 +179,7 @@ resource "aws_wafv2_web_acl_logging_configuration" "waf_logging" {
 }
 
 resource "aws_wafv2_ip_set" "ip_sets" {
-  name               = "${var.stack_name}-${terraform.workspace}-ips-blocked-cloudfront"
+  name               = "${var.stack_name}-${var.env}-ips-blocked-cloudfront"
   description        = "ips to blocked as result of violation of cloudfront waf rule"
   scope              = "CLOUDFRONT"
   ip_address_version = "IPV4"

@@ -7,15 +7,6 @@ variable "stack_name" {
   description = "name of the project"
   type = string
 }
-variable "region" {
-  description = "aws region to deploy"
-  type = string
-}
-variable "profile" {
-  description = "iam user profile to use"
-  type = string
-}
-
 variable "domain_name" {
   description = "domain name for the application"
   type = string
