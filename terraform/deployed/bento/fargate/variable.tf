@@ -94,6 +94,10 @@ variable "cloud_platform" {
   default = "leidos"
   type = string
 }
+variable "create_dns_record" {
+  type = bool
+  description = "choose to create dns record"
+}
 #variable "create_cloudfront" {
 #  type = bool
 #  default = false

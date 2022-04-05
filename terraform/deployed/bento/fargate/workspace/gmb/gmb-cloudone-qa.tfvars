@@ -57,3 +57,4 @@ microservices  = {
   }
 }
 cloud_platform = "cloudone"
+create_dns_record = false
