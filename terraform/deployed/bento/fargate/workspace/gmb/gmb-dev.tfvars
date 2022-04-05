@@ -57,6 +57,16 @@ microservices  = {
     cpu = 256
     memory = 512
     path = "/api/auth/*"
+  },
+  files = {
+    name = "files"
+    port = 8081
+    health_check_path = "/api/files/ping"
+    priority_rule_number = 21
+    image_url = "cbiitssrepo/bento-filedownloader:latest"
+    cpu = 256
+    memory = 512
+    path = "/api/files/*"
   }
 
 }
