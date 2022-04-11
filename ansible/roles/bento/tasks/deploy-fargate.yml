@@ -1,0 +1,439 @@
+---
+- name: get db ip
+  include_tasks: neo4j-ip.yml
+
+- name: Get the current caller identity information
+  aws_caller_info:
+  register: caller_info
+
+- name: set ECR registry name
+  set_fact:
+    ecr_repo: "{{ caller_info.account }}.dkr.ecr.{{ region }}.amazonaws.com"
+
+- name: login into ecr
+  shell: "docker login -u AWS -p $(aws ecr get-login-password --region {{ region }}) {{ecr_repo}}"
+  ignore_errors: True
+  register: ecr_login
+
+############################################################################################################################
+
+#     Task Definitions
+
+############################################################################################################################
+
+- name: create task definition - {{ project }}-backend
+  ecs_taskdefinition:
+    containers:
+    - name: sumologic-fluentd-backend
+      essential: true
+      image: "906394416424.dkr.ecr.us-east-1.amazonaws.com/aws-for-fluent-bit:2.21.3"
+      firelensConfiguration:
+        type: fluentbit
+        options:
+          enable-ecs-log-metadata: "true"
+    - name: backend
+      essential: true
+      image: "{{ ecr_repo }}/{{ project }}-backend:{{bento_api_version}}"
+      environment:
+        - name: NEO4J_URL
+          value: bolt://{{ neo4j_ip }}:7687
+        - name: NEO4J_USER
+          value: "{{ neo4j_user }}"
+        - name: NEO4J_PASSWORD
+          value: "{{ neo4j_password }}"
+        - name: NEO4J_GRAPHQL_ENDPOINT
+          value: http://{{ neo4j_ip }}:7474/graphql/
+        - name: BENTO_API_VERSION
+          value: "{{bento_api_version}}"
+        - name: ES_HOST
+          value: "{{es_host}}"
+        - name: REDIS_ENABLE
+          value: "{{ enable_redis }}"
+        - name: REDIS_USE_CLUSTER
+          value: "{{ use_cluster }}"
+        - name: REDIS_HOST
+          value: "{{ redis_host[tier] }}"
+        - name: REDIS_PORT
+          value: "{{ redis_port }}"
+        - name: REDIS_FILTER_ENABLE
+          value: false
+        - name: ES_FILTER_ENABLED
+          value: "{{ enable_es_filter }}"
+        - name: NEW_RELIC_LICENSE_KEY
+          value: "{{ newrelic_license_key }}"
+        - name: NEW_RELIC_APP_NAME
+          value: "{{ app_name }}-backend"
+        - name: NEW_RELIC_DISTRIBUTED_TRACING_ENABLED
+          value: true
+        - name: NEW_RELIC_HOST
+          value: "gov-collector.newrelic.com"
+        - name: NEW_RELIC_LOG_FILE_NAME
+          value: "STDOUT"
+        - name: NEW_RELIC_LABELS
+          value: "Project:{{ project }};Environment:{{ tier }}"
+        - name: JAVA_OPTS
+          value: "-javaagent:/usr/local/tomcat/newrelic/newrelic.jar"
+      entryPoint:
+        - "/bin/ash"
+        - "-c"
+        - 'wget "https://download.newrelic.com/newrelic/java-agent/newrelic-agent/current/newrelic-java.zip" -O newrelic-java.zip && rm -rf newrelic && unzip -o newrelic-java.zip && bin/catalina.sh run'
+      portMappings:
+      - containerPort: "8080"
+        hostPort: "8080"
+      logConfiguration:
+        logDriver: awsfirelens
+        options:
+          Name: http
+          Host: "{{ sumo_endpoint }}"
+          URI: "/receiver/v1/http/{{ sumo_token_be }}"
+          Port: "443"
+          tls: "On"
+          tls.verify: "Off"
+          Format: json_lines
+    network_mode: bridge
+    family: "{{ project }}-{{tier}}-backend"
+    launch_type: FARGATE
+    memory: '2048'
+    cpu: '512'
+    state: present
+    region: "{{region}}"
+  register: task_output
+
+- name: create task definition - {{ project }}-frontend
+  ecs_taskdefinition:
+    containers:
+    - name: sumologic-fluentd-frontend
+      essential: true
+      image: "906394416424.dkr.ecr.us-east-1.amazonaws.com/aws-for-fluent-bit:2.21.3"
+      firelensConfiguration:
+        type: fluentbit
+        options:
+          enable-ecs-log-metadata: "true"
+    - name: frontend
+      essential: true
+      image: "{{ ecr_repo }}/{{ project }}-frontend:{{frontend_version}}"
+      environment:
+        - name: REACT_APP_BACKEND_API
+          value: "{% if tier == 'prod' %}https://bento-tools.org/v1/graphql/{% else %}https://{{project}}-{{ tier }}.bento-tools.org/v1/graphql/{% endif %}" 
+        - name: REACT_APP_FILE_SERVICE_API
+          value: "{% if tier == 'prod' %}https://bento-tools.org/api/files/{% else %}https://{{project}}-{{ tier }}.bento-tools.org/api/files/{% endif %}"
+        - name: REACT_APP_BE_VERSION
+          value: "{{bento_api_version}}"
+        - name: REACT_APP_FE_VERSION
+          value: "{{frontend_version}}"
+        - name: REACT_APP_ABOUT_CONTENT_URL
+          value: "{{about_content_url}}"
+        - name: NEW_RELIC_LICENSE_KEY
+          value: "{{ newrelic_license_key }}"
+        - name: NEW_RELIC_APP_NAME
+          value: "{{ app_name }}-frontend"
+        - name: NEW_RELIC_DISTRIBUTED_TRACING_ENABLED
+          value: true
+        - name: NEW_RELIC_HOST
+          value: "gov-collector.newrelic.com"
+        - name: NEW_RELIC_NO_CONFIG_FILE
+          value: true
+        - name: NEW_RELIC_LABELS
+          value: "Project:{{ project }};Environment:{{ tier }}"
+        - name: REACT_APP_GOOGLE_CLIENT_ID
+          value: "{{ app_google_client_id }}"
+        - name: REACT_APP_AUTH_API
+          value: "{% if tier == 'prod' %}https://bento-tools.org{% else %}https://{{project}}-{{ tier }}.bento-tools.org{% endif %}" 
+      portMappings:
+      - containerPort: "80"
+        hostPort: "80"
+      logConfiguration:
+        logDriver: awsfirelens
+        options:
+          Name: http
+          Host: "{{ sumo_endpoint }}"
+          URI: "/receiver/v1/http/{{ sumo_token_fe }}"
+          Port: "443"
+          tls: "On"
+          tls.verify: "Off"
+          Format: json_lines
+    network_mode: bridge
+    family: "{{ project }}-{{tier}}-frontend"
+    launch_type: FARGATE
+    state: present
+    memory: '512'
+    cpu: '128'
+    region: "{{region}}"
+  register: task_output
+
+- name: create task definition - sumo docker
+  ecs_taskdefinition:
+    containers:
+    - name: sumologic-docker
+      essential: true
+      image: "sumologic/collector:latest"
+      environment:
+        - name: SUMO_COLLECTOR_NAME
+          value: "{{ app_name }}-docker"
+        - name: SUMO_ACCESS_ID
+          value: "{{ sumo_access_id }}"
+        - name: SUMO_ACCESS_KEY
+          value: "{{ sumo_access_key }}"
+        - name: SUMO_COLLECTOR_NAME_PREFIX
+          value: ""
+        - name: SUMO_CLOBBER
+          value: "true"
+      mountPoints:
+        - containerPath: /var/run/docker.sock
+          sourceVolume: docker-sock
+          readOnly: true
+    volumes:
+    - name: docker-sock
+      host:
+        sourcePath: /var/run/docker.sock
+    network_mode: bridge
+    family: "{{ project }}-{{tier}}-sumo_docker"
+    launch_type: FARGATE
+    state: present
+    memory: '512'
+    cpu: '128'
+    region: "{{region}}"
+  register: task_output
+
+- name: create task definition - newrelic docker
+  ecs_taskdefinition:
+    containers:
+    - name: newrelic-docker
+      essential: true
+      image: "newrelic/infrastructure-bundle:latest"
+      environment:
+        - name: NRIA_LICENSE_KEY
+          value: "{{ newrelic_license_key }}"
+        - name: NRIA_DISPLAY_NAME
+          value: "{{ app_name }}-docker"
+        - name: NEW_RELIC_HOST
+          value: "gov-collector.newrelic.com"
+        - name: NEW_RELIC_LABELS
+          value: "Project:{{ project }};Environment:{{ tier }}"
+        - name: STATUS_URL
+          value: "{% if tier == 'prod' %}https://bento-tools.org/nginx_status{% else %}https://bento-{{ tier }}.bento-tools.org/nginx_status{% endif %}"
+      entryPoint:
+        - "/bin/ash"
+        - "-c"
+        - 'echo -e "integrations:\n  - name: nri-nginx\n    env:\n      REMOTE_MONITORING: true\n      METRICS: 1" > /etc/newrelic-infra/integrations.d/nginx-config.yml && /sbin/tini -- /usr/bin/newrelic-infra-service'
+      mountPoints:
+        - containerPath: /var/run/docker.sock
+          sourceVolume: docker-sock
+          readOnly: true
+        - containerPath: /host
+          sourceVolume: docker-host
+          readOnly: true
+    volumes:
+    - name: docker-sock
+      host:
+        sourcePath: /var/run/docker.sock
+    - name: docker-host
+      host:
+        sourcePath: /
+    network_mode: bridge
+    family: "{{ project }}-{{tier}}-nr_docker"
+    launch_type: FARGATE
+    state: present
+    memory: '128'
+    cpu: '128'
+    region: "{{region}}"
+  register: task_output
+
+############################################################################################################################
+
+#     Task Definition Queries
+
+############################################################################################################################
+
+- name: query task definition - {{ project }}-{{tier}}-frontend
+  ecs_taskdefinition_info:
+    task_definition: "{{ project }}-{{tier}}-frontend"
+    region: "{{region}}" 
+  register: task_frontend
+
+- name: query task definition - {{ project }}-{{tier}}-backend
+  ecs_taskdefinition_info:
+    task_definition: "{{ project }}-{{tier}}-backend"
+    region: "{{region}}" 
+  register: task_backend
+
+- name: query task definition - sumologic docker
+  ecs_taskdefinition_info:
+    task_definition: "{{ project }}-{{tier}}-sumo_docker"
+    region: "{{region}}" 
+  register: task_sumo_docker
+
+- name: query task definition - newrelic docker
+  ecs_taskdefinition_info:
+    task_definition: "{{ project }}-{{tier}}-nr_docker"
+    region: "{{region}}" 
+  register: task_nr_docker
+
+############################################################################################################################
+
+#     Service Queries
+
+############################################################################################################################
+
+- name: query {{ project }}-{{tier}}-backend service
+  ecs_service_info:
+    cluster: "{{ project }}-{{tier}}"
+    service: "{{ project }}-{{tier}}-backend"
+    details: true
+    region: "{{region}}"
+  register: service_backend
+
+- name: query {{ project }}-{{tier}}-frontend service
+  ecs_service_info:
+    cluster: "{{ project }}-{{tier}}"
+    service: "{{ project }}-{{tier}}-frontend"
+    details: true
+    region: "{{region}}"
+  register: service_frontend
+
+- name: query sumologic docker service
+  ecs_service_info:
+    cluster: "{{ project }}-{{tier}}"
+    service: "{{ project }}-{{tier}}-sumo_docker"
+    details: true
+    region: "{{region}}"
+  register: service_sumo_docker
+
+- name: query newrelic docker service
+  ecs_service_info:
+    cluster: "{{ project }}-{{tier}}"
+    service: "{{ project }}-{{tier}}-nr_docker"
+    details: true
+    region: "{{region}}"
+  register: service_nr_docker
+
+############################################################################################################################
+
+- name: set facts
+  set_fact:
+    frontend_url: "{% if tier == 'prod' %}https://{{project}}.bento-tools.org/{% else %}https://{{project}}-{{ tier }}.bento-tools.org/{% endif %}"
+    frontend_revision: "{{task_frontend.revision}}"
+    backend_revision: "{{task_backend.revision}}"
+    task_backend_name: "{{task_backend.family}}"
+    task_frontend_name: "{{task_frontend.family}}"
+    task_sumo_docker_name: "{{task_sumo_docker.family}}"
+    task_nr_docker_name: "{{task_nr_docker.family}}"
+    lb_frontend: "{{service_frontend.services[0].loadBalancers}}"
+    lb_backend: "{{service_backend.services[0].loadBalancers}}"
+    role_arn: "{{service_backend.services[0].roleArn}}"
+
+############################################################################################################################
+
+#     Update Services
+
+############################################################################################################################
+
+- name: update sumologic docker service
+  ecs_service:
+    state: present
+    name: "{{ project }}-{{tier}}-sumo_docker"
+    cluster: "{{ project }}-{{tier}}"
+    task_definition: "{{task_sumo_docker_name}}"
+    force_new_deployment: no
+    deployment_configuration:
+      minimum_healthy_percent: 0
+      maximum_percent: 100
+      deployment_circuit_breaker:
+        enable: true
+        rollback: true
+    desired_count: 1
+    region: "{{region}}"
+  register: service_sumo_docker_output
+
+- name: update newrelic docker service
+  ecs_service:
+    state: present
+    name: "{{ project }}-{{tier}}-nr_docker"
+    cluster: "{{ project }}-{{tier}}"
+    task_definition: "{{task_nr_docker_name}}"
+    force_new_deployment: no
+    deployment_configuration:
+      minimum_healthy_percent: 0
+      maximum_percent: 100
+      deployment_circuit_breaker:
+        enable: true
+        rollback: true
+    desired_count: 1
+    region: "{{region}}"
+  register: service_nr_docker_output
+
+- name: update {{ project }}-{{tier}}-backend service
+  ecs_service:
+    state: present
+    name: "{{ project }}-{{tier}}-backend"
+    cluster: "{{ project }}-{{tier}}"
+    task_definition: "{{task_backend_name}}:{{backend_revision}}"
+    role: "{{role_arn}}"
+    force_new_deployment: yes
+    deployment_configuration:
+      minimum_healthy_percent: 0
+      maximum_percent: 100
+      deployment_circuit_breaker:
+        enable: true
+        rollback: false
+    desired_count: 1
+    load_balancers: "{{ lb_backend }}"
+    region: "{{region}}"
+  register: service_backend_output
+
+- name: update {{ project }}-{{tier}}-frontend service
+  ecs_service:
+    state: present
+    name: "{{ project }}-{{tier}}-frontend"
+    cluster: "{{ project }}-{{tier}}"
+    task_definition: "{{task_frontend_name}}:{{frontend_revision}}"
+    role: "{{role_arn}}"
+    force_new_deployment: yes
+    deployment_configuration:
+      minimum_healthy_percent: 0
+      maximum_percent: 100
+      deployment_circuit_breaker:
+        enable: true
+        rollback: false
+    desired_count: 1
+    load_balancers: "{{ lb_frontend }}"
+    region: "{{region}}"
+  register: service_frontend_output
+
+############################################################################################################################
+# Add the "production" tag for backend and frontend images if deployed to Prod
+############################################################################################################################
+
+- name: Add tag production to {{ project }}-frontend image
+  docker_image:
+    name: "{{ ecr_repo }}/{{ project }}-frontend:{{ frontend_version }}"
+    repository: "{{ ecr_repo }}/{{ project }}-frontend:production-{{ frontend_version }}"
+    force_tag: yes
+    push: yes
+    source: pull
+  when: tier == "prod"
+
+- name: Add tag production to {{ project }}-backend image
+  docker_image:
+    name: "{{ ecr_repo }}/{{ project }}-backend:{{ bento_api_version }}"
+    repository: "{{ ecr_repo }}/{{ project }}-backend:production-{{ bento_api_version }}"
+    force_tag: yes
+    push: yes
+    source: pull
+  when: tier == "prod"
+
+###############################################################################################################################
+
+#- name: Pause for 20 seconds to allow updates to take effect
+#  pause:
+#    seconds: 20
+
+#- name: "wait for {{ frontend_url }} to become available"
+#  uri:
+#   url: "{{ frontend_url }}"
+#   follow_redirects: none
+#   method: GET
+#  register: _result
+#  until: ('status' in _result) and (_result.status == 200)
+#  retries: 100
+#  delay: 10
