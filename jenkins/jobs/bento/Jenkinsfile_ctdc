@@ -222,7 +222,7 @@ pipeline {
                 withCredentials([string(credentialsId: 'es_ctdc_host', variable: 'ES_HOST'),
 				    usernamePassword(credentialsId: 'ctdc_neo4j_user', passwordVariable: 'NEO4J_PASS', usernameVariable: 'NEO4J_USER')]) {
                   env.NEO4J_IP    = "${NEO4J_CTDC_IP}"
-                  env.TIER  = "dev2"
+                  env.TIER  = "dev"
                   env.NEO4J_USER = "${NEO4J_USER}"
                   env.NEO4J_PASS  = "${NEO4J_PASS}"
 				  env.ES_HOST = "${ES_HOST}"
@@ -332,7 +332,7 @@ pipeline {
             		playbook: '${WORKSPACE}/icdc-devops/ansible/bento-deploy-fargate.yml', 
             		inventory: '${WORKSPACE}/icdc-devops/ansible/hosts', 
             		extraVars: [
-					project: 'ctdc',
+					project: 'ctdc2',
                     enable_redis: "${params.Use_Redis}",
 					enable_es_filter: "${params.Enable_ES_Filter}",
                     ],
