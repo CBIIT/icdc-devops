@@ -9,6 +9,6 @@
       include_role:
         name: bento
         tasks_from: deploy-fargate
-        vars_from: {{ project }}
+        vars_from: "{{ project }}"
       vars:
         data_bucket: nci-cbiit-ctdc-{{tier}}
