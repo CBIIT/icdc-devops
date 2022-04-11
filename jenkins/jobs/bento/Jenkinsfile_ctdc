@@ -329,7 +329,7 @@ pipeline {
 			
 			wrap([$class: 'AnsiColorBuildWrapper', colorMapName: "xterm"]) {
   				ansiblePlaybook( 
-            		playbook: '${WORKSPACE}/icdc-devops/ansible/bento-deploy.yml', 
+            		playbook: '${WORKSPACE}/icdc-devops/ansible/bento-deploy-fargate.yml', 
             		inventory: '${WORKSPACE}/icdc-devops/ansible/hosts', 
             		extraVars: [
 					project: 'ctdc',
