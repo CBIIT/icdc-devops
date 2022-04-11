@@ -5,6 +5,6 @@ module "ctdc_elasticsearch" {
   tags = var.tags
   vpc_id = var.vpc_id
   subnet_ip_block = var.subnet_ip_block
-  private_subnet_ids = var.private_subnet_ids
+  private_subnet_ids = [var.private_subnet_ids[0]]
   
 }

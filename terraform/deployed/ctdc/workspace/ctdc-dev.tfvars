@@ -2,31 +2,33 @@
 tags = {
   ManagedBy = "terraform"
   Project = "CTDC"
-  Environment = "DEV"
+  Environment = ""
   POC = ""
 }
 #enter the region in which your aws resources will be provisioned
-region = "us-east-1"
+region = ""
 
 #specify the name you will like to call this project.
-stack_name = "ctdc"
+stack_name = ""
 
-vpc_id = "< UPDATE >"
+vpc_id = ""
 
-private_subnet_ids = ["< UPDATE >"]
+private_subnet_ids = ""
 
-public_subnet_ids = ["< UPDATE >"]
+public_subnet_ids = ""
 
-subnet_ip_block = ["< UPDATE >"]
+subnet_ip_block = ""
 
-db_private_ip = "< UPDATE >"
+db_private_ip = ""
 
 create_es_service_role = false
 
-alb_certificate_arn = "< UPDATE >"
+alb_certificate_arn = ""
+
+domain_url = ""
 
 create_alb_s3_bucket = true
 
 #name of the ssh key imported in the deployment instruction
-ssh_key_name = "< UPDATE >"
-ssh_user = "< UPDATE >"
+ssh_key_name = ""
+ssh_user = ""

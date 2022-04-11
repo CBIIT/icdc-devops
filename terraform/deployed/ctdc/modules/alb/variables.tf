@@ -59,6 +59,32 @@ variable "frontend_app_name" {
   type        = string
   default     = ""
 }
+variable "frontend_container_port" {
+  description = "port on which the container listens"
+  type = number
+  default = 80
+}
+variable "backend_container_port" {
+  description = "port on which the container listens"
+  type = number
+  default = 8080
+}
+variable "fronted_rule_priority" {
+  description = "priority number to assign to alb rule"
+  type = number
+  default = 100
+}
+variable "backend_rule_priority" {
+  description = "priority number to assign to alb rule"
+  type = number
+  default = 110
+}
+variable "domain_url" {
+  description = "url to use for this stack"
+  type        = string
+}
+
+# S3 variables
 variable "s3_object_expiration_days" {
   description = "number of days for object to live"
   type = number

@@ -6,11 +6,11 @@ resource "aws_lb" "alb" {
   subnets            = var.subnets
   security_groups    = [aws_security_group.alb-sg.id]
 
-  access_logs  {
-    bucket  = local.alb_s3_bucket_name
-    prefix  = "alb-logs"
-    enabled = true
-  }
+#  access_logs  {
+#    bucket  = local.alb_s3_bucket_name
+#    prefix  = "alb-logs"
+#    enabled = true
+#  }
 
   timeouts {
     create = "10m"

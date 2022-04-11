@@ -1,6 +1,6 @@
 #create ecs cluster
 resource "aws_ecs_cluster" "ecs_cluster" {
-  name = "${var.stack_name}-${terraform.workspace}-test" ##########################################
+  name = "${var.stack_name}-${terraform.workspace}"
 
   tags = merge(
   {

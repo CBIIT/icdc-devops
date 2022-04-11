@@ -52,6 +52,10 @@ variable "alb_certificate_arn" {
   description = "alb certificate arn"
   type = string
 }
+variable "domain_url" {
+  description = "url to use for this stack"
+  type = string
+}
 variable "create_alb_s3_bucket" {
   description = "do we create alb s3 bucket"
   type = bool
