@@ -6,10 +6,3 @@ redis_host:
 schema_file: "ctdc.graphql"
 
 about_content_url: "https://raw.githubusercontent.com/CBIIT/bento-ctdc-frontend/{{ frontend_version }}/src/content/{{tier}}/aboutPagesContent.yaml"
-
-# Logging
-sumo_endpoint: "{{ lookup('aws_ssm', '/bento/sumologic/endpoint', region='us-east-1') }}"
-sumo_token_param_be: "/bento/sumologic/token/{{ tier }}/backend"
-sumo_token_be: "{{ lookup('aws_ssm', sumo_token_param_be, region='us-east-1') }}"
-sumo_token_param_fe: "/bento/sumologic/token/{{ tier }}/frontend"
-sumo_token_fe: "{{ lookup('aws_ssm', sumo_token_param_fe, region='us-east-1') }}" 

@@ -193,8 +193,7 @@ pipeline {
   			checkout( poll: false, 
 				changelog:false,
 				scm: [$class: 'GitSCM', 
-				//branches: [[name: '*/master']], 
-				branches: [[name: '*/ctdc_terraform_update']], 
+				branches: [[name: '*/master']], 
 				doGenerateSubmoduleConfigurations: false, 
 				extensions: [[$class: 'DisableRemotePoll'],
 				[$class: 'PathRestriction', excludedRegions: '*'], 
@@ -312,8 +311,7 @@ pipeline {
 		    checkout( changelog:false,
 				poll: false,
 				scm: [$class: 'GitSCM', 
-				//branches: [[name: '*/master']],
-				branches: [[name: '*/ctdc_terraform_update']],
+				branches: [[name: '*/master']],
 				doGenerateSubmoduleConfigurations: false, 
 				extensions: [[$class: 'DisableRemotePoll'],
 				[$class: 'PathRestriction', excludedRegions: '*'], 
@@ -326,68 +324,67 @@ pipeline {
 			
 			wrap([$class: 'AnsiColorBuildWrapper', colorMapName: "xterm"]) {
   				ansiblePlaybook( 
-            		playbook: '${WORKSPACE}/icdc-devops/ansible/bento-deploy-fargate.yml', 
+            		playbook: '${WORKSPACE}/icdc-devops/ansible/bento-deploy.yml', 
             		inventory: '${WORKSPACE}/icdc-devops/ansible/hosts', 
             		extraVars: [
-					project: 'ctdc2',
+					project: 'ctdc',
                     enable_redis: "${params.Use_Redis}",
 					enable_es_filter: "${params.Enable_ES_Filter}",
                     ],
-					extras: '-vvv',
 					colorized: true)
   			}
 		  }
   		}
   	}
 
-//	stage('update database monitoring agents'){
-//		steps{
-//		  node('data-loader') {
-//		    checkout( changelog:false,
-//				poll: false,
-//				scm: [$class: 'GitSCM', 
-//				branches: [[name: '*/master']], 
-//				doGenerateSubmoduleConfigurations: false, 
-//				extensions: [[$class: 'DisableRemotePoll'],
-//				[$class: 'PathRestriction', excludedRegions: '*'], 
-//				[$class: 'RelativeTargetDirectory', 
-//				relativeTargetDir: 'icdc-devops']], 
-//				submoduleCfg: [], 
-//				userRemoteConfigs: 
-//				[[url: 'https://github.com/CBIIT/icdc-devops.git']]
-//				])
-//			
-//		    echo "Recreating inventory file"
-//			sh "cp ${WORKSPACE}/icdc-devops/ansible/hosts ${WORKSPACE}/icdc-devops/ansible/hosts.bak"
-//            sh "echo [agent_setup] >> ${WORKSPACE}/icdc-devops/ansible/hosts"
-//            sh "echo ${NEO4J_IP} ansible_ssh_private_key_file=/home/bento/.ssh/devops ansible_ssh_user=bento >> ${WORKSPACE}/icdc-devops/ansible/hosts"
-//  			wrap([$class: 'AnsiColorBuildWrapper', colorMapName: "xterm"]) {
-//  				ansiblePlaybook( 
-//            		playbook: '${WORKSPACE}/icdc-devops/ansible/agent-setup.yml', 
-//            		inventory: '${WORKSPACE}/icdc-devops/ansible/hosts', 
-//					extraVars: [
-//                    env: "${params.Environment}",
-//					app_type: 'database',
-//					app_name: 'neo4j',
-//                    project: 'ctdc',
-//					log_path: '/var/log/neo4j/*.log',
-//                    ],
-//            		colorized: true)
-//  			}
-//  		  }
-//		}
-//  	}
+	stage('update database monitoring agents'){
+		steps{
+		  node('data-loader') {
+		    checkout( changelog:false,
+				poll: false,
+				scm: [$class: 'GitSCM', 
+				branches: [[name: '*/master']], 
+				doGenerateSubmoduleConfigurations: false, 
+				extensions: [[$class: 'DisableRemotePoll'],
+				[$class: 'PathRestriction', excludedRegions: '*'], 
+				[$class: 'RelativeTargetDirectory', 
+				relativeTargetDir: 'icdc-devops']], 
+				submoduleCfg: [], 
+				userRemoteConfigs: 
+				[[url: 'https://github.com/CBIIT/icdc-devops.git']]
+				])
+			
+		    echo "Recreating inventory file"
+			sh "cp ${WORKSPACE}/icdc-devops/ansible/hosts ${WORKSPACE}/icdc-devops/ansible/hosts.bak"
+            sh "echo [agent_setup] >> ${WORKSPACE}/icdc-devops/ansible/hosts"
+            sh "echo ${NEO4J_IP} ansible_ssh_private_key_file=/home/bento/.ssh/devops ansible_ssh_user=bento >> ${WORKSPACE}/icdc-devops/ansible/hosts"
+  			wrap([$class: 'AnsiColorBuildWrapper', colorMapName: "xterm"]) {
+  				ansiblePlaybook( 
+            		playbook: '${WORKSPACE}/icdc-devops/ansible/agent-setup.yml', 
+            		inventory: '${WORKSPACE}/icdc-devops/ansible/hosts', 
+					extraVars: [
+                    env: "${params.Environment}",
+					app_type: 'database',
+					app_name: 'neo4j',
+                    project: 'ctdc',
+					log_path: '/var/log/neo4j/*.log',
+                    ],
+            		colorized: true)
+  			}
+  		  }
+		}
+  	}
 
   }
   post {
 
-//	always {
-//
-//      sendSlackMessage()
-//
-//    }
+	always {
 
-//	success {
+      sendSlackMessage()
+
+    }
+
+	success {
 
 //		script {
 //			withCredentials([usernamePassword(credentialsId: 'github_user', passwordVariable: 'git_password', usernameVariable: 'git_user')]) {
@@ -422,14 +419,14 @@ pipeline {
 //				}
 //			}
 
-//        script {
-//			if (params.Reload_ES_Data) {
-//				echo 'Reload data to Elasticsearch'
-//				build job: 'CTDC-Dev/_Data_Processing/BentoDataLoader_ES_CTDC', parameters: [gitParameter(name: 'Dataloader_Branch', value: 'master'), gitParameter(name: 'Frontend_Branch', value: "${params.Frontend_Tag}"), gitParameter(name: 'Backend_Branch', value: "${params.Backend_Tag}"), extendedChoice(name: 'Environment', value: "${params.Environment}")]
-//			}
-//		}
-//		
-//		}
+        script {
+			if (params.Reload_ES_Data) {
+				echo 'Reload data to Elasticsearch'
+				build job: 'CTDC-Dev/_Data_Processing/BentoDataLoader_ES_CTDC', parameters: [gitParameter(name: 'Dataloader_Branch', value: 'master'), gitParameter(name: 'Frontend_Branch', value: "${params.Frontend_Tag}"), gitParameter(name: 'Backend_Branch', value: "${params.Backend_Tag}"), extendedChoice(name: 'Environment', value: "${params.Environment}")]
+			}
+		}
+		
+		}
 
 	cleanup {
 	
