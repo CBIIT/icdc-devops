@@ -335,6 +335,7 @@ pipeline {
 					project: 'ctdc2',
                     enable_redis: "${params.Use_Redis}",
 					enable_es_filter: "${params.Enable_ES_Filter}",
+					-vvv
                     ],
 					colorized: true)
   			}
