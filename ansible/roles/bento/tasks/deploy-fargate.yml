@@ -83,13 +83,13 @@
       logConfiguration:
         logDriver: awsfirelens
         options:
-          Name: http
+          Name: "backend"
           Host: "{{ sumo_endpoint }}"
           URI: "/receiver/v1/http/{{ sumo_token_be }}"
           Port: "443"
           tls: "On"
           tls.verify: "Off"
-          Format: json_lines
+          Format: "json_lines"
 #    network_mode: bridge
     network_mode: awsvpc
     family: "{{ project }}-{{tier}}-backend"
@@ -146,13 +146,13 @@
       logConfiguration:
         logDriver: awsfirelens
         options:
-          Name: http
+          Name: "frontend"
           Host: "{{ sumo_endpoint }}"
           URI: "/receiver/v1/http/{{ sumo_token_fe }}"
           Port: "443"
           tls: "On"
           tls.verify: "Off"
-          Format: json_lines
+          Format: "json_lines"
 #    network_mode: bridge
     network_mode: awsvpc
     family: "{{ project }}-{{tier}}-frontend"
