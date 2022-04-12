@@ -3,6 +3,7 @@ resource "aws_lb_target_group" "frontend_target_group" {
   name = "${var.stack_name}-${terraform.workspace}-frontend"
   port = var.frontend_container_port
   protocol = "HTTP"
+  target_type = "ip"
   vpc_id =  var.vpc_id
   stickiness {
     type = "lb_cookie"
@@ -31,6 +32,7 @@ resource "aws_lb_target_group" "backend_target_group" {
   name = "${var.stack_name}-${terraform.workspace}-backend"
   port = var.backend_container_port
   protocol = "HTTP"
+  target_type = "ip"
   vpc_id =  var.vpc_id
   stickiness {
     type = "lb_cookie"
@@ -92,7 +94,7 @@ resource "aws_lb_listener_rule" "backend_alb_listener" {
   }
   condition {
     path_pattern  {
-      values = ["/service*"]
+      values = ["/v1/graphql/*"]
     }
   }
 }
