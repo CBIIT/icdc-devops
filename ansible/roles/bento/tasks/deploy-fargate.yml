@@ -90,7 +90,8 @@
           tls: "On"
           tls.verify: "Off"
           Format: json_lines
-    network_mode: bridge
+#    network_mode: bridge
+    network_mode: awsvpc
     family: "{{ project }}-{{tier}}-backend"
     launch_type: FARGATE
     memory: '2048'
@@ -152,7 +153,8 @@
           tls: "On"
           tls.verify: "Off"
           Format: json_lines
-    network_mode: bridge
+#    network_mode: bridge
+    network_mode: awsvpc
     family: "{{ project }}-{{tier}}-frontend"
     launch_type: FARGATE
     state: present
@@ -186,7 +188,8 @@
     - name: docker-sock
       host:
         sourcePath: /var/run/docker.sock
-    network_mode: bridge
+#    network_mode: bridge
+    network_mode: awsvpc
     family: "{{ project }}-{{tier}}-sumo_docker"
     launch_type: FARGATE
     state: present
@@ -230,7 +233,8 @@
     - name: docker-host
       host:
         sourcePath: /
-    network_mode: bridge
+#    network_mode: bridge
+    network_mode: awsvpc
     family: "{{ project }}-{{tier}}-nr_docker"
     launch_type: FARGATE
     state: present
