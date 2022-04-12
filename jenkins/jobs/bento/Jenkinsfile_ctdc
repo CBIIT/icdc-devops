@@ -336,8 +336,9 @@ pipeline {
                     enable_redis: "${params.Use_Redis}",
 					enable_es_filter: "${params.Enable_ES_Filter}",
                     ],
-					colorized: true,
-					extras: -vvv)
+					ANSIBLE_DEBUG: true,
+					ANSIBLE_VERBOSITY: 4,
+					colorized: true)
   			}
 		  }
   		}
