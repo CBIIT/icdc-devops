@@ -27,6 +27,7 @@ elasticsearch_instance_type = "t3.medium.elasticsearch"
 create_es_service_role = false
 internal_alb = "false"
 app_ecr_registry_names = ["backend","frontend","auth","files"]
+create_dns_record = true
 microservices  = {
   frontend = {
     name = "frontend"
