@@ -150,10 +150,6 @@ variable "create_app_ecr_registry" {
   type = bool
 }
 
-variable "app_ecr_registry_names" {
-  type = list(string)
-  description = "names of app ecr regis"
-}
 
 variable "microservice_port" {
   type = number
