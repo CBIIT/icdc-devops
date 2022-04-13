@@ -5,11 +5,11 @@ variable "tags" {
 
 variable "ecr_names" {
   description = "name of ecr"
-  type = string
+  type = list(string)
 
 }
 
 variable "stack_name" {
   description = "name of the project"
-  type = list(string)
+  type = string
 }
