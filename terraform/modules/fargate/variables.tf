@@ -200,3 +200,7 @@ variable "cloud_platform" {
   description = "choose platform to use"
   type = string
 }
+variable "create_ecr" {
+  type = bool
+  description = "choose to create ecr or not"
+}

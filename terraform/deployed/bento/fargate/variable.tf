@@ -47,10 +47,6 @@ variable "app_sub_domain" {
   type = string
   default = null
 }
-variable "app_ecr_registry_names" {
-  type = list(string)
-  description = "names of app ecr regis"
-}
 
 variable "microservices" {
   type = map(object({
@@ -97,6 +93,17 @@ variable "cloud_platform" {
 variable "create_dns_record" {
   type = bool
   description = "choose to create dns record"
+}
+variable "create_ecr" {
+  type = bool
+  default = false
+  description = "choose to create ecr"
+}
+
+variable "ecr_names" {
+  description = "name of ecr"
+  type = list(string)
+  
 }
 #variable "create_cloudfront" {
 #  type = bool

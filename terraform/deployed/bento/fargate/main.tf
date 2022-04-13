@@ -31,6 +31,15 @@ module "ecs" {
   private_subnet_ids = var.private_subnet_ids
   public_subnet_ids = var.public_subnet_ids
   cloud_platform = var.cloud_platform
+  create_ecr = var.create_ecr
+}
+
+#create ecr
+module "ecr" {
+   count = var.create_ecr ? 1: 0
+   source = "../../../modules/ecr"
+   stack_name = var.stack_name
+   ecr_names = var.ecr_names
 }
 
 #create opensearch
