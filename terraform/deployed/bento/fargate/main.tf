@@ -40,6 +40,7 @@ module "ecr" {
    source = "../../../modules/ecr"
    stack_name = var.stack_name
    ecr_names = var.ecr_names
+   tags = var.tags
 }
 
 #create opensearch
