@@ -43,7 +43,7 @@ microservices  = {
     port = 8080
     health_check_path = "/ping"
     priority_rule_number = 20
-    image_url = "cbiitssrepo/bento-frontend:latest"
+    image_url = "cbiitssrepo/bento-backend:latest"
     cpu = 512
     memory = 1024
     path = "/v1/graphql/*"
@@ -58,16 +58,16 @@ microservices  = {
     memory = 512
     path = "/api/auth/*"
   },
-#  files = {
-#    name = "files"
-#    port = 8081
-#    health_check_path = "/api/files/ping"
-#    priority_rule_number = 19
-#    image_url = "cbiitssrepo/bento-filedownloader:latest"
-#    cpu = 256
-#    memory = 512
-#    path = "/api/files/*"
-#  }
+ files = {
+   name = "files"
+   port = 8081
+   health_check_path = "/api/files/ping"
+   priority_rule_number = 19
+   image_url = "cbiitssrepo/bento-filedownloader:latest"
+   cpu = 256
+   memory = 512
+   path = "/api/files/*"
+ }
 
 }
 #cloudfront

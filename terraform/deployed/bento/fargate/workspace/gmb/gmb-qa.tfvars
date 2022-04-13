@@ -7,12 +7,12 @@ private_subnet_ids = [
   "subnet-07d177a4d9df5cd32"
 ]
 vpc_id = "vpc-08f154f94dc8a0e34"
-stack_name = "cds"
-app_name = "cds"
+stack_name = "gmb"
+app_name = "gmb"
 domain_name = "bento-tools.org"
 
 tags = {
-  Project = "cds"
+  Project = "gmb"
   CreatedWith = "Terraform"
   POC = "ye.wu@nih.gov"
   Environment = "dev"
@@ -20,7 +20,7 @@ tags = {
 fargate_security_group_ports = ["80","443","3306","7473","7474","9200","7687"]
 certificate_domain_name = "*.bento-tools.org"
 allowed_subnet_ip_block = ["172.18.0.0/16","172.16.0.219/32"]
-app_sub_domain = "cds"
+app_sub_domain = "gmb"
 elasticsearch_version = "OpenSearch_1.1"
 region = "us-east-1"
 elasticsearch_instance_type = "t3.medium.elasticsearch"
@@ -43,7 +43,7 @@ microservices  = {
     port = 8080
     health_check_path = "/ping"
     priority_rule_number = 20
-    image_url = "cbiitssrepo/bento-backend:latest"
+    image_url = "cbiitssrepo/bento-frontend:latest"
     cpu = 512
     memory = 1024
     path = "/v1/graphql/*"
@@ -57,6 +57,32 @@ microservices  = {
     cpu = 256
     memory = 512
     path = "/api/auth/*"
-  }
+  },
+ files = {
+   name = "files"
+   port = 8081
+   health_check_path = "/api/files/ping"
+   priority_rule_number = 19
+   image_url = "cbiitssrepo/bento-filedownloader:latest"
+   cpu = 256
+   memory = 512
+   path = "/api/files/*"
+ }
 
 }
+#cloudfront
+cloudfront_slack_channel_name = "gmb-cloudfront-wafv2"
+
+alarms = {
+  error4xx = {
+    name = "4xxErrorRate"
+    threshold = 10
+  }
+  error5xx = {
+    name = "5xxErrorRate"
+    threshold = 10
+  }
+}
+slack_secret_name = "gmb-cloudfront-slack"
+create_cloudfront = false
+cloudfront_distribution_bucket_name = "gmb-dev-files"

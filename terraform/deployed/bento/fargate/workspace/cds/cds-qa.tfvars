@@ -15,7 +15,7 @@ tags = {
   Project = "cds"
   CreatedWith = "Terraform"
   POC = "ye.wu@nih.gov"
-  Environment = "dev"
+  Environment = "qa"
 }
 fargate_security_group_ports = ["80","443","3306","7473","7474","9200","7687"]
 certificate_domain_name = "*.bento-tools.org"
@@ -43,7 +43,7 @@ microservices  = {
     port = 8080
     health_check_path = "/ping"
     priority_rule_number = 20
-    image_url = "cbiitssrepo/bento-backend:latest"
+    image_url = "cbiitssrepo/bento-frontend:latest"
     cpu = 512
     memory = 1024
     path = "/v1/graphql/*"

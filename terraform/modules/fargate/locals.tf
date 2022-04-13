@@ -1,5 +1,5 @@
 locals {
-  alb_s3_bucket_name = "${var.stack_name}-alb-${var.env}-access-logs"
+  alb_s3_bucket_name = var.cloud_platform == "leidos" ? "${var.stack_name}-alb-${var.env}-access-logs" : "${var.stack_name}-${var.cloud_platform}-alb-${var.env}-access-logs"
   http_port    = 80
   any_port     = 0
   any_protocol = "-1"
