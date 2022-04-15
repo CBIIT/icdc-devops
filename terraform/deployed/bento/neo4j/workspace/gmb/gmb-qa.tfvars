@@ -1,7 +1,7 @@
 tags = {
   ManagedBy = "terraform"
   Project = "GMB"
-  Environment = "dev"
+  Environment = "qa"
   POC = "ye.wu@nih.gov"
 }
 #specify the name you will like to call this project.
