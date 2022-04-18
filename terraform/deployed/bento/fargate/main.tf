@@ -3,7 +3,7 @@ locals {
   all_ips      =  var.cloud_platform == "leidos" ? ["0.0.0.0/0"] : local.nih_ip_cidrs
   alb_subnets = terraform.workspace == "prod" || terraform.workspace == "stage"  || var.cloud_platform == "leidos" ? var.public_subnet_ids : var.private_subnet_ids
   app_url =  terraform.workspace == "prod" ? "${var.app_sub_domain}.${var.domain_name}" : "${var.app_sub_domain}-${terraform.workspace}.${var.domain_name}"
-  alb_allowed_ip_range = terraform.workspace == "prod" || terraform.workspace == "stage" ?  local.all_ips : local.nih_ip_cidrs
+  alb_allowed_ip_range = terraform.workspace == "prod" || terraform.workspace == "stage" || var.cloud_platform == "ledos"  ?  local.all_ips : local.nih_ip_cidrs
 }
 
 #create ecs cluster
