@@ -10,7 +10,7 @@ vpc_id = "vpc-08f154f94dc8a0e34"
 stack_name = "gmb"
 app_name = "gmb"
 domain_name = "bento-tools.org"
-
+cloud_platform = "leidos"
 tags = {
   Project = "gmb"
   CreatedWith = "Terraform"
