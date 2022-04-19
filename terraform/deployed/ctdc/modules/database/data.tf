@@ -26,6 +26,11 @@ data "aws_ami" "centos" {
 }
 
 #define user data
+data "aws_ssm_parameter" "sshkey" {
+  name = "ssh_public_key"
+}
+
+#define user data
 data "template_cloudinit_config" "user_data" {
   gzip          = false
   base64_encode = false
@@ -34,13 +39,13 @@ data "template_cloudinit_config" "user_data" {
 #cloud-config
 ---
 users:
-  - name: var..ssh_user
-    gecos: var.local.ssh_user
+  - name: "${var.ssh_user}"
+    gecos: "${var.ssh_user}"
     sudo: ALL=(ALL) NOPASSWD:ALL
     groups: wheel
     shell: /bin/bash
     ssh_authorized_keys:
-    - var.ssh_key_name
+    - "${data.aws_ssm_parameter.sshkey.value}"
 EOF
   }
 

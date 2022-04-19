@@ -2,7 +2,7 @@
 
 resource "aws_security_group" "alb-sg" {
 
-  name   = "${var.stack_name}-${var.frontend_app_name}-${terraform.workspace}-alb-sg"
+  name   = "${var.stack_name}-${terraform.workspace}-alb-sg"
   vpc_id = var.vpc_id
   tags = merge(
     {

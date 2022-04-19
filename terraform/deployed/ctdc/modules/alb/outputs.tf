@@ -23,3 +23,8 @@ output "backend_target_group_arn" {
   description = "backend target group"
   value = aws_lb_target_group.backend_target_group.arn
 }
+
+output "files_target_group_arn" {
+  description = "files target group"
+  value = aws_lb_target_group.files_target_group.arn
+}

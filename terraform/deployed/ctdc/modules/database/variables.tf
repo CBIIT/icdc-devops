@@ -32,7 +32,7 @@ variable "database_instance_type" {
 variable "database_name" {
   description = "name of the database"
   type = string
-  default = "neo4j"
+  default = "neo4j-4"
 }
 variable "db_private_ip" {
   description = "ip address of the database"

@@ -53,12 +53,6 @@ variable "vpc_id" {
 //  type        = string
 //}
 
-#added frontend app name to accomodate ppdc-otg and ppdc-otp
-variable "frontend_app_name" {
-  description = "it will be either otp or otg"
-  type        = string
-  default     = ""
-}
 variable "frontend_container_port" {
   description = "port on which the container listens"
   type = number
@@ -69,15 +63,25 @@ variable "backend_container_port" {
   type = number
   default = 8080
 }
+variable "files_container_port" {
+  description = "port on which the container listens"
+  type = number
+  default = 8081
+}
 variable "fronted_rule_priority" {
   description = "priority number to assign to alb rule"
   type = number
-  default = 100
+  default = 110
 }
 variable "backend_rule_priority" {
   description = "priority number to assign to alb rule"
   type = number
-  default = 110
+  default = 100
+}
+variable "files_rule_priority" {
+  description = "priority number to assign to alb rule"
+  type = number
+  default = 90
 }
 variable "domain_url" {
   description = "url to use for this stack"

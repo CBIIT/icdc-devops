@@ -32,6 +32,15 @@ variable "backend_target_group_arn" {
   description = "name of the backend alb target group"
   type = string
 }
+variable "files_container_port" {
+  description = "port on which the container listens"
+  type = number
+  default = 8081
+}
+variable "files_target_group_arn" {
+  description = "name of the files alb target group"
+  type = string
+}
 variable "vpc_id" {
   description = "id of the vpc"
   type = string
@@ -45,6 +54,11 @@ variable "backend_container_image_name" {
   description = "backend container image name"
   type = string
   default = "cbiitssrepo/bento-backend"
+}
+variable "files_container_image_name" {
+  description = "files container image name"
+  type = string
+  default = "cbiitssrepo/bento-filedownloader"
 }
 variable "ecs_network_mode" {
   description = "ecs network mode - bridge,host,awsvpc"
@@ -70,6 +84,11 @@ variable "backend_rule_priority" {
   description = "priority number to assign to alb rule"
   type = number
   default = 100
+}
+variable "files_rule_priority" {
+  description = "priority number to assign to alb rule"
+  type = number
+  default = 90
 }
 variable "public_subnets" {
   description = "Provide list of public subnets to use in this VPC. Example 10.0.1.0/24,10.0.2.0/24"
