@@ -3,7 +3,6 @@ resource "aws_iam_role" "ecs-service-role" {
   name               = "${var.stack_name}-${terraform.workspace}-ecs-service-role"
   path               = "/"
   assume_role_policy = data.aws_iam_policy_document.ecs-service-policy.json
-  tags = var.tags
 }
 
 resource "aws_iam_role_policy_attachment" "ecs-service-role-attachment" {

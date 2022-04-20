@@ -31,7 +31,6 @@ resource "aws_elasticsearch_domain" "es" {
     cloudwatch_log_group_arn = aws_cloudwatch_log_group.cloudwatch_log_group.arn
     log_type                 = "INDEX_SLOW_LOGS"
   }
-  tags = var.tags
 }
 
 
