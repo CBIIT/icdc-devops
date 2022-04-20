@@ -189,7 +189,7 @@ pipeline {
 				changelog:false,
 				scm: [$class: 'GitSCM', 
 				//branches: [[name: '*/master']], 
-				branches: [[name: '*/cicd_image']], 
+				branches: [[name: '*/image_scanning']], 
 				doGenerateSubmoduleConfigurations: false, 
 				extensions: [[$class: 'DisableRemotePoll'],
 				[$class: 'PathRestriction', excludedRegions: '*'], 
