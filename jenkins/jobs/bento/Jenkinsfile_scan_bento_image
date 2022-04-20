@@ -33,8 +33,7 @@ pipeline {
 
 	agent {
 		node {
-			//label 'cicd_microservice'
-			label 'ansible-10-test'
+			label 'cicd_microservice'
 		}
 	}
 

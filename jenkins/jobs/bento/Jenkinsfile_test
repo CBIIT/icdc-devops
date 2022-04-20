@@ -32,7 +32,7 @@ def sendSlackMessage() {
 pipeline {
 	agent {
 		node {
-			label 'ansible-10-test'
+			label 'cicd_microservice'
 		}
 	}
 	parameters {
@@ -165,27 +165,16 @@ pipeline {
   options {
   	ansiColor('xterm')
   }
-//  tools {
-//    maven 'Default' 
-//    jdk 'Default' 
-//  }
+
   stages{
   	stage('checkout'){
   		steps {
-//			git branch: "${params.Backend_Tag}",
-//				url: 'https://github.com/CBIIT/bento-backend'
-				
   			checkout([$class: 'GitSCM', 
   				branches: [[name: "${params.Backend_Tag}"]], 
   				doGenerateSubmoduleConfigurations: 
   				false, extensions: [], submoduleCfg: [], 
   				userRemoteConfigs: 
   				[[url: 'https://github.com/CBIIT/bento-backend']]])
-
-//			dir('bento-frontend'){
-//				git branch: "${params.Frontend_Tag}",
-//				url: 'https://github.com/CBIIT/bento-frontend'
-//				}
 
 			checkout([$class: 'GitSCM',
 				branches: [[name: "${params.Frontend_Tag}"]],
@@ -209,7 +198,6 @@ pipeline {
 				submoduleCfg: [], 
 				userRemoteConfigs: 
 				[[url: 'https://github.com/CBIIT/icdc-devops.git']]])
-
         }
  
   	}
