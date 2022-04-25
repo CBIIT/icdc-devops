@@ -85,6 +85,27 @@ resource "aws_lb_target_group" "files_target_group" {
   )
 }
 
+resource "aws_lb_listener_rule" "files_alb_listener" {
+  listener_arn = aws_lb_listener.listener_https.arn
+  priority = var.files_rule_priority
+  action {
+    type = "forward"
+    target_group_arn = aws_lb_target_group.files_target_group.arn
+  }
+
+  condition {
+    host_header {
+      values = ["${var.domain_url}"]
+    }
+
+  }
+  condition {
+    path_pattern  {
+      values = ["/api/files/*"]
+    }
+  }
+}
+
 resource "aws_lb_listener_rule" "backend_alb_listener" {
   count =  terraform.workspace !=  "prod" ? 1:0
   listener_arn = aws_lb_listener.listener_https.arn
@@ -103,6 +124,27 @@ resource "aws_lb_listener_rule" "backend_alb_listener" {
   condition {
     path_pattern  {
       values = ["/v1/graphql/*"]
+    }
+  }
+}
+
+resource "aws_lb_listener_rule" "version_alb_listener" {
+  listener_arn = aws_lb_listener.listener_https.arn
+  priority = var.version_rule_priority
+  action {
+    type = "forward"
+    target_group_arn = aws_lb_target_group.backend_target_group.arn
+  }
+
+  condition {
+    host_header {
+      values = ["${var.domain_url}"]
+    }
+
+  }
+  condition {
+    path_pattern  {
+      values = ["/version"]
     }
   }
 }
@@ -126,25 +168,4 @@ resource "aws_lb_listener_rule" "frontend_alb_listener" {
     }
   }
 
-}
-
-resource "aws_lb_listener_rule" "files_alb_listener" {
-  listener_arn = aws_lb_listener.listener_https.arn
-  priority = var.files_rule_priority
-  action {
-    type = "forward"
-    target_group_arn = aws_lb_target_group.files_target_group.arn
-  }
-
-  condition {
-    host_header {
-      values = ["${var.domain_url}"]
-    }
-
-  }
-  condition {
-    path_pattern  {
-      values = ["/api/files/*"]
-    }
-  }
 }

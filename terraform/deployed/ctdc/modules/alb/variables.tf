@@ -73,6 +73,11 @@ variable "fronted_rule_priority" {
   type = number
   default = 110
 }
+variable "version_rule_priority" {
+  description = "priority number to assign to alb rule"
+  type = number
+  default = 105
+}
 variable "backend_rule_priority" {
   description = "priority number to assign to alb rule"
   type = number
