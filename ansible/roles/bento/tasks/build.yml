@@ -131,7 +131,8 @@
   block:
     - name: run trivy scanner
       #command: "trivy image --exit-code 1 --severity HIGH,CRITICAL {{ ecr_repo }}/{{ project }}-backend:{{bento_api_version}}-{{build_number}}"
-      command: "trivy image --severity HIGH,CRITICAL {{ ecr_repo }}/{{ project }}-backend:{{bento_api_version}}-{{build_number}}"
+      #command: "trivy image --severity HIGH,CRITICAL {{ ecr_repo }}/{{ project }}-backend:{{bento_api_version}}-{{build_number}}"
+      command: "trivy image --severity HIGH,CRITICAL {{ project }}-backend:{{bento_api_version}}-{{build_number}}"
       register: backend_vuln
   always:
     - name: echo backend vulnerabilities
