@@ -117,10 +117,21 @@
     force_source: yes
     source: build
 
+- name: echo local images
+  block:
+    - name: get docker images
+      command: docker images
+      register: image_info
+  always:
+    - name: echo docker images
+      debug:
+        msg: "{{ image_info.stdout_lines }}"
+
 - name: test image for vulnerabilities
   block:
     - name: run trivy scanner
       command: "trivy image --exit-code 1 --severity HIGH,CRITICAL {{ ecr_repo }}/{{ project }}-backend:{{bento_api_version}}-{{build_number}}"
+      #command: "trivy image --severity HIGH,CRITICAL {{ ecr_repo }}/{{ project }}-backend:{{bento_api_version}}-{{build_number}}"
       register: backend_vuln
   always:
     - name: echo backend vulnerabilities
@@ -187,10 +198,20 @@
     force_source: yes
     source: build
 
+- name: echo local images
+  block:
+    - name: get docker images
+      command: docker images
+      register: image_info
+  always:
+    - name: echo docker images
+      debug:
+        msg: "{{ image_info.stdout_lines }}"
+
 - name: test image for vulnerabilities
   block:
     - name: run trivy scanner
-      command: "trivy image --exit-code 1 --severity HIGH,CRITICAL {{ ecr_repo }}/{{ project }}-backend:{{bento_api_version}}-{{build_number}}"
+      command: "trivy image --exit-code 1 --severity HIGH,CRITICAL {{ ecr_repo }}/{{ project }}-frontend:{{frontend_version}}-{{build_number}}"
       register: frontend_vuln
   always:
     - name: echo frontend vulnerabilities
