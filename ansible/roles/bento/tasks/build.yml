@@ -130,13 +130,21 @@
 - name: test image for vulnerabilities
   block:
     - name: run trivy scanner
-      command: "trivy image --exit-code 1 --severity HIGH,CRITICAL {{ ecr_repo }}/{{ project }}-backend:{{bento_api_version}}-{{build_number}}"
-      #command: "trivy image --severity HIGH,CRITICAL {{ ecr_repo }}/{{ project }}-backend:{{bento_api_version}}-{{build_number}}"
+      #command: "trivy image --exit-code 1 --severity HIGH,CRITICAL {{ ecr_repo }}/{{ project }}-backend:{{bento_api_version}}-{{build_number}}"
+      command: "trivy image --severity HIGH,CRITICAL {{ ecr_repo }}/{{ project }}-backend:{{bento_api_version}}-{{build_number}}"
       register: backend_vuln
   always:
     - name: echo backend vulnerabilities
       debug:
         msg: "{{ backend_vuln.stdout_lines }}"
+
+- name: Add {{ project }}-backend image to ECR
+  docker_image:
+    name: "{{ ecr_repo }}/{{ project }}-backend:{{bento_api_version}}-{{build_number}}"
+    repository: "{{ ecr_repo }}/{{ project }}-backend:{{bento_api_version}}-{{build_number}}"
+    #force_tag: yes
+    push: yes
+    source: local
 
 #- name: Add tag latest to {{ project }}-backend image
 #  docker_image:
@@ -217,6 +225,14 @@
     - name: echo frontend vulnerabilities
       debug:
         msg: "{{ frontend_vuln.stdout_lines }}"
+
+- name: Add {{ project }}-frontend image to ECR
+  docker_image:
+    name: "{{ ecr_repo }}/{{ project }}-frontend:{{frontend_version}}-{{build_number}}"
+    repository: "{{ ecr_repo }}/{{ project }}-frontend:{{frontend_version}}-{{build_number}}"
+    #force_tag: yes
+    push: yes
+    source: local
 
 #- name: Add tag latest to {{ project }}-frontend image
 #  docker_image:
