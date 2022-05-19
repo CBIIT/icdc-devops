@@ -23,7 +23,8 @@ region = "us-east-1"
 elasticsearch_instance_type = "t3.medium.elasticsearch"
 create_es_service_role = false
 internal_alb = true
-app_ecr_registry_names = ["backend","frontend","auth"]
+ecr_names = ["backend","frontend","auth","files"]
+create_ecr = true
 microservices  = {
   frontend = {
     name = "frontend"
@@ -65,7 +66,8 @@ microservices  = {
     memory = 512
     path = "/api/files/*"
   }
-
 }
 cloud_platform = "cloudone"
 create_dns_record = false
+create_cloudfront = false
+cloudfront_distribution_bucket_name = "nci-cbiit-caninedatacommons-file-test"
