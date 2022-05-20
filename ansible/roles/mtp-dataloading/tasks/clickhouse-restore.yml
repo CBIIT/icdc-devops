@@ -88,6 +88,8 @@
 
 - name: download the backup file
   shell: 'curl http://localhost:7171/backup/download/{{backupfile}} -X POST'
+  ignore_errors: yes
+  register: backups
 
 - name: display the backup files
   debug:
