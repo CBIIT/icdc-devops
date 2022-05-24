@@ -52,7 +52,7 @@ variable "alb_certificate_arn" {
   description = "alb certificate arn"
   type = string
 }
-variable "domain_url" {
+variable "domain_name" {
   description = "url to use for this stack"
   type = string
 }
@@ -68,4 +68,25 @@ variable "ssh_key_name" {
 variable "ssh_user" {
   description = "name of the ssh user"
   type = string
+}
+variable "neo4j_password" {
+    type = string
+    description = "neo4j password"
+    sensitive = true
+}
+variable "indexd_url" {
+    type = string
+    description = "indexd url"
+    sensitive = true
+}
+
+# Monitoring variables
+variable "sumologic_access_id" {
+    type = string
+    description = "Sumo Logic Access ID"
+}
+variable "sumologic_access_key" {
+    type = string
+    description = "Sumo Logic Access Key"
+    sensitive = true
 }
