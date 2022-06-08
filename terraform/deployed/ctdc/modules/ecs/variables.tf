@@ -100,3 +100,7 @@ variable "private_subnets" {
   default     = []
   type = list(string)
 }
+variable "iam_prefix" {
+  type    = string
+  default = "power-user"
+}

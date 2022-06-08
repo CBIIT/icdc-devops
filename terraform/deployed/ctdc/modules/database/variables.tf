@@ -52,3 +52,7 @@ variable "vpc_id" {
   description = "vpc id"
   type = string
 }
+variable "iam_prefix" {
+  type    = string
+  default = "power-user"
+}

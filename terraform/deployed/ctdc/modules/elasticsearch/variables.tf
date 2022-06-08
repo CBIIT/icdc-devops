@@ -34,3 +34,7 @@ variable "subnet_ip_block" {
   description = "subnet ip block"
   type = list(string)
 }
+variable "iam_prefix" {
+  type    = string
+  default = "power-user"
+}
