@@ -1,10 +1,9 @@
 resource "aws_secretsmanager_secret" "secrets" {
-  name = "bento/${var.app}2/${terraform.workspace}"
+  name = "bento/${var.app}/${terraform.workspace}"
 
 }
 
 resource "aws_secretsmanager_secret_version" "secrets_values" {
-  #secret_id = "bento/${var.app}1/${terraform.workspace}"
   secret_id = aws_secretsmanager_secret.secrets.id
   secret_string = <<EOF
     {
