@@ -3,6 +3,7 @@ resource "aws_lb" "alb" {
 
   name               = "${var.stack_name}-${var.alb_name}-${terraform.workspace}"
   load_balancer_type = var.lb_type
+  internal           = true
   subnets            = var.subnets
   security_groups    = [aws_security_group.alb-sg.id]
 

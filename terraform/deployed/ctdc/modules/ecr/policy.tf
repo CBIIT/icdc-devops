@@ -16,7 +16,7 @@ data "aws_iam_policy_document" "ecr_policy_doc" {
     effect = "Allow"
 
     principals {
-      identifiers = ["${data.aws_caller_identity.caller.account_id}"]
+      identifiers = ["${data.aws_caller_identity.current.account_id}"]
       type        = "AWS"
     }
     actions = [

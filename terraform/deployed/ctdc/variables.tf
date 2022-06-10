@@ -52,7 +52,7 @@ variable "alb_certificate_arn" {
   description = "alb certificate arn"
   type = string
 }
-variable "domain_name" {
+variable "domain_url" {
   description = "url to use for this stack"
   type = string
 }
