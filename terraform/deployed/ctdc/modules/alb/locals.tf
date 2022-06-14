@@ -9,4 +9,5 @@ locals {
 
 locals {
   alb_s3_bucket_name = "${var.stack_name}-alb-${terraform.workspace}-access-logs"
+  alb_s3_prefix = "${var.stack_name}-${terraform.workspace}"
 }
