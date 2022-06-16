@@ -11,7 +11,7 @@ resource "aws_lb" "alb" {
     bucket  = local.alb_s3_bucket_name
     prefix  = local.alb_s3_prefix
     enabled = true
-#  }
+  }
 
   timeouts {
     create = "10m"
