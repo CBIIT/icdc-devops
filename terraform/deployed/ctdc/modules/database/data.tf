@@ -22,7 +22,7 @@ data "aws_ami" "centos" {
     name   = "root-device-type"
     values = ["ebs"]
   }
-  owners   = ["679593333241"]
+  owners = ["679593333241"]
 }
 
 #define user data

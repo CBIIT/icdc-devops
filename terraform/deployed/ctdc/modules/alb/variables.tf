@@ -55,38 +55,38 @@ variable "vpc_id" {
 
 variable "frontend_container_port" {
   description = "port on which the container listens"
-  type = number
-  default = 80
+  type        = number
+  default     = 80
 }
 variable "backend_container_port" {
   description = "port on which the container listens"
-  type = number
-  default = 8080
+  type        = number
+  default     = 8080
 }
 variable "files_container_port" {
   description = "port on which the container listens"
-  type = number
-  default = 8081
+  type        = number
+  default     = 8081
 }
 variable "fronted_rule_priority" {
   description = "priority number to assign to alb rule"
-  type = number
-  default = 110
+  type        = number
+  default     = 110
 }
 variable "version_rule_priority" {
   description = "priority number to assign to alb rule"
-  type = number
-  default = 105
+  type        = number
+  default     = 105
 }
 variable "backend_rule_priority" {
   description = "priority number to assign to alb rule"
-  type = number
-  default = 100
+  type        = number
+  default     = 100
 }
 variable "files_rule_priority" {
   description = "priority number to assign to alb rule"
-  type = number
-  default = 90
+  type        = number
+  default     = 90
 }
 variable "domain_url" {
   description = "url to use for this stack"
@@ -94,27 +94,38 @@ variable "domain_url" {
 }
 
 # S3 variables
+variable "alb_s3_bucket_name" {
+  description = "name of bucket to use for alb logs"
+  default     = ""
+  type        = string
+}
+variable "alb_s3_prefix" {
+  description = "name of prefix to use for alb logs"
+  default     = ""
+  type        = string
+}
 variable "s3_object_expiration_days" {
   description = "number of days for object to live"
-  type = number
-  default = 720
+  type        = number
+  default     = 720
 }
 variable "s3_object_nonactive_expiration_days" {
   description = "number of days to retain non active objects"
-  type = number
-  default = 90
+  type        = number
+  default     = 90
 }
 variable "s3_object_standard_ia_transition_days" {
   description = "number of days for an object to transition to standard_ia storage class"
-  default = 120
-  type = number
+  default     = 120
+  type        = number
 }
 variable "s3_object_glacier_transition_days" {
   description = "number of days for an object to transition to glacier storage class"
-  default = 180
-  type = number
+  default     = 180
+  type        = number
 }
 variable "create_alb_s3_bucket" {
   description = "do we create alb s3 bucket"
-  type = bool
+  default     = false
+  type        = bool
 }

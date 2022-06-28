@@ -1,9 +1,9 @@
 
 resource "aws_iam_role" "db-instance-role" {
-  name                 = "${var.iam_prefix}-${var.stack_name}-db-instance-role-${terraform.workspace}"
+  name                 = var.use_cbiit_iam_roles ? "${local.iam_prefix}-${var.stack_name}-db-instance-role-${terraform.workspace}" : "${var.stack_name}-db-instance-role-${terraform.workspace}"
   path                 = "/"
   assume_role_policy   = data.aws_iam_policy_document.ecs-instance-policy.json
-  permissions_boundary = local.permission_boundary_arn
+  permissions_boundary = var.use_cbiit_iam_roles ? local.permission_boundary_arn : ""
 }
 
 data "aws_iam_policy_document" "ecs-instance-policy" {
@@ -23,8 +23,8 @@ resource "aws_iam_role_policy_attachment" "db-instance-role-attachment" {
 }
 
 resource "aws_iam_instance_profile" "ecs-instance-profile" {
-  name  = "${var.stack_name}-${terraform.workspace}-ecs-instance-profile"
-  path  = "/"
+  name = "${var.stack_name}-${terraform.workspace}-ecs-instance-profile"
+  path = "/"
   role = aws_iam_role.db-instance-role.id
 
 }
@@ -119,8 +119,8 @@ resource "aws_iam_policy_attachment" "ssm-policy-attachement" {
 
 data "aws_iam_policy_document" "ec2-policy-doc" {
   statement {
-    effect = "Allow"
-    actions = ["ec2:*"]
+    effect    = "Allow"
+    actions   = ["ec2:*"]
     resources = ["*"]
   }
 }
@@ -130,16 +130,16 @@ resource "aws_iam_policy" "ec2-policy" {
   policy = data.aws_iam_policy_document.ec2-policy-doc.json
 }
 resource "aws_iam_policy_attachment" "ec2-policy-attach" {
-  name  = "${var.stack_name}-ec2-attach-policy"
+  name       = "${var.stack_name}-ec2-attach-policy"
   policy_arn = aws_iam_policy.ec2-policy.arn
-  roles = [aws_iam_role.db-instance-role.name]
+  roles      = [aws_iam_role.db-instance-role.name]
 }
 
 
 data "aws_iam_policy_document" "ecs-policy-doc" {
   statement {
-    effect = "Allow"
-    actions = ["ecs:*"]
+    effect    = "Allow"
+    actions   = ["ecs:*"]
     resources = ["*"]
   }
   statement {
@@ -170,7 +170,7 @@ resource "aws_iam_policy" "ecs-policy" {
   policy = data.aws_iam_policy_document.ecs-policy-doc.json
 }
 resource "aws_iam_policy_attachment" "ecs-policy-attach" {
-  name  = "${var.stack_name}-${terraform.workspace}-ecs-policy-attachement"
+  name       = "${var.stack_name}-${terraform.workspace}-ecs-policy-attachement"
   policy_arn = aws_iam_policy.ecs-policy.arn
-  roles = [aws_iam_role.db-instance-role.name]
+  roles      = [aws_iam_role.db-instance-role.name]
 }

@@ -1,106 +1,106 @@
 variable "tags" {
   description = "tags to associate with this instance"
-  type = map(string)
+  type        = map(string)
 }
 variable "stack_name" {
   description = "name of the project"
-  type = string
+  type        = string
 }
 variable "container_replicas" {
   description = "specify the number of container to run"
-  type = number
+  type        = number
 }
 variable "alb_sg_id" {
   description = "id of the alb security group"
-  type = string
+  type        = string
 }
 variable "frontend_container_port" {
   description = "port on which the container listens"
-  type = number
-  default = 80
+  type        = number
+  default     = 80
 }
 variable "frontend_target_group_arn" {
   description = "name of the frontend alb target group"
-  type = string
+  type        = string
 }
 variable "backend_container_port" {
   description = "port on which the container listens"
-  type = number
-  default = 8080
+  type        = number
+  default     = 8080
 }
 variable "backend_target_group_arn" {
   description = "name of the backend alb target group"
-  type = string
+  type        = string
 }
 variable "files_container_port" {
   description = "port on which the container listens"
-  type = number
-  default = 8081
+  type        = number
+  default     = 8081
 }
 variable "files_target_group_arn" {
   description = "name of the files alb target group"
-  type = string
+  type        = string
 }
 variable "vpc_id" {
   description = "id of the vpc"
-  type = string
+  type        = string
 }
 variable "frontend_container_image_name" {
   description = "frontend container image name"
-  type = string
-  default = "cbiitssrepo/bento-frontend"
+  type        = string
+  default     = "cbiitssrepo/bento-frontend"
 }
 variable "backend_container_image_name" {
   description = "backend container image name"
-  type = string
-  default = "cbiitssrepo/bento-backend"
+  type        = string
+  default     = "cbiitssrepo/bento-backend"
 }
 variable "files_container_image_name" {
   description = "files container image name"
-  type = string
-  default = "cbiitssrepo/bento-filedownloader"
+  type        = string
+  default     = "cbiitssrepo/bento-filedownloader"
 }
 variable "ecs_network_mode" {
   description = "ecs network mode - bridge,host,awsvpc"
-  type = string
-  default = "awsvpc"
+  type        = string
+  default     = "awsvpc"
 }
 variable "ecs_launch_type" {
   description = "ecs launch type - FARGATE or EC2"
-  type = string
-  default = "FARGATE"
+  type        = string
+  default     = "FARGATE"
 }
 variable "ecs_scheduling_strategy" {
   description = "ecs scheduling strategy"
-  type = string
-  default = "REPLICA"
+  type        = string
+  default     = "REPLICA"
 }
 variable "fronted_rule_priority" {
   description = "priority number to assign to alb rule"
-  type = number
-  default = 101
+  type        = number
+  default     = 101
 }
 variable "backend_rule_priority" {
   description = "priority number to assign to alb rule"
-  type = number
-  default = 100
+  type        = number
+  default     = 100
 }
 variable "files_rule_priority" {
   description = "priority number to assign to alb rule"
-  type = number
-  default = 90
+  type        = number
+  default     = 90
 }
 variable "public_subnets" {
   description = "Provide list of public subnets to use in this VPC. Example 10.0.1.0/24,10.0.2.0/24"
   default     = []
-  type = list(string)
+  type        = list(string)
 }
 variable "private_subnets" {
   description = "Provide list private subnets to use in this VPC. Example 10.0.10.0/24,10.0.11.0/24"
   default     = []
-  type = list(string)
+  type        = list(string)
 }
-variable "iam_prefix" {
-  type    = string
-  default = "power-user"
+variable "use_cbiit_iam_roles" {
+  type    = bool
+  default = false
 }

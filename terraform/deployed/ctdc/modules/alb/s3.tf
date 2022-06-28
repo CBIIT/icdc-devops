@@ -2,11 +2,11 @@
 resource "aws_s3_bucket" "alb_logs_bucket" {
   count = var.create_alb_s3_bucket ? 1 : 0
 
-  bucket = local.alb_s3_bucket_name
+  bucket = var.alb_s3_bucket_name
 
   tags = merge(
     {
-      "Name" = local.alb_s3_bucket_name
+      "Name" = var.alb_s3_bucket_name
     },
     var.tags,
   )
@@ -14,14 +14,14 @@ resource "aws_s3_bucket" "alb_logs_bucket" {
 
 resource "aws_s3_bucket_acl" "this" {
   count = var.create_alb_s3_bucket ? 1 : 0
-  
+
   bucket = aws_s3_bucket.alb_logs_bucket[count.index].id
   acl    = "private"
 }
 
 resource "aws_s3_bucket_server_side_encryption_configuration" "this" {
-  count = var.create_alb_s3_bucket ? 1: 0
-  
+  count = var.create_alb_s3_bucket ? 1 : 0
+
   bucket = aws_s3_bucket.alb_logs_bucket[count.index].id
 
   rule {
@@ -33,36 +33,36 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "this" {
 
 resource "aws_s3_bucket_lifecycle_configuration" "this" {
   count = var.create_alb_s3_bucket ? 1 : 0
-  
+
   bucket = aws_s3_bucket.alb_logs_bucket[count.index].id
 
   rule {
-    id = "transition_to_standard_ia"
+    id     = "transition_to_standard_ia"
     status = "Enabled"
-    
-	transition {
-      days = var.s3_object_standard_ia_transition_days
-	  storage_class = "STANDARD_IA"
-    }
-    
-	noncurrent_version_transition {
-      noncurrent_days = var.s3_object_nonactive_expiration_days - 30 > 30 ? 30 : var.s3_object_nonactive_expiration_days + 30
+
+    transition {
+      days          = var.s3_object_standard_ia_transition_days
       storage_class = "STANDARD_IA"
     }
-	
+
+    noncurrent_version_transition {
+      noncurrent_days = var.s3_object_nonactive_expiration_days - 30 > 30 ? 30 : var.s3_object_nonactive_expiration_days + 30
+      storage_class   = "STANDARD_IA"
+    }
+
   }
-  
+
   rule {
-    id = "expire_objects"
+    id     = "expire_objects"
     status = "Enabled"
-    
-	expiration {
+
+    expiration {
       days = var.s3_object_expiration_days
     }
-    
-	noncurrent_version_expiration {
+
+    noncurrent_version_expiration {
       noncurrent_days = var.s3_object_nonactive_expiration_days
     }
-	
+
   }
 }

@@ -4,7 +4,7 @@ resource "aws_secretsmanager_secret" "secrets" {
 }
 
 resource "aws_secretsmanager_secret_version" "secrets_values" {
-  secret_id = aws_secretsmanager_secret.secrets.id
+  secret_id     = aws_secretsmanager_secret.secrets.id
   secret_string = <<EOF
     {
 	  "es_host": "${var.es_endpoint}",

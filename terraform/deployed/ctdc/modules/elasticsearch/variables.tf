@@ -1,38 +1,38 @@
 variable "tags" {
   description = "tags to associate with this instance"
-  type = map(string)
+  type        = map(string)
 }
 variable "stack_name" {
   description = "name of the project"
-  type = string
+  type        = string
 }
 variable "elasticsearch_instance_type" {
   description = "type of instance to be used to create the elasticsearch cluster"
-  type = string
-  default = "t3.medium.elasticsearch"
+  type        = string
+  default     = "t3.medium.elasticsearch"
 }
 variable "elasticsearch_version" {
-  type = string
+  type        = string
   description = "specify es version"
-  default = "7.10"
+  default     = "7.10"
 }
 variable "create_es_service_role" {
   description = "change this value to true if running this script for the first time"
-  type = bool
-  default = false
+  type        = bool
+  default     = false
 }
 variable "private_subnet_ids" {
   description = "list of subnet ids to use"
-  type = list(string)
-  default = null
+  type        = list(string)
+  default     = null
 }
 variable "vpc_id" {
   description = "vpc id"
-  type = string
+  type        = string
 }
 variable "subnet_ip_block" {
   description = "subnet ip block"
-  type = list(string)
+  type        = list(string)
 }
 variable "iam_prefix" {
   type    = string

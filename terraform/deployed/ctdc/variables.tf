@@ -1,92 +1,103 @@
 variable "tags" {
   description = "tags to associate with this instance"
-  type = map(string)
+  type        = map(string)
 }
 variable "stack_name" {
   description = "name of the project"
-  type = string
+  type        = string
 }
 variable "region" {
   description = "aws region to deploy"
-  type = string
-  default = "us-east-1"
+  type        = string
+  default     = "us-east-1"
 }
 variable "profile" {
   description = "iam user profile to use"
-  type = string
-  default = "default"
+  type        = string
+  default     = "default"
 }
 variable "remote_state_bucket_name" {
   description = "name of the remote bucket to store or pull terraform state data"
-  type = string
-  default = null
+  type        = string
+  default     = null
 }
 variable "create_es_service_role" {
-  type = bool
-  default = false
+  type        = bool
+  default     = false
   description = "change this value to true if running this script for the first time"
 }
 variable "private_subnet_ids" {
   description = "list of private subnet ids to use"
-  type = list(string)
-  default = null
+  type        = list(string)
+  default     = null
 }
 variable "public_subnet_ids" {
   description = "list of public subnet ids to use"
-  type = list(string)
-  default = null
+  type        = list(string)
+  default     = null
 }
 variable "db_private_ip" {
   description = "private ip address to use for the database"
-  type = string
+  type        = string
 }
 variable "vpc_id" {
   description = "vpc id"
-  type = string
+  type        = string
 }
 variable "subnet_ip_block" {
   description = "subnet ip block"
-  type = list(string)
+  type        = list(string)
 }
 variable "alb_certificate_arn" {
   description = "alb certificate arn"
-  type = string
+  type        = string
 }
 variable "domain_url" {
   description = "url to use for this stack"
-  type = string
+  type        = string
+}
+variable "dns_domain" {
+  description = "domain to use for this stack"
+  type        = string
 }
 variable "create_alb_s3_bucket" {
   description = "do we create alb s3 bucket"
-  type = bool
-  default = false
+  type        = bool
+  default     = false
 }
 variable "ssh_key_name" {
   description = "name of the ssh key to manage the instances"
-  type = string
+  type        = string
 }
 variable "ssh_user" {
   description = "name of the ssh user"
-  type = string
+  type        = string
 }
 variable "neo4j_password" {
-    type = string
-    description = "neo4j password"
-    sensitive = true
+  type        = string
+  description = "neo4j password"
+  sensitive   = true
 }
 variable "indexd_url" {
-    type = string
-    description = "indexd url"
-    sensitive = true
+  type        = string
+  description = "indexd url"
+  sensitive   = true
 }
 
 # Monitoring variables
 variable "sumologic_access_id" {
-    type = string
-    description = "Sumo Logic Access ID"
+  type        = string
+  description = "Sumo Logic Access ID"
 }
 variable "sumologic_access_key" {
-    type = string
-    description = "Sumo Logic Access Key"
-    sensitive = true
+  type        = string
+  description = "Sumo Logic Access Key"
+  sensitive   = true
+}
+
+# Role variables - set for cloudone environments
+variable "use_cbiit_iam_roles" {
+  description = "use CBIIT configurations for IAM roles"
+  default     = false
+  type        = bool
 }
