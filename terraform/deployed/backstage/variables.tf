@@ -55,6 +55,10 @@ variable "dns_domain" {
   description = "domain to use for this stack"
   type        = string
 }
+variable "container_image_name" {
+  description = "container image name"
+  type        = string
+}
 
 # S3 variables
 variable "create_alb_s3_bucket" {
