@@ -17,7 +17,7 @@ variable "alb_sg_id" {
 variable "container_port" {
   description = "port on which the container listens"
   type        = number
-  default     = 80
+  default     = 7000
 }
 variable "target_group_arn" {
   description = "name of the alb target group"

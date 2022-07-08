@@ -1,5 +1,6 @@
 resource "aws_secretsmanager_secret" "secrets" {
-  name = "${var.app}/${terraform.workspace}"
+  #name = "${var.app}/${terraform.workspace}"
+  name = "${var.app}"
 
 }
 

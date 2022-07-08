@@ -69,8 +69,8 @@ resource "aws_ecs_task_definition" "backstage" {
   task_role_arn            = aws_iam_role.task_role.arn
   container_definitions = jsonencode([
     {
-      name      = "backend"
-      image     = "${var.container_image_name}:latest"
+      name      = "backstage"
+      image     = "${var.container_image_name}"
       essential = true
       portMappings = [
         {

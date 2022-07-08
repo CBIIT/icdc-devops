@@ -55,10 +55,22 @@ variable "dns_domain" {
   description = "domain to use for this stack"
   type        = string
 }
+
+# S3 variables
 variable "create_alb_s3_bucket" {
   description = "do we create alb s3 bucket"
   type        = bool
   default     = false
+}
+variable "alb_s3_bucket_name" {
+  description = "alb s3 bucket name"
+  type        = string
+  default     = ""
+}
+variable "alb_s3_prefix" {
+  description = "name of prefix to use for alb logs"
+  default     = ""
+  type        = string
 }
 
 # Monitoring variables

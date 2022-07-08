@@ -1,8 +1,11 @@
 ---
 - name: backstage
-  image: cbiitssrepo/backstage-leidos:latest
+  #image: cbiitssrepo/bento-frontend:latest
+  image: 420434175168.dkr.ecr.us-east-1.amazonaws.com/backstage-leidos:latest
   essential: true
   portMappings:
     - protocol: tcp
-      containerPort: 80
-      hostPort: 80
+      #containerPort: 80
+      #hostPort: 80
+      containerPort: 7000
+      hostPort: 7000
