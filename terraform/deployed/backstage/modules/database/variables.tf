@@ -1,58 +1,26 @@
-variable "tags" {
-  description = "tags to associate with this instance"
-  type        = map(string)
-}
-variable "stack_name" {
+variable "app" {
   description = "name of the project"
-  type        = string
+  type = string
 }
-variable "ssh_key_name" {
-  description = "name of the ssh key to manage the instances"
-  type        = string
-}
-variable "ssh_user" {
-  description = "name of the ec2 user"
-  type        = string
-  default     = ""
-}
-variable "private_subnet_ids" {
-  description = "list of subnet ids to use"
+
+variable "db_subnet_ids" {
   type        = list(string)
-  default     = null
+  default     = []
+  description = "list of subnet IDs to use"
 }
-variable "subnet_ip_block" {
-  description = "subnet ip block to use"
+
+variable "allowed_ip_blocks" {
   type        = list(string)
+  default     = []
+  description = "list of allowed IP blocks"
 }
-variable "database_instance_type" {
-  description = "ec2 instance type to use"
+
+variable "ecs_security_group_id" {
   type        = string
-  default     = "t3.medium"
+  description = "ecs security group id"
 }
-variable "database_name" {
-  description = "name of the database"
-  type        = string
-  default     = "neo4j-4"
-}
-variable "db_private_ip" {
-  description = "ip address of the database"
-  type        = string
-}
-variable "evs_volume_type" {
-  description = "EVS volume type"
-  type        = string
-  default     = "standard"
-}
-variable "db_instance_volume_size" {
-  description = "volume size of the instances"
-  type        = number
-  default     = 80
-}
+
 variable "vpc_id" {
-  description = "vpc id"
   type        = string
-}
-variable "use_cbiit_iam_roles" {
-  type    = bool
-  default = false
+  description = "VPC ID the DB instance will be created in"
 }
