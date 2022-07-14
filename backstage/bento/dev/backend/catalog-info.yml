@@ -1,0 +1,69 @@
+- apiVersion: backstage.io/v1alpha1
+  kind: Component
+  metadata:
+    name: bento-dev-backend
+    description: backend service
+  spec:
+    type: service
+    lifecycle: development
+    owner: bento-dev-team
+    system: bento-dev
+    providesApis:
+      - bento-dev-backend-version
+      - bento-dev-backend-graphql
+
+- apiVersion: backstage.io/v1alpha1
+  kind: API
+  metadata:
+    name: bento-dev-backend-version
+    description: Retrieve backend version
+    links:
+      - url: https://bento-dev.bento-tools.org/version
+        title: Bento-dev backend version
+        icon: version
+  spec:
+    type: openapi
+    lifecycle: development
+    owner: bento-dev-team
+    system: bento-dev
+    definition: |
+      openapi: "3.0.0"
+      info:
+        version: 1.0.0
+        title: Version API
+        license:
+          name: MIT
+      servers:
+        - url: https://bento-dev.bento-tools.org
+      paths:
+        /version:
+          get:
+            summary: List API version
+
+- apiVersion: backstage.io/v1alpha1
+  kind: API
+  metadata:
+    name: bento-dev-backend-graphql
+    description: Backend graphql API
+    links:
+      - url: https://bento-dev.bento-tools.org/v1/graphql/
+        title: Bento-dev backend graphql API
+        icon: graphql
+  spec:
+    type: openapi
+    lifecycle: development
+    owner: bento-dev-team
+    system: bento-dev
+    definition: |
+      openapi: "3.0.0"
+      info:
+        version: 1.0.0
+        title: Version API
+        license:
+          name: MIT
+      servers:
+        - url: https://bento-dev.bento-tools.org
+      paths:
+        /v1/graphql/:
+          get:
+            summary: Graphql API
