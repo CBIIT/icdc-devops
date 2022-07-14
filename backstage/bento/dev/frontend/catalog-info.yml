@@ -20,6 +20,10 @@ kind: Component
 metadata:
   name: bento-dev-frontend
   description: frontend service
+  links:
+    - url: https://bento-dev.bento-tools.org
+      title: Bento-dev Frontend
+      icon: dashboard
 spec:
   type: service
   lifecycle: development
