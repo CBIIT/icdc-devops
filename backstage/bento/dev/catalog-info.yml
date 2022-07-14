@@ -5,4 +5,4 @@ metadata:
   description: the bento dev tier
 spec:
   owner: bento-dev-team
-  domain: Bento
+  domain: bento-tools.org
