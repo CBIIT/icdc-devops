@@ -1,8 +1,0 @@
-apiVersion: backstage.io/v1alpha1
-kind: System
-metadata:
-  name: bento-dev
-  description: the bento dev tier
-spec:
-  owner: bento-dev-team
-  domain: bento-tools.org

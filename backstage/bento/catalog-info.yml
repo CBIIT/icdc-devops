@@ -1,7 +1,0 @@
-apiVersion: backstage.io/v1alpha1
-kind: Domain
-metadata:
-  name: bento-tools.org
-  description: Bento Framework
-spec:
-  owner: bento-dev-team
