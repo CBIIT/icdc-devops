@@ -9,6 +9,12 @@ spec:
   owner: bento-dev-team
   system: bento-dev
   definition: |
+    openapi: "3.0.0"
+    info:
+      version: 1.0.0
+      title: Version API
+      license:
+        name: MIT
     servers:
       - url: https://bento-dev.bento-tools.org
     paths:
