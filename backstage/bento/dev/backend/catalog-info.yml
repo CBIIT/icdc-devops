@@ -9,7 +9,6 @@ spec:
   owner: bento-dev-team
   system: bento-dev
 
-apiVersion: backstage.io/v1alpha1
 kind: API
 metadata:
   name: bento-dev-backend-version
