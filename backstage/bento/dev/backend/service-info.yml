@@ -10,3 +10,4 @@ spec:
   system: bento-dev
   providesApis:
     - bento-dev-backend-version
+    - bento-dev-backend-graphql
