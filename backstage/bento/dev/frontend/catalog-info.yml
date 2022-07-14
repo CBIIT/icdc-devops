@@ -8,3 +8,4 @@ spec:
   lifecycle: development
   owner: bento-dev-team
   system: bento-dev
+  consumesApis: bento-dev-backend-graphql
