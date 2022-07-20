@@ -43,6 +43,12 @@ pipeline {
         description: 'Choose the environment to build', 
         type: 'PT_SINGLE_SELECT',
         value: 'sandbox,dev,test,qa,stage,prod')
+    extendedChoice(
+        name: 'DataModelBranch',
+        defaultValue: 'develop',
+        description: 'Choose Data Model branch to build',
+        type: 'PT_SINGLE_SELECT',
+        value: 'develop,master')
     booleanParam(
 		defaultValue: true,
 		description: 'Flush the Redis cache',
@@ -211,7 +217,8 @@ pipeline {
                   extraVars: [
 					redis_schema_file: "${params.Redis_Schema_File}",
 					redis_init_queries_file: "${params.Redis_Queries_File}",
-                    test_queries_file: "${params.Test_Queries_File}"
+                    test_queries_file: "${params.Test_Queries_File}",
+                    data_model_branch: "${params.DataModelBranch}",
                   ],
             			colorized: true
                   ) 

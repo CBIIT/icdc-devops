@@ -42,6 +42,12 @@ pipeline {
         description: 'Choose the environment to build', 
         type: 'PT_SINGLE_SELECT',
         value: 'demo,dev,qa,stage,prod' )
+    extendedChoice(
+        name: 'DataModelBranch',
+        defaultValue: 'develop',
+        description: 'Choose Data Model branch to build',
+        type: 'PT_SINGLE_SELECT',
+        value: 'develop,master')
 	booleanParam(
    		defaultValue: true,
 		description: 'Flush the Redis cache',
@@ -320,7 +326,8 @@ pipeline {
                     backend_version: "${params.Backend_Tag}",
                     backend_git_tag: "${params.Backend_Tag}",
                     frontend_git_tag: "${params.Frontend_Tag}",
-					enable_redis_filter: "${params.Enable_Redis_Filter}"
+					enable_redis_filter: "${params.Enable_Redis_Filter}",
+					 data_model_branch: "${params.DataModelBranch}",
                     ],
                 become: true,
                 hostKeyChecking: false,

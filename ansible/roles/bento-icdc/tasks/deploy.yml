@@ -35,7 +35,7 @@
     - /local/content/k9dc/file-downloader
     - /local/content/k9dc/nginx
 
-- name: update serivces and compose files
+- name: update services and compose files
   template:
     src: "{{item.src}}"
     dest: "{{item.dest}}"
