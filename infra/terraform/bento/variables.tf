@@ -154,11 +154,7 @@ variable "katalon_security_group_id" {
   description = "security group id of the bastion host"
   type = string
 }
-variable "db_iam_instance_profile_name" {
-  description = "name of iam_instance_profile to apply to this instance"
-  type = string
-  default = "bento-dev-ecs-instance-profile"
-}
+
 variable "db_subnet_id" {
   description = "subnet id to launch db"
   type = string
