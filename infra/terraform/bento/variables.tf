@@ -84,7 +84,7 @@ variable "microservices" {
     image_url = string
     cpu = number
     memory = number
-    path = string
+    path = list(string)
     number_container_replicas = number
   }))
 }
