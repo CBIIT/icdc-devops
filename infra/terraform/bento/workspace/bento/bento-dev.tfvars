@@ -38,7 +38,7 @@ microservices  = {
     image_url = "cbiitssrepo/bento-frontend:latest"
     cpu = 256
     memory = 512
-    path = "/*"
+    path = ["/*"]
     number_container_replicas = 1
   },
   backend = {
@@ -49,7 +49,7 @@ microservices  = {
     image_url = "cbiitssrepo/bento-backend:latest"
     cpu = 512
     memory = 1024
-    path = "/v1/graphql/*"
+    path = ["/v1/graphql/*","/version"]
     number_container_replicas = 1
   },
   auth = {
@@ -60,7 +60,7 @@ microservices  = {
     image_url = "cbiitssrepo/bento-auth:latest"
     cpu = 256
     memory = 512
-    path = "/api/auth/*"
+    path = ["/api/auth/*"]
     number_container_replicas = 1
   },
   files = {
@@ -71,7 +71,7 @@ microservices  = {
     image_url = "cbiitssrepo/bento-filedownloader:latest"
     cpu = 256
     memory = 512
-    path = "/api/files/*"
+    path = ["/api/files/*"]
     number_container_replicas = 1
   },
   files = {
@@ -82,7 +82,7 @@ microservices  = {
     image_url = "cbiitssrepo/bento-auth:latest"
     cpu = 256
     memory = 512
-    path = "/api/users/*"
+    path = ["/api/users/*"]
     number_container_replicas = 1
   }
 }
