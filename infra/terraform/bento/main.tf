@@ -86,7 +86,6 @@ module "neo4j" {
   vpc_id = var.vpc_id
   db_subnet_id = var.db_subnet_id
   db_instance_volume_size = var.db_instance_volume_size
-  iam_instance_profile_name = var.db_iam_instance_profile_name
   public_ssh_key_ssm_parameter_name = var.public_ssh_key_ssm_parameter_name
   stack_name = var.stack_name
   db_private_ip = var.db_private_ip
