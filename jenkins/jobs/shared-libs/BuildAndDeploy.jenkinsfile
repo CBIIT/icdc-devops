@@ -10,13 +10,17 @@ buildApp(label: "cicd_microservice") {
     stage("build"){  
         runAnsible playbook: "${WORKSPACE}/icdc-devops/ansible/build-frontend-microservice.yml", inventory: "${WORKSPACE}/icdc-devops/ansible/hosts", tier: "${params.Environment}", projectName: "${params.ProjectName}"
     }
-//     stage("deploy"){
-//
-//     }
-//     stage("tag repos"){
-//         tagRepo gitTag: "${params.FrontendTag}", gitUrl: "https://github.com/CBIIT/bento-frontend", checkoutDirectory: "vote-frontend"
-//         tagRepo gitTag: "${params.BackendTag}", gitUrl: "https://github.com/CBIIT/bento-backend", checkoutDirectory: "bento-backend"
-//     }
-//     notify secretPath: "notification/slack", secretName: "icdc_slack_url"
+    stage("deploy"){
+        setEnvValues(){
+            env.FE_VERSION = "${params.FrontendTag}-${BUILD_NUMBER}"
+        }
+        echo "${BE_VERSION}"
+        runAnsible playbook: "${WORKSPACE}/icdc-devops/ansible/deploy-frontend-microservice.yml", inventory: "${WORKSPACE}/icdc-devops/ansible/hosts", tier: "${params.Environment}", projectName: "${params.ProjectName}"
+    }
+    stage("tag repos"){
+        tagRepo gitTag: "${params.FrontendTag}", gitUrl: "https://github.com/CBIIT/bento-frontend", checkoutDirectory: "vote-frontend"
+        tagRepo gitTag: "${params.BackendTag}", gitUrl: "https://github.com/CBIIT/bento-backend", checkoutDirectory: "bento-backend"
+    }
+    notify secretPath: "notification/slack", secretName: "icdc_slack_url"
 }
 
