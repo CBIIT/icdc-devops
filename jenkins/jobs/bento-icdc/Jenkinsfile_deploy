@@ -327,7 +327,7 @@ pipeline {
                     backend_git_tag: "${params.Backend_Tag}",
                     frontend_git_tag: "${params.Frontend_Tag}",
 					enable_redis_filter: "${params.Enable_Redis_Filter}",
-					 data_model_branch: "${params.DataModelBranch}",
+					data_model_branch: "${params.DataModelBranch}",
                     ],
                 become: true,
                 hostKeyChecking: false,
