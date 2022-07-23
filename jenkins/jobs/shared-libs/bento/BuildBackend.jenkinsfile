@@ -1,0 +1,22 @@
+@Library('datacommons-jenkins-shared-library') _
+buildApp(label: "cicd_microservice") {
+    buildProperties(name: "BackendTag", remoteRepoUrl: "https://github.com/CBIIT/bento-backend") {
+    addParameters([[
+        gitBranchParameter name: "FrontendTag", remoteRepoUrl: "https://github.com/CBIIT/bento-frontend"
+    ]])
+    }
+    gitCheckout checkoutDirectory: "vote-frontend", gitUrl: "https://github.com/CBIIT/bento-frontend", gitBranch: "${params.FrontendTag}"
+    gitCheckout gitUrl: "https://github.com/CBIIT/bento-backend", gitBranch: "${params.BackendTag}"
+    gitCheckout checkoutDirectory: "icdc-devops", gitUrl: "https://github.com/CBIIT/icdc-devops", gitBranch: "master"
+    setEnvValues(type: "build"){}
+    stage("build"){
+        runAnsible playbook: "${WORKSPACE}/icdc-devops/ansible/build-backend-microservice.yml", inventory: "${WORKSPACE}/icdc-devops/ansible/hosts", tier: "${params.Environment}", projectName: "${params.ProjectName}"
+    }
+    stage("deploy"){
+        runAnsible playbook: "${WORKSPACE}/icdc-devops/ansible/deploy-backend-microservice.yml", inventory: "${WORKSPACE}/icdc-devops/ansible/hosts", tier: "${params.Environment}", projectName: "${params.ProjectName}"
+    }
+    stage("tag repos"){
+        tagRepo gitTag: "${params.BackendTag}", gitUrl: "https://github.com/CBIIT/bento-backend", checkoutDirectory: "bento-backend"
+    }
+    notify secretPath: "notification/slack", secretName: "icdc_slack_url"
+}
