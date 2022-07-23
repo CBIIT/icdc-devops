@@ -7,7 +7,7 @@ private_subnet_ids = [
   "subnet-07d177a4d9df5cd32"
 ]
 vpc_id = "vpc-08f154f94dc8a0e34"
-stack_name = "vote"
+stack_name = "bento"
 
 tags = {
   Project = "bento"
@@ -23,7 +23,7 @@ certificate_domain_name = "*.bento-tools.org"
 domain_name = "bento-tools.org"
 
 #ecr
-create_ecr_repos = true
+create_ecr_repos = false
 ecr_repo_names = ["backend","frontend","auth","files"]
 
 #ecs
@@ -72,6 +72,17 @@ microservices  = {
     cpu = 256
     memory = 512
     path = "/api/files/*"
+    number_container_replicas = 1
+  },
+  files = {
+    name = "users"
+    port = 8083
+    health_check_path = "/api/users/ping"
+    priority_rule_number = 18
+    image_url = "cbiitssrepo/bento-auth:latest"
+    cpu = 256
+    memory = 512
+    path = "/api/users/*"
     number_container_replicas = 1
   }
 }
