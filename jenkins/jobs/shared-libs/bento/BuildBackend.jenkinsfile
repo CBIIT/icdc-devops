@@ -3,11 +3,12 @@ build(label: "cicd_microservice") {
     buildProperties(name: "BackendTag", remoteRepoUrl: "https://github.com/CBIIT/bento-backend") {
         gitBranchParameter name: "FrontendTag", remoteRepoUrl: "https://github.com/CBIIT/bento-frontend"
     }
+     sh 'ls -l ${WORKSPACE}'
     gitCheckout checkoutDirectory: "bento-frontend", gitUrl: "https://github.com/CBIIT/bento-frontend", gitBranch: "${params.FrontendTag}"
     gitCheckout checkoutDirectory: "${WORKSPACE}", gitUrl: "https://github.com/CBIIT/bento-backend", gitBranch: "${params.BackendTag}"
     gitCheckout checkoutDirectory: "icdc-devops", gitUrl: "https://github.com/CBIIT/icdc-devops", gitBranch: "master"
     setEnvValues(type: "build"){}
-    sh 'ls -l ${WORKSPACE}/bento-frontend'
+    sh 'ls -l ${WORKSPACE}'
     stage("build"){
         runAnsible playbook: "${WORKSPACE}/icdc-devops/ansible/build-backend-microservice.yml", inventory: "${WORKSPACE}/icdc-devops/ansible/hosts", tier: "${params.Environment}", projectName: "${params.ProjectName}"
     }
