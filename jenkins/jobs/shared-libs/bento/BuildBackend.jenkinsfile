@@ -1,9 +1,7 @@
 @Library('datacommons-jenkins-shared-library') _
 
 build(label: "cicd_microservice") {
-    def additionalParams =  [
-     gitBranchParameter(name: , remoteRepoUrl: )
-    ]
+
     buildProperties(name: "BackendTag", remoteRepoUrl: "https://github.com/CBIIT/bento-backend") {
     }
     addParameters additionalParams: [
