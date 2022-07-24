@@ -89,5 +89,6 @@ module "neo4j" {
   public_ssh_key_ssm_parameter_name = var.public_ssh_key_ssm_parameter_name
   stack_name = var.stack_name
   db_private_ip = var.db_private_ip
+  database_instance_type = var.database_instance_type
   tags = var.tags
 }

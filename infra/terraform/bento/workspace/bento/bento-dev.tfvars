@@ -109,6 +109,6 @@ db_private_ip = "172.18.11.232"
 db_iam_instance_profile_name = "bento-dev-ecs-instance-profile"
 ssh_key_name = "devops"
 public_ssh_key_ssm_parameter_name = "ssh_public_key"
-
+database_instance_type = "t3.large"
 #dns
 create_dns_record = true
