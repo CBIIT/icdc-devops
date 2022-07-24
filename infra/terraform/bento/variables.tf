@@ -217,3 +217,8 @@ variable "create_env_specific_repo" {
   type = bool
   default = false
 }
+variable "database_instance_type" {
+  description = "ec2 instance type to use"
+  type        = string
+  default     = "t3.large"
+}
