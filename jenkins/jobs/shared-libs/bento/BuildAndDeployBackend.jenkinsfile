@@ -11,6 +11,10 @@ build(label: "cicd_microservice") {
         runAnsible playbook: "${WORKSPACE}/icdc-devops/ansible/build-backend-microservice.yml", inventory: "${WORKSPACE}/icdc-devops/ansible/hosts", tier: "${params.Environment}", projectName: "${params.ProjectName}"
     }
     stage("deploy"){
+        setEnvValues(){
+          //override BE_VERSION value at deploy stage
+          env.BE_VERSION = "${params.BackendTag}-${BUILD_NUMBER}"
+        }
         runAnsible playbook: "${WORKSPACE}/icdc-devops/ansible/deploy-backend-microservice.yml", inventory: "${WORKSPACE}/icdc-devops/ansible/hosts", tier: "${params.Environment}", projectName: "${params.ProjectName}"
     }
     stage("tag repos"){

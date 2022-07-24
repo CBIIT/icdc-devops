@@ -31,7 +31,7 @@
         database_name: "{{ project_name }}-{{ tier }}-neo4j"
 
     #deploy backend
-    - name: deploy stage for ctdc backend
+    - name: deploy stage for backend microservice
       include_role:
         name: bento.common.ecs
       vars:
