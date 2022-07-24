@@ -1,10 +1,9 @@
 @Library('datacommons-jenkins-shared-library') _
 buildApp(label: "cicd_microservice") {
     buildProperties(name: "BackendTag", remoteRepoUrl: "https://github.com/CBIIT/bento-backend") {
-    addParameters([[
+    addParameters additionalParams: [
         gitBranchParameter name: "FrontendTag", remoteRepoUrl: "https://github.com/CBIIT/bento-frontend"
-    ]])
-    }
+    ]
     gitCheckout checkoutDirectory: "bento-frontend", gitUrl: "https://github.com/CBIIT/bento-frontend", gitBranch: "${params.FrontendTag}"
     gitCheckout gitUrl: "https://github.com/CBIIT/bento-backend", gitBranch: "${params.BackendTag}"
     gitCheckout checkoutDirectory: "icdc-devops", gitUrl: "https://github.com/CBIIT/icdc-devops", gitBranch: "master"
@@ -20,3 +19,4 @@ buildApp(label: "cicd_microservice") {
     }
     notify secretPath: "notification/slack", secretName: "icdc_slack_url"
 }
+additionalParams
