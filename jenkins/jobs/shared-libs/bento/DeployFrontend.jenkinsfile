@@ -1,0 +1,12 @@
+@Library('datacommons-jenkins-shared-library') _
+deployApp(
+    label: "cicd_microservice",
+    parameterName: "FrontendTag",
+    repoName: "bento-frontend",
+    playbook: "deploy-frontend-microservice.yml",
+    inventory: "hosts",
+    tier: "${params.Environment}",
+    projectName: "${params.ProjectName}",
+    slackSecretPath: "notification/slack",
+    slackSecretName: "bento_slack_url"
+)
