@@ -1,5 +1,5 @@
 @Library('datacommons-jenkins-shared-library') _
-buildAndDeploy
+buildAndDeploy(
     label: "cicd_microservice",
     parameterName: "FrontendTag",
     codeRepoUrl: "https://github.com/CBIIT/bento-frontend",
