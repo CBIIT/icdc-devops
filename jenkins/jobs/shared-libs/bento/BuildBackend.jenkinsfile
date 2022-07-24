@@ -1,11 +1,11 @@
 @Library('datacommons-jenkins-shared-library') _
-def additionalParams = [
-    gitBranchParameter name: "FrontendTag", remoteRepoUrl: "https://github.com/CBIIT/bento-frontend"
-]
+// def additionalParams = [
+//     gitBranchParameter name: "FrontendTag", remoteRepoUrl: "https://github.com/CBIIT/bento-frontend"
+// ]
 build(label: "cicd_microservice") {
     buildProperties(name: "BackendTag", remoteRepoUrl: "https://github.com/CBIIT/bento-backend") {
     }
-    addParameters(additionalParams:[[gitBranchParameter name: "FrontendTag", remoteRepoUrl: "https://github.com/CBIIT/bento-frontend"]])
+    //addParameters(additionalParams:[[gitBranchParameter name: "FrontendTag", remoteRepoUrl: "https://github.com/CBIIT/bento-frontend"]])
     gitCheckout checkoutDirectory: "bento-frontend", gitUrl: "https://github.com/CBIIT/bento-frontend", gitBranch: "${params.FrontendTag}"
     gitCheckout gitUrl: "https://github.com/CBIIT/bento-backend", gitBranch: "${params.BackendTag}"
     gitCheckout checkoutDirectory: "icdc-devops", gitUrl: "https://github.com/CBIIT/icdc-devops", gitBranch: "master"
