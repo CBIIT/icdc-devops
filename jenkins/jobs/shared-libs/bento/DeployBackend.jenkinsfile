@@ -9,4 +9,4 @@ deployApp(
     projectName: "${params.ProjectName}",
     slackSecretPath: "notification/slack",
     slackSecretName: "bento_slack_url"
-){}
+)
