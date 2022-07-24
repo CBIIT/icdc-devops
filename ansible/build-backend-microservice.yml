@@ -34,7 +34,7 @@
         tier: "{{ tier }}"
         bento_api_version: "{{ image_version }}"
         container_name: "backend"
-        schema_file: "{%if project_name = 'bento' %}{{ project_name }}-extended.graphql{%else%}{{ project_name }}.graphql{%end if%}"
+        schema_file: "{%if project_name == 'bento' %}{{ project_name }}-extended.graphql{% else %}{{ project_name }}.graphql{% endif %}"
         es_schema_file: "es-schema-{{ project_name }}.graphql"
         es_host: "{{ lookup('amazon.aws.aws_secret', 'bento/{{ project_name }}/{{ tier }}.es_host', nested=true, region='us-east-1' ) }}"
         test_queries_file: "not_needed.txt"
