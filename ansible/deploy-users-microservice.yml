@@ -28,7 +28,7 @@
       vars:
         tier: "{{tier}}"
         project_name: "{{project_name}}"
-        database_name: "{{ project_name }}-{{ tier }}-neo4j"
+        database_name: "{{ project_name }}-{{ tier }}-neo4j-4"
 
     #deploy backend
     - name: deploy stage for users microservice
