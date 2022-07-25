@@ -37,7 +37,6 @@
       vars:
         auth_version: "{{ lookup('env','AUTH_VERSION') }}"
         region: "us-east-1"
-
         idp_provider: "{{ lookup('amazon.aws.aws_secret', 'auth/provider/google.idp_provider', nested=true, region='us-east-1' ) }}"
         idp_client_id: "{{ lookup('amazon.aws.aws_secret', 'auth/provider/google.idp_client_id', nested=true, region='us-east-1' ) }}"
         idp_client_secret: "{{ lookup('amazon.aws.aws_secret', 'auth/provider/google.idp_client_secret', nested=true, region='us-east-1' ) }}"
