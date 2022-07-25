@@ -92,7 +92,7 @@
           - name: DATE
             value: "{{ansible_date_time.date}}"
           - name: PROJECT
-            value: "{{project}}"
+            value: "{{project_name}}"
           - name: GOOGLE_REDIRECT_URL
             value: "{% if tier == 'prod' %}https://bento-tools.org{% else %}https://{{project_name}}-{{ tier }}.bento-tools.org{% endif %}"
           - name: NEW_RELIC_LICENSE_KEY
