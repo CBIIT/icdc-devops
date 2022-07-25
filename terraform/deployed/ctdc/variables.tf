@@ -61,6 +61,11 @@ variable "create_alb_s3_bucket" {
   type        = bool
   default     = false
 }
+variable "internal_alb" {
+  description = "is this alb internal?"
+  default     = false
+  type        = bool
+}
 variable "ssh_key_name" {
   description = "name of the ssh key to manage the instances"
   type        = string

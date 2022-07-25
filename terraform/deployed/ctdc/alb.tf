@@ -8,4 +8,5 @@ module "alb" {
   tags                 = var.tags
   create_alb_s3_bucket = var.create_alb_s3_bucket
   domain_url           = var.domain_url
+  internal_alb         = var.internal_alb
 }
