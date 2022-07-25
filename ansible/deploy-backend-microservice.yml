@@ -36,6 +36,9 @@
         name: bento.common.ecs
       vars:
         ansible_python_interpreter: /usr/bin/python3
+        iam_prefix: ""
+        execution_role: "{{ iam_prefix }}{{ project_name }}-{{ tier }}-task-execution-role"
+        task_role: "{{ iam_prefix }}{{ project_name }}-{{ tier }}-task-role"
         project_name: "{{project_name}}"
         platform: aws
         region: us-east-1
