@@ -36,7 +36,7 @@
         name: bento.common.ecs
       vars:
         ansible_python_interpreter: /usr/bin/python3
-        project_name: ctdc
+        project_name: "{{project_name}}"
         platform: aws
         region: us-east-1
         container_name: "backend"
