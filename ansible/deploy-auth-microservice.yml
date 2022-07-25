@@ -66,7 +66,7 @@
         sumo_collector_token: "{{ lookup('amazon.aws.aws_secret', 'bento/{{ project_name }}/{{ tier }}.sumo_collector_token_auth', nested=true, region='us-east-1' ) }}"
         container_port: "8082"
         container_memory: "512"
-        container_cpu: "512"
+        container_cpu: "256"
         container_image_url: "{{ ecr_repo }}/{{ project_name }}-{{ container_name }}"
         #Environment
         container_env:
