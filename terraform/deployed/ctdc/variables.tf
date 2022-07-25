@@ -61,6 +61,16 @@ variable "create_alb_s3_bucket" {
   type        = bool
   default     = false
 }
+variable "alb_s3_bucket_name" {
+  description = "name of bucket to use for alb logs"
+  default     = ""
+  type        = string
+}
+variable "alb_s3_prefix" {
+  description = "name of prefix to use for alb logs"
+  default     = ""
+  type        = string
+}
 variable "internal_alb" {
   description = "is this alb internal?"
   default     = false
