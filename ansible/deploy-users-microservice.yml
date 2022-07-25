@@ -35,6 +35,7 @@
       include_role:
         name: bento.common.ecs
       vars:
+        cookie_secret: "{{ lookup('amazon.aws.aws_secret', 'auth/provider/google.cookie_secret', nested=true, region='us-east-1' ) }}"
         users_version: "{{ lookup('env','USERS_VERSION') }}"
         region: "us-east-1"
         email_user: "{{ lookup('amazon.aws.aws_secret', 'smtp.email_user', nested=true, region='us-east-1' ) }}"
