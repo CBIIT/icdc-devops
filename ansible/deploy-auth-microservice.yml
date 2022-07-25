@@ -143,6 +143,6 @@
           - name: AUTHORIZATION_ENABLED
             value: "true"
           - name: AUTHORIZATION_URL
-            value: "{% if tier == 'prod' %}https://bento-tools.org/api/users/graphql{% else %}https://{{stack_name}}-{{ tier }}.bento-tools.org/api/users/graphql{% endif %}"
+            value: "{% if tier == 'prod' %}https://bento-tools.org/api/users/graphql{% else %}https://{{project_name}}-{{ tier }}.bento-tools.org/api/users/graphql{% endif %}"
           - name: EMAILS_ENABLED
             value: "true"
