@@ -24,6 +24,7 @@
     - name: set tier to prod for dev,qa,perf
       set_fact:
         cloudfront_key_group_name: "bento-prod-pub-key"
+        cloudfront_origin_id: "{{project_name}}_files_origin_id"
       when: 
         - tier == 'dev' or tier == 'qa' or tier == 'perf'
         - project_name == 'bento'
@@ -51,7 +52,6 @@
         name: bento.common.ecs
       vars:
         ansible_python_interpreter: /usr/bin/python3
-        cloudfront_origin_id: "{{project_name}}_files_origin_id"
         cloudfront_key_group_name: "{{project_name}}-{{tier}}-pub-key"
         cloudfront_private_key: "{{ lookup('aws_ssm', 'bento_files_cloudfront_private_key', region='us-east-1' ) }}"
         project_name: "{{project_name}}"
