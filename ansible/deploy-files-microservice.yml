@@ -26,7 +26,7 @@
         cloudfront_key_group_name: "bento-prod-pub-key"
       when: 
         - tier == 'dev' or tier == 'qa' or tier == 'perf'
-        - project == 'bento'
+        - project_name == 'bento'
 
     - name: get distribution domain name
       command: aws cloudfront list-distributions --query "DistributionList.Items[?Origins.Items[?Id=='{{cloudfront_origin_id}}']].DomainName |[0]" --output text
