@@ -56,10 +56,6 @@ variable "domain_url" {
   description = "url to use for this stack"
   type        = string
 }
-variable "dns_domain" {
-  description = "domain to use for this stack"
-  type        = string
-}
 variable "create_alb_s3_bucket" {
   description = "do we create alb s3 bucket"
   type        = bool
