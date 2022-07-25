@@ -31,7 +31,7 @@
         database_name: "{{ project_name }}-{{ tier }}-neo4j"
 
     #deploy backend
-    - name: deploy stage for backend microservice
+    - name: deploy stage for users microservice
       include_role:
         name: bento.common.ecs
       vars:
@@ -48,7 +48,7 @@
         project_name: "{{project_name}}"
         platform: aws
         container_name: "users"
-        image_version: "{{user_version }}"
+        image_version: "{{users_version }}"
         tier: "{{ tier }}"
         ecs_cluster_name: "{{ project_name }}-{{ tier }}-ecs"
         neo4j_user: "{{ lookup('amazon.aws.aws_secret', 'bento/{{ project_name }}/{{ tier }}.neo4j_user', nested=true, region='us-east-1' ) }}"
