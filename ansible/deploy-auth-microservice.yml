@@ -1,7 +1,7 @@
 - name: deploy auth microservice
   hosts: all
   connection: local
-  gather_facts: no
+  gather_facts: yes
   become: yes
 
   tasks:
