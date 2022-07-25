@@ -29,6 +29,7 @@ module "ecs" {
   stack_name = var.stack_name
   tags = var.tags
   vpc_id = var.vpc_id
+  add_opensearch_permission = var.add_opensearch_permission
   ecs_subnet_ids = var.private_subnet_ids
   application_url = local.application_url
   env = terraform.workspace

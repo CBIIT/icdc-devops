@@ -27,6 +27,7 @@ create_ecr_repos = false
 ecr_repo_names = ["backend","frontend","auth","files","users"]
 
 #ecs
+add_opensearch_permission = true
 fargate_security_group_ports = ["80","443","3306","7473","7474","9200","7687"]
 application_subdomain = "bento"
 microservices  = {
