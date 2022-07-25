@@ -11,5 +11,7 @@ buildAndDeploy(
     projectName: "${params.ProjectName}",
     slackSecretPath: "notification/slack",
     slackSecretName: "bento_slack_url",
-    appVersionName: "FILES_VERSION"
+    appVersionName: "FILES_VERSION",
+    useCustomBranch: "yes",
+    customBranch: "main"
 )
