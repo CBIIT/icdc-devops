@@ -74,7 +74,7 @@ microservices  = {
     path = ["/api/files/*"]
     number_container_replicas = 1
   },
-  files = {
+  users = {
     name = "users"
     port = 8083
     health_check_path = "/api/users/ping"
