@@ -222,3 +222,8 @@ variable "database_instance_type" {
   type        = string
   default     = "t3.large"
 }
+variable "add_opensearch_permission" {
+  type = bool
+  default = false
+  description = "choose to create opensearch permission or not"
+}
