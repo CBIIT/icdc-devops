@@ -102,7 +102,7 @@
           - name: MYSQL_HOST
             value: "{{mysql_host}}"
           - name: MYSQL_PORT
-            value: 3306
+            value: "3306"
           - name: MYSQL_PASSWORD
             value: "{{mysql_password}}"
           - name: MYSQL_USER
@@ -113,7 +113,7 @@
           - name: EMAIL_SMTP_HOST
             value: email-smtp.us-east-1.amazonaws.com
           - name: EMAIL_SMTP_PORT
-            value: 465
+            value: "465"
           # If Sent From AWS SMTP
           - name: EMAIL_USER
             value: "{{email_user}}"
