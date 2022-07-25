@@ -35,6 +35,9 @@
       include_role:
         name: bento.common.ecs
       vars:
+        iam_prefix: ""
+        execution_role: "{{ iam_prefix }}{{ project_name }}-{{ tier }}-task-execution-role"
+        task_role: "{{ iam_prefix }}{{ project_name }}-{{ tier }}-task-role"
         cookie_secret: "{{ lookup('amazon.aws.aws_secret', 'auth/provider/google.cookie_secret', nested=true, region='us-east-1' ) }}"
         users_version: "{{ lookup('env','USERS_VERSION') }}"
         region: "us-east-1"
