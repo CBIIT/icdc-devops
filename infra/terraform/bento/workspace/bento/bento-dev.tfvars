@@ -24,7 +24,7 @@ domain_name = "bento-tools.org"
 
 #ecr
 create_ecr_repos = false
-ecr_repo_names = ["backend","frontend","auth","files"]
+ecr_repo_names = ["backend","frontend","auth","files","users"]
 
 #ecs
 fargate_security_group_ports = ["80","443","3306","7473","7474","9200","7687"]
@@ -68,7 +68,7 @@ microservices  = {
     port = 8081
     health_check_path = "/api/files/ping"
     priority_rule_number = 19
-    image_url = "cbiitssrepo/bento-filedownloader:latest"
+    image_url = "cbiitssrepo/bento-auth:latest"
     cpu = 256
     memory = 512
     path = ["/api/files/*"]

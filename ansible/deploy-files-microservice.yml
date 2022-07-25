@@ -94,4 +94,4 @@
         - name: NEW_RELIC_LICENSE_KEY
           value: "{{ newrelic_license_key }}"
         - name: NEW_RELIC_APP_NAME
-          value: "{{project_name}}-{{tier}}-file-downloader-{{ansible_hostname}}"
+          value: "{{project_name}}-{{tier}}-files-{{ansible_hostname}}"
