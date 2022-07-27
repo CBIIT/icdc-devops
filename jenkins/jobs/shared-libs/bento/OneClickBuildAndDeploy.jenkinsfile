@@ -4,5 +4,5 @@ oneClickBuild(
     parameterName: "DeployTag",
     codeRepoUrl: "https://github.com/CBIIT/bento-deployments",
     checkoutDirectory: "bento-deployments",
-    deploymentFile: "${WORKSPACE}/bento-deployments/deployments.yaml"
+    deploymentFile: "bento-deployments/deployments.yaml"
 )
