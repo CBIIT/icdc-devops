@@ -14,7 +14,7 @@ buildAndDeploy(
     appVersionName: "FILES_VERSION",
     useCustomBranch: "yes",
     customBranch: "main",
-    deploymentRepoUrl: "https://github.com/CBIIT/bento-deployments.git",
+    deploymentRepoUrl: "https://github.com/CBIIT/bento-deployments",
     deploymentCheckoutDirectory: "bento-deployments",
     deploymentFile: "bento-deployments/deployments.yaml",
     service: "auth"
