@@ -13,5 +13,9 @@ buildAndDeploy(
     slackSecretName: "bento_slack_url",
     appVersionName: "FILES_VERSION",
     useCustomBranch: "yes",
-    customBranch: "main"
+    customBranch: "main",
+    deploymentRepoUrl: "https://github.com/CBIIT/bento-deployments.git",
+    deploymentCheckoutDirectory: "bento-deployments",
+    deploymentFile: "bento-deployments/deployments.yaml",
+    service: "auth"
 )
