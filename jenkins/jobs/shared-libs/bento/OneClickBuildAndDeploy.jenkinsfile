@@ -1,3 +1,4 @@
+@Library('datacommons-jenkins-shared-library') _
 oneClickBuild(
     label: "cicd_microservice",
     parameterName: "DeployTag",
