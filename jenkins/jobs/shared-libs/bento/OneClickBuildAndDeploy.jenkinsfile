@@ -1,0 +1,7 @@
+oneClickBuild(
+    label: "cicd_microservice",
+    parameterName: "DeployTag",
+    codeRepoUrl: "https://github.com/CBIIT/bento-deployments",
+    checkoutDirectory: "bento-deployments",
+    deploymentFile: "${WORKSPACE}/bento-deployments/deployments.yaml"
+)
