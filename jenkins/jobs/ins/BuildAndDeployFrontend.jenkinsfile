@@ -57,15 +57,6 @@ pipeline {
        sortMode: 'ASCENDING_SMART', 
        tagFilter: '*', 
        useRepository: 'https://github.com/CBIIT/INS-WebPortal')
-    gitParameter(branchFilter: 'origin/(.*)', 
-       defaultValue: 'main', 
-       name: 'Backend_Tag', 
-       type: 'PT_BRANCH_TAG',
-       quickFilterEnabled: false, 
-       selectedValue: 'DEFAULT', 
-       sortMode: 'ASCENDING_SMART', 
-       tagFilter: '*', 
-       useRepository: 'https://github.com/CBIIT/INS-WebService')
     string(
       defaultValue: 'ins',
       description: 'Project Name',
@@ -107,7 +98,6 @@ pipeline {
       environment {
        VERSION = "${params.Frontend_Tag}"
        FE_VERSION = "${params.Frontend_Tag}"
-       BE_VERSION = "${params.Backend_Tag}"
       }
     steps {
 
@@ -130,8 +120,7 @@ pipeline {
         FE_VERSION = "${params.Frontend_Tag}-${BUILD_NUMBER}"
         SLACK_CHANNEL = "#system-alerts"
         URL_DOMAIN = "bento-tools.org"
-		TIER = "${params.Environment}"
-        BE_VERSION = "${params.Backend_Tag}"
+		    TIER = "${params.Environment}"
       }
 	  steps{
 		  wrap([$class: 'AnsiColorBuildWrapper', colorMapName: "xterm"]) {
