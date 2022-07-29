@@ -36,15 +36,15 @@ resource "aws_security_group_rule" "all_outbound" {
 }
 
 #create ecs ingress sg
-//resource "aws_security_group_rule" "inbound_fargate" {
-//  for_each = toset(var.fargate_security_group_ports)
-//  from_port = each.key
-//  protocol = local.tcp_protocol
-//  to_port = each.key
-//  security_group_id = module.ecs.ecs_security_group_id
-//  cidr_blocks = [data.aws_vpc.vpc.cidr_block]
-//  type = "ingress"
-//}
+resource "aws_security_group_rule" "inbound_fargate" {
+  for_each = toset(local.fargate_security_group_ports)
+  from_port = each.key
+  protocol = local.tcp_protocol
+  to_port = each.key
+  security_group_id = module.ecs.ecs_security_group_id
+  cidr_blocks = [data.aws_vpc.vpc.cidr_block]
+  type = "ingress"
+}
 
 #create app ingress
 resource "aws_security_group_rule" "app_inbound" {
