@@ -71,10 +71,6 @@ variable "attach_bucket_policy" {
   type        = bool
   default     = true
 }
-variable "fargate_security_group_ports" {
-  type = list(string)
-  description = "list of ports to allow when using ECS"
-}
 variable "microservices" {
   type = map(object({
     name = string
