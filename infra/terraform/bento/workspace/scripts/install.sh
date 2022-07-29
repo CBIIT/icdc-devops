@@ -7,3 +7,7 @@ cd workspace
 git clone https://github.com/CBIIT/icdc-devops.git
 cd icdc-devops && git checkout master
 cd infra/terraform/bento
+
+###########
+terraform init -reconfigure -backend-config=workspace/gmb/gmb-nonprod.tfbackend
+terraform workspace new dev
