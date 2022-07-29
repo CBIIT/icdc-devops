@@ -5,7 +5,7 @@ import json
 import requests
 from monitors.alerts.conditions import set_apdex_condition
 
-def setapmalertpolicy(project, tier, email_id, slack_id, key):
+def setapmalertpolicy(project, tier, key):
    API_ENDPOINT = 'https://api.newrelic.com/v2/alerts_policies.json'
 
    policy_name = '{}-{} APM Policy'.format(project.title(), tier.title())
@@ -41,12 +41,6 @@ def setapmalertpolicy(project, tier, email_id, slack_id, key):
      except requests.exceptions.RequestException as e:
        raise SystemExit(e)
      policy_id = response.json()['policy'].get("id", "none")
-
-     # add notification channels
-     data = {
-       "policy_id": '{}'.format(policy_id),
-       "channel_ids": '{},{}'.format(email_id, slack_id)
-     }
 
      try:
        response = requests.put('https://api.newrelic.com/v2/alerts_policy_channels.json', headers=headers, data=json.dumps(data), allow_redirects=False)
