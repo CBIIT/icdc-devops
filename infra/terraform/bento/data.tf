@@ -43,6 +43,6 @@ data "aws_iam_policy_document" "s3_alb_policy" {
 
 data "aws_acm_certificate" "amazon_issued" {
   domain      =  var.certificate_domain_name
-  types       = local.cert_types
+  types       = [local.cert_types]
   most_recent = true
 }
