@@ -100,4 +100,4 @@
         - name: EMAIL_PASSWORD
           value: "{{email_user}}"
         - name: EMAILS_ENABLED
-          value: "false"
+          value: "true"
