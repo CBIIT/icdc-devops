@@ -35,7 +35,7 @@ module "ecs" {
   env = terraform.workspace
   microservices = var.microservices
   alb_https_listener_arn = module.alb.alb_https_listener_arn
-  target_account_cloudone = false
+  target_account_cloudone = var.target_account_cloudone
 }
 
 #create ecr
