@@ -16,8 +16,8 @@ region = "us-east-1"
 
 #alb
 internal_alb = true
-certificate_domain_name = "*.cancer.gov"
-domain_name = "cancer.gov"
+certificate_domain_name = "*.nci.nih.gov"
+domain_name = "nci.nih.gov"
 
 #ecr
 create_ecr_repos = true
