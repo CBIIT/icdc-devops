@@ -10,7 +10,7 @@ locals {
   neo4j_bolt = 7687
   redis = "6379"
   cert_types = var.cloud_platform == "leidos" ? "AMAZON_ISSUED" : "IMPORTED"
-  nih_ip_cidrs =  terraform.workspace == "prod" || terraform.workspace == "stage" || var.cloud_platform == "leidos" ? ["0.0.0.0/0"]: [ "129.43.0.0/16" , "137.187.0.0/16" , "10.128.0.0/9" , "165.112.0.0/16" , "156.40.0.0/16" , "10.208.0.0/21" , "128.231.0.0/16" , "130.14.0.0/16" , "157.98.0.0/16" , "10.133.0.0/16" ]
+  nih_ip_cidrs =  terraform.workspace == "prod" || terraform.workspace == "stage" || var.cloud_platform == "leidos" ? ["0.0.0.0/0"]: [ "129.43.0.0/16" , "137.187.0.0/16"  , "165.112.0.0/16" , "156.40.0.0/16"  , "128.231.0.0/16" , "130.14.0.0/16" , "157.98.0.0/16"]
   all_ips      =  var.cloud_platform == "leidos" ? ["0.0.0.0/0"] : local.nih_ip_cidrs
   alb_subnet_ids = terraform.workspace == "prod" || terraform.workspace == "stage"  || var.cloud_platform == "leidos" ? var.public_subnet_ids : var.private_subnet_ids
   #app_url =  terraform.workspace == "prod" ? "${var.app_sub_domain}.${var.domain_name}" : "${var.app_sub_domain}-${terraform.workspace}.${var.domain_name}"
