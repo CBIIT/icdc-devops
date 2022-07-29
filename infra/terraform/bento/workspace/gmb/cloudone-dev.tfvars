@@ -4,7 +4,7 @@ private_subnet_ids = [
   "subnet-409a0424"
 ]
 vpc_id = "vpc-29a12251"
-stack_name = "bento"
+stack_name = "gmb"
 
 tags = {
   Project = "gmb"
