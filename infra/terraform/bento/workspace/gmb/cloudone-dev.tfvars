@@ -104,3 +104,4 @@ create_dns_record = false
 
 #cloud platform
 cloud_platform="cloudone"
+target_account_cloudone = true
