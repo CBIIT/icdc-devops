@@ -5,13 +5,13 @@ import json
 import requests
 from monitors.alerts.conditions import set_disk_space_condition, set_memory_condition, set_cpu_condition
 
-def setdbalertpolicy(project, tier, email_id, synthetics_id, key):
+def setdbalertpolicy(project, tier, synthetics_id, key):
    API_ENDPOINT = 'https://api.newrelic.com/v2/alerts_policies.json'
 
    policy_name = '{}-{} DB Policy'.format(project.title(), tier.title())
    policy_found = False
    headers = {'Api-Key': key}
-   
+
    try:
      response = requests.get('{}'.format(API_ENDPOINT), headers=headers)
    except requests.exceptions.RequestException as e:
@@ -26,7 +26,7 @@ def setdbalertpolicy(project, tier, email_id, synthetics_id, key):
      "Api-Key": key,
      "Content-Type": "application/json"
    }
-   
+
    data = {
      "policy": {
        "incident_preference": "PER_POLICY",
@@ -42,12 +42,6 @@ def setdbalertpolicy(project, tier, email_id, synthetics_id, key):
      except requests.exceptions.RequestException as e:
        raise SystemExit(e)
      policy_id = response.json()['policy'].get("id", "none")
-
-     # add notification channels
-     data = {
-       "policy_id": '{}'.format(policy_id),
-       "channel_ids": '{}'.format(email_id)
-     }
 
      try:
        response = requests.put('https://api.newrelic.com/v2/alerts_policy_channels.json', headers=headers, data=json.dumps(data), allow_redirects=False)
@@ -65,7 +59,7 @@ def setdbalertpolicy(project, tier, email_id, synthetics_id, key):
        response = requests.put('{}'.format(API_ENDPOINT), headers=headers, data=json.dumps(data), allow_redirects=False)
      except requests.exceptions.RequestException as e:
        raise SystemExit(e)
-     
+
    # add disk space condition
    set_disk_space_condition.setdiskspacecondition(key, '{}-aws-{}-neo4j'.format(project.lower(), tier.lower()), policy_id)
 
