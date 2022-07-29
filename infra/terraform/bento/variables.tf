@@ -149,10 +149,12 @@ variable "create_dns_record" {
 variable "bastion_host_security_group_id" {
   description = "security group id of the bastion host"
   type = string
+  default = "sg-0c94322085acbfd97"
 }
 variable "katalon_security_group_id" {
   description = "security group id of the bastion host"
   type = string
+  default = "sg-0f07eae0a9b3a0bb8"
 }
 
 variable "db_subnet_id" {
