@@ -1,0 +1,63 @@
+pipeline {
+	agent {
+		node {
+			label 'slave-ncias-p2236-v'
+		}
+	}
+	parameters {
+    string(
+        name: 'Hostname',
+        defaultValue: 'create', 
+        description: 'Enter the hostname of the agent',
+        )
+  }
+  options {
+  	ansiColor('xterm')
+  }
+  tools {
+  	maven 'Default' 
+    jdk 'Default' 
+  }
+  stages{
+  	stage('checkout'){
+  		steps {
+
+  			checkout( poll: false, 
+				changelog:false,
+				scm: [$class: 'GitSCM', 
+				branches: [[name: '*/master']], 
+				doGenerateSubmoduleConfigurations: false, 
+				extensions: [[$class: 'DisableRemotePoll'],
+				[$class: 'PathRestriction', excludedRegions: '*'], 
+				[$class: 'RelativeTargetDirectory', 
+				relativeTargetDir: 'icdc-devops']], 
+				submoduleCfg: [], 
+				userRemoteConfigs: 
+				[[url: 'https://github.com/CBIIT/icdc-devops.git']]])
+        
+        }
+ 
+  	}
+  	stage('build'){
+ 		steps {
+ 			wrap([$class: 'AnsiColorBuildWrapper', colorMapName: "xterm"]) {
+                  sh "echo  [all]\n${params.Hostname} > ${WORKSPACE}/icdc-devops/ansible/hosts"
+                  ansiblePlaybook(
+                        playbook: '${WORKSPACE}/icdc-devops/ansible/apm-integrations.yml',
+                        inventory: '${WORKSPACE}/icdc-devops/ansible/inventory.yml',
+                        credentialsId: 'commonsdocker',
+                        extraVars: [tier: "${params.Environment}"],
+                        become: true,
+                        hostKeyChecking: false,
+                        colorized: true)
+ 		    }
+ 		}
+ 	}
+  }
+  post {
+    always {
+      sendSlackMessage() 
+      // cleanWs()
+    }
+  }
+}
