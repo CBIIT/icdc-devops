@@ -57,7 +57,7 @@ pipeline {
   }
   post {
     always {
-      sendSlackMessage() 
+      sh "echo end of pipeline"
       // cleanWs()
     }
   }
