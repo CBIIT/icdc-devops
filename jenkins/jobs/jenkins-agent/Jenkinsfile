@@ -42,7 +42,7 @@ pipeline {
  		steps {
  			wrap([$class: 'AnsiColorBuildWrapper', colorMapName: "xterm"]) {
                   sh "echo  [all]\n${params.Hostname} > ${WORKSPACE}/icdc-devops/ansible/hosts"
-                  sh "cat ${WORKSPACE}/icdc-devops/ansible/hosts"
+              
                   ansiblePlaybook(
                         playbook: '${WORKSPACE}/icdc-devops/ansible/initialize-jenkins-agent.yml',
                         inventory: '${WORKSPACE}/icdc-devops/ansible/hosts',
