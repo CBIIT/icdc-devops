@@ -38,6 +38,10 @@
           value: http://{{ neo4j_ip }}:7474/graphql/
         - name: BENTO_API_VERSION
           value: "{{bento_api_version}}"
+        - name: AUTH_ENDPOINT
+          value: "{{ react_app_auth_service_api[tier] }}"
+        - name: AUTH_ENABLED
+          value: "{{ auth_enabled }}"
         - name: ES_HOST
           value: "{{es_host}}"
         - name: REDIS_ENABLE
