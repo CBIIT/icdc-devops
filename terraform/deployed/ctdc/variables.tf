@@ -112,3 +112,8 @@ variable "use_cbiit_iam_roles" {
   default     = false
   type        = bool
 }
+variable "create_es_service_role" {
+  description = "change this value to true if running this script for the first time"
+  type        = bool
+  default     = false
+}
