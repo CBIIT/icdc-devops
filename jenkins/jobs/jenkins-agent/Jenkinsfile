@@ -1,7 +1,7 @@
 pipeline {
 	agent {
 		node {
-			label 'slave-ncias-p2236-v'
+			label 'commons-docker-ncias-p2236-v'
 		}
 	}
 	parameters {
