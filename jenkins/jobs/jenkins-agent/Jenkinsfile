@@ -43,10 +43,10 @@ pipeline {
  			wrap([$class: 'AnsiColorBuildWrapper', colorMapName: "xterm"]) {
                   sh "echo  [all]\n${params.Hostname} > ${WORKSPACE}/icdc-devops/ansible/hosts"
                   ansiblePlaybook(
-                        playbook: '${WORKSPACE}/icdc-devops/ansible/apm-integrations.yml',
-                        inventory: '${WORKSPACE}/icdc-devops/ansible/inventory.yml',
+                        playbook: '${WORKSPACE}/icdc-devops/ansible/initialize-jenkins-agent.yml',
+                        inventory: '${WORKSPACE}/icdc-devops/ansible/hosts',
                         credentialsId: 'commonsdocker',
-                        extraVars: [tier: "${params.Environment}"],
+                        extraVars: [host: "${params.Hostname}"],
                         become: true,
                         hostKeyChecking: false,
                         colorized: true)
