@@ -1,5 +1,5 @@
 - name: initialize jenkins
-  hosts: "{{host}}"
+  hosts: all
   gather_facts: yes
   become: yes
   remote_user: commonsdocker
