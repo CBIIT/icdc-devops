@@ -41,7 +41,7 @@ pipeline {
   	stage('build'){
  		steps {
  			wrap([$class: 'AnsiColorBuildWrapper', colorMapName: "xterm"]) {
-                  sh """echo  "[all]\n${params.Hostname}" > ${WORKSPACE}/icdc-devops/ansible/host"""
+                  sh """echo  "[agent]\n${params.Hostname}" > ${WORKSPACE}/icdc-devops/ansible/host"""
                   sh "cat ${WORKSPACE}/icdc-devops/ansible/host"
                   ansiblePlaybook(
                         playbook: "${WORKSPACE}/icdc-devops/ansible/initialize-jenkins-agent.yml",
