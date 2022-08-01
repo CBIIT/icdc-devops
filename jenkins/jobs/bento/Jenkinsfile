@@ -301,6 +301,7 @@ pipeline {
                         redis_schema_file: "",
 						redis_init_queries_file: "",
                         test_queries_file: "${params.Test_Queries_File}",
+						auth_enabled: "${params.Auth_Enabled}",
                         ],
 						colorized: true)
  				}
