@@ -21,11 +21,6 @@ variable "remote_state_bucket_name" {
   type        = string
   default     = null
 }
-variable "create_es_service_role" {
-  type        = bool
-  default     = false
-  description = "change this value to true if running this script for the first time"
-}
 variable "private_subnet_ids" {
   description = "list of private subnet ids to use"
   type        = list(string)
