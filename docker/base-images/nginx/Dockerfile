@@ -7,7 +7,7 @@ FROM 019211168375.dkr.ecr.us-east-1.amazonaws.com/cbiit-base-docker-images:cbiit
 
 LABEL maintainer="NGINX Docker Maintainers <docker-maint@nginx.com>"
 
-ENV NGINX_VERSION 1.22.0
+ENV NGINX_VERSION 1.22.2
 ENV NJS_VERSION   0.7.6
 ENV PKG_RELEASE   1
 
