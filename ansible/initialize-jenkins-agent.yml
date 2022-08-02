@@ -1,5 +1,5 @@
 - name: initialize jenkins
-  hosts: agent
+  hosts: "{{agent}}"
   gather_facts: yes
   become: yes
   remote_user: commonsdocker
