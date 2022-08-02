@@ -41,8 +41,8 @@ pipeline {
   	stage('build'){
  		steps {
  			wrap([$class: 'AnsiColorBuildWrapper', colorMapName: "xterm"]) {
- 			      sh "id && ls -la ~/.ssh"
-                  sh """echo  "[agent]\n${params.Hostname}\n" > ${WORKSPACE}/icdc-devops/ansible/hosts"""
+
+                  sh """echo  "[agent]\n${params.Hostname} ansible_ssh_private_key_file=/home/commonsdocker/.ssh/id_rsa ansible_ssh_user=commonsdocker" > ${WORKSPACE}/icdc-devops/ansible/hosts"""
                   ansiblePlaybook(
                         playbook: "${WORKSPACE}/icdc-devops/ansible/initialize-jenkins-agent.yml",
                         inventory: "${WORKSPACE}/icdc-devops/ansible/hosts",
