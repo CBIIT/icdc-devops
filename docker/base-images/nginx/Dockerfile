@@ -3,7 +3,7 @@
 #
 # PLEASE DO NOT EDIT IT DIRECTLY.
 #
-FROM alpine:3.16
+FROM 019211168375.dkr.ecr.us-east-1.amazonaws.com/cbiit-base-docker-images:cbiit-alpine-linux
 
 LABEL maintainer="NGINX Docker Maintainers <docker-maint@nginx.com>"
 
