@@ -2,7 +2,7 @@
   hosts: agent
   gather_facts: yes
   become: yes
-  become_method: "sudo su"
+  become_method: "sudo"
   remote_user: commonsdocker
 
   tasks:
