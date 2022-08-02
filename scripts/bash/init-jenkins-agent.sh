@@ -17,7 +17,7 @@ yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce
   &&  yum install -y nodejs \
   && npm install -g npm n\
   && npm install -g yarn\
-  && n $NODE_VERSION 
+  && n $NODE_VERSION
 
 
 yum -y install jq python3 python3-pip \
