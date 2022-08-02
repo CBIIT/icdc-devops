@@ -3,7 +3,6 @@
   gather_facts: yes
   become: yes
   become_method: "sudo"
-  remote_user: commonsdocker
 
   tasks:
     - name: install python3
