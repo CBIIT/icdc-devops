@@ -89,6 +89,11 @@ variable "indexd_url" {
   description = "indexd url"
   sensitive   = true
 }
+variable "create_ecr_repos" {
+  description = "do we create ecr repos"
+  default     = false
+  type        = bool
+}
 
 # Monitoring variables
 variable "sumologic_access_id" {

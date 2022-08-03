@@ -1,6 +1,8 @@
 # create ecr frontend repository
 resource "aws_ecr_repository" "fe_ecr" {
-  name = "${lower(var.stack_name)}-${terraform.workspace}-frontend"
+  count = var.create_ecr_repos ? 1 : 0
+  
+  name = "${lower(var.stack_name)}-frontend"
   tags = merge(
     {
       "Name" = format("%s-%s-%s", var.stack_name, terraform.workspace, "frontend")
@@ -11,7 +13,9 @@ resource "aws_ecr_repository" "fe_ecr" {
 
 # create ecr backend repository
 resource "aws_ecr_repository" "be_ecr" {
-  name = "${lower(var.stack_name)}-${terraform.workspace}-backend"
+  count = var.create_ecr_repos ? 1 : 0
+  
+  name = "${lower(var.stack_name)}-backend"
   tags = merge(
     {
       "Name" = format("%s-%s-%s", var.stack_name, terraform.workspace, "backend")
@@ -22,7 +26,9 @@ resource "aws_ecr_repository" "be_ecr" {
 
 # create ecr files repository
 resource "aws_ecr_repository" "files_ecr" {
-  name = "${lower(var.stack_name)}-${terraform.workspace}-files"
+  count = var.create_ecr_repos ? 1 : 0
+  
+  name = "${lower(var.stack_name)}-files"
   tags = merge(
     {
       "Name" = format("%s-%s-%s", var.stack_name, terraform.workspace, "files")
