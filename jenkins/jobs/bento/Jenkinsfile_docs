@@ -59,6 +59,19 @@ pipeline {
   	stage('checkout'){
   		steps {
 
+			checkout( changelog:true,
+				poll: true,
+				scm: [$class: 'GitSCM', 
+				//branches: [[name: '**']], 
+				branches: [[name: "${params.Branch}"]],
+				doGenerateSubmoduleConfigurations: false, 
+				extensions: [[$class: 'RelativeTargetDirectory', 
+				relativeTargetDir: 'docrepo']], 
+				submoduleCfg: [], 
+				userRemoteConfigs: 
+				[[url: 'https://github.com/CBIIT/bento-docs.git']]
+				])
+
   			checkout( changelog:false,
 				poll: false,
 				scm: [$class: 'GitSCM', 
