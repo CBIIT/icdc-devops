@@ -16,9 +16,9 @@
   args:
     chdir: "{{ workspace }}"
 
-- name: echo branch
-      debug:
-        msg: "{{ docs_branch }}"
+- name: echo branch to use
+  debug:
+    msg: "{{ docs_branch }}"
 
 - name: show repo branch
   block:
