@@ -66,7 +66,8 @@ pipeline {
 				branches: [[name: "${params.Branch}"]],
 				doGenerateSubmoduleConfigurations: false, 
 				extensions: [[$class: 'RelativeTargetDirectory', 
-				relativeTargetDir: 'docrepo']], 
+				//relativeTargetDir: 'docrepo']], 
+				relativeTargetDir: 'bento-docs']], 
 				submoduleCfg: [], 
 				userRemoteConfigs: 
 				[[url: 'https://github.com/CBIIT/bento-docs.git']]
