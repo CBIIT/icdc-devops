@@ -1,24 +1,20 @@
 ---
-- name: show python version
-  block:
-    - name: get python version
-      shell: "python3 --version"
-      args:
-        chdir: "{{ workspace }}"
-      register: python_ver
-  always:
-    - name: echo python version
-      debug:
-        msg: "{{ python_ver.stdout_lines }}"
+#- name: show python version
+#  block:
+#    - name: get python version
+#      shell: "python3 --version"
+#      args:
+#        chdir: "{{ workspace }}"
+#      register: python_ver
+#  always:
+#    - name: echo python version
+#      debug:
+#        msg: "{{ python_ver.stdout_lines }}"
 
 - name: clone docs repo
   shell: git clone https://github.com/CBIIT/bento-docs.git
   args:
     chdir: "{{ workspace }}"
-
-- name: echo branch to use
-  debug:
-    msg: "{{ docs_branch }}"
 
 - name: show repo branch
   block:
