@@ -62,11 +62,9 @@ pipeline {
 			checkout( changelog:true,
 				poll: true,
 				scm: [$class: 'GitSCM', 
-				//branches: [[name: '**']], 
 				branches: [[name: "${params.Branch}"]],
 				doGenerateSubmoduleConfigurations: false, 
 				extensions: [[$class: 'RelativeTargetDirectory', 
-				//relativeTargetDir: 'docrepo']], 
 				relativeTargetDir: 'bento-docs']], 
 				submoduleCfg: [], 
 				userRemoteConfigs: 
