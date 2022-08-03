@@ -11,10 +11,10 @@
 #      debug:
 #        msg: "{{ python_ver.stdout_lines }}"
 
-- name: clone docs repo
-  shell: git clone https://github.com/CBIIT/bento-docs.git
-  args:
-    chdir: "{{ workspace }}"
+#- name: clone docs repo
+#  shell: git clone https://github.com/CBIIT/bento-docs.git
+#  args:
+#    chdir: "{{ workspace }}"
 
 - name: show repo branch
   block:
