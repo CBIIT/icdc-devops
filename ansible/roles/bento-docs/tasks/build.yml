@@ -23,7 +23,7 @@
 - name: show repo branch
   block:
     - name: get repo branch
-      shell: git branch
+      shell: git checkout "{{ docs_branch }}" && git branch
       args:
         chdir: "{{ workspace }}/bento-docs"
       register: repo_branch
