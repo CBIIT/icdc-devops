@@ -1,28 +1,48 @@
 ---
-- name: get python version
-  shell: "python3 --version"
-  args:
-    chdir: "{{ workspace }}"
-  register: python_ver
-
-- name: echo python version
-  debug:
-    msg: "{{ python_ver.stdout_lines }}"
+- name: show python version
+  block:
+    - name: get python version
+      shell: "python3 --version"
+      args:
+        chdir: "{{ workspace }}"
+      register: python_ver
+  always:
+    - name: echo python version
+      debug:
+        msg: "{{ python_ver.stdout_lines }}"
 
 - name: clone docs repo
   shell: git clone https://github.com/CBIIT/bento-docs.git
   args:
     chdir: "{{ workspace }}"
 
-- name: get repo commit ID
-  shell: git rev-parse HEAD
-  args:
-    chdir: "{{ workspace }}/bento-docs"
-  register: repo_commit
+- name: echo branch
+      debug:
+        msg: "{{ docs_branch }}"
 
-- name: echo repo commit
-  debug:
-    msg: "{{ repo_commit.stdout_lines }}"
+- name: show repo branch
+  block:
+    - name: get repo branch
+      shell: git branch
+      args:
+        chdir: "{{ workspace }}/bento-docs"
+      register: repo_branch
+  always:
+    - name: echo repo commit
+      debug:
+        msg: "{{ repo_branch.stdout_lines }}"
+
+- name: show repo commit ID
+  block:
+    - name: get repo commit ID
+      shell: git rev-parse HEAD
+      args:
+        chdir: "{{ workspace }}/bento-docs"
+      register: repo_commit
+  always:
+    - name: echo repo commit
+      debug:
+        msg: "{{ repo_commit.stdout_lines }}"
 
 - name: get additional branches
   shell: git branch -r | grep -v '\->' | while read remote; do git branch --track "${remote#origin/}" "$remote"; done

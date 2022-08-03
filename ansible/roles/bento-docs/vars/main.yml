@@ -1,3 +1,4 @@
 ---
 # vars file for cicd
 workspace: "{{ lookup('env','WORKSPACE') }}"
+docs_branch: "{{ lookup('env','DOCS_BRANCH') }}"
