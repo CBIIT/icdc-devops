@@ -37,6 +37,20 @@ pipeline {
 		}
 	}
 
+  	parameters {
+
+   	gitParameter(branchFilter: 'origin/(.*)', 
+       defaultValue: 'master', 
+       name: 'Branch', 
+       type: 'PT_BRANCH_TAG',
+       quickFilterEnabled: false, 
+       selectedValue: 'DEFAULT', 
+       sortMode: 'ASCENDING_SMART', 
+       tagFilter: '*', 
+       useRepository: 'https://github.com/CBIIT/bento-docs')
+
+  }
+
   options {
   	ansiColor('xterm')
   }
@@ -48,7 +62,8 @@ pipeline {
 			checkout( changelog:true,
 				poll: true,
 				scm: [$class: 'GitSCM', 
-				branches: [[name: '**']], 
+				//branches: [[name: '**']], 
+				branches: [[name: "${params.Branch}"]],
 				doGenerateSubmoduleConfigurations: false, 
 				extensions: [[$class: 'RelativeTargetDirectory', 
 				relativeTargetDir: 'docrepo']], 
@@ -94,29 +109,29 @@ pipeline {
 
     }
 
-	success {
-
-		script {
-			withCredentials([usernamePassword(credentialsId: 'github_user', passwordVariable: 'git_password', usernameVariable: 'git_user')]) {
-				sh label: 'GIT Commit Doc Changes', script: '''#!/bin/bash
-				
-				cd ./bento-docs
-				gitCommit=$(git rev-parse HEAD)
-				gitURL=$(git config remote.origin.url | sed 's|^.*//||')
-				echo "Committing documentation changes to URL:  $gitURL"
-				echo "Commit triggered by change:  $gitCommit"
-				git config user.email "jenkins@bento-tools.org"
-				git config user.name "Bento Jenkins"
-				git add docs
-				git commit -m "Documentation changes added by Jenkins: triggered by commit ${gitCommit}"
-				git push https://${git_user}:${git_password}@${gitURL} --all
-				
-				'''
-			
-				}
-			}
-
-	}
+//	success {
+//
+//		script {
+//			withCredentials([usernamePassword(credentialsId: 'github_user', passwordVariable: 'git_password', usernameVariable: 'git_user')]) {
+//				sh label: 'GIT Commit Doc Changes', script: '''#!/bin/bash
+//				
+//				cd ./bento-docs
+//				gitCommit=$(git rev-parse HEAD)
+//				gitURL=$(git config remote.origin.url | sed 's|^.*//||')
+//				echo "Committing documentation changes to URL:  $gitURL"
+//				echo "Commit triggered by change:  $gitCommit"
+//				git config user.email "jenkins@bento-tools.org"
+//				git config user.name "Bento Jenkins"
+//				git add docs
+//				git commit -m "Documentation changes added by Jenkins: triggered by commit ${gitCommit}"
+//				git push https://${git_user}:${git_password}@${gitURL} --all
+//				
+//				'''
+//			
+//				}
+//			}
+//
+//	}
 
 	cleanup {
 	
