@@ -1,11 +1,16 @@
 # ecr policy
 resource "aws_ecr_repository_policy" "fe_ecr_policy" {
-  repository = aws_ecr_repository.fe_ecr.name
+  repository = aws_ecr_repository.fe_ecr.name[count.index]
   policy     = data.aws_iam_policy_document.ecr_policy_doc.json
 }
 
 resource "aws_ecr_repository_policy" "be_ecr_policy" {
-  repository = aws_ecr_repository.be_ecr.name
+  repository = aws_ecr_repository.be_ecr.name[count.index]
+  policy     = data.aws_iam_policy_document.ecr_policy_doc.json
+}
+
+resource "aws_ecr_repository_policy" "files_ecr_policy" {
+  repository = aws_ecr_repository.files_ecr.name[count.index]
   policy     = data.aws_iam_policy_document.ecr_policy_doc.json
 }
 
