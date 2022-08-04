@@ -25,7 +25,7 @@
       include_role:
         name: bento.common.build_backend
       vars:
-        ansible_python_interpreter: /usr/bin/python3
+        #ansible_python_interpreter: /usr/bin/python3
         workspace: "{{ lookup('env','WORKSPACE') }}"
         build_number: "{{ lookup('env','BUILD_NUMBER')}}"
         project_name: "{{ lookup('env','PROJECT_NAME') }}"
