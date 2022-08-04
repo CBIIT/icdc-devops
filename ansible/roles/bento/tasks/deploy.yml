@@ -9,6 +9,9 @@
 - name: set ECR registry name
   set_fact:
     ecr_repo: "{{ caller_info.account }}.dkr.ecr.{{ region }}.amazonaws.com"
+- name: set cluster
+  set_fact:
+    cluster: "{% if tier==dev %}{{project}}-{{tier}}-ecs{% else %}{{project}}-{{tier}}{% endif %}"
 
 - name: login into ecr
   shell: "docker login -u AWS -p $(aws ecr get-login-password --region {{ region }}) {{ecr_repo}}"
@@ -313,7 +316,8 @@
 
 - name: query sumologic syslog service
   ecs_service_info:
-    cluster: "{{ project }}-{{tier}}"
+#    cluster: "{{ project }}-{{tier}}"
+    cluster: "{{cluster}}"
     service: "{{ project }}-{{tier}}-sumo_syslog"
     details: true
     region: "{{region}}"
@@ -321,7 +325,8 @@
 
 - name: query sumologic docker service
   ecs_service_info:
-    cluster: "{{ project }}-{{tier}}"
+    #cluster: "{{ project }}-{{tier}}"
+    cluster: "{{cluster}}"
     service: "{{ project }}-{{tier}}-sumo_docker"
     details: true
     region: "{{region}}"
@@ -329,7 +334,8 @@
 
 - name: query newrelic docker service
   ecs_service_info:
-    cluster: "{{ project }}-{{tier}}"
+    #cluster: "{{ project }}-{{tier}}"
+    cluster: "{{cluster}}"
     service: "{{ project }}-{{tier}}-nr_docker"
     details: true
     region: "{{region}}"
@@ -361,7 +367,8 @@
   ecs_service:
     state: present
     name: "{{ project }}-{{tier}}-sumo_syslog"
-    cluster: "{{ project }}-{{tier}}"
+    #cluster: "{{ project }}-{{tier}}"
+    cluster: "{{cluster}}"
     task_definition: "{{task_sumo_syslog_name}}"
     force_new_deployment: no
     deployment_configuration:
@@ -378,7 +385,8 @@
   ecs_service:
     state: present
     name: "{{ project }}-{{tier}}-sumo_docker"
-    cluster: "{{ project }}-{{tier}}"
+    #cluster: "{{ project }}-{{tier}}"
+    cluster: "{{cluster}}"
     task_definition: "{{task_sumo_docker_name}}"
     force_new_deployment: no
     deployment_configuration:
@@ -395,7 +403,8 @@
   ecs_service:
     state: present
     name: "{{ project }}-{{tier}}-nr_docker"
-    cluster: "{{ project }}-{{tier}}"
+    #cluster: "{{ project }}-{{tier}}"
+    cluster: "{{cluster}}"
     task_definition: "{{task_nr_docker_name}}"
     force_new_deployment: no
     deployment_configuration:
@@ -412,7 +421,8 @@
   ecs_service:
     state: present
     name: "{{ project }}-{{tier}}-backend"
-    cluster: "{{ project }}-{{tier}}"
+    cluster: "{{cluster}}"
+    #cluster: "{{ project }}-{{tier}}"
     task_definition: "{{task_backend_name}}:{{backend_revision}}"
     role: "{{role_arn}}"
     force_new_deployment: yes
@@ -431,7 +441,8 @@
   ecs_service:
     state: present
     name: "{{ project }}-{{tier}}-frontend"
-    cluster: "{{ project }}-{{tier}}"
+    cluster: "{{cluster}}"
+    #cluster: "{{ project }}-{{tier}}"
     task_definition: "{{task_frontend_name}}:{{frontend_revision}}"
     role: "{{role_arn}}"
     force_new_deployment: yes
