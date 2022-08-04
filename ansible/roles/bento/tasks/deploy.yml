@@ -11,7 +11,7 @@
     ecr_repo: "{{ caller_info.account }}.dkr.ecr.{{ region }}.amazonaws.com"
 - name: set cluster
   set_fact:
-    cluster: "{% if tier==dev %}{{project}}-{{tier}}-ecs{% else %}{{project}}-{{tier}}{% endif %}"
+    cluster: "{% if tier=='dev' %}{{project}}-{{tier}}-ecs{% else %}{{project}}-{{tier}}{% endif %}"
 
 - name: login into ecr
   shell: "docker login -u AWS -p $(aws ecr get-login-password --region {{ region }}) {{ecr_repo}}"
