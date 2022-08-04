@@ -29,7 +29,5 @@ localhost
 localhost
 
 [all]
-ansible_host=localhost ansible_connection=local
-[all:vars]
-ansible_python_interpreter=/usr/bin/python3
+localhost
 
