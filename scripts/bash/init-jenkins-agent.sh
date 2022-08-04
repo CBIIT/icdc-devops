@@ -22,4 +22,4 @@ yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce
 
 yum -y install jq python3 python3-pip \
   && /usr/bin/pip3 install pip -U \
-  && /usr/bin/pip3 install ansible==4.0.0 awscli jmespath docker boto botocore boto3
+  && /usr/bin/pip3 install wheel ansible==2.10 awscli jmespath docker boto botocore boto3
