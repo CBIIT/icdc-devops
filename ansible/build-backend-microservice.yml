@@ -1,10 +1,12 @@
 - name: build backend microservice
-  hosts: all
-  gather_facts: no
+  hosts: backend
+  gather_facts: yes
   connection: local
   become: yes
 
   tasks:
+    - debug: var=ansible_python_interpreter
+    - debug: var=ansible_python_version
     #install collections
     - name: install aws collection
       command: ansible-galaxy collection install {{item}}
