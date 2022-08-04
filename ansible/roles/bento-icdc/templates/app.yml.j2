@@ -24,6 +24,7 @@ services:
       NEW_RELIC_DISTRIBUTED_TRACING_ENABLED: "true"
       NEW_RELIC_HOST: "gov-collector.newrelic.com"
       NEW_RELIC_LOG_FILE_NAME: "STDOUT"
+      ES_HOST: "{{es_host}}"
       NEW_RELIC_LABELS: "Project:{{ project }};Environment:{{ tier }}"
       JAVA_OPTS: "-javaagent:/usr/local/tomcat/newrelic/newrelic.jar"
     entrypoint: ["/bin/ash", "-c", 'if [ ! -f /usr/local/tomcat/newrelic/newrelic.jar ]; then wget "https://download.newrelic.com/newrelic/java-agent/newrelic-agent/current/newrelic-java.zip" -O newrelic-java.zip && unzip newrelic-java.zip; fi && bin/catalina.sh run']
