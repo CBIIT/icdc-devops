@@ -8,3 +8,5 @@ newrelic_license_key: "{{ lookup('aws_ssm', 'newrelic_license_key', region='us-e
 newrelic_collector_url: "https://gov-infra-api.newrelic.com"
 newrelic_identity_url: "https://gov-identity-api.newrelic.com"
 newrelic_command_channel_url: "https://gov-infrastructure-command-api.newrelic.com"
+
+#ansible_python_interpreter: /bin/python

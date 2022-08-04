@@ -36,3 +36,5 @@ neo4j_logs:
     filters: ""
 additional_logs: "{{ tomcat_logs if app_name == 'Tomcat' else neo4j_logs }}"
 additional_logs_docker: "{{ docker_logs if app_name == 'Tomcat' else '' }}"
+
+ansible_python_interpreter: /bin/python
