@@ -7,7 +7,7 @@ export MAVEN_VERSION=3.6.3
 
 yum  -y install epel-release \
   && yum -y install java-11-openjdk-devel wget which yum-utils device-mapper-persistent-data lvm2 redis\
-  && wget https://www-us.apache.org/dist/maven/maven-3/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz -P /tmp \
+  && wget https://downloads.apache.org/maven/maven-3/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz -P /tmp \
   && tar xf /tmp/apache-maven-$MAVEN_VERSION-bin.tar.gz -C /usr/local \
   && ln -s /usr/local/apache-maven-$MAVEN_VERSION /usr/local/maven
 
