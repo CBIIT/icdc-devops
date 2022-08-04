@@ -61,5 +61,5 @@ def setawsalertpolicy(project, tier, key):
        raise SystemExit(e)
 
    # add redis conditions
-   set_aws_redis_mem_condition.setawsredisconditions(key, project, tier, policy_id)
-   set_aws_redis_command_condition.setawsredisconditions(key, project, tier, policy_id)
+   #set_aws_redis_mem_condition.setawsredisconditions(key, project, tier, policy_id)
+   #set_aws_redis_command_condition.setawsredisconditions(key, project, tier, policy_id)
