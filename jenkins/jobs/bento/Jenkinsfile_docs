@@ -37,6 +37,20 @@ pipeline {
 		}
 	}
 
+  	parameters {
+
+   	gitParameter(branchFilter: 'origin/(.*)', 
+       defaultValue: 'master', 
+       name: 'Branch', 
+       type: 'PT_BRANCH_TAG',
+       quickFilterEnabled: false, 
+       selectedValue: 'DEFAULT', 
+       sortMode: 'ASCENDING_SMART', 
+       tagFilter: '*', 
+       useRepository: 'https://github.com/CBIIT/bento-docs')
+
+  }
+
   options {
   	ansiColor('xterm')
   }
@@ -48,10 +62,10 @@ pipeline {
 			checkout( changelog:true,
 				poll: true,
 				scm: [$class: 'GitSCM', 
-				branches: [[name: '**']], 
+				branches: [[name: "${params.Branch}"]],
 				doGenerateSubmoduleConfigurations: false, 
 				extensions: [[$class: 'RelativeTargetDirectory', 
-				relativeTargetDir: 'docrepo']], 
+				relativeTargetDir: 'bento-docs']], 
 				submoduleCfg: [], 
 				userRemoteConfigs: 
 				[[url: 'https://github.com/CBIIT/bento-docs.git']]
@@ -75,7 +89,8 @@ pipeline {
 
   	stage('build'){
 	  environment {
-	   SLACK_URL = "${SLACK_URL}"
+	   SLACK_URL   = "${SLACK_URL}"
+	   DOCS_BRANCH = "${params.Branch}"
       }
   		steps{
   			wrap([$class: 'AnsiColorBuildWrapper', colorMapName: "xterm"]) {
@@ -97,7 +112,8 @@ pipeline {
 	success {
 
 		script {
-			withCredentials([usernamePassword(credentialsId: 'github_user', passwordVariable: 'git_password', usernameVariable: 'git_user')]) {
+
+			withCredentials([string(credentialsId: 'git_credential', variable: 'git_token')]) {
 				sh label: 'GIT Commit Doc Changes', script: '''#!/bin/bash
 				
 				cd ./bento-docs
@@ -109,7 +125,7 @@ pipeline {
 				git config user.name "Bento Jenkins"
 				git add docs
 				git commit -m "Documentation changes added by Jenkins: triggered by commit ${gitCommit}"
-				git push https://${git_user}:${git_password}@${gitURL} --all
+				git push https://${git_token}:x-oauth-basic@${gitURL} --all
 				
 				'''
 			
