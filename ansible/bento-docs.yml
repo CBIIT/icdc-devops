@@ -1,5 +1,5 @@
 ---
-- name: deploy latest vwersion of Bento documentation
+- name: deploy latest version of Bento documentation
   hosts: bento
   connection: local
   gather_facts: no
