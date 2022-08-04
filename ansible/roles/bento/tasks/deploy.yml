@@ -300,7 +300,8 @@
 
 - name: query {{ project }}-{{tier}}-backend service
   ecs_service_info:
-    cluster: "{{ project }}-{{tier}}"
+    #cluster: "{{ project }}-{{tier}}"
+    cluster: "{{cluster}}"
     service: "{{ project }}-{{tier}}-backend"
     details: true
     region: "{{region}}"
@@ -308,7 +309,8 @@
 
 - name: query {{ project }}-{{tier}}-frontend service
   ecs_service_info:
-    cluster: "{{ project }}-{{tier}}"
+#    cluster: "{{ project }}-{{tier}}"
+    cluster: "{{cluster}}"
     service: "{{ project }}-{{tier}}-frontend"
     details: true
     region: "{{region}}"
