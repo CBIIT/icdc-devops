@@ -29,5 +29,4 @@ localhost
 localhost
 
 [backend]
-ansible_host=localhost ansible_python_interpreter=/bin/python3
-
+ansible_host=localhost ansible_python_interpreter=/usr/bin/python3

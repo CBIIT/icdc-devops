@@ -1,6 +1,6 @@
 - name: build backend microservice
   hosts: backend
-  gather_facts: yes
+  gather_facts: no
   connection: local
   become: yes
 
@@ -8,13 +8,18 @@
     - debug: var=ansible_python_interpreter
     - debug: var=ansible_python_version
     #install collections
-    - name: install aws collection
-      command: ansible-galaxy collection install {{item}}
+    - name: Install collection community.network
+      community.general.ansible_galaxy_install:
+        type: collection
+        name: "{{item}}"
       loop:
         - community.docker
         - amazon.aws
         - community.aws:<=3.2.0
         - git+https://github.com/CBIIT/datacommons-devops.git#/ansible/collections/bento/common/,main
+#    - name: install aws collection
+#      command: ansible-galaxy collection install {{item}}
+
     #docker login
     - name: docker login
       include_role:
