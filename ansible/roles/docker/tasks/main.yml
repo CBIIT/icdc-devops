@@ -30,11 +30,11 @@
       - docker-compose
     state: installed
 
-- name: install docker python module
-  pip:
-    name: 
-      # - docker
-      - docker-py
+#- name: install docker python module
+#  pip:
+#    name:
+#      # - docker
+#      - docker-py
 
 
     
