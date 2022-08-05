@@ -2,7 +2,7 @@
   hosts: backend
   gather_facts: yes
   connection: local
-  become: yes
+#  become: yes
 
   tasks:
     - debug: var=ansible_python_version
