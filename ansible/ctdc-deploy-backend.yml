@@ -11,8 +11,7 @@
       loop:
         -  amazon.aws
         -  community.aws
-        #-  git+https://github.com/CBIIT/datacommons-devops.git#/ansible/collections/bento/common/,collections_v1.2
-        -  git+https://github.com/CBIIT/datacommons-devops.git#/ansible/collections/bento/common/,main
+        -  git+https://github.com/CBIIT/datacommons-devops.git#/ansible/collections/bento/common/,collections_v1.2
 
     #docker login
     - name: docker login
@@ -33,8 +32,7 @@
     #deploy backend
     - name: deploy stage for ctdc backend
       include_role:
-        #name: bento.common.ecs
-        name: bento.common.ecs_debug
+        name: bento.common.ecs
       vars:
         ansible_python_interpreter: /usr/bin/python3
         project_name: ctdc
