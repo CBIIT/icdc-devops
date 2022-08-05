@@ -6,8 +6,9 @@
 
   tasks:
     - command: ansible --version
-      register: ansible-version
-    - debug: var={{ansible-version.stdout_lines}}
+      register: output
+    - debug:
+        msg: "{{output.stdout_lines}}"
     - debug: var=ansible_python_version
     #install collections
     - name: Install collection community.network
