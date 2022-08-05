@@ -1,5 +1,5 @@
 - name: build backend microservice
-  hosts: backend
+  hosts: all
   gather_facts: yes
   connection: local
   become: yes

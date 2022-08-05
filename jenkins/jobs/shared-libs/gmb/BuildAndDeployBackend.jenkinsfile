@@ -1,6 +1,6 @@
 @Library('datacommons-jenkins-shared-library') _
 buildAndDeploy(
-    label: "ccdi-deploy-agent",
+    label: "slave-ncias-q2944-c",
     parameterName: "BackendTag",
     codeRepoUrl: "https://github.com/CBIIT/bento-backend",
     checkoutDirectory: "workspace",
