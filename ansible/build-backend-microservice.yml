@@ -5,7 +5,9 @@
   become: yes
 
   tasks:
-    - debug: var=ansible_python_interpreter
+    - command: ansible --version
+      register: ansible-version
+    - debug: var={{ansible-version.stdout_lines}}
     - debug: var=ansible_python_version
     #install collections
     - name: Install collection community.network
