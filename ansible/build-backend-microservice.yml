@@ -12,7 +12,7 @@
       loop:
         - community.docker
         - amazon.aws
-        - community.aws:<=3.2.0
+        - "community.aws:<=3.2.0"
         - "git+https://github.com/CBIIT/datacommons-devops.git#/ansible/collections/bento/common/,main"
 #    - name: install aws collection
 #      command: ansible-galaxy collection install {{item}}
