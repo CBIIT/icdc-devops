@@ -25,7 +25,7 @@ resource "aws_iam_role_policy_attachment" "integration_server" {
 }
 
 resource "aws_iam_role_policy_attachment" "managed_ecr" {
-  for_each = var.create_instance_profile ? toset(local.managed_policy_arns) : {}
+  for_each = var.create_instance_profile ? toset(local.managed_policy_arns) : toset([])
   role       = aws_iam_role.integration_server[0].name
   policy_arn = each.key
 }
