@@ -237,8 +237,7 @@ data "aws_iam_policy_document" "integration_server_policy" {
       "es:ESHttpPut"
     ]
     resources = [
-      "arn:aws:es:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:domain/mtp-*",
-      "arn:aws:es:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:domain/ccdc-*"
+      "arn:aws:es:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:domain/*",
     ]
   }
 
