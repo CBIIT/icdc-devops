@@ -1,7 +1,7 @@
 resource "aws_iam_instance_profile" "integration_server" {
   count = var.create_instance_profile ? 1 : 0
   name = local.integration_server_profile_name
-  role = aws_iam_role.integration_server.name
+  role = aws_iam_role.integration_server[count.index].name
 }
 
 resource "aws_iam_role" "integration_server" {
