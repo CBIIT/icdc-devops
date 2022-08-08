@@ -230,3 +230,8 @@ variable "target_account_cloudone"{
   type        = bool
   default =   false
 }
+variable "iam_prefix" {
+  type = string
+  default = "power-user"
+  description = "nci iam power user prefix"
+}
