@@ -113,3 +113,4 @@ public_ssh_key_ssm_parameter_name = "ssh_public_key"
 database_instance_type = "t3.large"
 #dns
 create_dns_record = true
+create_instance_profile = false
