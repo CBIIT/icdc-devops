@@ -29,4 +29,4 @@ localhost
 localhost
 
 [all]
-localhost ansible_python_interpreter=/usr/bin/python3
+localhost
