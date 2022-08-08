@@ -12,7 +12,7 @@
       loop:
         - community.docker
         - amazon.aws
-        - community.aws
+        - community.aws:<=3.2.0
         - "git+https://github.com/CBIIT/datacommons-devops.git#/ansible/collections/bento/common/,main"
 #    - name: install aws collection
 #      command: ansible-galaxy collection install {{item}}
@@ -23,7 +23,8 @@
         name: bento.common.ecr_login
       vars:
         region: us-east-1
-
+    - debug:
+        msg: "Here is the ECR repo {{ecr_repo}}"
     #build backend
     - name: build {{project_name}} backend
       include_role:
