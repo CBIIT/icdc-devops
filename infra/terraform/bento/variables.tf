@@ -235,3 +235,8 @@ variable "iam_prefix" {
   default = "power-user"
   description = "nci iam power user prefix"
 }
+variable "create_instance_profile" {
+  type = bool
+  default = false
+  description = "set to create instance profile"
+}
