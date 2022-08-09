@@ -7,16 +7,13 @@ pipeline {
     stages {
         stage('Test') {
             agent {
-                docker.withRegistry("ncidockerhub.nci.nih.gov","ncidockerhub") {
-
-        docker.image('my-custom-image').inside {
-            sh 'make test'
-        }
-    }
-                docker { 
-                        image "ncidockerhub.nci.nih.gov/icdc/jenkins-agent-ansible"
-                        reuseNode true
-                    }
+                docker{
+                    image "ncidockerhub.nci.nih.gov/icdc/jenkins-agent-ansible"
+                    registryUrl "ncidockerhub.nci.nih.gov"
+                    registryCredentialsId "ncidockerhub"
+                    args "--net=host"
+                    reuseNode true
+                }
             }
             steps {
                 sh 'ansible --version'
