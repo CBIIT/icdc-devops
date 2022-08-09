@@ -1,0 +1,17 @@
+pipeline {
+    agent {
+        node {
+            label "slave-ncias-q2944-c"
+        }
+    }
+    stages {
+        stage('Test') {
+            agent {
+                docker { image 'cbiitssrepo/cicd-microservices-ecs' }
+            }
+            steps {
+                sh 'ansible --version'
+            }
+        }
+    }
+}
