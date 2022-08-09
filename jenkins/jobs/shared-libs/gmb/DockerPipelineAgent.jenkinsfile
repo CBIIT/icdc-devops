@@ -7,8 +7,14 @@ pipeline {
     stages {
         stage('Test') {
             agent {
+                docker.withRegistry("ncidockerhub.nci.nih.gov","ncidockerhub") {
+
+        docker.image('my-custom-image').inside {
+            sh 'make test'
+        }
+    }
                 docker { 
-                        image 'cbiitssrepo/cicd-microservices-ecs' 
+                        image "ncidockerhub.nci.nih.gov/icdc/jenkins-agent-ansible"
                         reuseNode true
                     }
             }
