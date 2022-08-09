@@ -9,7 +9,7 @@ pipeline {
             agent {
                 docker{
                     image "ncidockerhub.nci.nih.gov/icdc/jenkins-agent-ansible"
-                    registryUrl "ncidockerhub.nci.nih.gov"
+                    registryUrl "https://ncidockerhub.nci.nih.gov"
                     registryCredentialsId "ncidockerhub"
                     args "--net=host"
                     reuseNode true
