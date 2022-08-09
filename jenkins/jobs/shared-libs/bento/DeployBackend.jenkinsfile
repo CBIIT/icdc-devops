@@ -8,5 +8,9 @@ deployApp(
     tier: "${params.Environment}",
     projectName: "${params.ProjectName}",
     slackSecretPath: "notification/slack",
-    slackSecretName: "bento_slack_url"
+    slackSecretName: "bento_slack_url",
+    deploymentRepoUrl: "https://github.com/CBIIT/bento-deployments",
+    deploymentCheckoutDirectory: "bento-deployments",
+    deploymentFile: "bento-deployments/deployments.yaml",
+    service: "backend"
 )
