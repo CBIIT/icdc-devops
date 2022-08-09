@@ -11,7 +11,7 @@ pipeline {
                     image "ncidockerhub.nci.nih.gov/icdc/jenkins-agent-ansible"
                     registryUrl "https://ncidockerhub.nci.nih.gov"
                     registryCredentialsId "ncidockerhub"
-                    args "--net=host"
+                    args "--net=host -u root"
                     reuseNode true
                 }
             }
