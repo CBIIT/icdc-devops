@@ -33,7 +33,7 @@
     #deploy backend
     - name: deploy stage for users microservice
       include_role:
-        name: bento.common.ecs
+        name: bento.common.ecs_cloudwatch
       vars:
         iam_prefix: ""
         execution_role: "{{ iam_prefix }}{{ project_name }}-{{ tier }}-task-execution-role"

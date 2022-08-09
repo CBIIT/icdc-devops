@@ -49,7 +49,7 @@
     #deploy files
     - name: deploy stage for ctdc files
       include_role:
-        name: bento.common.ecs
+        name: bento.common.ecs_cloudwatch
       vars:
         ansible_python_interpreter: /usr/bin/python3
         iam_prefix: ""
