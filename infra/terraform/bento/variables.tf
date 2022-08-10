@@ -240,3 +240,9 @@ variable "create_instance_profile" {
   default = false
   description = "set to create instance profile"
 }
+variable "allow_cloudwatch_stream" {
+  type = bool
+  default = true
+  description = "allow cloudwatch stream for the containers"
+
+}
