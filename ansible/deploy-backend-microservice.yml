@@ -21,7 +21,7 @@
       vars:
         region: us-east-1
 
-  
+
     #deploy backend
     - name: deploy stage for backend microservice
       include_role:
