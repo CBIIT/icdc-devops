@@ -240,7 +240,16 @@ data "aws_iam_policy_document" "integration_server_policy" {
       "arn:aws:es:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:domain/*",
     ]
   }
-
+  statement {
+    effect = "Allow"
+    actions = [
+      "ec2:DescribeInstances",
+      "ec2:DescribeImages",
+      "ec2:DescribeTags",
+      "ec2:DescribeSnapshots"
+    ]
+    resources = ["*"]
+  }
   statement {
     effect = "Allow"
     actions = [
