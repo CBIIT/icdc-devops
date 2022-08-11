@@ -76,6 +76,10 @@
             value: "http://{{ neo4j_ip }}:7474/graphql/"
           - name: BENTO_API_VERSION
             value: "{{ image_version }}"
+          - name: AUTH_ENDPOINT
+            value: "{% if tier == 'prod' %}https://{{project_name}}.bento-tools.org/api/auth{% else %}https://{{ project_name }}-{{ tier }}.bento-tools.org/api/auth{% endif %}"
+          - name: AUTH_ENABLED
+            value: "{{ auth_enabled }}"
           - name: ES_HOST
             value: "{{ es_host }}"
           - name: ES_FILTER_ENABLED
