@@ -227,8 +227,11 @@ data "aws_iam_policy_document" "integration_server_policy" {
   }
   statement {
     effect = "Allow"
-    actions = ["iam:PassRole"]
-    resources = [aws_iam_role.integration_server.arn]
+    actions = [
+      "iam:PassRole",
+      "iam:GetRole",
+    ]
+    resources = ["arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/${local.integration_server_profile_name}"]
   }
   statement {
     effect = "Allow"
