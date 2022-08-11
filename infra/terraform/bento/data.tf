@@ -231,7 +231,7 @@ data "aws_iam_policy_document" "integration_server_policy" {
       "iam:PassRole",
       "iam:GetRole",
     ]
-    resources = ["arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/${local.ecs_task_role_name}"]
+    resources = ["arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/${var.stack_name}-${terraform.workspace}-task-role"]
   }
   statement {
     effect = "Allow"
