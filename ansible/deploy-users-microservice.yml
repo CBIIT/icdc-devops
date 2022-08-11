@@ -98,6 +98,6 @@
         - name: EMAIL_USER
           value: "{{email_user}}"
         - name: EMAIL_PASSWORD
-          value: "{{email_user}}"
+          value: "{{email_password}}"
         - name: EMAILS_ENABLED
           value: "true"
