@@ -35,6 +35,7 @@
         platform: aws
         region: us-east-1
         container_name: "backend"
+        auth_enabled: "true"
         image_version: "{{ lookup('env','BE_VERSION') }}"
         tier: "{{ lookup('env','TIER') }}"
         ecs_cluster_name: "{{ project_name }}-{{ tier }}-ecs"
