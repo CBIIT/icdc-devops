@@ -225,7 +225,11 @@ data "aws_iam_policy_document" "integration_server_policy" {
     actions   = ["secretsmanager:*"]
     resources = ["*"]
   }
-
+  statement {
+    effect = "Allow"
+    actions = ["iam:PassRole"]
+    resources = [aws_iam_role.integration_server.arn]
+  }
   statement {
     effect = "Allow"
     actions = [
