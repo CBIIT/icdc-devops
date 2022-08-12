@@ -44,7 +44,7 @@
         image_version: "{{ lookup('env','AUTH_VERSION') }}"
         tier: "{{ tier }}"
         container_name: "auth"
-        dockerfile_path: "{{workspace}}/icdc-devops/docker/dockerfiles/auth-dockerfile"
+        dockerfile_path: "{{workspace}}/icdc-devops/docker/dockerfiles/auth-microservice-dockerfile"
         container_image: "{{ ecr_repo }}/{{ project_name }}-{{ container_name }}:{{ image_version }}s"
         container_registry_url: "{{ ecr_repo }}"
         container_build_path: "{{ auth_container_build_path }}"
