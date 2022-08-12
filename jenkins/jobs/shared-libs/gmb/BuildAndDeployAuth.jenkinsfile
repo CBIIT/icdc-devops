@@ -1,0 +1,19 @@
+@Library('datacommons-jenkins-shared-library') _
+buildAndDeploy(
+    label: "slave-ncias-q2944-c",
+    parameterName: "AuthTag",
+    codeRepoUrl: "https://github.com/CBIIT/bento-auth",
+    checkoutDirectory: "bento-auth",
+    buildPlaybook: "build-auth-microservice.yml",
+    deployPlaybook: "deploy-auth-microservice.yml",
+    inventory: "hosts",
+    tier: "${params.Environment}",
+    projectName: "${params.ProjectName}",
+    slackSecretPath: "notification/slack",
+    slackSecretName: "gmb_slack_url",
+    appVersionName: "AUTH_VERSION",
+    deploymentRepoUrl: "https://github.com/CBIIT/gmb-deployments",
+    deploymentCheckoutDirectory: "gmb-deployments",
+    deploymentFile: "gmb-deployments/deployments.yaml",
+    service: "auth"
+)
