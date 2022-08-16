@@ -49,10 +49,6 @@
     src: "{{ workspace }}/target/Bento-0.0.1.war"
     dest: "{{ workspace }}/target/ROOT.war"
 
-- name: echo ecr repo url
-  debug:
-    msg: "Here is the ECR repo {{ container_registry_url }}"
-
 - name: build {{ project_name }}-{{ container_name }} image
   community.docker.docker_image:
     build:
