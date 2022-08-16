@@ -80,5 +80,7 @@
             value: "Project:{{ project_name }};Environment:{{ tier }}"
           - name: REACT_APP_GOOGLE_CLIENT_ID
             value: "{{ app_google_client_id }}"
+          - name: REACT_APP_BACKEND_PUBLIC_API
+            value: "{% if tier == 'prod' %}https://{{project_name}}.bento-tools.org/v1/public-graphql/{% else %}https://{{ project_name }}-{{ tier }}.bento-tools.org/v1/public-graphql/{% endif %}"
           - name: REACT_APP_AUTH_API
             value: "{% if tier == 'prod' %}https://{{project_name}}.bento-tools.org{% else %}https://{{ project_name }}-{{ tier }}.bento-tools.org{% endif %}"
