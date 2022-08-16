@@ -28,4 +28,3 @@
     container_image: "{{ backend_container_image }}"
     container_registry_url: "{{ ecr_repo }}"
     bento_api_version: "{{ backend_image_version }}"
-    ansible_python_interpreter: /usr/bin/python3
