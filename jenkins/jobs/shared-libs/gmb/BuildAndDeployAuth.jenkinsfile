@@ -15,5 +15,6 @@ buildAndDeploy(
     deploymentRepoUrl: "https://github.com/CBIIT/gmb-deployments",
     deploymentCheckoutDirectory: "gmb-deployments",
     deploymentFile: "gmb-deployments/deployments.yaml",
-    service: "auth"
+    service: "auth",
+    extraVars: [iam_prefix: "power-user"]
 )
