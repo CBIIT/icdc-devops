@@ -21,15 +21,6 @@
       vars:
         region: us-east-1
 
-    #get db ip
-    - name: get db ip
-      include_role:
-        name: bento.common.neo4j_ip
-      vars:
-        tier: "{{tier}}"
-        project_name: "{{project_name}}"
-        database_name: "{{ project_name }}-{{ tier }}-neo4j-4"
-
     #deploy backend
     - name: deploy stage for backend microservice
       include_role:
@@ -64,6 +55,8 @@
         ecs_cluster_name: "{{ project_name }}-{{ tier }}-ecs"
         neo4j_user: "{{ lookup('amazon.aws.aws_secret', 'bento/{{ project_name }}/{{ tier }}.neo4j_user', nested=true, region='us-east-1' ) }}"
         neo4j_password: "{{ lookup('amazon.aws.aws_secret', 'bento/{{ project_name }}/{{ tier }}.neo4j_password', nested=true, region='us-east-1' ) }}"
+        neo4j_ip: "{{ lookup('amazon.aws.aws_secret', 'bento/{{ project_name }}/{{ tier }}.neo4j_ip', nested=true, region='us-east-1' ) }}"
+
         newrelic_license_key: "{{ lookup('amazon.aws.aws_secret', 'monitoring/newrelic.api_key', nested=true, region='us-east-1' ) }}"
         sumo_collector_endpoint: "{{ lookup('amazon.aws.aws_secret', 'bento/{{ project_name }}/{{ tier }}.sumo_collector_endpoint', nested=true, region='us-east-1' ) }}"
         sumo_collector_token: "{{ lookup('amazon.aws.aws_secret', 'bento/{{ project_name }}/{{ tier }}.sumo_collector_token_auth', nested=true, region='us-east-1' ) }}"
