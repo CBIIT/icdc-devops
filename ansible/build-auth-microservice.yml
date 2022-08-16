@@ -1,4 +1,4 @@
-- name: build backend microservice
+- name: build auth microservice
   hosts: all
   connection: local
   gather_facts: no
@@ -19,7 +19,8 @@
         name: bento.common.ecr_login
       vars:
         region: us-east-1
-
+    - debug:
+        msg: "Here is the ECR repo {{ecr_repo}}"
     #build backend
     - name: build {{project_name}} auth microservice
       include_role:
@@ -45,6 +46,6 @@
         tier: "{{ tier }}"
         container_name: "auth"
         dockerfile_path: "{{workspace}}/icdc-devops/docker/dockerfiles/auth-microservice-dockerfile"
-        container_image: "{{ ecr_repo }}/{{ project_name }}-{{ container_name }}:{{ image_version }}s"
+        container_image: "{{ ecr_repo }}/{{ project_name }}-{{ container_name }}:{{ image_version }}"
         container_registry_url: "{{ ecr_repo }}"
         container_build_path: "{{ auth_container_build_path }}"

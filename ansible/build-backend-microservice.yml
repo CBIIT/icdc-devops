@@ -15,7 +15,6 @@
         - community.aws:<=3.2.0
         - git+https://github.com/CBIIT/datacommons-devops.git#/ansible/collections/bento/common/,main
 
-
     #docker login
     - name: docker login
       include_role:
