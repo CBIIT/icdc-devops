@@ -4,7 +4,7 @@
   loop:
     -  amazon.aws
     -  community.aws
-    -  community.docker:==v2.7.1
+    -  community.docker:==2.7.1
     
 
 
