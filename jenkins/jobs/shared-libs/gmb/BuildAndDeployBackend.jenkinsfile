@@ -18,5 +18,6 @@ buildAndDeploy(
     service: "backend",
     includeFrontendRepo: true,
     frontendRepoUrl: "https://github.com/CBIIT/bento-gmb-frontend",
-    frontendCheckoutDirectory: "gmb-frontend"
+    frontendCheckoutDirectory: "gmb-frontend",
+    extraVars: [iam_prefix: "power-user"]
 )
