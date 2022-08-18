@@ -93,7 +93,7 @@
           - name: NEW_RELIC_LICENSE_KEY
             value: "{{ newrelic_license_key }}"
           - name: NEW_RELIC_APP_NAME
-            value: "{{project_name}}-{{tier}}-auth-{{ansible_hostname}}"
+            value: "{{project_name}}-{{tier}}-auth"
           # MySQL Configuration
           - name: MYSQL_HOST
             value: "{{mysql_host}}"
