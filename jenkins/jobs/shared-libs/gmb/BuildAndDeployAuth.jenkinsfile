@@ -1,5 +1,4 @@
 @Library('datacommons-jenkins-shared-library') _
-def Map extraVars = ["iam-prefix" : "power-user","test": "yes"]
 buildAndDeploy(
     label: "slave-ncias-q2944-c",
     parameterName: "AuthTag",
@@ -17,5 +16,5 @@ buildAndDeploy(
     deploymentCheckoutDirectory: "gmb-deployments",
     deploymentFile: "gmb-deployments/deployments.yaml",
     service: "auth",
-    extraAnsibleVars: extraVars
+    extraAnsibleVars: ["iam-prefix" : "power-user","test": "yes"]
 )
