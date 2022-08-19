@@ -1,5 +1,5 @@
 @Library('datacommons-jenkins-shared-library') _
-def Map extraVars = [iam-prefix: "power-user",tes: "yes"]
+def Map extraVars = ["iam-prefix" : "power-user","test": "yes"]
 buildAndDeploy(
     label: "slave-ncias-q2944-c",
     parameterName: "AuthTag",
