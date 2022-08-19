@@ -16,5 +16,5 @@ buildAndDeploy(
     deploymentCheckoutDirectory: "gmb-deployments",
     deploymentFile: "gmb-deployments/deployments.yaml",
     service: "auth",
-    extraAnsibleVars: "[iam-prefix: 'power-user',test: 'yes']"
+    extraAnsibleVars: "iam-prefix:power-user,test:yes"
 )
