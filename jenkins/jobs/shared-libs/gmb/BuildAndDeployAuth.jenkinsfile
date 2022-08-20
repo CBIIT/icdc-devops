@@ -16,9 +16,9 @@ buildAndDeploy(
     deploymentCheckoutDirectory: "gmb-deployments",
     deploymentFile: "gmb-deployments/deployments.yaml",
     service: "auth",
-    extraAnsibleVars: "iam_prefix:power-user"
-    useDockerAgent: true
-    agentImage: "ncidockerhub.nci.nih.gov/icdc/jenkins-agent-ansible"
-    dockerRegistryUrl: "https://ncidockerhub.nci.nih.gov"
+    extraAnsibleVars: "iam_prefix:power-user",
+    useDockerAgent: true,
+    agentImage: "ncidockerhub.nci.nih.gov/icdc/jenkins-agent-ansible",
+    dockerRegistryUrl: "https://ncidockerhub.nci.nih.gov",
     registryCredentialsId "ncidockerhub"
 )
