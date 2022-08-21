@@ -15,7 +15,7 @@ buildAndDeploy(
     deploymentRepoUrl: "https://github.com/CBIIT/gmb-deployments",
     deploymentCheckoutDirectory: "gmb-deployments",
     deploymentFile: "gmb-deployments/deployments.yaml",
-    service: "frontend"
+    service: "frontend",
     extraAnsibleVars: "iam_prefix:power-user-",
     useDockerAgent: true,
     agentImage: "ncidockerhub.nci.nih.gov/icdc/jenkins-agent-ansible",
