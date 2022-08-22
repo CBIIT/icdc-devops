@@ -26,9 +26,8 @@
       include_role:
         name: bento.common.ecs_cloudwatch
       vars:
-        iam_prefix: ""
-        execution_role: "{{ iam_prefix }}{{ project_name }}-{{ tier }}-ecs-task-execution-role"
-        task_role: "{{ iam_prefix }}{{ project_name }}-{{ tier }}-ecs-task-role"
+        execution_role: "{% if iam_prefix is defined and iam_prefix != '' %}{{ iam_prefix }}-{{ project_name }}-{{ tier }}-ecs-task-execution-role{% else %}{{ project_name }}-{{ tier }}-ecs-task-execution-role{% endif %}"
+        task_role: "{% if iam_prefix is defined and iam_prefix != '' %}{{ iam_prefix }}-{{ project_name }}-{{ tier }}-task-role{% else %}{{ project_name }}-{{ tier }}-task-role{% endif %}"
         auth_version: "{{ lookup('env','AUTH_VERSION') }}"
         region: "us-east-1"
         idp_provider: "{{ lookup('amazon.aws.aws_secret', 'auth/provider/google.idp_provider', nested=true, region='us-east-1' ) }}"
