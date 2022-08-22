@@ -31,7 +31,7 @@ container_registry_url: "{{ ecr_repo }}"
 app_name: "{{project_name}}-{{platform}}-{{tier}}"
 
 fe_version: "{{ lookup('env','FE_VERSION') }}"
-branch: "{{ fe_version.split("-")[0] }}"
+branch: "{{ fe_version.split('-')[0] }}"
 about_content_url: "https://raw.githubusercontent.com/CBIIT/bento-cds-frontend/{{ branch }}/src/content/{{ tier }}/aboutPagesContent.yaml"
 
 sumo_collector_endpoint: collectors.fed.sumologic.com
