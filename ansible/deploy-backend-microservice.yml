@@ -28,8 +28,8 @@
         name: bento.common.ecs_cloudwatch
       vars:
         ansible_python_interpreter: /usr/bin/python3
-        execution_role: "{% if iam_prefix is defined and iam_prefix != "" %}{{ iam_prefix }}-{{ project_name }}-{{ tier }}-ecs-task-execution-role{% else %}{{ project_name }}-{{ tier }}-ecs-task-execution-role{% endif %}"
-        task_role: "{% if iam_prefix is defined and iam_prefix != "" %}{{ iam_prefix }}-{{ project_name }}-{{ tier }}-task-role{% else %}{{ project_name }}-{{ tier }}-task-role{% endif %}"
+        execution_role: "{% if iam_prefix is defined and iam_prefix != '' %}{{ iam_prefix }}-{{ project_name }}-{{ tier }}-ecs-task-execution-role{% else %}{{ project_name }}-{{ tier }}-ecs-task-execution-role{% endif %}"
+        task_role: "{% if iam_prefix is defined and iam_prefix != '' %}{{ iam_prefix }}-{{ project_name }}-{{ tier }}-task-role{% else %}{{ project_name }}-{{ tier }}-task-role{% endif %}"
         project_name: "{{project_name}}"
         platform: aws
         region: us-east-1
