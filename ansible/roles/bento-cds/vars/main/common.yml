@@ -29,6 +29,6 @@ syslog_host: "{{ lookup('aws_ssm', 'syslog_host', region='us-east-1' ) }}"
 sumo_collector_token: "{{ lookup('amazon.aws.aws_secret', 'monitoring/sumologic.collector_token', nested=true, region='us-east-1' ) }}"
 container_registry_url: "{{ ecr_repo }}"
 app_name: "{{project_name}}-{{platform}}-{{tier}}"
-fe_version: "{{ lookup('env','FE_VERSION') }}"
+fe_version: "{{ lookup('env','FE_VERSION') | split('-') | first }}" }}"
 about_content_url: "https://raw.githubusercontent.com/CBIIT/bento-cds-frontend/{{ fe_version }}/src/content/{{ tier }}/aboutPagesContent.yaml"
 sumo_collector_endpoint: collectors.fed.sumologic.com
