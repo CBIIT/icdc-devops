@@ -15,5 +15,6 @@ buildAndDeploy(
     deploymentRepoUrl: "https://github.com/CBIIT/bento-deployments",
     deploymentCheckoutDirectory: "bento-deployments",
     deploymentFile: "bento-deployments/deployments.yaml",
-    service: "auth"
+    service: "auth",
+    extraAnsibleVars: ""
 )
