@@ -27,6 +27,15 @@ resource "aws_security_group_rule" "inbound_backend_alb" {
   type                     = "ingress"
 }
 
+resource "aws_security_group_rule" "inbound_files_alb" {
+  from_port                = var.files_container_port
+  protocol                 = local.tcp_protocol
+  to_port                  = var.files_container_port
+  security_group_id        = aws_security_group.app_sg.id
+  source_security_group_id = var.alb_sg_id
+  type                     = "ingress"
+}
+
 resource "aws_security_group_rule" "all_outbound_frontend" {
   from_port         = local.any_port
   protocol          = local.any_protocol
