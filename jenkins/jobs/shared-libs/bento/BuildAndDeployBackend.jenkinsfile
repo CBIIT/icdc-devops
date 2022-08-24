@@ -23,7 +23,7 @@ buildAndDeploy(
     deploymentFile: "bento-deployments/deployments.yaml",
     service: "backend",
     includeFrontendRepo: true,
-    extraAnsibleVars: "${extraAnsibleVars}",
+    extraAnsibleVars: "auth_enabled=${params.AuthEnabled}",
     useDockerAgent: false,
     frontendRepoUrl: "https://github.com/CBIIT/bento-frontend",
     frontendCheckoutDirectory: "bento-frontend"
