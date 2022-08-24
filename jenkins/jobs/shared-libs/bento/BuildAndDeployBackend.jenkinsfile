@@ -1,10 +1,10 @@
 @Library('datacommons-jenkins-shared-library') _
 def extraAnsibleVars = ""
-if("${params.AuthEnabled}"){
-    println params.AuthEnabled
-    println "${params.AuthEnabled}"
+if("${params.AuthEnabled}" != null){
+
     extraAnsibleVars = "auth_enabled=${params.AuthEnabled}"
 }
+println extraAnsibleVars 
 buildAndDeploy(
     label: "cicd_microservice",
     parameterName: "BackendTag",
