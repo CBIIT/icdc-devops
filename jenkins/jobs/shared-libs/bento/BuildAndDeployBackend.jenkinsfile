@@ -4,7 +4,7 @@ if("${params.AuthEnabled}" != null){
 
     extraAnsibleVars = "auth_enabled=${params.AuthEnabled}"
 }
-println extraAnsibleVars 
+
 buildAndDeploy(
     label: "cicd_microservice",
     parameterName: "BackendTag",
@@ -23,7 +23,7 @@ buildAndDeploy(
     deploymentFile: "bento-deployments/deployments.yaml",
     service: "backend",
     includeFrontendRepo: true,
-    extraAnsibleVars: extraAnsibleVars,
+    extraAnsibleVars: "${extraAnsibleVars}",
     useDockerAgent: false,
     frontendRepoUrl: "https://github.com/CBIIT/bento-frontend",
     frontendCheckoutDirectory: "bento-frontend"
