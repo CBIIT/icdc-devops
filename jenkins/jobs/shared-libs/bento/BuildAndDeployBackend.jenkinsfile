@@ -1,4 +1,8 @@
 @Library('datacommons-jenkins-shared-library') _
+def extraAnsibleVars = ""
+if(params.AuthEnabled){
+    extraAnsibleVars = "auth_enabled=${params.AuthEnabled}"
+}
 buildAndDeploy(
     label: "cicd_microservice",
     parameterName: "BackendTag",
@@ -17,7 +21,7 @@ buildAndDeploy(
     deploymentFile: "bento-deployments/deployments.yaml",
     service: "backend",
     includeFrontendRepo: true,
-    extraAnsibleVars: "${params.AuthEnabled}" ? "auth_enabled=${params.AuthEnabled}" : "",
+    extraAnsibleVars: extraAnsibleVars,
     useDockerAgent: false,
     frontendRepoUrl: "https://github.com/CBIIT/bento-frontend",
     frontendCheckoutDirectory: "bento-frontend"
