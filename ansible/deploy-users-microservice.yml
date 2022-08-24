@@ -35,8 +35,8 @@
       include_role:
         name: bento.common.ecs_cloudwatch
       vars:
-        execution_role: "{% if iam_prefix is defined and iam_prefix != '' %}{{ iam_prefix }}-{{ project_name }}-{{ tier }}-ecs-task-execution-role{% else %}{{ project_name }}-{{ tier }}-ecs-task-execution-role{% endif %}"
-        task_role: "{% if iam_prefix is defined and iam_prefix != '' %}{{ iam_prefix }}-{{ project_name }}-{{ tier }}-task-role{% else %}{{ project_name }}-{{ tier }}-task-role{% endif %}"
+        execution_role: "{% if iam_prefix is defined and iam_prefix != '' %}{{ iam_prefix }}-{{ project_name }}-{{ tier }}-ecs-task-execution-role{% else %}{{ project_name }}-{{ tier }}-task-execution-role{% endif %}"
+        task_role: "{% if iam_prefix is defined and iam_prefix != '' %}{{ iam_prefix }}-{{ project_name }}-{{ tier }}-ecs-task-role{% else %}{{ project_name }}-{{ tier }}-task-role{% endif %}"
         cookie_secret: "{{ lookup('amazon.aws.aws_secret', 'auth/provider/google.cookie_secret', nested=true, region='us-east-1' ) }}"
         users_version: "{{ lookup('env','USERS_VERSION') }}"
         region: "us-east-1"
