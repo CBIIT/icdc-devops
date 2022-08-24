@@ -1,6 +1,6 @@
 @Library('datacommons-jenkins-shared-library') _
 def extraAnsibleVars = ""
-if("${params.AuthEnabled}" != null){
+if(params.AuthEnabled != null){
 
     extraAnsibleVars = "auth_enabled=${params.AuthEnabled}"
 }
