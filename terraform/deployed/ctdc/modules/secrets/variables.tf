@@ -32,3 +32,7 @@ variable "sumo_collector_token_files" {
   type        = string
   description = "Sumo collector token for files"
 }
+variable "db_instance" {
+  type        = string
+  description = "name of he db instance for this tier"
+}

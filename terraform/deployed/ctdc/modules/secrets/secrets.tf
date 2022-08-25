@@ -14,7 +14,8 @@ resource "aws_secretsmanager_secret_version" "secrets_values" {
 	  "sumo_collector_endpoint": "collectors.fed.sumologic.com",
 	  "sumo_collector_token_be": "${var.sumo_collector_token_be}",
 	  "sumo_collector_token_fe": "${var.sumo_collector_token_fe}",
-	  "sumo_collector_token_files": "${var.sumo_collector_token_files}"
+	  "sumo_collector_token_files": "${var.sumo_collector_token_files}",
+	  "db_instance": "${var.db_instance}"
 	}
 EOF
 }

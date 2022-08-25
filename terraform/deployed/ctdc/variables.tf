@@ -84,6 +84,10 @@ variable "neo4j_password" {
   description = "neo4j password"
   sensitive   = true
 }
+variable "db_instance" {
+  type        = string
+  description = "name of he db instance for this tier"
+}
 variable "indexd_url" {
   type        = string
   description = "indexd url"
