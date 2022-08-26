@@ -72,12 +72,12 @@ variable "cross_account_roles" {
 variable "started_tags" {
   description = "Comma separated list of tagname and values on the formt name=value,name=value,.. that are set on started instances"
   type        = string
-  default     =  "Scheduler"
+  default     =  "Schedule=Enabled"
 }
 variable "stopped_tags" {
   description = "Comma separated list of tagname and values on the formt name=value,name=value,.. that are set on stopped instances"
   type        = string
-  default     =  "Scheduler"
+  default     =  "Schedule=Enabled"
 }
 variable "scheduler_frequency" {
   description = "Scheduler running frequency in minutes."
@@ -88,4 +88,10 @@ variable "schedule_lambda_account" {
   description = "Schedule instances in this account."
   type        = string
   default     = "Yes"
+}
+variable "tags" {
+  type = map(string)
+  default = {
+    Ticket = "CLDOPS-2311"
+  }
 }
