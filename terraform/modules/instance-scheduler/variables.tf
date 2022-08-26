@@ -27,7 +27,7 @@ variable "create_rds_snapshot" {
 variable "memory_size" {
   description = "Size of the Lambda function running the scheduler, increase size when processing large numbers of instances."
   type        = string
-  default     = "128"
+//  default     = "128"
 }
 variable "use_cloud_watch_metrics" {
   description = "Collect instance scheduling data using CloudWatch metrics."
