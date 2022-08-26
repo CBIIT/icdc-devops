@@ -51,6 +51,7 @@ locals {
 resource "aws_cloudwatch_log_group" "scheduler_log_group" {
   name = join("-", [var.stack_name, "logs"])
   retention_in_days = var.log_retention_days
+  tags = var.tags
 }
 
 resource "aws_iam_role" "scheduler_role" {
@@ -140,7 +141,7 @@ resource "aws_lambda_function" "main" {
       STATE_TABLE                    = aws_dynamodb_table.state_table.arn
     }
   }
-  function_name = join("-", [var.stack_name, "-Instance-scheduler"])
+  function_name = join("-", [var.stack_name, "instance-scheduler"])
   handler       = "main.lambda_handler"
   memory_size   = var.memory_size
   runtime       = "python3.7"
@@ -225,9 +226,10 @@ resource "aws_dynamodb_table" "maintenance_window_table" {
 }
 
 resource "aws_cloudwatch_event_rule" "scheduler_rule" {
+  name = join("-",[var.stack_name,"scheduler_rule"])
   description         = "Instance Scheduler - Rule to trigger instance for scheduler function version v1.4.1"
   schedule_expression = local.mappings["mappings"]["Timeouts"][var.scheduler_frequency]
-  is_enabled          = local.mappings["mappings"]["EnabledDisabled"][var.scheduling_active] == "Yes" ? true : false
+  is_enabled          = local.mappings["mappings"]["EnabledDisabled"][var.scheduling_active] == "ENABLED" ? true : false
 }
 
 resource "aws_cloudwatch_event_target" "scheduler_target" {
