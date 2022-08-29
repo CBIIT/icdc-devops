@@ -383,13 +383,13 @@ resource "aws_dynamodb_table_item" "running" {
     "S": "schedule"
   },
   "name": {
-    "S": "stopped"
+    "S": "running"
   },
   "description": {
-    "S": "Instances stopped"
+    "S": "Instances running"
   },
   "override_status": {
-    "S": "stopped"
+    "S": "running"
   },
   "use_metrics": {
     "BOOL": false
