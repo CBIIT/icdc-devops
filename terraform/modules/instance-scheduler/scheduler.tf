@@ -358,20 +358,67 @@ resource "aws_dynamodb_table_item" "schedule" {
     "S": "schedule"
   },
   "name": {
-    "S": "office-hours"
+    "S": "running"
   },
-  "timezone": {
-    "S": "America/New_York"
+  "description": {
+    "S": "Instances running"
   },
-  "enforced": {
-    "BOOL": true
+  "override_status": {
+    "S": "running"
   },
-  "periods": {
-    "SS": [
-      "office-hours-9-5"
-    ]
+  "use_metrics": {
+    "BOOL": false
   }
 }
 EOF
 
+}
+resource "aws_dynamodb_table_item" "running" {
+  range_key   =  aws_dynamodb_table.config_table.range_key
+  hash_key    =  aws_dynamodb_table.config_table.hash_key
+  table_name  =  aws_dynamodb_table.config_table.name
+  item        = <<EOF
+{
+  "type": {
+    "S": "schedule"
+  },
+  "name": {
+    "S": "stopped"
+  },
+  "description": {
+    "S": "Instances stopped"
+  },
+  "override_status": {
+    "S": "stopped"
+  },
+  "use_metrics": {
+    "BOOL": false
+  }
+}
+EOF
+}
+
+resource "aws_dynamodb_table_item" "stopped" {
+  range_key   =  aws_dynamodb_table.config_table.range_key
+  hash_key    =  aws_dynamodb_table.config_table.hash_key
+  table_name  =  aws_dynamodb_table.config_table.name
+  item        = <<EOF
+{
+  "type": {
+    "S": "schedule"
+  },
+  "name": {
+    "S": "stopped"
+  },
+  "description": {
+    "S": "Instances stopped"
+  },
+  "override_status": {
+    "S": "stopped"
+  },
+  "use_metrics": {
+    "BOOL": false
+  }
+}
+EOF
 }
