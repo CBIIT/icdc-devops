@@ -60,19 +60,6 @@ resource "aws_iam_role" "scheduler_role" {
   path = "/"
 }
 
-resource "aws_iam_role_policy_attachment" "attach_policy_schedule_role" {
-  for_each = toset([
-    aws_iam_policy.ec2_permissions.arn,
-    aws_iam_policy.scheduler_role_policy.arn,
-    aws_iam_policy.scheduler_policy.arn,
-    aws_iam_policy.ec2_dynamo_db_policy.arn,
-    aws_iam_policy.scheduler_rds_policy.arn
-  ])
-#  name       =  join("-", [var.stack_name, "scheduler-policies"])
-  policy_arn =  each.value
-  role =  aws_iam_role.scheduler_role.name
-}
-
 resource "aws_iam_role_policy_attachment" "attach_policy_lambda_role" {
   role =  aws_iam_role.lambda_role.name
   policy_arn = aws_iam_policy.lambda_policy.arn
@@ -109,8 +96,6 @@ resource "aws_iam_role" "lambda_role" {
   force_detach_policies =  true
 }
 
-
-
 resource "aws_lambda_function" "main" {
   s3_bucket   = join("", ["solutions-", data.aws_region.current.name])
   s3_key      = "aws-instance-scheduler/v1.4.1/instance-scheduler.zip"
@@ -120,7 +105,7 @@ resource "aws_lambda_function" "main" {
     variables = {
       SCHEDULER_FREQUENCY            = var.scheduler_frequency
       TAG_NAME                       = var.tag_name
-      LOG_GROUP                      = aws_cloudwatch_log_group.scheduler_log_group.arn
+      LOG_GROUP                      = aws_cloudwatch_log_group.scheduler_log_group.name
       ACCOUNT                        = data.aws_caller_identity.current.account_id
       ISSUES_TOPIC_ARN               = aws_sns_topic.instance_scheduler_sns_topic.id
       STACK_NAME                     = var.stack_name
@@ -135,10 +120,10 @@ resource "aws_lambda_function" "main" {
       METRICS_URL                    = local.mappings["mappings"]["Settings"]["MetricsUrl"]
       UUID_KEY                       = local.mappings["Send"]["ParameterKey"]["UniqueId"]
       START_EC2_BATCH_SIZE           = "5"
-      DDB_TABLE_NAME                 = aws_dynamodb_table.state_table.arn
-      CONFIG_TABLE                   = aws_dynamodb_table.config_table.arn
-      MAINTENANCE_WINDOW_TABLE       = aws_dynamodb_table.maintenance_window_table.arn
-      STATE_TABLE                    = aws_dynamodb_table.state_table.arn
+      DDB_TABLE_NAME                 = aws_dynamodb_table.state_table.name
+      CONFIG_TABLE                   = aws_dynamodb_table.config_table.name
+      MAINTENANCE_WINDOW_TABLE       = aws_dynamodb_table.maintenance_window_table.name
+      STATE_TABLE                    = aws_dynamodb_table.state_table.name
     }
   }
   function_name = join("-", [var.stack_name, "instance-scheduler"])
@@ -259,6 +244,134 @@ resource "aws_iam_policy" "scheduler_rds_policy" {
   name = join("-",[var.stack_name,"rds-scheduler-policy"])
 }
 
+resource "aws_iam_role_policy_attachment" "ec2_permissions" {
+  policy_arn = aws_iam_policy.ec2_permissions.arn
+  role       = aws_iam_role.scheduler_role.name
+}
+
+resource "aws_iam_role_policy_attachment" "scheduler_role_policy" {
+  policy_arn = aws_iam_policy.scheduler_role_policy.arn
+  role       = aws_iam_role.scheduler_role.name
+}
+resource "aws_iam_role_policy_attachment" "scheduler_policy" {
+  policy_arn = aws_iam_policy.scheduler_policy.arn
+  role       = aws_iam_role.scheduler_role.name
+}
+resource "aws_iam_role_policy_attachment" "ec2_dynamo_db_policy" {
+  policy_arn = aws_iam_policy.ec2_dynamo_db_policy.arn
+  role       = aws_iam_role.scheduler_role.name
+}
+resource "aws_iam_role_policy_attachment" "scheduler_rds_policy" {
+  policy_arn = aws_iam_policy.scheduler_rds_policy.arn
+  role       = aws_iam_role.scheduler_role.name
+}
+
+resource "aws_dynamodb_table_item" "config" {
+  hash_key   = aws_dynamodb_table.config_table.hash_key
+  table_name = aws_dynamodb_table.config_table.name
+  range_key =  aws_dynamodb_table.config_table.range_key
+  item       = <<EOF
+{
+  "type": {
+    "S": "config"
+  },
+  "name": {
+    "S": "scheduler"
+  },
+  "create_rds_snapshot": {
+    "BOOL": false
+  },
+  "default_timezone": {
+    "S": "America/New_York"
+  },
+  "enable_SSM_maintenance_windows": {
+    "BOOL": false
+  },
+  "regions": {
+    "SS": [
+      "us-east-1"
+    ]
+  },
+  "scheduled_services": {
+    "SS": [
+      "ec2"
+    ]
+  },
+  "schedule_clusters": {
+    "BOOL": false
+  },
+  "schedule_lambda_account": {
+    "BOOL": true
+  },
+  "tagname": {
+    "S": "Schedule"
+  },
+  "trace": {
+    "BOOL": false
+  },
+  "use_metrics": {
+    "BOOL": false
+  }
+}
+EOF
+}
+
+resource "aws_dynamodb_table_item" "period" {
+  range_key   =  aws_dynamodb_table.config_table.range_key
+  hash_key    =  aws_dynamodb_table.config_table.hash_key
+  table_name  =  aws_dynamodb_table.config_table.name
+  item        =<<EOF
+{
+  "type": {
+    "S": "period"
+  },
+  "name": {
+    "S": "office-hours-9-5"
+  },
+  "begintime": {
+    "S": "21:20"
+  },
+  "description": {
+    "S": "Office hours"
+  },
+  "endtime": {
+    "S": "22:00"
+  },
+  "weekdays": {
+    "SS": [
+      "sat"
+    ]
+  }
+}
+EOF
+
+}
 
 
+resource "aws_dynamodb_table_item" "schedule" {
+  range_key   =  aws_dynamodb_table.config_table.range_key
+  hash_key    =  aws_dynamodb_table.config_table.hash_key
+  table_name  =  aws_dynamodb_table.config_table.name
+  item        =<<EOF
+{
+  "type": {
+    "S": "schedule"
+  },
+  "name": {
+    "S": "office-hours"
+  },
+  "timezone": {
+    "S": "America/New_York"
+  },
+  "enforced": {
+    "BOOL": true
+  },
+  "periods": {
+    "SS": [
+      "office-hours-9-5"
+    ]
+  }
+}
+EOF
 
+}
