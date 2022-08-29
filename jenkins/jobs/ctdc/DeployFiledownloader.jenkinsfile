@@ -5,7 +5,7 @@ def sendSlackMessage() {
   beer_image = ":beer:"
   long epoch = System.currentTimeMillis()/1000
   def BUILD_COLORS = ['SUCCESS': 'good', 'FAILURE': 'danger', 'UNSTABLE': 'danger', 'ABORTED': 'danger']
-  
+
   def slack = JsonOutput.toJson(
       [
             icon_emoji: jenkins_image,
@@ -45,21 +45,19 @@ pipeline {
         value: 'dev,qa')
 
   }
+
   options {
   	ansiColor('xterm')
   }
 
   stages{
-  	stage('deploy'){
-	  environment {
-	   FILES_SLACK_URL = "${FILES_SLACK_URL}"
-       TIER = "${params.Environment}"
-	   DOWNLOADER_VERSION = "${params.Filedownloader_Image}"
-      }
-  		steps{
-		  node('cicd_microservice') {
-		    checkout( changelog:false,
-				poll: false,
+
+	stage('checkout'){
+
+  		steps {
+
+  			checkout( poll: false, 
+				changelog:false,
 				scm: [$class: 'GitSCM', 
 				//branches: [[name: '*/master']], 
 				branches: [[name: '*/ctdc_cloudone']], 
@@ -70,9 +68,21 @@ pipeline {
 				relativeTargetDir: 'icdc-devops']], 
 				submoduleCfg: [], 
 				userRemoteConfigs: 
-				[[url: 'https://github.com/CBIIT/icdc-devops.git']]
-				])
-          
+				[[url: 'https://github.com/CBIIT/icdc-devops.git']]])
+
+        }
+
+  	}
+
+  	stage('deploy'){
+	  environment {
+	   FILES_SLACK_URL = "${FILES_SLACK_URL}"
+       TIER = "${params.Environment}"
+	   DOWNLOADER_VERSION = "${params.Filedownloader_Image}"
+      }
+
+  		steps{
+
 		  wrap([$class: 'AnsiColorBuildWrapper', colorMapName: "xterm"]) {
             ansiblePlaybook( 
                 playbook: '${WORKSPACE}/icdc-devops/ansible/ctdc-deploy-files.yml',
@@ -82,19 +92,20 @@ pipeline {
                      project_name: "ctdc",
                 ],
                 colorized: true)
-            }
-		  }
-  		}
+          }
+
+	    }
+
   	}
 
   }
-  
+
   post {
 
     always {
       sendSlackMessage()
     }
-	
+
 	cleanup {
 		cleanWs()
 	}
