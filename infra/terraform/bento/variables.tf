@@ -244,5 +244,45 @@ variable "allow_cloudwatch_stream" {
   type = bool
   default = true
   description = "allow cloudwatch stream for the containers"
-
+}
+variable "db_subnet_ids" {
+  type        = list(string)
+  default     = []
+  description = "list of subnet IDs to usee"
+}
+variable "db_engine_mode" {
+  type        = string
+  default     = "serverless"
+  description = "The database engine mode."
+}
+variable "db_engine_version" {
+  description = "aurora database engine version."
+  type        = string
+  default     = "5.6.10a"
+}
+variable "db_engine_type" {
+  description = "Aurora database engine type"
+  type        = string
+  default     = "aurora-mysql"
+}
+variable "db_instance_class" {
+  description = "Instance type to use for the db"
+  type        = string
+  default     = "db.serverless"
+}
+variable "master_username" {
+  description = "username for this db"
+  type        = string
+  default     = ""
+  sensitive   = true
+}
+variable "database_name" {
+  description = "name of the database"
+  type = string
+  default = "bento"
+}
+variable "create_aurora_rds" {
+  description = "create rds or not"
+  type = bool
+  default = false
 }
