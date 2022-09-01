@@ -123,3 +123,7 @@ db_engine_type = "aurora-mysql"
 master_username = "bento"
 db_instance_class = "db.serverless"
 database_name = "bento_session"
+db_subnet_ids = [
+  "subnet-09b0c7407416d4730",
+  "subnet-07d177a4d9df5cd32"
+]
