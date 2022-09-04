@@ -64,26 +64,18 @@
           - 'wget "https://download.newrelic.com/newrelic/java-agent/newrelic-agent/current/newrelic-java.zip" -O newrelic-java.zip && rm -rf newrelic && unzip -o newrelic-java.zip && bin/catalina.sh run'
         #Environment
         container_env:
-#          - name: PROJECT
-#            value: "{{ project_name }}"
           - name: NEO4J_URL
             value: "bolt://{{ neo4j_ip }}:7687"
           - name: NEO4J_USER
             value: "{{ neo4j_user }}"
           - name: NEO4J_PASSWORD
             value: "{{ neo4j_password }}"
-#          - name: NEO4J_GRAPHQL_ENDPOINT
-#            value: "http://{{ neo4j_ip }}:7474/graphql/"
           - name: BENTO_API_VERSION
             value: "{{ image_version }}"
           - name: AUTH_ENDPOINT
-            value: "{% if tier == 'prod' %}https://{{project_name}}.bento-tools.org/api/auth{% else %}https://{{ project_name }}-{{ tier }}.bento-tools.org/api/auth{% endif %}"
-#          - name: AUTH_ENABLED
-#            value: "{{ auth_enabled }}"
+            value: "{% if tier == 'prod' and project_name == 'bento' %}https://bento-tools.org/api/auth{% else %}https://{{ project_name }}-{{ tier }}.bento-tools.org/api/auth{% endif %}"
           - name: ES_HOST
             value: "{{ es_host }}"
-#          - name: ES_FILTER_ENABLED
-#            value: "{{ enable_es_filter }}"
           - name: NEW_RELIC_LICENSE_KEY
             value: "{{ newrelic_license_key }}"
           - name: NEW_RELIC_APP_NAME
