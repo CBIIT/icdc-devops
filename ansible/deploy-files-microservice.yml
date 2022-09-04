@@ -26,7 +26,7 @@
         cloudfront_key_group_name: "bento-prod-pub-key"
         cloudfront_origin_id: "{{project_name}}_files_origin_id"
       when: 
-        - tier == 'dev' or tier == 'qa' or tier == 'perf'
+#        - tier == 'dev' or tier == 'qa' or tier == 'perf'
         - project_name == 'bento'
 
     - name: get distribution domain name
