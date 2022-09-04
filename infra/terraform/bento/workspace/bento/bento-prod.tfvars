@@ -100,10 +100,10 @@ create_cloudwatch_log_policy = false
 
 
 #neo4j db
-katalon_security_group_id = "sg-0f07eae0a9b3a0bb8"
+#katalon_security_group_id = "sg-0f07eae0a9b3a0bb8"
 bastion_host_security_group_id = "sg-0c94322085acbfd97"
 create_db_instance = true
-db_subnet_id = "subnet-09b0c7407416d4730"
+db_subnet_id = "subnet-029f8f63b6443f2ce"
 db_instance_volume_size = 80
 ssh_user = "bento"
 db_private_ip = "10.8.11.71"
