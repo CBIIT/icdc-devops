@@ -10,7 +10,6 @@
       community.general.ansible_galaxy_install:
         type: collection
         name: {{item}}
-        force: yes
       loop:
         - community.docker
         - amazon.aws
