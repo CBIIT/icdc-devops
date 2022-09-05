@@ -5,24 +5,13 @@
   become: yes
 
   tasks:
-    #install collections
-    - name: install collections
-      community.general.ansible_galaxy_install:
-        type: collection
-        name: "{{item}}"
-        force: yes
+    - name: install aws collection
+      command: ansible-galaxy collection install --force {{item}}
       loop:
         - community.docker
         - amazon.aws
         - community.aws:<=3.2.0
         - git+https://github.com/CBIIT/datacommons-devops.git#/ansible/collections/bento/common/,main
-#    - name: install aws collection
-#      command: ansible-galaxy collection install {{item}}
-#      loop:
-#        - community.docker
-#        - amazon.aws
-#        - community.aws:<=3.2.0
-#        - git+https://github.com/CBIIT/datacommons-devops.git#/ansible/collections/bento/common/,main
 
     #docker login
     - name: docker login
