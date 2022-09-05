@@ -33,5 +33,5 @@
         image_version: "{{ lookup('env','FILES_VERSION') }}"
         container_name: "files"
         container_build_path: "{{ workspace }}/{{ project_name }}-files"
-        dockerfile_path: "{{ workspace }}/icdc-devops/docker/dockerfiles/filedownload-dockerfile"
+        dockerfile_path: "{{ workspace }}/icdc-devops/docker/dockerfiles/files-microservice-dockerfile"
         container_registry_url: "{{ ecr_repo }}"

@@ -3,7 +3,7 @@ buildAndDeploy(
     label: "slave-ncias-q2944-c",
     parameterName: "FilesTag",
     codeRepoUrl: "https://github.com/CBIIT/bento-files",
-    checkoutDirectory: "bento-files",
+    checkoutDirectory: "gmb-files",
     buildPlaybook: "build-files-microservice.yml",
     deployPlaybook: "deploy-files-microservice.yml",
     inventory: "hosts",
