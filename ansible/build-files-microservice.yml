@@ -9,7 +9,8 @@
     - name: install collections
       community.general.ansible_galaxy_install:
         type: collection
-        name: {{item}}
+        name: "{{item}}"
+        force: yes
       loop:
         - community.docker
         - amazon.aws
