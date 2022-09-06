@@ -105,3 +105,7 @@ create_dns_record = false
 cloud_platform="cloudone"
 target_account_cloudone = true
 create_instance_profile = true
+
+#cloudfront
+cloudfront_distribution_bucket_name = "gmb-nonprod-annotation-files"
+cloudfront_distribution_log_bucket_name = "gmb-nonprod-cloudfront-logs"

@@ -1,45 +1,39 @@
 import boto3
-import logging
+from os import getenv
 
-#create custom session
-aws_session = boto3.session.Session()
-aws_region = aws_session.region_name
-ec2_resource = boto3.resource('ec2', region_name=aws_region)
+#retrieve region information from environment
+aws_region = getenv("AWS_REGION")
 
-# create filter for instances in running state
-running_instances = [
-    {
-        'Name': 'instance-state-name',
-        'Values': ['running']
-    }
-]
+#create sns clint
+client = boto3.client("sns",region_name=aws_region)
+#retrieve account id from session
+aws_account_id = boto3.client("sts").get_caller_identity()["Account"]
 
-#schedule tags
-schedule_tag = [
-    {
-        'Key': 'Schedule',
-        'Value': "office-hours-7-pm"
-    }
-]
+def get_topic_subscription_arns(topic_arn):
+    resp = client.list_subscriptions_by_topic(TopicArn=topic_arn)
+    subscription_arns = [arn["SubscriptionArn"] for arn in  resp["Subscriptions"]]
+    return subscription_arns
 
-#check running instances
-def check_schedule_tag(instance):
-    return [tag for tag in instance.tags if tag["Key"] == "Schedule"]
+def get_subscription_status(topic_arn):
+    subscription_status = []
+    subscription_arns = get_topic_subscription_arns(topic_arn)
+    for subscription_arn in subscription_arns:
+        resp = client.get_subscription_attributes(SubscriptionArn=subscription_arn)
+        if resp["Attributes"]["PendingConfirmation"] and resp["Attributes"]["PendingConfirmation"] == "true":
+            status = {
+                "account": resp["Attributes"]["Owner"],
+                "status" : resp["Attributes"]["PendingConfirmation"]
+            }
+            subscription_status.append(status)
 
+    return subscription_status
 
-def tag_instances(instances: list, tag):
-    if len(instances) > 0:
-        for instance in instances:
-            logging.info(f"Tagging instance {instance.id}")
-            instance.create_tags(Tags=tag)
 
 def handler(event,context):
+    phd_topic_arn = f"arn:aws:sns:{aws_region}:{aws_account_id}:seronet-test-notifications-success"
+    sns_subscription_statu = get_subscription_status(phd_topic_arn)
     
-    #filter running instances
-    instances = ec2_resource.instances.filter(
-        Filters=running_instances
-    )
 
-    instances_without_schedule_tag = [instance for instance in instances if len(check_schedule_tag(instance)) == 0]
-    tag_instances(instances_without_schedule_tag,schedule_tag)
-    logging.info("Tagging is complete")
+
+
+
