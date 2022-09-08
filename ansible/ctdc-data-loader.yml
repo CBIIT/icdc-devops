@@ -14,6 +14,17 @@
         #- git+https://github.com/CBIIT/icdc-devops.git#/ansible/ansible_collections/bento/common/,ctdc_troubleshooting
         - git+https://github.com/CBIIT/datacommons-devops.git#/ansible/collections/bento/common/,collections_v1.2
 
+    #list collections
+    - name: list collections
+      block:
+        - name: list collections
+          command: ansible-galaxy collection list
+          register: coll_installed
+      always:
+        - name: echo results
+          debug:
+            msg: "{{ coll_installed.stdout_lines }}"
+
     #get db ip
     - name: get db ip
       include_role:
