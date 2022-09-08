@@ -22,6 +22,9 @@ pipeline {
         type: 'PT_SINGLE_SELECT',
         value: 'dev,qa,stage,prod' )
     string(defaultValue: "", 
+        description: 'S3 Bucket to load data from', 
+        name: 'S3Bucket')
+	string(defaultValue: "", 
         description: 'S3 Folder to load data from', 
         name: 'S3Folder')
     extendedChoice( 
@@ -84,7 +87,8 @@ pipeline {
   	}
   	stage('load-data'){
  		environment {
-            S3_FOLDER = "${params.S3Folder}"
+            S3_BUCKET = "${params.S3Bucket}"
+			S3_FOLDER = "${params.S3Folder}"
             TIER  = "${params.Environment}"
             WIPE_DB = "${params.WipeDB}"
             CHEAT_MODE = "${params.CheatMode}"
