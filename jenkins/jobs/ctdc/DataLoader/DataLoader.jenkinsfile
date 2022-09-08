@@ -2,7 +2,7 @@ pipeline {
 	agent {
 		node {
 			//label 'data-loader'
-			label 'slave-ncias-d2320-c'
+			label 'slave-ncias-d2957-c'
 		}
 	}
 	parameters {
@@ -71,7 +71,8 @@ pipeline {
 			sh 'git submodule update --init'
 				
   			dir('icdc-devops'){
-  				git branch: 'master',
+  				//git branch: 'master',
+				git branch: 'ctdc_cloudone',
     			url: 'https://github.com/CBIIT/icdc-devops.git'}
 			
             dir('ctdc-model'){
