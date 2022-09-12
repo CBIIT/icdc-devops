@@ -5,10 +5,11 @@ resource "aws_security_group" "es" {
   vpc_id = var.vpc_id
 
   ingress {
-    from_port   = local.https_port
-    to_port     = local.https_port
-    protocol    = local.tcp_protocol
-    cidr_blocks = var.subnet_ip_block
+    from_port       = local.https_port
+    to_port         = local.https_port
+    protocol        = local.tcp_protocol
+    #cidr_blocks = var.subnet_ip_block
+	security_groups = var.ecs_sg_id
   }
 }
 

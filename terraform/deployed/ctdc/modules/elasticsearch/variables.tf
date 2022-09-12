@@ -38,3 +38,7 @@ variable "iam_prefix" {
   type    = string
   default = "power-user"
 }
+variable "ecs_sg_id" {
+  type    = string
+  default = ""
+}
