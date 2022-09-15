@@ -1,0 +1,16 @@
+@Library('datacommons-jenkins-shared-library') _
+deployApp(
+    label: "cicd_microservice",
+    parameterName: "FilesTag",
+    repoName: "bento-files",
+    playbook: "deploy-files-microservice.yml",
+    inventory: "hosts",
+    tier: "${params.Environment}",
+    projectName: "${params.ProjectName}",
+    slackSecretPath: "notification/slack",
+    slackSecretName: "bento_slack_url",
+    deploymentRepoUrl: "https://github.com/CBIIT/bento-deployments",
+    deploymentCheckoutDirectory: "bento-deployments",
+    deploymentFile: "bento-deployments/deployments.yaml",
+    service: "files"
+)
