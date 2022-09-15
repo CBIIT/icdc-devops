@@ -107,14 +107,6 @@ resource "aws_lb_listener_rule" "users_alb_listener_prod_graphql" {
       values = ["/api/users/graphql"]
     }
   }
-<<<<<<< HEAD
-=======
-  condition {
-    source_ip {
-      values = [data.terraform_remote_state.network.outputs.vpc_cidr_block]
-    }
-  }
->>>>>>> 37fde576e8b5c36fbd5e79dffa583f2e1168bab9
 }
 
 resource "aws_lb_listener_rule" "users_alb_listener" {
