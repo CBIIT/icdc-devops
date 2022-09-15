@@ -3,7 +3,7 @@ buildAndDeploy(
     label: "cicd_microservice",
     parameterName: "FrontendTag",
     codeRepoUrl: "https://github.com/CBIIT/bento-c3dc-frontend",
-    checkoutDirectory: "bento-frontend",
+    checkoutDirectory: "c3dc-frontend",
     buildPlaybook: "build-frontend-microservice.yml",
     deployPlaybook: "deploy-frontend-microservice.yml",
     inventory: "hosts",
