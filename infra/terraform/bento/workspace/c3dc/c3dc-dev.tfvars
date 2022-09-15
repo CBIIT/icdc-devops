@@ -23,8 +23,8 @@ certificate_domain_name = "*.bento-tools.org"
 domain_name = "bento-tools.org"
 
 #ecr
-create_ecr_repos = false
-ecr_repo_names = ["backend","frontend","auth","files","users"]
+create_ecr_repos = true
+ecr_repo_names = ["auth","files","users","base-images"]
 
 #ecs
 add_opensearch_permission = true
