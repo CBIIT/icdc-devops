@@ -12,8 +12,8 @@ buildAndDeploy(
     slackSecretPath: "notification/slack",
     slackSecretName: "bento_slack_url",
     appVersionName: "USERS_VERSION",
-    deploymentRepoUrl: "https://github.com/CBIIT/bento-deployments",
-    deploymentCheckoutDirectory: "bento-deployments",
-    deploymentFile: "bento-deployments/deployments.yaml",
+    deploymentRepoUrl: "https://github.com/CBIIT/c3dc-deployments",
+    deploymentCheckoutDirectory: "c3dc-deployments",
+    deploymentFile: "c3dc-deployments/deployments.yaml",
     service: "users"
 )
