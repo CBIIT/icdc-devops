@@ -100,3 +100,5 @@
           value: "{{email_password}}"
         - name: EMAILS_ENABLED
           value: "true"
+        - name: SEED_DATA_FILE
+          value: "yaml/seed-data-gmb.yaml"
