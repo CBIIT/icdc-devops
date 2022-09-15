@@ -24,7 +24,7 @@ domain_name = "bento-tools.org"
 
 #ecr
 create_ecr_repos = true
-ecr_repo_names = ["auth","files","users","base-images"]
+ecr_repo_names = ["auth","files","users"]
 
 #ecs
 add_opensearch_permission = true
