@@ -17,3 +17,4 @@
         about_content_url: "https://raw.githubusercontent.com/CBIIT/bento-c3dc-frontend/{{ frontend_version }}/src/content/{{tier}}/aboutPagesContent.yaml"
         test_queries_file: "test-queries.1k.bento.yaml"
         redis_schema_file: "redis-schema.graphql"
+        redis_init_queries_file: "test-queries.1k.bento.yaml"
