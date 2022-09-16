@@ -20,5 +20,5 @@ buildAndDeploy(
 //     extraAnsibleVars: [],
     useDockerAgent: false,
     frontendRepoUrl: "https://github.com/CBIIT/bento-c3dc-frontend",
-    frontendCheckoutDirectory: "bento-frontend"
+    frontendCheckoutDirectory: "c3dc-frontend"
 )
