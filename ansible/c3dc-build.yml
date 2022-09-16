@@ -18,3 +18,4 @@
         test_queries_file: "test-queries.1k.bento.yaml"
         redis_schema_file: "redis-schema.graphql"
         redis_init_queries_file: "test-queries.1k.bento.yaml"
+        project: "{{project_name}}"
