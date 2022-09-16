@@ -17,10 +17,7 @@ buildAndDeploy(
     deploymentFile: "c3dc-deployments/deployments.yaml",
     service: "backend",
     includeFrontendRepo: true,
-    extraAnsibleVars: [
-    redis_host: [dev: "c3dc-dev-redis-cluster.l5vrvc.clustercfg.use1.cache.amazonaws.com"],
-        schema_file: "bento-c3dc.graphql",
-    ],
+//     extraAnsibleVars: [],
     useDockerAgent: false,
     frontendRepoUrl: "https://github.com/CBIIT/bento-c3dc-frontend",
     frontendCheckoutDirectory: "bento-frontend"
