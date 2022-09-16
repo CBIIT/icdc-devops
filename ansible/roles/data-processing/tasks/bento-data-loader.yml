@@ -10,7 +10,9 @@
 
 - name: set instance name
   set_fact:
-    neo4j_ip: "{{ neo4j.instances[0].network_interfaces[0].private_ip_address }}"
+#    neo4j_ip: "{{ neo4j.instances[0].network_interfaces[0].private_ip_address }}"
+    neo4j_ip: "{{ lookup('amazon.aws.aws_secret', 'bento/{{ project_name }}/{{ tier }}.neo4j_ip', nested=true, region='us-east-1' ) }}"
+
 
 - name: show db 
   debug:
