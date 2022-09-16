@@ -1,4 +1,4 @@
- ---
+---
 - name: gather instance facts
   ec2_instance_facts:
     region: us-east-1
