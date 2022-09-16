@@ -31,6 +31,7 @@ manifest_file: "{{ lookup('env','MANIFEST_FILE') }}"
 
 data_bucket: "{{bucket[project]}}"
 project: "{{ lookup('env','PROJECT') }}"
+project_name: "{{ lookup('env','PROJECT') }}"
 bucket:
   bento: bento-metadata-dev
   ccdi: ccdi-metadata-dev
