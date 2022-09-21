@@ -1,4 +1,4 @@
-module "ctdc_ecs" {
+module "ecs" {
   source = "./modules/ecs"
 
   stack_name                = var.stack_name
