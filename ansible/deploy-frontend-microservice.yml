@@ -24,7 +24,7 @@
     #deploy frontend
     - name: deploy stage for frontend microservice
       include_role:
-        name: bento.common.ecs_cloudwatch
+        name: bento.common.ecs
       vars:
         ansible_python_interpreter: /usr/bin/python3
         project_name: "{{project_name}}"
