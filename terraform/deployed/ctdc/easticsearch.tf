@@ -7,6 +7,6 @@ module "ctdc_elasticsearch" {
   subnet_ip_block        = var.subnet_ip_block
   private_subnet_ids     = [var.private_subnet_ids[0]]
   create_es_service_role = var.create_es_service_role
-  ecs_sg_id              = module.ecs.ecs_security_group_id
+  ecs_sg_id              = [module.ecs.ecs_security_group_id]
 
 }

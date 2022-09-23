@@ -39,6 +39,6 @@ variable "iam_prefix" {
   default = "power-user"
 }
 variable "ecs_sg_id" {
-  type    = string
-  default = ""
+  type    = list(string)
+  default = null
 }
