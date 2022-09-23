@@ -5,5 +5,5 @@ oneClickDeploy(
     codeRepoUrl: "https://github.com/CBIIT/bento-deployments.git",
     checkoutDirectory: "bento-deployments",
     deploymentFile: "bento-deployments/deployments.yaml",
-    jobPath: "Bento/job/build_and_deploy/"
+    jobPath: "Bento/job/build_and_deploy/Deploy"
 )
