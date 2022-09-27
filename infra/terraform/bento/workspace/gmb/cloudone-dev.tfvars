@@ -107,5 +107,17 @@ target_account_cloudone = true
 create_instance_profile = true
 
 #cloudfront
+create_cloudfront = true
 cloudfront_distribution_bucket_name = "gmb-nonprod-annotation-files"
-cloudfront_distribution_log_bucket_name = "gmb-nonprod-cloudfront-logs"
+cloudfront_slack_channel_name = "gmb-cloudfront-wafv2"
+alarms = {
+  error4xx = {
+    name = "4xxErrorRate"
+    threshold = 10
+  }
+  error5xx = {
+    name = "5xxErrorRate"
+    threshold = 10
+  }
+}
+slack_secret_name = "cloudfront-slack"

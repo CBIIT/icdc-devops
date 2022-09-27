@@ -8,5 +8,4 @@ oneClickDeploy(
     jobPath: "Bento/build_and_deploy/",
     slackSecretPath: "notification/slack",
     slackSecretName: "bento_slack_url",
-
 )
