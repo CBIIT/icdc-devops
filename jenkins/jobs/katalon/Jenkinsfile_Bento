@@ -60,7 +60,7 @@ pipeline {
         defaultValue: 'QA_PROD', 
         description: 'Choose the profile to use', 
         type: 'PT_SINGLE_SELECT',
-        value: 'QA_PROD,PERF_PROD,BENTO_ICDC,BENTO_CTDC,CDS_QA,GMB_QA,INS_DEV' )
+        value: 'QA_PROD,PERF_PROD,BENTO_ICDC,BENTO_CTDC,CDS_QA,GMB_QA,INS_DEV,BENTO_PROD' )
 
 	string(defaultValue: "gayathri.radhakrishnan@nih.gov,laxmi.lolla@nih.gov,sohil.sohil@nih.gov", 
         description: 'Enter a list of email addresses to notify in case of test failures:', 
@@ -116,6 +116,20 @@ pipeline {
 						withCredentials([string(credentialsId: 'Box_Email_PERF_BENTO', variable: 'box_email'),
 						  string(credentialsId: 'Box_Url_PERF_BENTO', variable: 'box_url'),
 						  file(credentialsId: 'Katalon_PERF_PROD', variable: 'pass_file')]) {
+                            BOX_EMAIL="${box_email}"
+							BOX_URL="${box_url}"
+							PROFILE="${pass_file}"
+							sh "cp ${pass_file} ${WORKSPACE}/Profiles/"
+                            }
+                        break
+
+					case "BENTO_PROD":
+						WIKI_PAGE="442632045"
+						PROJECT="Bento"
+						TIER="Prod"
+						withCredentials([string(credentialsId: 'Box_Email_PROD_BENTO', variable: 'box_email'),
+						  string(credentialsId: 'Box_Url_PROD_BENTO', variable: 'box_url'),
+						  file(credentialsId: 'Katalon_BENTO_PROD', variable: 'pass_file')]) {
                             BOX_EMAIL="${box_email}"
 							BOX_URL="${box_url}"
 							PROFILE="${pass_file}"
