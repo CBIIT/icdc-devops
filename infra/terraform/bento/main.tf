@@ -126,4 +126,5 @@ module "cloudfront" {
   slack_secret_name = var.slack_secret_name
   tags = var.tags
   create_files_bucket = var.create_files_bucket
+  cloud_platform = var.cloud_platform
 }
