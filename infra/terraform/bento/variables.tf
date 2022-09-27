@@ -319,3 +319,8 @@ variable "cloudfront_slack_channel_name" {
   type = string
   description = "cloudfront slack name"
 }
+variable "create_files_bucket" {
+  description = "indicate if you want to create files bucket or use existing one"
+  type = bool
+  default = false
+}

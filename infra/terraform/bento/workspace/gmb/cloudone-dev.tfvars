@@ -108,6 +108,7 @@ create_instance_profile = true
 
 #cloudfront
 create_cloudfront = true
+create_files_bucket = true
 cloudfront_distribution_bucket_name = "gmb-nonprod-annotation-files"
 cloudfront_slack_channel_name = "gmb-cloudfront-wafv2"
 alarms = {
