@@ -12,5 +12,5 @@ output "db_password" {
   sensitive = true
 }
 output "public_key" {
-   value = module.cloudfront.public_key
+   value = module.cloudfront.outputs.public_key
 }
