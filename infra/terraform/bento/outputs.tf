@@ -15,3 +15,4 @@ output "public_key" {
    value = module.cloudfront[0].public_key
    sensitive = true
 }
+
