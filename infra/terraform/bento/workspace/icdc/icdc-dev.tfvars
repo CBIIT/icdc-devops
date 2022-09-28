@@ -4,10 +4,10 @@ private_subnet_ids = [
   "subnet-409a0424"
 ]
 vpc_id = "vpc-29a12251"
-stack_name = "gmb"
+stack_name = "icdc"
 
 tags = {
-  Project = "gmb"
+  Project = "icdc"
   CreatedWith = "Terraform"
   POC = "ye.wu@nih.gov"
   Environment = "dev"
@@ -25,7 +25,7 @@ ecr_repo_names = ["backend","frontend","auth","files","users"]
 
 #ecs
 add_opensearch_permission = true
-application_subdomain = "gmb"
+application_subdomain = "caninecommons"
 microservices  = {
   frontend = {
     name = "frontend"
