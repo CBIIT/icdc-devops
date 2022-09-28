@@ -90,7 +90,7 @@ opensearch_ebs_volume_size = 200
 opensearch_instance_type = "t3.medium.search"
 opensearch_version = "OpenSearch_1.2"
 allowed_ip_blocks = ["10.208.0.0/21","10.210.0.0/24"]
-create_os_service_role = true
+create_os_service_role = false
 opensearch_instance_count = 1
 create_cloudwatch_log_policy = true
 
