@@ -11,8 +11,4 @@ output "db_password" {
   value = module.aurora.*.db_password
   sensitive = true
 }
-output "public_key" {
-   value = module.cloudfront[0].public_key
-   sensitive = true
-}
 
