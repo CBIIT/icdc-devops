@@ -1,9 +1,9 @@
 @Library('datacommons-jenkins-shared-library') _
 deployApp(
     label: "slave-ncias-q2944-c",
-    parameterName: "AuthTag",
-    repoName: "gmb-auth",
-    playbook: "deploy-auth-microservice.yml",
+    parameterName: "FilesTag",
+    repoName: "gmb-files",
+    playbook: "deploy-files-microservice.yml",
     inventory: "hosts",
     tier: "${params.Environment}",
     projectName: "${params.ProjectName}",
@@ -12,7 +12,7 @@ deployApp(
     deploymentRepoUrl: "https://github.com/CBIIT/gmb-deployments",
     deploymentCheckoutDirectory: "gmb-deployments",
     deploymentFile: "gmb-deployments/deployments.yaml",
-    service: "auth",
+    service: "files",
     extraAnsibleVars: [iam_prefix: "power-user"],
     useDockerAgent: true,
     agentImage: "ncidockerhub.nci.nih.gov/icdc/jenkins-agent-ansible",
