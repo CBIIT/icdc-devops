@@ -19,7 +19,7 @@ buildAndDeploy(
     includeFrontendRepo: true,
     frontendRepoUrl: "https://github.com/CBIIT/bento-gmb-frontend",
     frontendCheckoutDirectory: "gmb-frontend",
-    extraAnsibleVars: "iam_prefix:power-user",
+    extraAnsibleVars: [iam_prefix: "power-user"],
     useDockerAgent: true,
     agentImage: "ncidockerhub.nci.nih.gov/icdc/jenkins-agent-ansible",
     dockerRegistryUrl: "https://ncidockerhub.nci.nih.gov",

@@ -1,24 +1,17 @@
 @Library('datacommons-jenkins-shared-library') _
-buildAndDeploy(
+deployApp(
     label: "slave-ncias-q2944-c",
     parameterName: "AuthTag",
-    codeRepoUrl: "https://github.com/CBIIT/bento-auth",
-    checkoutDirectory: "bento-auth",
-    buildPlaybook: "build-auth-microservice.yml",
-    deployPlaybook: "deploy-auth-microservice.yml",
+    repoName: "bento-auth",
+    playbook: "deploy-auth-microservice.yml",
     inventory: "hosts",
     tier: "${params.Environment}",
     projectName: "${params.ProjectName}",
     slackSecretPath: "notification/slack",
     slackSecretName: "gmb_slack_url",
-    appVersionName: "AUTH_VERSION",
     deploymentRepoUrl: "https://github.com/CBIIT/gmb-deployments",
     deploymentCheckoutDirectory: "gmb-deployments",
     deploymentFile: "gmb-deployments/deployments.yaml",
     service: "auth",
     extraAnsibleVars: [iam_prefix: "power-user"],
-    useDockerAgent: true,
-    agentImage: "ncidockerhub.nci.nih.gov/icdc/jenkins-agent-ansible",
-    dockerRegistryUrl: "https://ncidockerhub.nci.nih.gov",
-    registryCredentialsId: "ncidockerhub"
 )
