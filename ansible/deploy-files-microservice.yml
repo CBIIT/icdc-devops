@@ -56,11 +56,12 @@
         cloudfront_origin_id: "{{ lookup('amazon.aws.aws_secret', 'cloudfront.origin_id', nested=true, region='us-east-1' ) }}"
         cloudfront_domain_name: "{{ lookup('amazon.aws.aws_secret', 'cloudfront.domain_name', nested=true, region='us-east-1' ) }}"
         cloudfront_key_group_id: "{{ lookup('amazon.aws.aws_secret', 'cloudfront.key_group_id', nested=true, region='us-east-1' ) }}"
+        cloudfront_private_key: "{{ lookup('amazon.aws.aws_secret', 'cloudfront.privatekey', nested=true, region='us-east-1' ) }}"
         ansible_python_interpreter: /usr/bin/python3
         execution_role: "{% if iam_prefix is defined and iam_prefix != '' %}{{ iam_prefix }}-{{ project_name }}-{{ tier }}-ecs-task-execution-role{% else %}{{ project_name }}-{{ tier }}-task-execution-role{% endif %}"
         task_role: "{% if iam_prefix is defined and iam_prefix != '' %}{{ iam_prefix }}-{{ project_name }}-{{ tier }}-ecs-task-role{% else %}{{ project_name }}-{{ tier }}-task-role{% endif %}"
 #        cloudfront_key_group_name: "{{project_name}}-{{tier}}-pub-key"
-        cloudfront_private_key: "{{ lookup('aws_ssm', 'bento_files_cloudfront_private_key', region='us-east-1' ) }}"
+#        cloudfront_private_key: "{{ lookup('aws_ssm', 'bento_files_cloudfront_private_key', region='us-east-1' ) }}"
         project_name: "{{project_name}}"
         region: us-east-1
         container_name: "files"
