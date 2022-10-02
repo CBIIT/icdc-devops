@@ -23,17 +23,17 @@ resource "aws_security_group_rule" "alb_https_inbound" {
     ]
 }
 #create alb egress
-resource "aws_security_group_rule" "all_outbound" {
-  from_port   = local.any_port
-  protocol    = local.any_protocol
-  to_port     = local.any_port
-  cidr_blocks = local.all_ips
-  security_group_id = module.alb.alb_securitygroup_id
-  type              = "egress"
-  depends_on = [
-      module.alb
-    ]
-}
+//resource "aws_security_group_rule" "all_outbound" {
+//  from_port   = local.any_port
+//  protocol    = local.any_protocol
+//  to_port     = local.any_port
+//  cidr_blocks = local.all_ips
+//  security_group_id = module.alb.alb_securitygroup_id
+//  type              = "egress"
+//  depends_on = [
+//      module.alb
+//    ]
+//}
 
 #create ecs ingress sg
 resource "aws_security_group_rule" "inbound_fargate" {
