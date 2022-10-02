@@ -61,14 +61,14 @@ resource "aws_security_group_rule" "app_inbound" {
 }
 
 #creeate app egress rule
-resource "aws_security_group_rule" "app_outbound" {
-  from_port = local.any_port
-  protocol = local.any_protocol
-  to_port = local.any_port
-  cidr_blocks = local.all_ips
-  security_group_id = module.ecs.app_security_group_id
-  type = "egress"
-}
+//resource "aws_security_group_rule" "app_outbound" {
+//  from_port = local.any_port
+//  protocol = local.any_protocol
+//  to_port = local.any_port
+//  cidr_blocks = local.all_ips
+//  security_group_id = module.ecs.app_security_group_id
+//  type = "egress"
+//}
 
 #create opensearch ingress rule
 resource "aws_security_group_rule" "opensearch_inbound" {
