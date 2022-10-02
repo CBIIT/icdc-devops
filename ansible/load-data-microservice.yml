@@ -18,7 +18,7 @@
        model_file1: "{{workspace}}/gmb-model/model-desc/000048_Model.yml"
        model_file2: "{{workspace}}/gmb-model/model-desc/000048_Model_Props.yml"
        property_file: "config/props-gmb-mock.yml"
-      when: project == "gmb"
+      when: project_name == "gmb"
 
     #run data loader
     - name: data loader stage
