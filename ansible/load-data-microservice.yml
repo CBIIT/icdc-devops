@@ -13,7 +13,8 @@
         - amazon.aws
         - community.aws:<=3.2.0
         - git+https://github.com/CBIIT/datacommons-devops.git#/ansible/collections/bento/common/,main
-
+    - set_fact:
+       workspace: "{{ lookup('env','WORKSPACE') }}"
     - set_fact:
        model_file1: "{{workspace}}/gmb-model/model-desc/000048_Model.yml"
        model_file2: "{{workspace}}/gmb-model/model-desc/000048_Model_Props.yml"
@@ -29,7 +30,6 @@
         project_name: "{{project_name}}"
         platform: aws
         region: us-east-1
-        workspace: "{{ lookup('env','WORKSPACE') }}"
         tier: "{{tier}}"
         neo4j_user: "{{ lookup('amazon.aws.aws_secret', 'bento/{{ project_name }}/{{ tier }}.neo4j_user', nested=true, region='us-east-1' ) }}"
         neo4j_ip: "{{ lookup('amazon.aws.aws_secret', 'bento/{{ project_name }}/{{ tier }}.neo4j_ip', nested=true, region='us-east-1' ) }}"
