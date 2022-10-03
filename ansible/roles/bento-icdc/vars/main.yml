@@ -71,3 +71,11 @@ react_app_news_data:
   qa: "https://raw.githubusercontent.com/CBIIT/bento-icdc-static-content/qa/newsView.yaml"
   stage: "https://raw.githubusercontent.com/CBIIT/bento-icdc-static-content/stage/newsView.yaml"
   prod: "https://raw.githubusercontent.com/CBIIT/bento-icdc-static-content/production/newsView.yaml"
+
+react_app_about_data:
+  dev: "https://raw.githubusercontent.com/CBIIT/bento-icdc-static-content/develop/aboutPagesContent.yaml"
+  qa: "https://raw.githubusercontent.com/CBIIT/bento-icdc-static-content/qa/aboutPagesContent.yaml"
+  stage: "https://raw.githubusercontent.com/CBIIT/bento-icdc-static-content/stage/aboutPagesContent.yaml"
+
+react_app_prod_about_data:
+  prod: "https://raw.githubusercontent.com/CBIIT/bento-icdc-static-content/production/aboutPagesContent.yaml"
