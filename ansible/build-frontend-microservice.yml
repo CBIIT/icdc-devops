@@ -33,3 +33,5 @@
         container_build_path: "{{ workspace }}/{{ project_name }}-frontend"
         dockerfile_path: "{{ workspace }}/icdc-devops/docker/dockerfiles/nginx-frontend-dockerfile"
         container_registry_url: "{{ ecr_repo }}"
+      environment:
+        NODE_OPTIONS: "--max-old-space-size=8192"
