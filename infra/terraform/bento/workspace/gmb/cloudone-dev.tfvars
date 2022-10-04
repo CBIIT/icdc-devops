@@ -25,7 +25,7 @@ ecr_repo_names = ["backend","frontend","auth","files","users"]
 
 #ecs
 add_opensearch_permission = true
-application_subdomain = "gmb"
+application_subdomain = "gmbq"
 microservices  = {
   frontend = {
     name = "frontend"
