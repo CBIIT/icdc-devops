@@ -12,7 +12,6 @@ buildAndDeploy(
     slackSecretName: "bento_slack_url",
     appVersionName: "BE_VERSION",
     deploymentRepoUrl: "https://github.com/CBIIT/bento-deployments",
-    frontendRepoUrl:
     deploymentCheckoutDirectory: "bento-deployments",
     deploymentFile: "bento-deployments/deployments.yaml",
     service: "backend",
