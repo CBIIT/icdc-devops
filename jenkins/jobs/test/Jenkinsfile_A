@@ -27,16 +27,22 @@ pipeline {
                             id: 'userInput', message: 'Enter path of test reports:?',
                             parameters: [
 
-                                    string(defaultValue: 'None',
-                                            description: 'Path of config file',
-                                            name: 'Config'),
+                                    extendedChoice(name: 'Environment', 
+									     defaultValue: 'dev',
+										 multiSelectDelimiter: ',',
+										 quoteValue: false,
+										 saveJSONParameterToFile: false,
+										 type: 'PT_SINGLE_SELECT',
+										 value: 'dev,qa',
+										 visibleItemCount: 5),
+									
                                     string(defaultValue: 'None',
                                             description: 'Test Info file',
                                             name: 'Test'),
                             ])
 
                     // Save to variables. Default to empty string if not found.
-                    env.CONFIG = userInput.Config?:''
+                    env.ENVIRONMENT = userInput.Environment?:''
                     env.TEST = userInput.Test?:''
 
                 }
@@ -51,7 +57,7 @@ pipeline {
 
                     // Echo to console
 					echo("Variables:")
-                    echo("Config: ${CONFIG}")
+                    echo("Environment: ${ENVIRONMENT}")
                     echo("Test: ${TEST}")
 
                 }
