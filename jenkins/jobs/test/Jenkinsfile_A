@@ -115,7 +115,7 @@ pipeline {
 	
 	    script {
 				echo 'Run job B'
-				build job: 'Test/params/test_b', parameters: [extendedChoice(name: 'Environment', value: "${ENVIRONMENT}"), [$class: 'CascadeChoiceParameter', name: 'Branch', value: "${BRANCH}"]]
+				build job: 'Test/params/test_b', parameters: [string(name: 'Environment', value: "${ENVIRONMENT}"), string(name: 'Branch', value: "${BRANCH}")]
 		}
 	
 	}
