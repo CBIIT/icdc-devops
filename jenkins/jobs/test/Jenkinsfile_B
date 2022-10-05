@@ -111,15 +111,6 @@ pipeline {
   }
   post {
 
-	success {
-	
-	    script {
-				echo 'Run job B'
-				build job: 'Test/params/test_b', parameters: [extendedChoice(name: 'Environment', value: "${ENVIRONMENT}"), CascadeChoiceParameter(name: 'Branch' value: "${BRANCH}")]
-		}
-	
-	}
-	
 	cleanup {
 	
 		cleanWs()
