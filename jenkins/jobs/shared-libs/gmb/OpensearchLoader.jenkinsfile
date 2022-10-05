@@ -8,7 +8,7 @@ loadOpensearch(
     model_file1: "000048_Model.yml",
     model_file2: "000048_Model_Props.yml",
     property_file: "props-gmb-mock.yml",
-    index_file: "es_indices_gmb.yml",
+    indices_file: "es_indices_gmb.yml",
     slackSecretPath: "notification/slack",
     slackSecretName: "gmb_slack_url",
     modelRepoUrl: "https://github.com/CBIIT/gmb-model",
