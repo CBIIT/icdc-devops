@@ -1,0 +1,72 @@
+
+pipeline {
+
+	agent {
+		node {
+			label 'cicd_microservice'
+		}
+	}
+
+  options {
+  	ansiColor('xterm')
+  }
+
+  stages{
+
+  	stage('set_params'){
+
+  		steps{
+  			script {
+
+                    // Variables for input
+                    //def inputConfig
+                    //def inputTest
+
+                    // Get the input
+                    def userInput = input(
+                            id: 'userInput', message: 'Enter path of test reports:?',
+                            parameters: [
+
+                                    string(defaultValue: 'None',
+                                            description: 'Path of config file',
+                                            name: 'Config'),
+                                    string(defaultValue: 'None',
+                                            description: 'Test Info file',
+                                            name: 'Test'),
+                            ])
+
+                    // Save to variables. Default to empty string if not found.
+                    env.CONFIG = userInput.Config?:''
+                    env.TEST = userInput.Test?:''
+
+                }
+  		}
+
+  	}
+
+  	stage('echo_params'){
+
+  		steps{
+  			script {
+
+                    // Echo to console
+					echo("Variables:")
+                    echo("Config: ${CONFIG}")
+                    echo("Test: ${TEST}")
+
+                }
+  		}
+
+  	}
+
+  }
+  post {
+
+	cleanup {
+	
+		cleanWs()
+    
+	}
+
+  }
+}
