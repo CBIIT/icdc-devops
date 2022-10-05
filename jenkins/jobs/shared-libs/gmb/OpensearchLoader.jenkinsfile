@@ -1,0 +1,21 @@
+@Library('datacommons-jenkins-shared-library') _
+loadData(
+    label: "slave-ncias-q2944-c",
+    playbook: "load-opensearch-microservice.yml",
+    inventory: "hosts",
+    tier: "${params.Environment}",
+    projectName: "${params.ProjectName}",
+    model_file1: "000048_Model.yml",
+    model_file2: "000048_Model_Props.yml",
+    property_file: "props-gmb-mock.yml",
+    indices_file: "es_indices_gmb.yml",
+    slackSecretPath: "notification/slack",
+    slackSecretName: "gmb_slack_url",
+    modelRepoUrl: "https://github.com/CBIIT/gmb-model",
+    frontendRepoUrl: "https://github.com/CBIIT/bento-gmb-frontend",
+    backendRepoUrl: "https://github.com/CBIIT/bento-backend",
+    useDockerAgent: true,
+    agentImage: "ncidockerhub.nci.nih.gov/icdc/cicd-microservices-ecs",
+    dockerRegistryUrl: "https://ncidockerhub.nci.nih.gov",
+    registryCredentialsId: "ncidockerhub"
+)

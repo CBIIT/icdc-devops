@@ -1,0 +1,44 @@
+- name: load opensearch
+  hosts: all
+  connection: local
+  gather_facts: no
+#  become: yes
+
+  tasks:
+    #install collections
+    - name: install aws collection
+      command: ansible-galaxy collection install {{item}}
+      loop:
+        - community.docker
+        - amazon.aws
+        - community.aws:<=3.2.0
+        - git+https://github.com/CBIIT/datacommons-devops.git#/ansible/collections/bento/common/,main
+    - set_fact:
+       workspace: "{{ lookup('env','WORKSPACE') }}"
+#    - set_fact:
+#       model_file1: "{{workspace}}/gmb-model/model-desc/000048_Model.yml"
+#       model_file2: "{{workspace}}/gmb-model/model-desc/000048_Model_Props.yml"
+#       property_file: "config/props-gmb-mock.yml"
+#      when: project_name == "gmb"
+
+    #run data loader
+    - name: data loader stage
+      include_role:
+        name: bento.common.data_loader
+      vars:
+        ansible_python_interpreter: /usr/bin/python3
+        project_name: "{{project_name}}"
+        platform: aws
+        region: us-east-1
+        tier: "{{tier}}"
+        model_file1: "{{workspace}}/{{project_name}}-model/model-desc/{{model_file1}}"
+        model_file2: "{{workspace}}/{{project_name}}-model/model-desc/{{model_file2}}"
+        property_file: "config/{{property_file}}"
+        about_file: "{{ workspace }}/{{project_name}}-frontend/src/content/{{ tier }}/aboutPagesContent.yaml"
+        indices_file: "{{ workspace }}/{{project_name}}-backend/src/main/resources/yaml/{{indices_file}}"
+        neo4j_user: "{{ lookup('amazon.aws.aws_secret', 'bento/{{ project_name }}/{{ tier }}.neo4j_user', nested=true, region='us-east-1' ) }}"
+        neo4j_ip: "{{ lookup('amazon.aws.aws_secret', 'bento/{{ project_name }}/{{ tier }}.neo4j_ip', nested=true, region='us-east-1' ) }}"
+        neo4j_password: "{{ lookup('amazon.aws.aws_secret', 'bento/{{ project_name }}/{{ tier }}.neo4j_password', nested=true, region='us-east-1' ) }}"
+        #Elasticsearch
+        es_host: "{{ lookup('amazon.aws.aws_secret', 'bento/{{ project_name }}/{{ tier }}.es_host', nested=true, region='us-east-1' ) }}"
+
