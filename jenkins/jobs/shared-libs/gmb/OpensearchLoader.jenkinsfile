@@ -14,7 +14,7 @@ loadOpensearch(
     modelRepoUrl: "https://github.com/CBIIT/gmb-model",
     frontendRepoUrl: "https://github.com/CBIIT/bento-gmb-frontend",
     backendRepoUrl: "https://github.com/CBIIT/bento-backend",
-    useDockerAgent: false,
+    useDockerAgent: true,
     agentImage: "ncidockerhub.nci.nih.gov/icdc/cicd-microservices-ecs",
     dockerRegistryUrl: "https://ncidockerhub.nci.nih.gov",
     registryCredentialsId: "ncidockerhub"
