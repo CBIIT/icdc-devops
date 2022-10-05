@@ -17,7 +17,12 @@ pipeline {
 
   		steps{
   			script {
-                if (!env.ENVIRONMENT) {
+                if (params.Environment != null) {
+				
+				    env.ENVIRONMENT = params.Environment
+                    env.BRANCH = params.Branch
+				
+				} else {
 				
                     // Variables for input
                     //def inputConfig
