@@ -17,7 +17,8 @@ pipeline {
 
   		steps{
   			script {
-
+                if (env.ENVIRONMENT == null) {
+				
                     // Variables for input
                     //def inputConfig
                     //def inputTest
@@ -89,6 +90,8 @@ pipeline {
                     env.BRANCH = userInput.Branch?:''
 
                 }
+				
+			}
   		}
 
   	}
