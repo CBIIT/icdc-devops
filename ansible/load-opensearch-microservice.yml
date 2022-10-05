@@ -24,7 +24,7 @@
     #run data loader
     - name: data loader stage
       include_role:
-        name: bento.common.data_loader
+        name: bento.common.opensearch_loader
       vars:
         ansible_python_interpreter: /usr/bin/python3
         project_name: "{{project_name}}"
