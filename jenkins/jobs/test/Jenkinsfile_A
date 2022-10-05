@@ -24,7 +24,7 @@ pipeline {
 
                     // Get the input
                     def userInput = input(
-                            id: 'userInput', message: 'Enter path of test reports:?',
+                            id: 'userInput', message: 'Enter build parameters:?',
                             parameters: [
 
                                     extendedChoice(name: 'Environment', 
@@ -36,14 +36,57 @@ pipeline {
 										 value: 'dev,qa',
 										 visibleItemCount: 5),
 									
-                                    string(defaultValue: 'None',
-                                            description: 'Test Info file',
-                                            name: 'Test'),
+                                    [$class: 'CascadeChoiceParameter',
+									     name: 'Branch',
+										 choiceType: 'PT_SINGLE_SELECT',
+										 filterLength: 1,
+										 filterable: false,
+										 randomName: 'choice-parameter-8988952787828020',
+										 referencedParameters: 'Environment',
+										 script: [$class: 'GroovyScript',
+										 fallbackScript: [classpath: [],
+										 oldScript: '',
+										 sandbox: false,
+										 script: ''],
+										 script: [classpath: [],
+										 oldScript: '',
+										 sandbox: true,
+										 script: '''env_value = Environment
+
+                                                    def gettags = ("git ls-remote -h https://github.com/CBIIT/bento-ctdc-frontend.git").execute()
+                                                    def tags = gettags.text.readLines().collect { it.split()[1].replaceAll(\'refs/heads/\', \'\').replaceAll(\'refs/tags/\', \'\').replaceAll("\\\\^\\\\{\\\\}", \'\')}
+                                                    List tagnames = tags.collect{ \'\' + it + \'\' }
+                                                    tagnames.add(0, "Show All Tags")
+
+                                                    if(env_value.equalsIgnoreCase("dev")) {
+                                                      for(int i=0; i < tagnames.size(); i++) {
+                                                    	if(tagnames.get(i).equalsIgnoreCase("integration")) {
+                                                    	  new_value = tagnames[i] + \':selected\'
+                                                    	  tagnames.set(i, new_value);
+                                                    	  }
+                                                    	}
+                                                      } else if(env_value.equalsIgnoreCase("qa")) {
+                                                          for(int i=0; i < tagnames.size(); i++) {
+                                                    	if(tagnames.get(i).equalsIgnoreCase("2.0.0")) {
+                                                    	  new_value = tagnames[i] + \':selected\'
+                                                    	  tagnames.set(i, new_value);
+                                                    	  }
+                                                    	}
+                                                      } else {
+                                                    	for(int i=0; i < tagnames.size(); i++) {
+                                                    	  if(tagnames.get(i).equalsIgnoreCase("master")) {
+                                                    		new_value = tagnames[i] + \':selected\'
+                                                    		tagnames.set(i, new_value);
+                                                    		}
+                                                    	  }
+                                                    	}
+
+                                                    return tagnames''']]],
                             ])
 
                     // Save to variables. Default to empty string if not found.
                     env.ENVIRONMENT = userInput.Environment?:''
-                    env.TEST = userInput.Test?:''
+                    env.BRANCH = userInput.Branch?:''
 
                 }
   		}
@@ -58,7 +101,7 @@ pipeline {
                     // Echo to console
 					echo("Variables:")
                     echo("Environment: ${ENVIRONMENT}")
-                    echo("Test: ${TEST}")
+                    echo("Branch: ${BRANCH}")
 
                 }
   		}
