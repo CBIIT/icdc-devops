@@ -62,7 +62,7 @@ services:
       NEW_RELIC_LABELS: "Project:{{ project }};Environment:{{ tier }}"
       REACT_APP_FILE_SERVICE_API: "{% if tier == 'prod' %}https://caninecommons.cancer.gov/api/files/{% else %}https://caninecommons-{{ tier }}.cancer.gov/api/files/{% endif %}"
       REACT_APP_ABOUT_DATA: "{{ react_app_about_data[tier] }}"
-      REACT_APP_PROD_ABOUT_DATA: "{{ react_app_prod_about_data[tier] }}"
+      REACT_APP_PROD_ABOUT_DATA: "{{ react_app_prod_about_data }}"
     volumes:
       - "/local/content/k9dc/nginx:/var/log/nginx"
     ports:
