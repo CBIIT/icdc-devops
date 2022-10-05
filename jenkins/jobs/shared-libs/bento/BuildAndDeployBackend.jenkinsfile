@@ -16,5 +16,5 @@ buildAndDeploy(
     deploymentFile: "bento-deployments/deployments.yaml",
     service: "backend",
     useDockerAgent: false,
-    checkoutSubmodule: true
+    checkoutDirectory: workspace
 )
