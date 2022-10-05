@@ -17,7 +17,7 @@ pipeline {
 
   		steps{
   			script {
-                if (env.ENVIRONMENT == null) {
+                if ("${ENVIRONMENT} == null) {
 				
                     // Variables for input
                     //def inputConfig
