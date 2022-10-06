@@ -1,0 +1,16 @@
+@Library('datacommons-jenkins-shared-library') _
+deployApp(
+    label: "cicd_microservice",
+    parameterName: "BackendTag",
+    repoName: "c3dc-backend",
+    playbook: "deploy-backend-microservice.yml",
+    inventory: "hosts",
+    tier: "${params.Environment}",
+    projectName: "${params.ProjectName}",
+    slackSecretPath: "notification/slack",
+    slackSecretName: "bento_slack_url",
+    deploymentRepoUrl: "https://github.com/CBIIT/c3dc-deployments",
+    deploymentCheckoutDirectory: "c3dc-deployments",
+    deploymentFile: "c3dc-deployments/deployments.yaml",
+    service: "backend"
+)

@@ -21,41 +21,47 @@
         name: bento.common.ecr_login
       vars:
         region: us-east-1
-    - name: set tier to prod for dev,qa,perf
-      set_fact:
-        cloudfront_key_group_name: "bento-prod-pub-key"
-        cloudfront_origin_id: "{{project_name}}_files_origin_id"
-      when: 
-        - tier == 'dev' or tier == 'qa' or tier == 'perf'
-        - project_name == 'bento'
 
-    - name: get distribution domain name
-      command: aws cloudfront list-distributions --query "DistributionList.Items[?Origins.Items[?Id=='{{cloudfront_origin_id}}']].DomainName |[0]" --output text
-      register: dist_info
+#    - name: set tier to prod for dev,qa,perf
+#      set_fact:
+#        cloudfront_key_group_name: "bento-prod-pub-key"
+#        cloudfront_origin_id: "{{project_name}}_files_origin_id"
+#      when:
+##        - tier == 'dev' or tier == 'qa' or tier == 'perf'
+#        - project_name == 'bento'
 
-    - name: retrieve key group id 
-      command:  aws cloudfront list-public-keys --query "PublicKeyList.Items[?Name=='{{cloudfront_key_group_name}}'].Id |[0]" --output text --region us-east-1
-      register: key_group
-
-    - name: set facts distribution DomainName and key_group id
-      set_fact:
-        cloudfront_domain_name: "{{dist_info.stdout_lines | map('trim') | list |first}}"
-        cloudfront_key_group_id: "{{key_group.stdout_lines | map('trim') | list |first}}"
-
-    - name: show cloudfront_key_group_name
-      debug:
-        msg: "{{cloudfront_key_group_id}}"
+#    - name: get distribution domain name
+#      command: aws cloudfront list-distributions --query "DistributionList.Items[?Origins.Items[?Id=='{{cloudfront_origin_id}}']].DomainName |[0]" --output text
+#      register: dist_info
+#
+#    - name: retrieve key group id
+#      command:  aws cloudfront list-public-keys --query "PublicKeyList.Items[?Name=='{{cloudfront_key_group_name}}'].Id |[0]" --output text --region us-east-1
+#      register: key_group
+#
+#    - name: set facts distribution DomainName and key_group id
+#      set_fact:
+#        cloudfront_domain_name: "{{dist_info.stdout_lines | map('trim') | list |first}}"
+#        cloudfront_key_group_id: "{{key_group.stdout_lines | map('trim') | list |first}}"
+#
+#    - name: show cloudfront_key_group_name
+#      debug:
+#        msg: "{{cloudfront_key_group_id}}"
 
     #deploy files
-    - name: deploy stage for ctdc files
+    - name: deploy stage files
       include_role:
-        name: bento.common.ecs_cloudwatch
+        name: bento.common.ecs
       vars:
+        cloudfront_key_group_name: "{{ lookup('amazon.aws.aws_secret', 'cloudfront.key_group_name', nested=true, region='us-east-1' ) }}"
+        cloudfront_origin_id: "{{ lookup('amazon.aws.aws_secret', 'cloudfront.origin_id', nested=true, region='us-east-1' ) }}"
+        cloudfront_domain_name: "{{ lookup('amazon.aws.aws_secret', 'cloudfront.domain_name', nested=true, region='us-east-1' ) }}"
+        cloudfront_key_group_id: "{{ lookup('amazon.aws.aws_secret', 'cloudfront.key_group_id', nested=true, region='us-east-1' ) }}"
+        cloudfront_private_key: "{{ lookup('amazon.aws.aws_secret', 'cloudfront.privatekey', nested=true, region='us-east-1' ) }}"
         ansible_python_interpreter: /usr/bin/python3
         execution_role: "{% if iam_prefix is defined and iam_prefix != '' %}{{ iam_prefix }}-{{ project_name }}-{{ tier }}-ecs-task-execution-role{% else %}{{ project_name }}-{{ tier }}-task-execution-role{% endif %}"
         task_role: "{% if iam_prefix is defined and iam_prefix != '' %}{{ iam_prefix }}-{{ project_name }}-{{ tier }}-ecs-task-role{% else %}{{ project_name }}-{{ tier }}-task-role{% endif %}"
-        cloudfront_key_group_name: "{{project_name}}-{{tier}}-pub-key"
-        cloudfront_private_key: "{{ lookup('aws_ssm', 'bento_files_cloudfront_private_key', region='us-east-1' ) }}"
+#        cloudfront_key_group_name: "{{project_name}}-{{tier}}-pub-key"
+#        cloudfront_private_key: "{{ lookup('aws_ssm', 'bento_files_cloudfront_private_key', region='us-east-1' ) }}"
         project_name: "{{project_name}}"
         region: us-east-1
         container_name: "files"

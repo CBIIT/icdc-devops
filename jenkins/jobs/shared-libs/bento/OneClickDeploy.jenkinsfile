@@ -5,4 +5,7 @@ oneClickDeploy(
     codeRepoUrl: "https://github.com/CBIIT/bento-deployments.git",
     checkoutDirectory: "bento-deployments",
     deploymentFile: "bento-deployments/deployments.yaml",
+    jobPath: "Bento/build_and_deploy/",
+    slackSecretPath: "notification/slack",
+    slackSecretName: "bento_slack_url",
 )

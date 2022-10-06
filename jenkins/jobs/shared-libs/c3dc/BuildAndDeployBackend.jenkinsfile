@@ -1,0 +1,24 @@
+@Library('datacommons-jenkins-shared-library') _
+buildAndDeploy(
+    label: "cicd_microservice",
+    parameterName: "BackendTag",
+    codeRepoUrl: "https://github.com/CBIIT/bento-backend",
+    checkoutDirectory: "workspace",
+    buildPlaybook: "c3dc-build.yml",
+    deployPlaybook: "deploy-backend-microservice.yml",
+    inventory: "hosts",
+    tier: "${params.Environment}",
+    projectName: "${params.ProjectName}",
+    slackSecretPath: "notification/slack",
+    slackSecretName: "bento_slack_url",
+    appVersionName: "BE_VERSION",
+    deploymentRepoUrl: "https://github.com/CBIIT/c3dc-deployments",
+    deploymentCheckoutDirectory: "c3dc-deployments",
+    deploymentFile: "c3dc-deployments/deployments.yaml",
+    service: "backend",
+    includeFrontendRepo: true,
+//     extraAnsibleVars: [],
+    useDockerAgent: false,
+    frontendRepoUrl: "https://github.com/CBIIT/bento-c3dc-frontend",
+    frontendCheckoutDirectory: "c3dc-frontend"
+)

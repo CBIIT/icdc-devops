@@ -1,3 +1,4 @@
+#make sure bento-backend:release is your ecr repo.
 ARG ECR_REPO
 
 FROM ${ECR_REPO}/bento-backend:release

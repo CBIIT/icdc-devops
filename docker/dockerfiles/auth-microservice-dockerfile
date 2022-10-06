@@ -1,5 +1,5 @@
 ARG ECR_REPO
-FROM ${ECR_REPO}/base-images:node-17.5.0
+FROM ${ECR_REPO}/base-images:node-16.17.0
 ENV PORT 8082
 ENV NODE_ENV production
 WORKDIR /usr/src/app

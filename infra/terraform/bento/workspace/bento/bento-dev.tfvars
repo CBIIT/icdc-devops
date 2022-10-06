@@ -50,7 +50,7 @@ microservices  = {
     image_url = "cbiitssrepo/bento-backend:latest"
     cpu = 512
     memory = 1024
-    path = ["/v1/graphql/*","/version"]
+    path = ["/v1/*","/version","/ping"]
     number_container_replicas = 1
   },
   auth = {

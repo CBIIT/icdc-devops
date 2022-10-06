@@ -2,9 +2,8 @@
 buildAndDeploy(
     label: "cicd_microservice",
     parameterName: "BackendTag",
-    codeRepoUrl: "https://github.com/CBIIT/bento-backend",
-    checkoutDirectory: "workspace",
-    buildPlaybook: "build-backend-microservice.yml",
+    codeRepoUrl: "https://github.com/CBIIT/bento-RI-backend",
+    buildPlaybook: "build-bento-reference-microservice.yml",
     deployPlaybook: "deploy-backend-microservice.yml",
     inventory: "hosts",
     tier: "${params.Environment}",
@@ -16,9 +15,6 @@ buildAndDeploy(
     deploymentCheckoutDirectory: "bento-deployments",
     deploymentFile: "bento-deployments/deployments.yaml",
     service: "backend",
-    includeFrontendRepo: true,
-    extraAnsibleVars: "",
     useDockerAgent: false,
-    frontendRepoUrl: "https://github.com/CBIIT/bento-frontend",
-    frontendCheckoutDirectory: "bento-frontend"
+    checkoutDirectory: "workspace"
 )

@@ -244,5 +244,83 @@ variable "allow_cloudwatch_stream" {
   type = bool
   default = true
   description = "allow cloudwatch stream for the containers"
+}
+variable "db_subnet_ids" {
+  type        = list(string)
+  default     = []
+  description = "list of subnet IDs to usee"
+}
+variable "db_engine_mode" {
+  type        = string
+  default     = "serverless"
+  description = "The database engine mode."
+}
+variable "db_engine_version" {
+  description = "aurora database engine version."
+  type        = string
+  default     = "5.6.10a"
+}
+variable "db_engine_type" {
+  description = "Aurora database engine type"
+  type        = string
+  default     = "aurora-mysql"
+}
+variable "db_instance_class" {
+  description = "Instance type to use for the db"
+  type        = string
+  default     = "db.serverless"
+}
+variable "master_username" {
+  description = "username for this db"
+  type        = string
+  default     = ""
+  sensitive   = true
+}
+variable "database_name" {
+  description = "name of the database"
+  type = string
+  default = "bento"
+}
+variable "create_aurora_rds" {
+  description = "create rds or not"
+  type = bool
+  default = false
+}
+variable "create_cloudfront" {
+  description = "create cloudfront or not"
+  type = bool
+  default = false
+}
+variable "cloudfront_distribution_bucket_name" {
+  description = "specify the name of s3 bucket for cloudfront"
+  type = string
+}
+variable "cloudfront_origin_acess_identity_description" {
+  description = "description for OAI"
+  type = string
+  default = "cloudfront origin access identify for s3"
+}
+variable "cloudfront_log_path_prefix_key" {
+  description = "path prefix to where cloudfront send logs to s3 bucket"
+  type = string
+  default = "cloudfront/logs"
+}
 
+variable "alarms" {
+  description = "alarms to be configured"
+  type = map(map(string))
+}
+
+variable "slack_secret_name" {
+  type = string
+  description = "name of cloudfront slack secret"
+}
+variable "cloudfront_slack_channel_name" {
+  type = string
+  description = "cloudfront slack name"
+}
+variable "create_files_bucket" {
+  description = "indicate if you want to create files bucket or use existing one"
+  type = bool
+  default = false
 }

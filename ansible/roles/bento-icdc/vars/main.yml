@@ -77,3 +77,4 @@ react_app_about_data:
   qa: "https://raw.githubusercontent.com/CBIIT/bento-icdc-static-content/qa/aboutPagesContent.yaml"
   stage: "https://raw.githubusercontent.com/CBIIT/bento-icdc-static-content/stage/aboutPagesContent.yaml"
   prod: "https://raw.githubusercontent.com/CBIIT/bento-icdc-static-content/production/aboutPagesContent.yaml"
+  

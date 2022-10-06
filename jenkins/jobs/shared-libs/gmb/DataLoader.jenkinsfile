@@ -1,0 +1,21 @@
+@Library('datacommons-jenkins-shared-library') _
+loadData(
+    label: "slave-ncias-q2944-c",
+    playbook: "load-data-microservice.yml",
+    inventory: "hosts",
+    tier: "${params.Environment}",
+    projectName: "${params.ProjectName}",
+    s3_folder: "${params.S3Folder}",
+    wipe_db: "${params.WipeDB}",
+    cheat_mode: "${params.CheatMode}",
+    data_bucket: "${params.DataBucket}",
+    split_transactions: "${params.SplitTransactions}",
+    slackSecretPath: "notification/slack",
+    slackSecretName: "gmb_slack_url",
+    modelRepoUrl: "https://github.com/CBIIT/gmb-model",
+    modelCheckoutDirectory: "gmb-model",
+    useDockerAgent: true,
+    agentImage: "ncidockerhub.nci.nih.gov/icdc/jenkins-agent-ansible",
+    dockerRegistryUrl: "https://ncidockerhub.nci.nih.gov",
+    registryCredentialsId: "ncidockerhub"
+)

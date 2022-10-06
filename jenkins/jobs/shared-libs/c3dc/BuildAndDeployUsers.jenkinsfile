@@ -1,0 +1,19 @@
+@Library('datacommons-jenkins-shared-library') _
+buildAndDeploy(
+    label: "cicd_microservice",
+    parameterName: "UsersTag",
+    codeRepoUrl: "https://github.com/CBIIT/bento-users",
+    checkoutDirectory: "bento-users",
+    buildPlaybook: "build-users-microservice.yml",
+    deployPlaybook: "deploy-users-microservice.yml",
+    inventory: "hosts",
+    tier: "${params.Environment}",
+    projectName: "${params.ProjectName}",
+    slackSecretPath: "notification/slack",
+    slackSecretName: "bento_slack_url",
+    appVersionName: "USERS_VERSION",
+    deploymentRepoUrl: "https://github.com/CBIIT/c3dc-deployments",
+    deploymentCheckoutDirectory: "c3dc-deployments",
+    deploymentFile: "c3dc-deployments/deployments.yaml",
+    service: "users"
+)
