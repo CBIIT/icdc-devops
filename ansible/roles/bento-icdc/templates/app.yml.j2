@@ -54,7 +54,6 @@ services:
       NEW_RELIC_DISTRIBUTED_TRACING_ENABLED: "true"
       NEW_RELIC_HOST: "gov-collector.newrelic.com"
       NEW_RELIC_NO_CONFIG_FILE: "true"
-      #REACT_APP_ABOUT_CONTENT_URL: "{{ backend_content_url }}"
       REACT_APP_ABOUT_CONTENT_URL: "{{ react_app_about_data }}"
       REACT_APP_LANDING_DATA: "{% if tier == 'prod' %}https://raw.githubusercontent.com/CBIIT/bento-icdc-static-content/production/landingView.yaml{% elif tier == 'dev' %}https://raw.githubusercontent.com/CBIIT/bento-icdc-static-content/develop/landingView.yaml{% else %}https://raw.githubusercontent.com/CBIIT/bento-icdc-static-content/{{tier}}/landingView.yaml{% endif %}"
       REACT_APP_NEWS_DATA: "{% if tier == 'prod' %}https://raw.githubusercontent.com/CBIIT/bento-icdc-static-content/production/newsView.yaml{% elif tier == 'dev' %}https://raw.githubusercontent.com/CBIIT/bento-icdc-static-content/develop/newsView.yaml{% else %}https://raw.githubusercontent.com/CBIIT/bento-icdc-static-content/{{tier}}/newsView.yaml{% endif %}"
