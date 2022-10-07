@@ -74,10 +74,11 @@ pipeline {
 				relativeTargetDir: 'bento-backend']],
 				submoduleCfg: [],
 				userRemoteConfigs: 
-				[[url: 'https://github.com/CBIIT/bento-backend']]])
+				[[url: 'https://github.com/CBIIT/bento-RI-backend']]])
             
-			sh 'git submodule update --init'
-  			
+			sh 'git submodule update --init --recursive'
+  			sh 'cd bento-backend && git submodule update --init --recursive'
+
 			checkout([$class: 'GitSCM',
 				branches: [[name: "master"]],
 				doGenerateSubmoduleConfigurations: false,
