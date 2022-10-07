@@ -22,7 +22,7 @@ pipeline {
         selectedValue: 'DEFAULT', 
         sortMode: 'ASCENDING_SMART', 
         tagFilter: '*', 
-        useRepository: 'https://github.com/CBIIT/bento-backend')
+        useRepository: 'https://github.com/CBIIT/bento-RI-backend')
     gitParameter(branchFilter: 'origin/(.*)', 
         defaultValue: 'master', 
         name: 'Frontend_Branch', 
