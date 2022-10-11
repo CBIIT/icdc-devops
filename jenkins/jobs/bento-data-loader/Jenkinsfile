@@ -54,7 +54,7 @@ pipeline {
         value: 'false,true',
         type: 'PT_SINGLE_SELECT')
 	gitParameter(branchFilter: 'origin/(.*)', 
-        defaultValue: 'master', 
+        defaultValue: 'main', 
         name: 'ES_Backend_Branch', 
         type: 'PT_BRANCH_TAG',
         quickFilterEnabled: false, 
