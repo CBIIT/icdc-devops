@@ -61,7 +61,7 @@ pipeline {
         selectedValue: 'DEFAULT', 
         sortMode: 'ASCENDING_SMART', 
         tagFilter: '*', 
-        useRepository: 'https://github.com/CBIIT/bento-backend')
+        useRepository: 'https://github.com/CBIIT/bento-RI-backend')
     gitParameter(branchFilter: 'origin/(.*)', 
         defaultValue: 'master', 
         name: 'ES_Frontend_Branch', 
@@ -107,7 +107,7 @@ pipeline {
 				relativeTargetDir: 'bento-backend']],
 				submoduleCfg: [],
 				userRemoteConfigs: 
-				[[url: 'https://github.com/CBIIT/bento-backend']]])
+				[[url: 'https://github.com/CBIIT/bento-RI-backend']]])
 				
           sh 'git submodule update --init'
   			dir('icdc-devops'){
