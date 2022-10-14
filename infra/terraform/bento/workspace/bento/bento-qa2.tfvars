@@ -13,7 +13,7 @@ tags = {
   Project = "bento"
   CreatedWith = "Terraform"
   POC = "ye.wu@nih.gov"
-  Environment = "local"
+  Environment = "qa2"
 }
 region = "us-east-1"
 
@@ -50,7 +50,7 @@ microservices  = {
     image_url = "cbiitssrepo/bento-backend:latest"
     cpu = 512
     memory = 1024
-    path = ["/v1/*","/version","/ping"]
+    path = ["/v1/*","/version","/ping","/*-version"]
     number_container_replicas = 1
   },
   auth = {
