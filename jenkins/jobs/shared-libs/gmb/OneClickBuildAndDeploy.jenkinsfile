@@ -5,7 +5,7 @@ oneClickDeploy(
     codeRepoUrl: "https://github.com/CBIIT/gmb-deployments.git",
     checkoutDirectory: "gmb-deployments",
     deploymentFile: "gmb-deployments/deployments.yaml",
-    jobPath: "_default/job/_lower/job/GMB/job/OneClickDeployment/_jobs/",
+    jobPath: "_default/_lower/GMB/OneClickDeployment/_jobs/",
     slackSecretPath: "notification/slack",
     slackSecretName: "gmb_slack_url",
     useDockerAgent: true,
