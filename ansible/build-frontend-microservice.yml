@@ -31,5 +31,5 @@
         image_version: "{{ lookup('env','FE_VERSION') }}"
         container_name: "frontend"
         container_build_path: "{{ workspace }}/{{ project_name }}-frontend"
-        dockerfile_path: "{{ workspace }}/icdc-devops/docker/dockerfiles/nginx-frontend-dockerfile"
+        dockerfile_path: "{{ workspace }}/icdc-devops/docker/dockerfiles/frontend-microservice-dockerfile"
         container_registry_url: "{{ ecr_repo }}"
