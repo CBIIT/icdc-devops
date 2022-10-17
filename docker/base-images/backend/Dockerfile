@@ -2,7 +2,7 @@ FROM 019211168375.dkr.ecr.us-east-1.amazonaws.com/cbiit-base-docker-images:cbiit
 MAINTAINER ESI Devops Team
 
 ENV TOMCAT_MAJOR=9
-ENV TOMCAT_VERSION=9.0.65
+ENV TOMCAT_VERSION=9.0.67
 ENV CATALINA_HOME=/usr/local/tomcat 
 ENV TOMCAT_URL=https://archive.apache.org/dist/tomcat/tomcat-"$TOMCAT_MAJOR"/v"$TOMCAT_VERSION"/bin/apache-tomcat-"$TOMCAT_VERSION".tar.gz 
 ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk  
