@@ -127,3 +127,19 @@ db_subnet_ids = [
   "subnet-09b0c7407416d4730",
   "subnet-07d177a4d9df5cd32"
 ]
+
+create_cloudfront = false
+create_files_bucket = false
+cloudfront_distribution_bucket_name = "bento-nonprod-annotation-files"
+cloudfront_slack_channel_name = "bento-cloudfront-wafv2"
+alarms = {
+  error4xx = {
+    name = "4xxErrorRate"
+    threshold = 10
+  }
+  error5xx = {
+    name = "5xxErrorRate"
+    threshold = 10
+  }
+}
+slack_secret_name = "cloudfront-slack"
