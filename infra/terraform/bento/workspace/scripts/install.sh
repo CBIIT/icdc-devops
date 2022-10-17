@@ -9,5 +9,5 @@ cd icdc-devops && git checkout master
 cd infra/terraform/bento
 
 ###########
-terraform init -reconfigure -backend-config=workspace/gmb/gmb-nonprod.tfbackend
+terraform init -reconfigure -backend-config=workspace/cds/cds-nonprod.tfbackend
 terraform workspace new dev

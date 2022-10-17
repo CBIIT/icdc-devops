@@ -1,0 +1,8 @@
+@Library('datacommons-jenkins-shared-library') _
+oneClickBuild(
+    label: "cicd_microservice",
+    parameterName: "DeployTag",
+    codeRepoUrl: "https://github.com/CBIIT/gmb-deployments.git",
+    checkoutDirectory: "gmb-deployments",
+    deploymentFile: "gmb-deployments/deployments.yaml"
+)
