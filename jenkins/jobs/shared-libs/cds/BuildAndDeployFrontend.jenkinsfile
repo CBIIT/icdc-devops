@@ -17,7 +17,7 @@ buildAndDeploy(
     deploymentFile: "cds-deployments/deployments.yaml",
     service: "frontend",
     extraAnsibleVars: [iam_prefix: "power-user"],
-    useDockerAgent: false,
+    useDockerAgent: true,
     agentImage: "ncidockerhub.nci.nih.gov/icdc/cicd-microservices-ecs",
     dockerRegistryUrl: "https://ncidockerhub.nci.nih.gov",
     registryCredentialsId: "ncidockerhub"
