@@ -1,0 +1,27 @@
+@Library('datacommons-jenkins-shared-library') _
+buildAndDeploy(
+    label: "slave-ncias-q2943-c",
+    parameterName: "BackendTag",
+    codeRepoUrl: "https://github.com/CBIIT/bento-backend",
+    checkoutDirectory: "workspace",
+    buildPlaybook: "build-backend-microservice.yml",
+    deployPlaybook: "deploy-backend-microservice.yml",
+    inventory: "hosts",
+    tier: "${params.Environment}",
+    projectName: "${params.ProjectName}",
+    slackSecretPath: "notification/slack",
+    slackSecretName: "cds_slack_url",
+    appVersionName: "BE_VERSION",
+    deploymentRepoUrl: "https://github.com/CBIIT/cds-deployments",
+    deploymentCheckoutDirectory: "cds-deployments",
+    deploymentFile: "cds-deployments/deployments.yaml",
+    service: "backend",
+    includeFrontendRepo: true,
+    frontendRepoUrl: "https://github.com/CBIIT/bento-cds-frontend",
+    frontendCheckoutDirectory: "cds-frontend",
+    extraAnsibleVars: [iam_prefix: "power-user"],
+    useDockerAgent: true,
+    agentImage: "ncidockerhub.nci.nih.gov/icdc/jenkins-agent-ansible",
+    dockerRegistryUrl: "https://ncidockerhub.nci.nih.gov",
+    registryCredentialsId: "ncidockerhub"
+)
