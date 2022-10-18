@@ -1,0 +1,19 @@
+[Unit]
+Description=New Relic Private Location
+After=docker.service
+Requires=docker.service
+
+[Service]
+TimeoutStartSec=30
+Type=exec
+Restart=always
+EnvironmentFile=/etc/systemd/system/newrelic.private
+ExecStartPre=-/bin/docker stop %n
+ExecStartPre=-/bin/docker rm %n
+ExecStartPre=/bin/docker pull quay.io/newrelic/synthetics-minion
+ExecStartPre=/bin/docker run -d -e MINION_PRIVATE_LOCATION_KEY=${MINION_PRIVATE_LOCATION_KEY} -e MINION_VSE_PASSPHRASE=${MINION_VSE_PASSPHRASE} -v /tmp:/tmp:rw -v /var/run/docker.sock:/var/run/docker.sock:rw --name %n quay.io/newrelic/synthetics-minion:${MINION_VERSION}
+ExecStart=/bin/docker start -a %n
+ExecStop=/bin/docker stop %n
+
+[Install]
+WantedBy=multi-user.target
