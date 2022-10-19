@@ -37,7 +37,7 @@ pipeline {
         defaultValue: 'dev', 
         description: 'Choose the environment to build', 
         type: 'PT_SINGLE_SELECT',
-        value: 'dev,qa,perf,ctdc,local,prod' )
+        value: 'dev,qa,perf,ctdc,qa2,prod' )
   }
   // options {
   // 	ansiColor('xterm')
@@ -100,14 +100,14 @@ pipeline {
         steps {
           script {
             switch("${params.Environment}") {
-             case "local":
-                withCredentials([usernamePassword(credentialsId: 'bento_local_neo4j_user', passwordVariable: 'neo4j_password', usernameVariable: 'neo4j_user'),
-				     string(credentialsId: 'es_local_host', variable: 'ES_HOST')]) {
+             case "qa2":
+                withCredentials([usernamePassword(credentialsId: 'bento_qa2_neo4j_user', passwordVariable: 'neo4j_password', usernameVariable: 'neo4j_user'),
+				     string(credentialsId: 'es_qa2_host', variable: 'ES_HOST')]) {
                   env.ES_HOST        = "https://${ES_HOST}"
 				  env.PROJECT        = "bento"
 				  env.TIER           = "${params.Environment}"
 				  env.NEO4J_PASSWORD = "${neo4j_password}"
-				  env.NEO4J_IP       = "${NEO4J_LOCAL_IP}"
+				  env.NEO4J_IP       = "${NEO4J_QA2_IP}"
                 }
               break
               case "dev":
