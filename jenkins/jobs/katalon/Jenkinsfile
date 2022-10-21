@@ -56,7 +56,7 @@ pipeline {
         defaultValue: 'QA_ICDC', 
         description: 'Choose the profile to use', 
         type: 'PT_SINGLE_SELECT',
-        value: 'DEV_ICDC,QA_ICDC,STAGE_ICDC,PROD_ICDC,QA_CTDC' )
+        value: 'DEV_ICDC,QA_ICDC,STAGE_ICDC,PROD_ICDC,QA_CTDC,QA_MTP' )
 
 	string(defaultValue: "gayathri.radhakrishnan@nih.gov,laxmi.lolla@nih.gov,sohil.sohil@nih.gov", 
         description: 'Enter a list of email addresses to notify in case of test failures:', 
@@ -96,6 +96,16 @@ pipeline {
 							RESULTS_EMAIL="${results_email}"
                             }
                         break
+
+					case ~/[\w\/]+MTP$/:
+						PROJECT="MTP"
+						withCredentials([string(credentialsId: 'Sharepoint_Email', variable: 'results_email'),
+						  string(credentialsId: 'Sharepoint_Url_MTP', variable: 'sharepoint_url')]) {
+                            RESULTS_URL="${sharepoint_url}"
+							RESULTS_EMAIL="${results_email}"
+                            }
+                        break
+
 					}
 					
 					switch("${params.Profile}") {
@@ -127,6 +137,15 @@ pipeline {
 							sh "cp ${pass_file} ${WORKSPACE}/Profiles/"
                             }
                         break
+
+                    case "QA_MTP":
+						TIER="QA"
+						withCredentials([file(credentialsId: 'Katalon_QA_MTP', variable: 'pass_file')]) {
+							PROFILE="${pass_file}"
+							sh "cp ${pass_file} ${WORKSPACE}/Profiles/"
+                            }
+                        break
+
 					case "QA_CTDC":
 						WIKI_PAGE="289178298"
 						PROJECT="CTDC"
@@ -177,7 +196,6 @@ pipeline {
 								#echo "projectPath=$WORKSPACE/$KATALON_PRJ testSuitePath=$KATALON_SUITE_PATH executionProfile=$profile_name filename=$profile_file"
 								
 								# Run Katalon Tests
-								#katalonc -noSplash -runMode=console --config -webui.autoUpdateDrivers=true -projectPath="$WORKSPACE/$KATALON_PRJ" -retry=0 -testSuitePath="$KATALON_SUITE_PATH" -executionProfile="$profile_name" -browserType="$KATALON_BROWSER (headless)" -reportFolder="results" -reportFileName="$reportFile" -apiKey="$api_key" -orgID="$org_id"
 								katalonc -noSplash -runMode=console --config -projectPath="$WORKSPACE/$KATALON_PRJ" -retry=0 -testSuitePath="$KATALON_SUITE_PATH" -executionProfile="$profile_name" -browserType="$KATALON_BROWSER (headless)" -reportFolder="results" -reportFileName="$reportFile" -apiKey="$api_key" -orgID="$org_id"
 
 								'''
