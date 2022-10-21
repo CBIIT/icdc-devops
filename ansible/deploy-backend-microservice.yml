@@ -73,7 +73,7 @@
           - name: BENTO_API_VERSION
             value: "{{ image_version }}"
           - name: AUTH_ENDPOINT
-            value: "{% if tier == 'prod' and project_name == 'bento' %}https://bento-tools.org/api/auth{% else %}https://{{ project_name }}-{{ tier }}.bento-tools.org/api/auth{% endif %}"
+            value: "{% if tier == 'prod' %}https://{{subdomain}}{{domain_name}}/api/auth{% else %}https://{{subdomain}}-{{ tier }}.{{domain_name}}/api/auth{% endif %}"
           - name: ES_HOST
             value: "{{ es_host }}"
           - name: NEW_RELIC_LICENSE_KEY

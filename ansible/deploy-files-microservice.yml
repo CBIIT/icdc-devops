@@ -22,30 +22,7 @@
       vars:
         region: us-east-1
 
-#    - name: set tier to prod for dev,qa,perf
-#      set_fact:
-#        cloudfront_key_group_name: "bento-prod-pub-key"
-#        cloudfront_origin_id: "{{project_name}}_files_origin_id"
-#      when:
-##        - tier == 'dev' or tier == 'qa' or tier == 'perf'
-#        - project_name == 'bento'
 
-#    - name: get distribution domain name
-#      command: aws cloudfront list-distributions --query "DistributionList.Items[?Origins.Items[?Id=='{{cloudfront_origin_id}}']].DomainName |[0]" --output text
-#      register: dist_info
-#
-#    - name: retrieve key group id
-#      command:  aws cloudfront list-public-keys --query "PublicKeyList.Items[?Name=='{{cloudfront_key_group_name}}'].Id |[0]" --output text --region us-east-1
-#      register: key_group
-#
-#    - name: set facts distribution DomainName and key_group id
-#      set_fact:
-#        cloudfront_domain_name: "{{dist_info.stdout_lines | map('trim') | list |first}}"
-#        cloudfront_key_group_id: "{{key_group.stdout_lines | map('trim') | list |first}}"
-#
-#    - name: show cloudfront_key_group_name
-#      debug:
-#        msg: "{{cloudfront_key_group_id}}"
 
     #deploy files
     - name: deploy stage files
