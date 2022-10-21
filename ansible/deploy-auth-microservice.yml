@@ -140,7 +140,7 @@
           # - name: AUTHORIZATION_URL
           #   value: "{% if tier == 'prod' %}https://bento-tools.org/api/users/graphql{% else %}https://{{project_name}}-{{ tier }}.bento-tools.org/api/users/graphql{% endif %}"
           - name: AUTHORIZATION_URL
-            value: "{% if tier == 'prod'  and project_name = 'bento' %}https://{{domain_name}}/api/users/graphql{% else if tier == 'prod' %}https://{{subdomain}}.{{domain_name}}/api/users/graphql{% else %}https://{{subdomain}}-{{tier}}.{{domain_name}}/api/users/graphql{% endif %}"
+            value: "{% if tier == 'prod'  and project_name == 'bento' %}https://{{domain_name}}/api/users/graphql{% else if tier == 'prod' %}https://{{subdomain}}.{{domain_name}}/api/users/graphql{% else %}https://{{subdomain}}-{{tier}}.{{domain_name}}/api/users/graphql{% endif %}"
           - name: EMAILS_ENABLED
             value: "true"
 
