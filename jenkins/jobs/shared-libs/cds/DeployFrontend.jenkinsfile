@@ -13,7 +13,11 @@ deployApp(
     deploymentCheckoutDirectory: "gmb-deployments",
     deploymentFile: "gmb-deployments/deployments.yaml",
     service: "frontend",
-    extraAnsibleVars: [iam_prefix: "power-user"],
+    extraAnsibleVars: [
+        iam_prefix: "power-user",
+        subdomain: "cds",
+        domain_name: "datacommons.cancer.gov"
+     ],
     useDockerAgent: true,
     agentImage: "ncidockerhub.nci.nih.gov/icdc/jenkins-agent-ansible",
     dockerRegistryUrl: "https://ncidockerhub.nci.nih.gov",
