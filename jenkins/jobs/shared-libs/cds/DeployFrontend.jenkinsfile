@@ -18,7 +18,7 @@ deployApp(
         subdomain: "cds",
         domain_name: "datacommons.cancer.gov"
     ],
-    useDockerAgent: true,
+    useDockerAgent: false,
     agentImage: "ncidockerhub.nci.nih.gov/icdc/jenkins-agent-ansible",
     dockerRegistryUrl: "https://ncidockerhub.nci.nih.gov",
     registryCredentialsId: "ncidockerhub"
