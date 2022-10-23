@@ -18,5 +18,8 @@ buildAndDeploy(
     deploymentCheckoutDirectory: "bento-deployments",
     deploymentFile: "bento-deployments/deployments.yaml",
     service: "files",
-    extraAnsibleVars: ""
+    extraAnsibleVars: [
+        subdomain: "bento",
+        domain_name: "bento-tools.org"
+    ]
 )

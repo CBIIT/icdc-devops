@@ -17,7 +17,7 @@ deployApp(
         iam_prefix: "power-user",
         subdomain: "gmbq",
         domain_name: "ccr.cancer.gov"
-        ],
+    ],
     useDockerAgent: true,
     agentImage: "ncidockerhub.nci.nih.gov/icdc/jenkins-agent-ansible",
     dockerRegistryUrl: "https://ncidockerhub.nci.nih.gov",
