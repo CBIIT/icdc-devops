@@ -8,10 +8,10 @@ deployApp(
     tier: "${params.Environment}",
     projectName: "${params.ProjectName}",
     slackSecretPath: "notification/slack",
-    slackSecretName: "gmb_slack_url",
+    slackSecretName: "cds_slack_url",
     deploymentRepoUrl: "https://github.com/CBIIT/gmb-deployments",
-    deploymentCheckoutDirectory: "gmb-deployments",
-    deploymentFile: "gmb-deployments/deployments.yaml",
+    deploymentCheckoutDirectory: "cds-deployments",
+    deploymentFile: "cds-deployments/deployments.yaml",
     service: "backend",
     extraAnsibleVars: [
         iam_prefix: "power-user",
