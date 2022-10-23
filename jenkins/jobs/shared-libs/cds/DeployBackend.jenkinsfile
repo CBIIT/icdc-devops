@@ -1,6 +1,6 @@
 @Library('datacommons-jenkins-shared-library') _
 deployApp(
-    label: "slave-ncias-q2944-c",
+    label: "slave-ncias-d2943-c",
     parameterName: "BackendTag",
     repoName: "gmb-backend",
     playbook: "deploy-backend-microservice.yml",
