@@ -12,7 +12,6 @@ loadData(
     split_transactions: "${params.SplitTransactions}",
     model_file1: "000048_Model.yml",
     model_file2: "000048_Model_Props.yml",
-    model_location: "gmb-model",
     property_file: "config/props-gmb-mock.yml",
     slackSecretPath: "notification/slack",
     slackSecretName: "gmb_slack_url",
