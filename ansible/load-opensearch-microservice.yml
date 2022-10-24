@@ -26,8 +26,8 @@
         platform: aws
         region: us-east-1
         tier: "{{tier}}"
-        model_file1: "{{workspace}}/{{project_name}}-model/model-desc/{{model_File1}}"
-        model_file2: "{{workspace}}/{{project_name}}-model/model-desc/{{model_File2}}"
+        model_file1: "{{workspace}}/{{project_name}}-model/model-desc/{{model_file_1}}"
+        model_file2: "{{workspace}}/{{project_name}}-model/model-desc/{{model_file_2}}"
         property_file: "config/{{property_File}}"
         about_file: "{{ workspace }}/{{project_name}}-frontend/src/content/{{ tier }}/aboutPagesContent.yaml"
         indices_file: "{{ workspace }}/{{project_name}}-backend/src/main/resources/yaml/{{indices_File}}"
