@@ -16,9 +16,9 @@ buildAndDeploy(
     deploymentFile: "bento-deployments/deployments.yaml",
     service: "backend",
     useDockerAgent: false,
-    checkoutDirectory: "workspace".
     extraAnsibleVars: [
         subdomain: "bento",
         domain_name: "bento-tools.org"
-    ]
+    ],
+    checkoutDirectory: "workspace"
 )
