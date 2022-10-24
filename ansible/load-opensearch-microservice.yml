@@ -30,7 +30,7 @@
         model_file2: "{{workspace}}/{{project_name}}-model/model-desc/{{model_file_2}}"
         property_file: "config/{{property_File}}"
         about_file: "{{ workspace }}/{{project_name}}-frontend/src/content/{{ tier }}/aboutPagesContent.yaml"
-        indices_file: "{{ workspace }}/src/main/resources/yaml/{{indices_file}}"
+        indices_file: "{{ workspace }}/{{project_name}}-backend/src/main/resources/yaml/{{indices_File}}"
         neo4j_user: "{{ lookup('amazon.aws.aws_secret', 'bento/{{ project_name }}/{{ tier }}.neo4j_user', nested=true, region='us-east-1' ) }}"
         neo4j_ip: "{{ lookup('amazon.aws.aws_secret', 'bento/{{ project_name }}/{{ tier }}.neo4j_ip', nested=true, region='us-east-1' ) }}"
         neo4j_password: "{{ lookup('amazon.aws.aws_secret', 'bento/{{ project_name }}/{{ tier }}.neo4j_password', nested=true, region='us-east-1' ) }}"
