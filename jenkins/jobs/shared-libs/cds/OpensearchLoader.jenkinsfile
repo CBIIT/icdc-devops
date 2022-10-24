@@ -14,7 +14,7 @@ loadOpensearch(
     modelRepoUrl: "https://github.com/CBIIT/cds-model",
     frontendRepoUrl: "https://github.com/CBIIT/bento-cds-frontend",
     backendRepoUrl: "https://github.com/CBIIT/bento-backend",
-    useDockerAgent: true,
+    useDockerAgent: false,
     agentImage: "ncidockerhub.nci.nih.gov/icdc/cicd-microservices-ecs",
     dockerRegistryUrl: "https://ncidockerhub.nci.nih.gov",
     registryCredentialsId: "ncidockerhub"
