@@ -17,9 +17,9 @@ buildAndDeploy(
     deploymentRepoUrl: "https://github.com/CBIIT/bento-deployments",
     deploymentCheckoutDirectory: "bento-deployments",
     deploymentFile: "bento-deployments/deployments.yaml",
-    service: "files",
     extraAnsibleVars: [
         subdomain: "bento",
         domain_name: "bento-tools.org"
-    ]
+    ],
+    service: "files
 )
