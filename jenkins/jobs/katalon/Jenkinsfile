@@ -56,7 +56,7 @@ pipeline {
         defaultValue: 'QA_ICDC', 
         description: 'Choose the profile to use', 
         type: 'PT_SINGLE_SELECT',
-        value: 'DEV_ICDC,QA_ICDC,STAGE_ICDC,PROD_ICDC,QA_CTDC,QA_MTP' )
+        value: 'DEV_ICDC,QA_ICDC,STAGE_ICDC,PROD_ICDC,QA_CTDC,QA_MTP,QA_INS' )
 
 	string(defaultValue: "gayathri.radhakrishnan@nih.gov,laxmi.lolla@nih.gov,sohil.sohil@nih.gov", 
         description: 'Enter a list of email addresses to notify in case of test failures:', 
@@ -106,6 +106,14 @@ pipeline {
                             }
                         break
 
+					case ~/[\w\/]+INS$/:
+						PROJECT="MTP"
+						withCredentials([string(credentialsId: 'Sharepoint_Email', variable: 'results_email'),
+						  string(credentialsId: 'Sharepoint_Url_INS', variable: 'sharepoint_url')]) {
+                            RESULTS_URL="${sharepoint_url}"
+							RESULTS_EMAIL="${results_email}"
+                            }
+                        break
 					}
 					
 					switch("${params.Profile}") {
@@ -141,6 +149,14 @@ pipeline {
                     case "QA_MTP":
 						TIER="QA"
 						withCredentials([file(credentialsId: 'Katalon_QA_MTP', variable: 'pass_file')]) {
+							PROFILE="${pass_file}"
+							sh "cp ${pass_file} ${WORKSPACE}/Profiles/"
+                            }
+                        break
+
+                    case "QA_INS":
+						TIER="QA"
+						withCredentials([file(credentialsId: 'Katalon_QA_INS', variable: 'pass_file')]) {
 							PROFILE="${pass_file}"
 							sh "cp ${pass_file} ${WORKSPACE}/Profiles/"
                             }
