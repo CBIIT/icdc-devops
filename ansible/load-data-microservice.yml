@@ -13,19 +13,23 @@
         - amazon.aws
         - community.aws:<=3.2.0
         - git+https://github.com/CBIIT/datacommons-devops.git#/ansible/collections/bento/common/,main
-    - set_fact:
-       workspace: "{{ lookup('env','WORKSPACE') }}"
-    - set_fact:
-       model_file1: "{{workspace}}/{{model_location}}/model-desc/{{model_file_1}}"
-       model_file2: "{{workspace}}/{{model_location}}/model-desc/{{model_file_2}}"
-       property_file: "{{property_file}}"
-      when: project_name == "gmb"
+    # - set_fact:
+    #    workspace: "{{ lookup('env','WORKSPACE') }}"
+    # - set_fact:
+    #    model_file1: "{{workspace}}/{{model_location}}/model-desc/{{model_file_1}}"
+    #    model_file2: "{{workspace}}/{{model_location}}/model-desc/{{model_file_2}}"
+    #    property_file: "{{property_file}}"
+    #   when: project_name == "gmb"
 
     #run data loader
     - name: data loader stage
       include_role:
         name: bento.common.data_loader
       vars:
+        workspace: "{{ lookup('env','WORKSPACE') }}"
+        model_file1: "{{workspace}}/{{model_location}}/model-desc/{{model_file_1}}"
+        model_file2: "{{workspace}}/{{model_location}}/model-desc/{{model_file_2}}"
+        property_file: "{{property_file}}"
         ansible_python_interpreter: /usr/bin/python3
         project_name: "{{project_name}}"
         platform: aws
