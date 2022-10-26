@@ -107,7 +107,7 @@ pipeline {
                         break
 
 					case ~/[\w\/]+INS$/:
-						PROJECT="MTP"
+						PROJECT="INS"
 						withCredentials([string(credentialsId: 'Sharepoint_Email', variable: 'results_email'),
 						  string(credentialsId: 'Sharepoint_Url_INS', variable: 'sharepoint_url')]) {
                             RESULTS_URL="${sharepoint_url}"
