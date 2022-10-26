@@ -21,7 +21,7 @@ buildAndDeploy(
         subdomain: "gmbq",
         domain_name: "ccr.cancer.gov"
     ],
-    useDockerAgent: true,
+    useDockerAgent: false,
     agentImage: "ncidockerhub.nci.nih.gov/icdc/jenkins-agent-ansible",
     dockerRegistryUrl: "https://ncidockerhub.nci.nih.gov",
     registryCredentialsId: "ncidockerhub"
