@@ -43,7 +43,7 @@
         public_es_schema_file: "{{ project_name }}-public-es-schema.graphql"
         es_host: "{{ lookup('amazon.aws.aws_secret', 'bento/{{ project_name }}/{{ tier }}.es_host', nested=true, region='us-east-1' ) }}"
         test_queries_file: "not_needed.txt"
-        dockerfile_path: "{{workspace}}/icdc-devops/docker/dockerfiles/backend-microservice-dockerfile"
+        dockerfile_path: "{{workspace}}/playbooks/docker/dockerfiles/backend-microservice-dockerfile"
         container_image: "{{ ecr_repo }}/{{ project_name }}-{{ container_name }}:{{ image_version }}s"
         container_registry_url: "{{ ecr_repo }}"
         auth_enabled: "true"
