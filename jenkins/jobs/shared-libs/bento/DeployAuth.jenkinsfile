@@ -3,7 +3,7 @@ deployApp(
     label: "cicd_microservice",
     parameterName: "AuthTag",
     repoName: "bento-auth",
-    playbook: "deploy-auth-microservice.yml",
+    playbook: "ansible/deploy-auth-microservice.yml",
     inventory: "hosts",
     tier: "${params.Environment}",
     projectName: "${params.ProjectName}",

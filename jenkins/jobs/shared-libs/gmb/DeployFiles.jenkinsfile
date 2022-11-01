@@ -3,7 +3,7 @@ deployApp(
     label: "slave-ncias-q2944-c",
     parameterName: "FilesTag",
     repoName: "gmb-files",
-    playbook: "deploy-files-microservice.yml",
+    playbook: "ansible/deploy-files-microservice.yml",
     inventory: "hosts",
     tier: "${params.Environment}",
     projectName: "${params.ProjectName}",

@@ -3,7 +3,7 @@ deployApp(
     label: "cicd_microservice",
     parameterName: "FrontendTag",
     repoName: "bento-frontend",
-    playbook: "deploy-frontend-microservice.yml",
+    playbook: "ansible/deploy-frontend-microservice.yml",
     inventory: "hosts",
     tier: "${params.Environment}",
     projectName: "${params.ProjectName}",

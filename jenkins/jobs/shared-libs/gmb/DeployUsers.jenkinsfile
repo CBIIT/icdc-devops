@@ -3,7 +3,7 @@ deployApp(
     label: "slave-ncias-q2944-c",
     parameterName: "UsersTag",
     repoName: "gmb-users",
-    playbook: "deploy-users-microservice.yml",
+    playbook: "ansible/deploy-users-microservice.yml",
     inventory: "hosts",
     tier: "${params.Environment}",
     projectName: "${params.ProjectName}",

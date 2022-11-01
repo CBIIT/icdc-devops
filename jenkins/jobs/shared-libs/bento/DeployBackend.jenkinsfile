@@ -3,7 +3,7 @@ deployApp(
     label: "cicd_microservice",
     parameterName: "BackendTag",
     repoName: "bento-backend",
-    playbook: "deploy-backend-microservice.yml",
+    playbook: "ansible/deploy-backend-microservice.yml",
     inventory: "hosts",
     tier: "${params.Environment}",
     projectName: "${params.ProjectName}",

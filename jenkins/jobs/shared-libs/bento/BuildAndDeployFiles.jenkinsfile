@@ -4,8 +4,8 @@ buildAndDeploy(
     parameterName: "FilesTag",
     codeRepoUrl: "https://github.com/CBIIT/bento-files",
     checkoutDirectory: "bento-files",
-    buildPlaybook: "build-files-microservice.yml",
-    deployPlaybook: "deploy-files-microservice.yml",
+    buildPlaybook: "ansible/build-files-microservice.yml",
+    deployPlaybook: "ansible/deploy-files-microservice.yml",
     inventory: "hosts",
     tier: "${params.Environment}",
     projectName: "${params.ProjectName}",
@@ -21,5 +21,5 @@ buildAndDeploy(
         subdomain: "bento",
         domain_name: "bento-tools.org"
     ],
-    service: "files
+    service: "files"
 )

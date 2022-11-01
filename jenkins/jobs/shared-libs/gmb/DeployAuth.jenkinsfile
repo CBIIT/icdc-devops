@@ -3,7 +3,7 @@ deployApp(
     label: "slave-ncias-q2944-c",
     parameterName: "AuthTag",
     repoName: "gmb-auth",
-    playbook: "deploy-auth-microservice.yml",
+    playbook: "ansible/deploy-auth-microservice.yml",
     inventory: "hosts",
     tier: "${params.Environment}",
     projectName: "${params.ProjectName}",

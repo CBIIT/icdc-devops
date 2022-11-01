@@ -3,7 +3,7 @@ deployApp(
     label: "slave-ncias-q2944-c",
     parameterName: "BackendTag",
     repoName: "gmb-backend",
-    playbook: "deploy-backend-microservice.yml",
+    playbook: "ansible/deploy-backend-microservice.yml",
     inventory: "hosts",
     tier: "${params.Environment}",
     projectName: "${params.ProjectName}",

@@ -1,7 +1,7 @@
 @Library('datacommons-jenkins-shared-library') _
 loadData(
     label: "slave-ncias-q2944-c",
-    playbook: "load-data-microservice.yml",
+    playbook: "ansible/load-data-microservice.yml",
     inventory: "hosts",
     tier: "${params.Environment}",
     projectName: "${params.ProjectName}",

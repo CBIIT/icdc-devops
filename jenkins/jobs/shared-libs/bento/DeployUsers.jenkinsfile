@@ -3,7 +3,7 @@ deployApp(
     label: "cicd_microservice",
     parameterName: "UsersTag",
     repoName: "bento-users",
-    playbook: "deploy-users-microservice.yml",
+    playbook: "ansible/deploy-users-microservice.yml",
     inventory: "hosts",
     tier: "${params.Environment}",
     projectName: "${params.ProjectName}",
