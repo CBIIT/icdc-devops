@@ -6,7 +6,7 @@ buildAndDeploy(
     checkoutDirectory: "gmb-files",
     buildPlaybook: "ansible/build-files-microservice.yml",
     deployPlaybook: "ansible/deploy-files-microservice.yml",
-    inventory: "hosts",
+    inventory: "ansible/hosts",
     tier: "${params.Environment}",
     projectName: "${params.ProjectName}",
     slackSecretPath: "notification/slack",

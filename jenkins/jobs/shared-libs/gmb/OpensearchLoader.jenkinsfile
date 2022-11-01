@@ -2,7 +2,7 @@
 loadOpensearch(
     label: "slave-ncias-q2944-c",
     playbook: "ansible/load-opensearch-microservice.yml",
-    inventory: "hosts",
+    inventory: "ansible/hosts",
     tier: "${params.Environment}",
     projectName: "${params.ProjectName}",
     model_file1: "000048_Model.yml",

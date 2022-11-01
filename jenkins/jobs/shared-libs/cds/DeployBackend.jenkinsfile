@@ -4,7 +4,7 @@ deployApp(
     parameterName: "BackendTag",
     repoName: "gmb-backend",
     playbook: "ansible/deploy-backend-microservice.yml",
-    inventory: "hosts",
+    inventory: "ansible/hosts",
     tier: "${params.Environment}",
     projectName: "${params.ProjectName}",
     slackSecretPath: "notification/slack",

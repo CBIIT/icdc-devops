@@ -6,7 +6,7 @@ buildAndDeploy(
     checkoutDirectory: "workspace",
     buildPlaybook: "ansible/c3dc-build.yml",
     deployPlaybook: "ansible/deploy-backend-microservice.yml",
-    inventory: "hosts",
+    inventory: "ansible/hosts",
     tier: "${params.Environment}",
     projectName: "${params.ProjectName}",
     slackSecretPath: "notification/slack",

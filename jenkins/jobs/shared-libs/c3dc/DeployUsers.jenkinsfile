@@ -4,7 +4,7 @@ deployApp(
     parameterName: "UsersTag",
     repoName: "bento-users",
     playbook: "ansible/deploy-users-microservice.yml",
-    inventory: "hosts",
+    inventory: "ansible/hosts",
     tier: "${params.Environment}",
     projectName: "${params.ProjectName}",
     slackSecretPath: "notification/slack",

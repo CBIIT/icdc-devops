@@ -4,7 +4,7 @@ deployApp(
     parameterName: "FrontendTag",
     repoName: "gmb-frontend",
     playbook: "ansible/deploy-frontend-microservice.yml",
-    inventory: "hosts",
+    inventory: "ansible/hosts",
     tier: "${params.Environment}",
     projectName: "${params.ProjectName}",
     slackSecretPath: "notification/slack",

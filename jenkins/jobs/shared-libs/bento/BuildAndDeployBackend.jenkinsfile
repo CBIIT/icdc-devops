@@ -5,7 +5,7 @@ buildAndDeploy(
     codeRepoUrl: "https://github.com/CBIIT/bento-RI-backend",
     buildPlaybook: "ansible/build-bento-reference-microservice.yml",
     deployPlaybook: "ansible/deploy-backend-microservice.yml",
-    inventory: "hosts",
+    inventory: "ansible/hosts",
     tier: "${params.Environment}",
     projectName: "${params.ProjectName}",
     slackSecretPath: "notification/slack",

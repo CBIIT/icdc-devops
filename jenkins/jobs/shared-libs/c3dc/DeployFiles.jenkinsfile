@@ -4,7 +4,7 @@ deployApp(
     parameterName: "FilesTag",
     repoName: "bento-files",
     playbook: "ansible/deploy-files-microservice.yml",
-    inventory: "hosts",
+    inventory: "ansible/hosts",
     tier: "${params.Environment}",
     projectName: "${params.ProjectName}",
     slackSecretPath: "notification/slack",

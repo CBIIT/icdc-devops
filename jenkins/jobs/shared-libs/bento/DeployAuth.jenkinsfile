@@ -4,7 +4,7 @@ deployApp(
     parameterName: "AuthTag",
     repoName: "bento-auth",
     playbook: "ansible/deploy-auth-microservice.yml",
-    inventory: "hosts",
+    inventory: "ansible/hosts",
     tier: "${params.Environment}",
     projectName: "${params.ProjectName}",
     slackSecretPath: "notification/slack",

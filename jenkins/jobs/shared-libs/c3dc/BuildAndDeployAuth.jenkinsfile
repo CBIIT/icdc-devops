@@ -6,7 +6,7 @@ buildAndDeploy(
     checkoutDirectory: "bento-auth",
     buildPlaybook: "ansible/build-auth-microservice.yml",
     deployPlaybook: "ansible/deploy-auth-microservice.yml",
-    inventory: "hosts",
+    inventory: "ansible/hosts",
     tier: "${params.Environment}",
     projectName: "${params.ProjectName}",
     slackSecretPath: "notification/slack",

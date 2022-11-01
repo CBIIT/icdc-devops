@@ -2,7 +2,7 @@
 loadData(
     label: "slave-ncias-q2944-c",
     playbook: "ansible/load-data-microservice.yml",
-    inventory: "hosts",
+    inventory: "ansible/hosts",
     tier: "${params.Environment}",
     projectName: "${params.ProjectName}",
     s3_folder: "${params.S3Folder}",
