@@ -22,7 +22,7 @@
         workspace: "{{ lookup('env','WORKSPACE') }}"
         model_file1: "{{workspace}}/{{project_name}}-model/model-desc/{{model_file_1}}"
         model_file2: "{{workspace}}/{{project_name}}-model/model-desc/{{model_file_2}}"
-        property_file: "config/{{property_File}}"
+        property_file: "{{workspace}}/config/{{property_File}}"
         ansible_python_interpreter: /usr/bin/python3
         project_name: "{{project_name}}"
         platform: aws
