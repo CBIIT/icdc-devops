@@ -9,7 +9,7 @@ deployApp(
     projectName: "${params.ProjectName}",
     slackSecretPath: "notification/slack",
     slackSecretName: "cds_slack_url",
-    deploymentRepoUrl: "https://github.com/CBIIT/gmb-deployments",
+    deploymentRepoUrl: "https://github.com/CBIIT/cds-deployments",
     deploymentCheckoutDirectory: "cds-deployments",
     deploymentFile: "cds-deployments/deployments.yaml",
     service: "backend",
