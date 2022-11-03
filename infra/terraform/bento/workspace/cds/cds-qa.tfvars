@@ -59,7 +59,7 @@ opensearch_version = "OpenSearch_1.2"
 allowed_ip_blocks = ["10.208.0.0/21","10.210.0.0/24","10.208.8.0/21"]
 create_os_service_role = false
 opensearch_instance_count = 1
-create_cloudwatch_log_policy = false
+create_cloudwatch_log_policy = true
 
 
 #neo4j db is created by cloudone
