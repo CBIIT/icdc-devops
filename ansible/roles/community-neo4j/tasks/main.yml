@@ -10,7 +10,7 @@
 #     state: latest
 #     disable_gpg_check: yes
 - name: insstall system packages
-  command: "{{item}}"
+  command: yum -y install "{{item}}"
   loop:
     - firewalld
     - epel-release
@@ -44,7 +44,7 @@
 #     state: installed
 
 - name: install neo4j community {{ neo4j_version }} and java 11 JRE
-  command: "{{item}}"
+  command: yum -y install "{{item}}"
   loop:
     - java-11-openjdk
     - neo4j-{{ neo4j_version }}
