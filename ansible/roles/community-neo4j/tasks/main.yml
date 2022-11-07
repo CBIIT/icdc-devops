@@ -1,21 +1,15 @@
 ---
 # tasks file for neo4j
-# - name: install systems packages
-#   yum:
-#     name: 
-#       - firewalld
-#       - epel-release
-#       - unzip
-#       - wget
-#     state: latest
-#     disable_gpg_check: yes
-- name: insstall system packages
-  command: yum -y install "{{item}}"
-  loop:
-    - firewalld
-    - epel-release
-    - unzip
-    - wget
+- name: install systems packages
+  yum:
+    name: 
+      - firewalld
+      - epel-release
+      - unzip
+      - wget
+    state: latest
+    disable_gpg_check: yes
+
 - name: create neo4j group
   group:
     name: neo4j
@@ -36,18 +30,12 @@
     gpgcheck: no
     enabled: yes
 
-# - name: install neo4j community {{ neo4j_version }} and java 11 JRE
-#   yum:
-#     name: 
-#      - java-11-openjdk
-#      - neo4j-{{ neo4j_version }}
-#     state: installed
-
 - name: install neo4j community {{ neo4j_version }} and java 11 JRE
-  command: yum -y install "{{item}}"
-  loop:
-    - java-11-openjdk
-    - neo4j-{{ neo4j_version }}
+  yum:
+    name: 
+     - java-11-openjdk
+     - neo4j-{{ neo4j_version }}
+    state: installed
 
 - name: Generate an OpenSSL private key
   openssl_privatekey:
