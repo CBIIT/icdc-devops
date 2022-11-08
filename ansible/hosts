@@ -29,7 +29,7 @@ localhost
 localhost
 
 [neo4j]
-localhost ansible_python_interpreter=/bin/python2
+localhost ansible_python_interpreter=/usr/bin/python
 
 [all]
 localhost ansible_python_interpreter=/usr/bin/python3
