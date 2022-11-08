@@ -32,4 +32,4 @@ localhost
 localhost ansible_python_interpreter=/usr/bin/python
 
 [all]
-localhost ansible_python_interpreter=/usr/bin/python3
+localhost ansible_python_interpreter=/usr/bin/python2
