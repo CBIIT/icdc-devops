@@ -6,6 +6,6 @@
   gather_facts: no
 
   roles:
-    - common
+    # - common
     - community-neo4j
 
