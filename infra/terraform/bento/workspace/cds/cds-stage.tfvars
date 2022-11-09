@@ -74,7 +74,7 @@ create_dns_record = false
 #cloud platform
 cloud_platform="cloudone"
 target_account_cloudone = true
-create_instance_profile = false
+create_instance_profile = true
 
 #cloudfront
 create_cloudfront = false
