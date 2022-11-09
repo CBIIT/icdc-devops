@@ -1,26 +1,26 @@
 public_subnet_ids = []
 private_subnet_ids = [
-  "subnet-f334f0ae",
-  "subnet-a69608c2"
+  "subnet-4c35f111",
+  "subnet-8de37de9"
 ]
-vpc_id = "vpc-c29e1dba"
+vpc_id = "vpc-0bab2873"
 stack_name = "cds"
 
 tags = {
   Project = "cds"
   CreatedWith = "Terraform"
   POC = "ye.wu@nih.gov"
-  Environment = "stage"
+  Environment = "prod"
 }
 region = "us-east-1"
 
 #alb
 internal_alb = false
-certificate_domain_name = "cds-stage.datacommons.cancer.gov"
+certificate_domain_name = "cds.datacommons.cancer.gov"
 domain_name = "datacommons.cancer.gov"
 
 #ecr
-create_ecr_repos = true
+create_ecr_repos = false
 ecr_repo_names = ["backend","frontend"]
 
 #ecs
@@ -57,7 +57,7 @@ opensearch_ebs_volume_size = 200
 opensearch_instance_type = "t3.medium.search"
 opensearch_version = "OpenSearch_1.2"
 allowed_ip_blocks = ["10.208.0.0/21","10.210.0.0/24","10.208.8.0/21"]
-create_os_service_role = true
+create_os_service_role = false
 opensearch_instance_count = 1
 create_cloudwatch_log_policy = true
 
