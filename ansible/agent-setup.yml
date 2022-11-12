@@ -1,7 +1,8 @@
 ---
 - name: setup sumologic and newrelic agents
-  hosts: agent_setup
+  hosts: localhost
   become: yes
+  gather_facts: yes
 
   roles:
     - sumologic
