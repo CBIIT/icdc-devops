@@ -1,6 +1,7 @@
 ---
 - name: setup sumologic and newrelic agents
   hosts: localhost
+  connection: local
   become: yes
   gather_facts: yes
 
