@@ -91,5 +91,4 @@ alarms = {
 slack_secret_name = "cloudfront-slack"
 
 #ecr replication
-replication_destination_registry_id = "767705013692"
 enable_ecr_replication = true
