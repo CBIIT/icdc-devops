@@ -324,3 +324,14 @@ variable "create_files_bucket" {
   type = bool
   default = false
 }
+
+variable "replication_destination_registry_id" {
+  type = string
+  description = "registry id for destination image"
+  default = null
+}
+variable "enable_ecr_replication" {
+  description = "enable ecr replication"
+  type = bool
+  default = false
+}

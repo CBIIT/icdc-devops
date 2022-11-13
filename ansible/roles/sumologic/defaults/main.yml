@@ -2,4 +2,4 @@
 # defaults file for sumologic
 timezone: 'Etc/EST'
 additional_logs: []
-app_name: tomcat
+app_name: ''
