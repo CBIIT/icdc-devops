@@ -50,6 +50,8 @@ module "ecr" {
    env = terraform.workspace
    enable_ecr_replication = var.enable_ecr_replication
    replication_destination_registry_id = var.replication_destination_registry_id
+   replication_source_registry_id = var.replication_source_registry_id 
+   allow_ecr_replication = var.allow_ecr_replication
 }
 
 #create opensearch

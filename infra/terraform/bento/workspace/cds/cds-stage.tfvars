@@ -92,3 +92,7 @@ alarms = {
   }
 }
 slack_secret_name = "cloudfront-slack"
+
+#ecr replication
+enable_ecr_replication = false
+allow_ecr_replication = true
