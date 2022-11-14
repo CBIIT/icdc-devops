@@ -7,6 +7,7 @@ tags = {
 
 secret_values = {
   app = {
+    description = "app secret"
     secretKey = "bento/test/dev"
     secretValue = {
       neo4j         = "neo4j"
@@ -14,6 +15,7 @@ secret_values = {
     }
   }
   db = {
+    description = "db secret"
     secretKey = "mydbsecret"
     secretValue = {
       username = "admin"

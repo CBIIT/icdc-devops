@@ -12,5 +12,6 @@ variable "secret_values" {
   type = map(object({
     secretKey = string
     secretValue = map(string)
+    description = string
   }))
 }

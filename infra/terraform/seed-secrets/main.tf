@@ -1,6 +1,7 @@
 resource "aws_secretsmanager_secret" "this" {
   for_each = var.secret_values
   name = each.value.secretKey
+  description = ""
   tags = var.tags
 }
 
