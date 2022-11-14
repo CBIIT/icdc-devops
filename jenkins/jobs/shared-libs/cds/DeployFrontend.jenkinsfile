@@ -1,6 +1,7 @@
 @Library('datacommons-jenkins-shared-library') _
 deployApp(
-    label: "slave-ncias-d2943-c",
+    // label: "slave-ncias-d2943-c",
+    label: "slave-ncias-s2979-c",
     parameterName: "FrontendTag",
     repoName: "cds-frontend",
     playbook: "ansible/deploy-frontend-microservice.yml",
