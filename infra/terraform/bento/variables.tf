@@ -345,3 +345,16 @@ variable "allow_ecr_replication" {
   type = bool
   default = false
 }
+
+variable "project_name" {
+  type = string 
+  default = "bento"
+  description = "project name"
+}
+
+variable "program" {
+  type = string 
+  default = "crdc"
+  description = "program name"
+}
+
