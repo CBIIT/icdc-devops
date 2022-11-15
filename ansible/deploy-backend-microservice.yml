@@ -45,8 +45,8 @@
         sumo_collector_endpoint: "{{ lookup('amazon.aws.aws_secret', 'bento/{{ project_name }}/{{ tier }}.sumo_collector_endpoint', nested=true, region='us-east-1' ) }}"
         sumo_collector_token: "{{ lookup('amazon.aws.aws_secret', 'bento/{{ project_name }}/{{ tier }}.sumo_collector_token_backend', nested=true, region='us-east-1' ) }}"
         container_port: 8080
-        container_memory: 1024
-        container_cpu: 512
+        container_memory: 2048
+        container_cpu: 1024
         container_image_url: "{{ ecr_repo }}/{{ project_name }}-{{ container_name }}"
         #Elasticsearch
         es_host: "{{ lookup('amazon.aws.aws_secret', 'bento/{{ project_name }}/{{ tier }}.es_host', nested=true, region='us-east-1' ) }}"
