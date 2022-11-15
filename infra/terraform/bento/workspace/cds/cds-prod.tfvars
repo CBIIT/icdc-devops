@@ -1,10 +1,10 @@
 public_subnet_ids = [
-  "subnet-f334f0ae",
-  "subnet-a69608c2"
+  "subnet-8de37de9",
+  "subnet-4c35f111"
 ]
 private_subnet_ids = [
-  "subnet-4c35f111",
-  "subnet-8de37de9"
+  "subnet-8de37de9",
+  "subnet-4c35f111"
 ]
 vpc_id = "vpc-0bab2873"
 stack_name = "cds"
