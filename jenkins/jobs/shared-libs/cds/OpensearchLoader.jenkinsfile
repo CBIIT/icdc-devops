@@ -18,6 +18,6 @@ loadOpensearch(
     agentImage: "ncidockerhub.nci.nih.gov/icdc/cicd-microservices-ecs",
     dockerRegistryUrl: "https://ncidockerhub.nci.nih.gov",
     registryCredentialsId: "ncidockerhub",
-    useCustomBranch: "yes"
+    useCustomBranch: "yes",
     customBranch: "main"
 )
