@@ -106,8 +106,19 @@ cloud_platform="cloudone"
 target_account_cloudone = true
 create_instance_profile = true
 
-#
+
+#create aurora
 create_aurora_rds = true
+db_engine_mode = "provisioned"
+db_engine_version = "8.0"
+db_engine_type = "aurora-mysql"
+master_username = "bento"
+db_instance_class = "db.serverless"
+database_name = "bento_session"
+db_subnet_ids = [
+  "subnet-319d0355",
+  "subnet-df30f482"
+]
 
 #cloudfront
 create_cloudfront = true
