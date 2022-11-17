@@ -1,7 +1,7 @@
 @Library('datacommons-jenkins-shared-library') _
 deployApp(
-    // label: "slave-ncias-d2943-c",
-    label: "slave-ncias-s2979-c",
+    label: "slave-ncias-d2943-c",
+    // label: "slave-ncias-s2979-c",
     parameterName: "BackendTag",
     repoName: "cds-backend",
     playbook: "ansible/deploy-backend-microservice.yml",
@@ -19,7 +19,7 @@ deployApp(
         subdomain: "cds",
         domain_name: "datacommons.cancer.gov"
      ],
-    useDockerAgent: false,
+    useDockerAgent: true,
     agentImage: "ncidockerhub.nci.nih.gov/icdc/jenkins-agent-ansible",
     dockerRegistryUrl: "https://ncidockerhub.nci.nih.gov",
     registryCredentialsId: "ncidockerhub"
