@@ -106,6 +106,9 @@ cloud_platform="cloudone"
 target_account_cloudone = true
 create_instance_profile = true
 
+#
+create_aurora_rds = true
+
 #cloudfront
 create_cloudfront = true
 create_files_bucket = true

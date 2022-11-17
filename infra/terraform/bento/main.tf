@@ -135,15 +135,15 @@ module "cloudfront" {
 }
 
 
-module "new_relic_metric_pipeline" {
-  source = "github.com/CBIIT/datacommons-devops/terraform/modules/firehose-metrics/"
-  count  = terraform.workspace == "dev" || terraform.workspace == "stage" ? 1 : 0
-  account_id                = data.aws_caller_identity.current.account_id
-  app                       = var.project_name
-  http_endpoint_access_key  = var.http_endpoint_access_key (do not store this value in GitHub. Instead, pass this value in when running Terraform Apply operations)
-  level                     = terraform.workspace == "dev"  || terraform.workspace == "qa" ? "non-prod" : "prod"
-  new_relic_account_id      = var.new_relic_account_id (do not store this value in GitHub. Instead, pass this value in when running Terraform Apply operations)
-  permission_boundary_arn   =  local.permission_boundary_arn
-  program                   = var.program #i.e. "crdc"
-  s3_bucket_arn             = var.failed_metric_delivery_bucket #i.e "arn:aws:s3:::example-icdc-destination-bucket"
-}
+# module "new_relic_metric_pipeline" {
+#   source = "github.com/CBIIT/datacommons-devops/terraform/modules/firehose-metrics/"
+#   count  = terraform.workspace == "dev" || terraform.workspace == "stage" ? 1 : 0
+#   account_id                = data.aws_caller_identity.current.account_id
+#   app                       = var.project_name
+#   http_endpoint_access_key  = var.http_endpoint_access_key (do not store this value in GitHub. Instead, pass this value in when running Terraform Apply operations)
+#   level                     = terraform.workspace == "dev"  || terraform.workspace == "qa" ? "non-prod" : "prod"
+#   new_relic_account_id      = var.new_relic_account_id (do not store this value in GitHub. Instead, pass this value in when running Terraform Apply operations)
+#   permission_boundary_arn   =  local.permission_boundary_arn
+#   program                   = var.program #i.e. "crdc"
+#   s3_bucket_arn             = var.failed_metric_delivery_bucket #i.e "arn:aws:s3:::example-icdc-destination-bucket"
+# }
