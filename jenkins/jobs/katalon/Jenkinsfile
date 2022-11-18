@@ -436,6 +436,12 @@ pipeline {
 					
 					
 				}
+				
+			cleanup {
+	
+	            cleanWs()
+    
+	            }
 
 			}
 	}
