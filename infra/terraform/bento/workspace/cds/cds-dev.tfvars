@@ -101,3 +101,4 @@ create_destination_bucket = false
 create_source_bucket = false
 replication_role_arn = ""
 enable_replication = false
+create_s3_replication = true
