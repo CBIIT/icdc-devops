@@ -101,7 +101,6 @@ allow_ecr_replication = true
 
 #destination_bucket_name = ""
 create_destination_bucket = true
-create_source_bucket = false
 replication_role_arn = "arn:aws:iam::339649878709:role/power-user-cds-qa-s3-replication-role"
 enable_replication = true
 create_s3_replication = true
