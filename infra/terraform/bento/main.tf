@@ -152,6 +152,7 @@ module "s3-replication-destination" {
   destination_bucket_name = var.destination_bucket_name 
   tags = var.tags
   replication_role_arn = var.replication_role_arn
+  create_destination_bucket = var.create_destination_bucket
 }
 # module "replication" {
 #   count = var.create_s3_replication ? 1 : 0
