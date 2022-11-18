@@ -150,10 +150,7 @@ module "s3-replication-destination" {
   count = var.create_s3_replication ? 1 : 0
   source = "git::https://github.com/CBIIT/datacommons-devops.git//terraform/modules/s3-replication-destination"
   destination_bucket_name = var.destination_bucket_name 
-  env =  terraform.workspace
-  stack_name = var.stack_name
   tags = var.tags
-  target_account_cloudone = var.target_account_cloudone
   replication_role_arn = var.replication_role_arn
 }
 # module "replication" {
