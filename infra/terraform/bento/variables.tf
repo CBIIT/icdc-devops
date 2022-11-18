@@ -395,3 +395,8 @@ variable "enable_s3_replication" {
   type = bool
   default = false
 }
+variable "enable_metric_pipeline" {
+  description = "enable metric pipeline"
+  type = bool
+  default = false
+}

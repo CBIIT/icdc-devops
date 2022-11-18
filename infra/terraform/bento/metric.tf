@@ -20,7 +20,7 @@ resource "aws_s3_bucket_public_access_block" "metric" {
 
 module "new_relic_metric_pipeline" {
    source = "github.com/CBIIT/datacommons-devops/terraform/modules/firehose-metrics/"
-   count  = terraform.workspace == "dev" || terraform.workspace == "stage" ? 1 : 0
+   count  =  var.enable_metric_pipeline && terraform.workspace == "dev" ||  var.enable_metric_pipeline && terraform.workspace == "stage" ? 1 : 0
    account_id                = data.aws_caller_identity.current.account_id
    app                       = var.project_name
    http_endpoint_access_key  = var.http_endpoint_access_key

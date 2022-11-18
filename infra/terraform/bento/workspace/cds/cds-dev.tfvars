@@ -94,3 +94,6 @@ slack_secret_name = "cloudfront-slack"
 enable_ecr_replication = true
 allow_ecr_replication = false
 
+#metric pipeline
+enable_metric_pipeline = true
+project_name = "cds"
