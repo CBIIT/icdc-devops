@@ -154,30 +154,3 @@ module "s3-replication-destination" {
   replication_role_arn = var.replication_role_arn
   create_destination_bucket = var.create_destination_bucket
 }
-# module "replication" {
-#   count = var.create_s3_replication ? 1 : 0
-#   source = "git::https://github.com/CBIIT/datacommons-devops.git//terraform/modules/s3-replication"
-#   destination_bucket_name = var.destination_bucket_name 
-#   env =  terraform.workspace
-#   source_bucket_name = var.source_bucket_name
-#   stack_name = var.stack_name
-#   tags = var.tags
-#   target_account_cloudone = var.target_account_cloudone
-#   create_destination_bucket = var.create_destination_bucket
-#   create_source_bucket = var.create_source_bucket 
-#   replication_role_arn = var.replication_role_arn
-#   enable_replication = var.enable_replication
-# }
-
-# module "new_relic_metric_pipeline" {
-#   source = "github.com/CBIIT/datacommons-devops/terraform/modules/firehose-metrics/"
-#   count  = terraform.workspace == "dev" || terraform.workspace == "stage" ? 1 : 0
-#   account_id                = data.aws_caller_identity.current.account_id
-#   app                       = var.project_name
-#   http_endpoint_access_key  = var.http_endpoint_access_key (do not store this value in GitHub. Instead, pass this value in when running Terraform Apply operations)
-#   level                     = terraform.workspace == "dev"  || terraform.workspace == "qa" ? "non-prod" : "prod"
-#   new_relic_account_id      = var.new_relic_account_id (do not store this value in GitHub. Instead, pass this value in when running Terraform Apply operations)
-#   permission_boundary_arn   =  local.permission_boundary_arn
-#   program                   = var.program #i.e. "crdc"
-#   s3_bucket_arn             = var.failed_metric_delivery_bucket #i.e "arn:aws:s3:::example-icdc-destination-bucket"
-# }
