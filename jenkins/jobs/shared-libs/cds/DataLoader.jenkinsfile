@@ -1,7 +1,7 @@
 @Library('datacommons-jenkins-shared-library') _
 loadData(
-    label: "slave-ncias-d2943-c",
-    // label: "slave-ncias-s2979-c",
+    // label: "slave-ncias-d2943-c",
+    label: "slave-ncias-s2979-c",
     playbook: "ansible/load-data-microservice.yml",
     inventory: "ansible/hosts",
     tier: "${params.Environment}",
@@ -18,7 +18,7 @@ loadData(
     slackSecretName: "cds_slack_url",
     modelRepoUrl: "https://github.com/CBIIT/cds-model",
     modelCheckoutDirectory: "cds-model",
-    useDockerAgent: false,
+    useDockerAgent: true,
     agentImage: "ncidockerhub.nci.nih.gov/icdc/jenkins-agent-ansible",
     dockerRegistryUrl: "https://ncidockerhub.nci.nih.gov",
     registryCredentialsId: "ncidockerhub"
