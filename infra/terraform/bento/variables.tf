@@ -389,3 +389,9 @@ variable "create_s3_replication" {
   type = bool
   default = false
 }
+
+variable "enable_s3_replication" {
+  description = "create s3 replication"
+  type = bool
+  default = false
+}

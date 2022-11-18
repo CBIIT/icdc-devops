@@ -147,7 +147,7 @@ module "s3-replication-source" {
 }
 
 module "s3-replication-destination" {
-  count = var.create_s3_replication ? 1 : 0
+  count = var.enable_s3_replication ? 1 : 0
   source = "git::https://github.com/CBIIT/datacommons-devops.git//terraform/modules/s3-replication-destination"
   destination_bucket_name = var.destination_bucket_name 
   tags = var.tags
