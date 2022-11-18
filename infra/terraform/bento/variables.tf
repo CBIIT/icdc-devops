@@ -400,3 +400,11 @@ variable "enable_metric_pipeline" {
   type = bool
   default = false
 }
+variable "http_endpoint_access_key" {
+  description = "new relic http api key"
+  type = string
+}
+variable "new_relic_account_id" {
+  description = "new relic account id"
+  type = string
+}
