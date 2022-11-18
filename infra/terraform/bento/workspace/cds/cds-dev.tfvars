@@ -93,3 +93,11 @@ slack_secret_name = "cloudfront-slack"
 #ecr replication
 enable_ecr_replication = true
 allow_ecr_replication = false
+
+#ecr 
+#destination_bucket_name = ""
+source_bucket_name = "cds-nonprod-metadata"
+create_destination_bucket = false
+create_source_bucket = false
+replication_role_arn = ""
+enable_replication = false
