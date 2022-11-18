@@ -102,3 +102,4 @@ create_source_bucket = false
 replication_role_arn = ""
 enable_replication = false
 create_s3_replication = true
+destination_bucket_name = "cds-prod-metadata"
