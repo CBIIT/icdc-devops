@@ -383,11 +383,6 @@ variable "replication_role_arn" {
   type = string
   default = "*"
 }
-variable "enable_replication" {
-  description = "enable replication"
-  type = bool
-  default = false
-}
 
 variable "create_s3_replication" {
   description = "create s3 replication"

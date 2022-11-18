@@ -134,20 +134,32 @@ module "cloudfront" {
   public_key_path = file("${path.module}/workspace/gmb/gmb_public_key.pem")
 }
 
-module "replication" {
+module "s3-replication-source" {
   count = var.create_s3_replication ? 1 : 0
-  source = "git::https://github.com/CBIIT/datacommons-devops.git//terraform/modules/s3-replication"
+  source = "git::https://github.com/CBIIT/datacommons-devops.git//terraform/modules/s3-replication-source"
   destination_bucket_name = var.destination_bucket_name 
   env =  terraform.workspace
   source_bucket_name = var.source_bucket_name
   stack_name = var.stack_name
   tags = var.tags
   target_account_cloudone = var.target_account_cloudone
-  create_destination_bucket = var.create_destination_bucket
   create_source_bucket = var.create_source_bucket 
-  replication_role_arn = var.replication_role_arn
-  enable_replication = var.enable_replication
 }
+
+# module "replication" {
+#   count = var.create_s3_replication ? 1 : 0
+#   source = "git::https://github.com/CBIIT/datacommons-devops.git//terraform/modules/s3-replication"
+#   destination_bucket_name = var.destination_bucket_name 
+#   env =  terraform.workspace
+#   source_bucket_name = var.source_bucket_name
+#   stack_name = var.stack_name
+#   tags = var.tags
+#   target_account_cloudone = var.target_account_cloudone
+#   create_destination_bucket = var.create_destination_bucket
+#   create_source_bucket = var.create_source_bucket 
+#   replication_role_arn = var.replication_role_arn
+#   enable_replication = var.enable_replication
+# }
 
 # module "new_relic_metric_pipeline" {
 #   source = "github.com/CBIIT/datacommons-devops/terraform/modules/firehose-metrics/"
