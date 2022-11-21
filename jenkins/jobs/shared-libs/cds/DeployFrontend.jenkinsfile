@@ -17,7 +17,8 @@ deployApp(
     extraAnsibleVars: [
         iam_prefix: "power-user",
         subdomain: "cds",
-        domain_name: "datacommons.cancer.gov"
+        domain_name: "datacommons.cancer.gov",
+        about_content_url: "https://raw.githubusercontent.com/CBIIT/bento-cds-frontend/develop/src/content/dev/aboutPagesContent.yaml"
     ],
     useDockerAgent: false,
     agentImage: "ncidockerhub.nci.nih.gov/icdc/jenkins-agent-ansible",
