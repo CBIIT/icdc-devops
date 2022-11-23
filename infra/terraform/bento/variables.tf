@@ -408,3 +408,8 @@ variable "new_relic_account_id" {
   description = "new relic account id"
   type = string
 }
+variable "replication_destination_account_id" {
+  type = string
+  description = "replication account id"
+  
+}
