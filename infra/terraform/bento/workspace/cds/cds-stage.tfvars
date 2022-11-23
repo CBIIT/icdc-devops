@@ -1,6 +1,6 @@
 public_subnet_ids = [
-  "subnet-f334f0ae",
-  "subnet-a69608c2"
+  "subnet-9e9907fa",
+  "subnet-ed3efab0"
 ]
 private_subnet_ids = [
   "subnet-f334f0ae",
