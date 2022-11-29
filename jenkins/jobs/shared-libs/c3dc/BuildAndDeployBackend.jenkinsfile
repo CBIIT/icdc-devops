@@ -17,7 +17,10 @@ buildAndDeploy(
     deploymentFile: "c3dc-deployments/deployments.yaml",
     service: "backend",
     includeFrontendRepo: true,
-//     extraAnsibleVars: [],
+    extraAnsibleVars: [
+        subdomain: "cds",
+        domain_name: "bento-tools.org",
+    ],
     useDockerAgent: false,
     frontendRepoUrl: "https://github.com/CBIIT/bento-c3dc-frontend",
     frontendCheckoutDirectory: "c3dc-frontend"

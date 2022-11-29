@@ -108,7 +108,7 @@
       ECR_REPO: "{{ecr_repo}}"
     build:
       path: "{{workspace}}"
-      dockerfile: "{{workspace}}/icdc-devops/docker/dockerfiles/backend-dockerfile"
+      dockerfile: "{{workspace}}/playbooks/docker/dockerfiles/backend-dockerfile"
       pull: yes
       nocache: yes
     name: "{{ project }}-backend"
@@ -164,7 +164,7 @@
 - name: copy  nginx conf
   copy:
     remote_src: yes
-    src: '{{workspace}}/icdc-devops/docker/dockerfiles/nginx.conf'
+    src: '{{workspace}}/playbooks/docker/dockerfiles/nginx.conf'
     dest: '{{workspace}}/build/nginx.conf'
 
 - name: copy entrypoint.sh to workspace
@@ -202,7 +202,7 @@
   docker_image:
     build:
       path: "{{workspace}}/build"
-      dockerfile: "{{workspace}}/icdc-devops/docker/dockerfiles/frontend-icdc-dockerfile"
+      dockerfile: "{{workspace}}/playbooks/docker/dockerfiles/frontend-icdc-dockerfile"
       pull: yes
       nocache: yes
     name: "{{ project }}-frontend"
