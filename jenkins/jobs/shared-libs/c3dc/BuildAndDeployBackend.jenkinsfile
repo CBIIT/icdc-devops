@@ -18,7 +18,7 @@ buildAndDeploy(
     service: "backend",
     includeFrontendRepo: true,
     extraAnsibleVars: [
-        subdomain: "cds",
+        subdomain: "c3dc",
         domain_name: "bento-tools.org",
     ],
     useDockerAgent: false,

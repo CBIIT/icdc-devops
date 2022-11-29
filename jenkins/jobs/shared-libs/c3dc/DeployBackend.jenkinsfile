@@ -12,5 +12,9 @@ deployApp(
     deploymentRepoUrl: "https://github.com/CBIIT/c3dc-deployments",
     deploymentCheckoutDirectory: "c3dc-deployments",
     deploymentFile: "c3dc-deployments/deployments.yaml",
-    service: "backend"
+    service: "backend",
+    extraAnsibleVars: [
+        subdomain: "c3dc",
+        domain_name: "bento-tools.org",
+    ]
 )
