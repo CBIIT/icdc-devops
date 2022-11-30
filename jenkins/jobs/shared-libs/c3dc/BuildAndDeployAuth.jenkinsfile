@@ -16,5 +16,8 @@ buildAndDeploy(
     deploymentCheckoutDirectory: "c3dc-deployments",
     deploymentFile: "c3dc-deployments/deployments.yaml",
     service: "auth",
-    extraAnsibleVars: ""
+    extraAnsibleVars: [
+        subdomain: "c3dc",
+        domain_name: "bento-tools.org",
+    ],
 )
