@@ -12,7 +12,7 @@ runETL(
     s3_rawdata_subfolder: "${params.S3_RAWDATA_SUBFOLDER}",
     slackSecretPath: "notification/slack",
     slackSecretName: "cds_slack_url",
-    etlRepoUrl: "https://github.com/CBIIT/cds-model",
+    etlRepoUrl: "https://github.com/CBIIT/cds-etl",
     useDockerAgent: false,
     agentImage: "ncidockerhub.nci.nih.gov/icdc/jenkins-agent-ansible",
     dockerRegistryUrl: "https://ncidockerhub.nci.nih.gov",
