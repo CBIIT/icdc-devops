@@ -89,7 +89,7 @@ react_app_model_props_url:
   prod: "https://raw.githubusercontent.com/CBIIT/icdc-model-tool/master/model-desc/icdc-model-props.yml"
 
 react_app_readme_url:
-  dev: "https://raw.githubusercontent.com/CBIIT/icdc-readMe-content/dev/data-model-navigator/header.md"
-  qa: "https://raw.githubusercontent.com/CBIIT/icdc-readMe-content/qa/data-model-navigator/header.md"
-  stage: "https://raw.githubusercontent.com/CBIIT/icdc-readMe-content/stage/data-model-navigator/header.md"
-  prod: "https://raw.githubusercontent.com/CBIIT/icdc-readMe-content/prod/data-model-navigator/header.md"
+  dev: "https://raw.githubusercontent.com/CBIIT/icdc-readMe-content/dev/Data_Model_Navigator_README.md"
+  qa: "https://raw.githubusercontent.com/CBIIT/icdc-readMe-content/qa/Data_Model_Navigator_README.md"
+  stage: "https://raw.githubusercontent.com/CBIIT/icdc-readMe-content/stage/Data_Model_Navigator_README.md"
+  prod: "https://raw.githubusercontent.com/CBIIT/icdc-readMe-content/prod/Data_Model_Navigator_README.md"
