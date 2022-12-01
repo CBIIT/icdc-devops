@@ -1,0 +1,20 @@
+@Library('datacommons-jenkins-shared-library') _
+runETL(
+    label: "slave-ncias-d2943-c",
+    // label: "slave-ncias-s2979-c",
+    playbook: "ansible/etl.yml",
+    inventory: "ansible/hosts",
+    tier: "${params.Environment}",
+    projectName: "${params.ProjectName}",
+    s3_bucket: "${params.S3_BUCKET}",
+    data_batch_name: "${params.DATA_BATCH_NAME}",
+    version: "${params.VERSION}",
+    s3_rawdata_subfolder: "${params.S3_RAWDATA_SUBFOLDER}",
+    slackSecretPath: "notification/slack",
+    slackSecretName: "cds_slack_url",
+    etlRepoUrl: "https://github.com/CBIIT/cds-etl",
+    useDockerAgent: false,
+    agentImage: "ncidockerhub.nci.nih.gov/icdc/jenkins-agent-ansible",
+    dockerRegistryUrl: "https://ncidockerhub.nci.nih.gov",
+    registryCredentialsId: "ncidockerhub"
+)
