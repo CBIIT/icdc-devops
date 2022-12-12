@@ -2,8 +2,8 @@
 runETL(
     label: "slave-ncias-d2943-c",
     // label: "slave-ncias-s2979-c",
-    playbook: "playbooks/ansible/etl.yml",
-    inventory: "playbooks/ansible/hosts",
+    playbook: "/ansible/etl.yml",
+    inventory: "/ansible/hosts",
     tier: "${params.Environment}",
     projectName: "${params.ProjectName}",
     s3_bucket: "${params.S3_BUCKET}",
