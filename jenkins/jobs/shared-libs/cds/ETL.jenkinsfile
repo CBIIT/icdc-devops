@@ -13,7 +13,7 @@ runETL(
     slackSecretPath: "notification/slack",
     slackSecretName: "cds_slack_url",
     etlRepoUrl: "https://github.com/CBIIT/cds-etl",
-    useDockerAgent: true,
+    useDockerAgent: false,
     agentImage: "ncidockerhub.nci.nih.gov/icdc/jenkins-agent-ansible",
     dockerRegistryUrl: "https://ncidockerhub.nci.nih.gov",
     registryCredentialsId: "ncidockerhub"
