@@ -364,7 +364,7 @@ pipeline {
 	script {
 	  if (params.Reload_OS_Data) {
 		echo 'Reload data to Opensearch'
-		build job: '_default/_lower/Data Processing/opensearch-loader', parameters: [gitParameter(name: 'Opensearch_Branch', value: 'master'), gitParameter(name: 'Frontend_Branch', value: "${params.Frontend_Tag}"), gitParameter(name: 'Backend_Branch', value: "${params.Backend_Tag}"), extendedChoice(name: 'Environment', value: "${params.Environment}")]
+		build job: '_default/_lower/data-processing/opensearch-loader', parameters: [gitParameter(name: 'Opensearch_Branch', value: 'master'), gitParameter(name: 'Frontend_Branch', value: "${params.Frontend_Tag}"), gitParameter(name: 'Backend_Branch', value: "${params.Backend_Tag}"), extendedChoice(name: 'Environment', value: "${params.Environment}")]
 	  }
 	}
 
