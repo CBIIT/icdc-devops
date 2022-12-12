@@ -69,6 +69,10 @@ pipeline {
 	    defaultValue: 'test-queries.1k.bento.yaml',
 		description: 'The file to use when loading test queries',
 		name: 'Test_Queries_File')
+	booleanParam(
+		defaultValue: true,
+		description: 'Reload Opensearch data',
+		name: 'Reload_OS_Data')
 	string(
 	    defaultValue: '',
 		description: 'The set of parameters to use for test automation - if left blank no tests will be run',
@@ -356,6 +360,13 @@ pipeline {
 		build quietPeriod: 300, wait: false, job: '_default/_lower/Test_Automation/Katalon_Prod', parameters: [gitParameter(name: 'Tag', value: list_params['Tag']), string(name: 'KatalonSuite', value: list_params['KatalonSuite']), extendedChoice(name: 'Profile', value: list_params['Profile']), string(name: 'EmailRecipients', value: list_params['Email'])]
 	    }
 	  }
+	  
+	script {
+	  if (params.Reload_OS_Data) {
+		echo 'Reload data to Opensearch'
+		build job: '_default/_lower/data-processing/opensearch-loader', parameters: [gitParameter(name: 'Opensearch_Branch', value: 'master'), gitParameter(name: 'Frontend_Branch', value: "${params.Frontend_Tag}"), gitParameter(name: 'Backend_Branch', value: "${params.Backend_Tag}"), extendedChoice(name: 'Environment', value: "${params.Environment}")]
+	  }
+	}
 
     }
     cleanup {

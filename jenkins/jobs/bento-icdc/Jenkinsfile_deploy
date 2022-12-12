@@ -56,6 +56,10 @@ pipeline {
 		defaultValue: true,
 		description: 'Enable the Redis filter',
 		name: 'Enable_Redis_Filter')
+	booleanParam(
+		defaultValue: true,
+		description: 'Reload Opensearch data',
+		name: 'Reload_OS_Data')
 	string(
 	    defaultValue: '',
 		description: 'The set of parameters to use for test automation - if left blank no tests will be run',
@@ -398,6 +402,15 @@ pipeline {
 				def params = "[${params.Test_Params}]"
 				def list_params = evaluate(params)
 				build quietPeriod: 300, wait: false, job: '_default/_lower/Test_Automation/Katalon_Prod', parameters: [gitParameter(name: 'Tag', value: list_params['Tag']), string(name: 'KatalonSuite', value: list_params['KatalonSuite']), extendedChoice(name: 'Profile', value: list_params['Profile']), string(name: 'EmailRecipients', value: list_params['Email'])]
+			}
+		}
+		
+		script {
+			if (params.Reload_OS_Data) {
+				echo 'Reload data to Opensearch'
+				String be_tag = "${params.Backend_Image}"
+				String be_branch = "${be_tag}".substring(0, "${be_tag}".lastIndexOf("-")) + "-icdc" + "${be_tag}".substring("${be_tag}".lastIndexOf("-"), "${be_tag}".length())
+				build job: '_default/_lower/data-processing/opensearch-loader', parameters: [gitParameter(name: 'Opensearch_Branch', value: 'master'), gitParameter(name: 'Frontend_Branch', value: "${params.Frontend_Image}"), gitParameter(name: 'Backend_Branch', value: "${be_branch}"), extendedChoice(name: 'Environment', value: "${params.Environment}")]
 			}
 		}
 
