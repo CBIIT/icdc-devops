@@ -408,9 +408,9 @@ pipeline {
 		script {
 			if (params.Reload_OS_Data) {
 				echo 'Reload data to Opensearch'
-				String be_tag = "${params.Backend_Image}"
+				String be_tag = "${params.Backend_Tag}"
 				String be_branch = "${be_tag}".substring(0, "${be_tag}".lastIndexOf("-")) + "-icdc" + "${be_tag}".substring("${be_tag}".lastIndexOf("-"), "${be_tag}".length())
-				build job: '_default/_lower/data-processing/opensearch-loader', parameters: [gitParameter(name: 'Opensearch_Branch', value: 'master'), gitParameter(name: 'Frontend_Branch', value: "${params.Frontend_Image}"), gitParameter(name: 'Backend_Branch', value: "${be_branch}"), extendedChoice(name: 'Environment', value: "${params.Environment}")]
+				build job: '_default/_lower/data-processing/opensearch-loader', parameters: [gitParameter(name: 'Opensearch_Branch', value: 'master'), gitParameter(name: 'Frontend_Branch', value: "${params.Frontend_Tag}"), gitParameter(name: 'Backend_Branch', value: "${be_branch}"), extendedChoice(name: 'Environment', value: "${params.Environment}")]
 			}
 		}
 
