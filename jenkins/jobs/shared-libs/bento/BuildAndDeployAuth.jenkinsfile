@@ -17,7 +17,8 @@ buildAndDeploy(
     deploymentFile: "bento-deployments/deployments.yaml",
     extraAnsibleVars: [
         subdomain: "bento",
-        domain_name: "bento-tools.org"
+        domain_name: "bento-tools.org",
+        checkout_directory: 
     ],
-    service: "auth"
+    service: "auth": "bento-auth"
 )

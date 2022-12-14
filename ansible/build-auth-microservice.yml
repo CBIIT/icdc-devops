@@ -19,8 +19,12 @@
         name: bento.common.ecr_login
       vars:
         region: us-east-1
-    - debug:
-        msg: "Here is the ECR repo {{ecr_repo}}"
+    - name: checkout any submodules
+      command: git submodule update --init --recursive
+      args:
+        chdir: "{{workspacee}}/{{checkout_directory}}"
+      when:
+        - project_name: "bento"
     #build backend
     - name: build {{project_name}} auth microservice
       include_role:
