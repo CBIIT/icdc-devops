@@ -4,6 +4,9 @@
   gather_facts: no
   become: yes
 
+  vars:
+    workspace: "{{ lookup('env','WORKSPACE') }}"
+
   tasks:
     #install collections
     - name: install aws collection
@@ -19,7 +22,6 @@
         name: bento.common.ecr_login
       vars:
         region: us-east-1
-        workspace: "{{ lookup('env','WORKSPACE') }}"
     - name: checkout any submodules
       command: git submodule update --init --recursive
       args:
