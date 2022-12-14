@@ -22,9 +22,9 @@
         name: bento.common.ecr_login
       vars:
         region: us-east-1
-
+        
     - name: checkout any submodules
-      command: ls -l
+      shell: git submodule update --init --recursive
       args:
         chdir: "{{workspace}}/{{checkout_directory}}"
       register: output
