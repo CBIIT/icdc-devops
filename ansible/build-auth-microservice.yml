@@ -22,7 +22,7 @@
     - name: checkout any submodules
       command: git submodule update --init --recursive
       args:
-        chdir: "{{workspacee}}/{{checkout_directory}}"
+        chdir: "{{workspace}}/{{checkout_directory}}"
       when:
         - project_name: "bento"
     #build backend
