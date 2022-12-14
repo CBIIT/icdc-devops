@@ -22,6 +22,7 @@
         name: bento.common.ecr_login
       vars:
         region: us-east-1
+        
     - name: checkout any submodules
       command: git submodule update --init --recursive
       args:
