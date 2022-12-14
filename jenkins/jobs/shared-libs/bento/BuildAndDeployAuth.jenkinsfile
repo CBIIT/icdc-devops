@@ -20,5 +20,5 @@ buildAndDeploy(
         domain_name: "bento-tools.org",
         checkout_directory: "bento-auth"
     ],
-    service: "auth": "bento-auth"
+    service: "auth"
 )
