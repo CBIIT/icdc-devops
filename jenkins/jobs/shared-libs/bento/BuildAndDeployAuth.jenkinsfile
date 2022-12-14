@@ -18,7 +18,7 @@ buildAndDeploy(
     extraAnsibleVars: [
         subdomain: "bento",
         domain_name: "bento-tools.org",
-        checkout_directory: 
+        checkout_directory: "bento-auth"
     ],
     service: "auth": "bento-auth"
 )
