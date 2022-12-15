@@ -337,7 +337,7 @@ pipeline {
 					emailBody="<b> $emailBody"
 					emailBody=${emailBody/\\\\n\\\\n/</b><br><br>}
 					emailBody=${emailBody//\\\\n/<br>}
-					emailBody="$emailBody <br><br><br> The results of this test run can be found in Box:  <a href=\\\"$boxUrl\\\">$resultsFile</a>"
+					emailBody="$emailBody <br><br><br> The results of this test run can be found in Box:  <a href=\\\"$resultsUrl\\\">$resultsFile</a>"
 					echo $emailBody
 
 					''',
@@ -412,7 +412,7 @@ pipeline {
 						errorOutput=''' + ERROR_OUTPUT + '''
 						resultsUrl=''' + RESULTS_URL + '''
 						resultsFile=$(basename results/*.zip)
-						errorOutput="$errorOutput \\n\\n @<!channel> The results of this test run can be found in Box:  <$boxUrl|$resultsFile>"
+						errorOutput="$errorOutput \\n\\n @<!channel> The results of this test run can be found in Box:  <$resultsUrl|$resultsFile>"
 						payload="\'{\\\"text\\\":\\\"$errorOutput\\\"}\'"
 						post_message_to_slack
 							'''
