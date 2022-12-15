@@ -114,7 +114,7 @@ pipeline {
 	  environment {
 	   SLACK_URL = "${SLACK_URL}"
        TIER = "${params.Environment}"
-       BE_VERSION = "${params.Backend_Tag}-${BUILD_NUMBER}"
+       BE_VERSION = "${params.Backend_Tag}.${BUILD_NUMBER}"
 	   SLACK_CHANNEL = "#system-alerts"
 	   URL_DOMAIN = "bento-tools.org"
       }
