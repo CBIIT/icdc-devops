@@ -33,9 +33,9 @@
         container_name: "files"
         image_version: "{{ lookup('env','DOWNLOADER_VERSION') }}"
         tier: "{{ lookup('env','TIER') }}"
-        ecs_cluster_name: "{{ project_name }}-{{ tier }}"
-        execution_role: "power-user-ctdc-ecs-task-execution-role-dev"
-        task_role: "power-user-ctdc-ecs-task-role-dev"
+        ecs_cluster_name: "{{ project_name }}-{{ tier }}-ecs"
+        execution_role: "power-user-{{ project_name }}-{{ tier }}-ecs-task-execution-role"
+        task_role: "power-user-{{ project_name }}-{{ tier }}-ecs-task-role"
         sumo_collector_endpoint: "{{ lookup('amazon.aws.aws_secret', 'bento/{{ project_name }}/{{ tier }}.sumo_collector_endpoint', nested=true, region='us-east-1' ) }}"
         sumo_collector_token: "{{ lookup('amazon.aws.aws_secret', 'bento/{{ project_name }}/{{ tier }}.sumo_collector_token_files', nested=true, region='us-east-1' ) }}"
         container_port: 8081
