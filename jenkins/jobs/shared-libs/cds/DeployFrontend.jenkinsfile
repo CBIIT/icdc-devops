@@ -18,7 +18,7 @@ deployApp(
         iam_prefix: "power-user",
         subdomain: "dataservice",
         domain_name: "datacommons.cancer.gov",
-        about_content_url: " https://raw.githubusercontent.com/CBIIT/bento-cds-frontend/2.0.0/src/content/${params.Environment}/aboutPagesContent.yaml",
+        about_content_url: "https://raw.githubusercontent.com/CBIIT/bento-cds-frontend/2.0.0/src/content/${params.Environment}/aboutPagesContent.yaml",
     ],
     useDockerAgent: false,
     agentImage: "ncidockerhub.nci.nih.gov/icdc/jenkins-agent-ansible",

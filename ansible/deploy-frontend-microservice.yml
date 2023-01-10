@@ -20,7 +20,10 @@
         name: bento.common.ecr_login
       vars:
         region: us-east-1
-
+    - name: set fact
+      set_fact:
+        react_app_ga_tracking_id: "{{ lookup('amazon.aws.aws_secret', 'cds/react.react_app_ga_tracking_id', nested=true, region='us-east-1' ) }}"
+      when: project_name='cds'
     #deploy frontend
     - name: deploy stage for frontend microservice
       include_role:
@@ -89,6 +92,8 @@
             value: "{% if tier == 'qa2'  and project_name == 'bento' %}false{% else %}true{% endif %}"
           - name: NODE_LEVEL
             value: "{% if tier == 'qa2'  and project_name == 'bento' %}''{% else %}Study Arm(s){% endif %}"
+          - name: REACT_APP_GA_TRACKING_ID
+            value: "{% if project_name in ['cds'] %}{{react_app_ga_tracking_id}}{% else %}''{% endif %}"
           
 
 
