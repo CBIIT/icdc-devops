@@ -16,7 +16,7 @@ region = "us-east-1"
 
 #alb
 internal_alb = true
-certificate_domain_name = "cds-qa.datacommons.cancer.gov"
+certificate_domain_name = "*.datacommons.cancer.gov"
 domain_name = "datacommons.cancer.gov"
 
 #ecr
@@ -25,7 +25,7 @@ ecr_repo_names = ["backend","frontend"]
 
 #ecs
 add_opensearch_permission = true
-application_subdomain = "cds"
+application_subdomain = "dataservice"
 microservices  = {
   frontend = {
     name = "frontend"
