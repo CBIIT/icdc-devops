@@ -16,7 +16,7 @@ deployApp(
     service: "backend",
     extraAnsibleVars: [
         iam_prefix: "power-user",
-        subdomain: "cds",
+        subdomain: "dataservice",
         domain_name: "datacommons.cancer.gov"
      ],
     useDockerAgent: false,
