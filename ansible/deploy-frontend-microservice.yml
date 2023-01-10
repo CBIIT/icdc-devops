@@ -55,7 +55,7 @@
             value: "{{ backend_version }}"
           - name: REACT_APP_FE_VERSION
             value: "{{ frontend_version }}"
-          - name: REACT_APP_ABOUT_CONTENT_URL
+          - name: REACT_APP_ABOUT_CONTENT_URL 
             value: "{{ about_content_url }}"
           - name: REACT_APP_AUTH_SERVICE_API
             value: "{% if tier == 'prod'  and project_name == 'bento' %}https://{{domain_name}}/api/auth/{% elif tier == 'prod' %}https://{{subdomain}}.{{domain_name}}/api/auth/{% else %}https://{{subdomain}}-{{tier}}.{{domain_name}}/api/auth/{% endif %}"
@@ -89,5 +89,6 @@
             value: "{% if tier == 'qa2'  and project_name == 'bento' %}false{% else %}true{% endif %}"
           - name: NODE_LEVEL
             value: "{% if tier == 'qa2'  and project_name == 'bento' %}''{% else %}Study Arm(s){% endif %}"
+          
 
 
