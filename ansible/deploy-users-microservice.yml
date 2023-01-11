@@ -95,3 +95,5 @@
           value: "true"
         - name: SEED_DATA_FILE
           value: "yaml/seed-data-gmb.yaml"
+        - name: SERVER_HOST
+          value: "{% if tier == 'prod'  and project_name == 'bento' %}https://{{domain_name}}/v1/graphql/{% elif tier == 'prod' %}https://{{subdomain}}.{{domain_name}}{% else %}https://{{subdomain}}-{{tier}}.{{domain_name}}{% endif %}"
