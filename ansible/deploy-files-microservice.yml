@@ -81,3 +81,10 @@
           value: "{{ newrelic_license_key }}"
         - name: NEW_RELIC_APP_NAME
           value: "{{project_name}}-{{tier}}-files-{{ansible_hostname}}"
+        - name: NEO4J_URI
+          value: "{{ lookup('amazon.aws.aws_secret', 'bento/{{ project_name }}/{{ tier }}.neo4j_ip', nested=true, region='us-east-1' ) }}"
+        - name: NEO4J_USER
+          value: "{{ lookup('amazon.aws.aws_secret', 'bento/{{ project_name }}/{{ tier }}.neo4j_user', nested=true, region='us-east-1' ) }}"
+        - name: NEO4J_PASSWORD
+          value: "{{ lookup('amazon.aws.aws_secret', 'bento/{{ project_name }}/{{ tier }}.neo4j_password', nested=true, region='us-east-1' ) }}"
+
