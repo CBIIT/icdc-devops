@@ -93,7 +93,7 @@
           - name: NODE_LEVEL
             value: "{% if tier == 'qa2'  and project_name == 'bento' %}''{% else %}Study Arm(s){% endif %}"
           - name: REACT_APP_GA_TRACKING_ID
-            value: "{% if project_name in ['cds'] %}{{react_app_ga_tracking_id}}{% else %}''{% endif %}"
+            value: "{% if project_name in ['cds'] %}{{react_app_ga_tracking_id}}{% endif %}"
           
 
 
