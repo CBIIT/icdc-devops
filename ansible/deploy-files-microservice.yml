@@ -46,6 +46,7 @@
         files_version: "{{ lookup('env','FILES_VERSION') }}"
         image_version: "{{ files_version}}"
         tier: "{{ tier }}"
+        neo4j_ip: "{{ lookup('amazon.aws.aws_secret', 'bento/{{ project_name }}/{{ tier }}.neo4j_ip', nested=true, region='us-east-1' ) }}"
         ecs_cluster_name: "{{ project_name }}-{{ tier }}-ecs"
         sumo_collector_endpoint: "{{ lookup('amazon.aws.aws_secret', 'bento/{{ project_name }}/{{ tier }}.sumo_collector_endpoint', nested=true, region='us-east-1' ) }}"
         sumo_collector_token: "{{ lookup('amazon.aws.aws_secret', 'bento/{{ project_name }}/{{ tier }}.sumo_collector_token_files', nested=true, region='us-east-1' ) }}"
@@ -81,10 +82,10 @@
           value: "{{ newrelic_license_key }}"
         - name: NEW_RELIC_APP_NAME
           value: "{{project_name}}-{{tier}}-files-{{ansible_hostname}}"
-        - name: NEO4J_URI
-          value: "{{ lookup('amazon.aws.aws_secret', 'bento/{{ project_name }}/{{ tier }}.neo4j_ip', nested=true, region='us-east-1' ) }}"
         - name: NEO4J_USER
           value: "{{ lookup('amazon.aws.aws_secret', 'bento/{{ project_name }}/{{ tier }}.neo4j_user', nested=true, region='us-east-1' ) }}"
         - name: NEO4J_PASSWORD
           value: "{{ lookup('amazon.aws.aws_secret', 'bento/{{ project_name }}/{{ tier }}.neo4j_password', nested=true, region='us-east-1' ) }}"
+        - name: NEO4J_URI
+          value: "bolt://{{neo4j_ip}}:7687"
 
