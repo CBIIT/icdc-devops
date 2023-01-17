@@ -103,4 +103,6 @@
           value: "{{mysql_user}}"
         - name: MYSQL_DATABASE
           value: "{{mysql_database}}"
+        - name: MYSQL_SESSION_ENABLED
+          value: "true"
 
