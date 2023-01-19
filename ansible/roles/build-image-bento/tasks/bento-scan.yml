@@ -7,6 +7,11 @@
   set_fact:
     ecr_repo: "{{ caller_info.account }}.dkr.ecr.{{ region }}.amazonaws.com"
 
+- name: login into ecr
+  shell: "docker login -u AWS -p $(aws ecr get-login-password --region {{ region }}) {{ecr_repo}}"
+  ignore_errors: True
+  register: ecr_login
+
 - name: backend image
   block:
     - name: get backend image vulnerabilities
