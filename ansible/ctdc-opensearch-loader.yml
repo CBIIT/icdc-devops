@@ -23,7 +23,7 @@
         ansible_python_interpreter: /usr/bin/python3
         tier: "{{ lookup('env','TIER') }}"
         project_name: ctdc
-        database_name: "{{ lookup('amazon.aws.aws_secret', 'bento/{{ project_name }}/{{ tier }}.db_instance', nested=true, region='us-east-1' ) }}"
+        database_name: "{{ lookup('amazon.aws.aws_secret', 'bento/{{ project_name }}/{{ tier }}.neo4j_ip', nested=true, region='us-east-1' ) }}"
 
     #load data
     - name: perform data loading
