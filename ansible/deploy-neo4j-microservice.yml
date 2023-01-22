@@ -1,0 +1,57 @@
+- name: deploy neo4j microservice db
+  hosts: all
+  connection: local
+  gather_facts: yes
+  become: yes
+
+  tasks:
+    #install collections
+    - name: install aws collection
+      command: ansible-galaxy collection install {{item}}
+      loop:
+        - community.docker
+        - amazon.aws
+        - community.aws:<=3.2.0
+        - git+https://github.com/CBIIT/datacommons-devops.git#/ansible/collections/bento/common/,main
+
+    #docker login
+    - name: docker login
+      include_role:
+        name: bento.common.ecr_login
+      vars:
+        region: us-east-1
+
+
+    #deploy backend
+    - name: deploy stage for neo4j microservice db
+      include_role:
+        name: bento.common.neo4j_ecs
+      vars:
+        execution_role: "{% if iam_prefix is defined and iam_prefix != '' %}{{ iam_prefix }}-{{ project_name }}-{{ tier }}-ecs-task-execution-role{% else %}{{ project_name }}-{{ tier }}-task-execution-role{% endif %}"
+        task_role: "{% if iam_prefix is defined and iam_prefix != '' %}{{ iam_prefix }}-{{ project_name }}-{{ tier }}-ecs-task-role{% else %}{{ project_name }}-{{ tier }}-task-role{% endif %}"
+        region: "us-east-1"
+        ansible_python_interpreter: /usr/bin/python3
+        project_name: "{{project_name}}"
+        platform: aws
+        container_name: "neo4j"
+        image_version: "4.2.19-community"
+        tier: "{{ tier }}"
+        ecs_cluster_name: "{{ project_name }}-{{ tier }}-ecs"
+        newrelic_license_key: "{{ lookup('amazon.aws.aws_secret', 'monitoring/newrelic.api_key', nested=true, region='us-east-1' ) }}"
+        sumo_collector_endpoint: "{{ lookup('amazon.aws.aws_secret', 'bento/{{ project_name }}/{{ tier }}.sumo_collector_endpoint', nested=true, region='us-east-1' ) }}"
+        sumo_collector_token: "{{ lookup('amazon.aws.aws_secret', 'bento/{{ project_name }}/{{ tier }}.sumo_collector_token_users', nested=true, region='us-east-1' ) }}"
+        neo4j_user: "{{ lookup('amazon.aws.aws_secret', 'bento/{{ project_name }}/{{ tier }}.neo4j_user', nested=true, region='us-east-1' ) }}"
+        neo4j_password: "{{ lookup('amazon.aws.aws_secret', 'bento/{{ project_name }}/{{ tier }}.neo4j_password', nested=true, region='us-east-1' ) }}"
+        container_port_http: "7474"
+        container_port_bolt: "7687"
+        container_memory: "1024"
+        container_cpu: "512"
+        #Environment
+        container_env:
+        - name: NEO4J_AUTH
+          value: "{{neo4j_user}}/{{neo4j_password}}"
+        - name: NEO4J_dbms_connector_http_advertised__address
+          value: "0.0.0.0"
+        - name: NEO4J_dbms_connector_bolt_advertised__address
+          value: "0.0.0.0"
+        

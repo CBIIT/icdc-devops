@@ -1,0 +1,14 @@
+@Library('datacommons-jenkins-shared-library') _
+deployNeo4jDB(
+    label: "cicd_microservice",
+    playbook: "ansible/deploy-neo4j-microservice.yml",
+    inventory: "ansible/hosts",
+    tier: "${params.Environment}",
+    projectName: "${params.ProjectName}",
+    slackSecretPath: "notification/slack",
+    slackSecretName: "bento_slack_url",
+    // extraAnsibleVars: [
+    //     subdomain: "bento",
+    //     domain_name: "bento-tools.org"
+    // ]
+)
