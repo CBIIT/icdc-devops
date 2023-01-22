@@ -294,6 +294,7 @@ variable "create_cloudfront" {
 variable "cloudfront_distribution_bucket_name" {
   description = "specify the name of s3 bucket for cloudfront"
   type = string
+  default = null
 }
 variable "cloudfront_origin_acess_identity_description" {
   description = "description for OAI"
@@ -309,15 +310,18 @@ variable "cloudfront_log_path_prefix_key" {
 variable "alarms" {
   description = "alarms to be configured"
   type = map(map(string))
+  default = null
 }
 
 variable "slack_secret_name" {
   type = string
   description = "name of cloudfront slack secret"
+  default = null
 }
 variable "cloudfront_slack_channel_name" {
   type = string
   description = "cloudfront slack name"
+  default = null
 }
 variable "create_files_bucket" {
   description = "indicate if you want to create files bucket or use existing one"
@@ -403,14 +407,17 @@ variable "enable_metric_pipeline" {
 variable "http_endpoint_access_key" {
   description = "new relic http api key"
   type = string
+  default = null
 }
 variable "new_relic_account_id" {
   description = "new relic account id"
   type = string
+  default = null
 }
 variable "replication_destination_account_id" {
   type = string
   description = "replication account id"
+  default = null
   
 }
 variable "create_neo4j_db" {
