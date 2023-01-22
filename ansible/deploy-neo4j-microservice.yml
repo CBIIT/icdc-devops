@@ -35,7 +35,7 @@
         platform: aws
         container_name: "neo4j"
         neo4j_version: "{{ lookup('env','NEO4J_VERSION') }}"
-        image_version: "{{image_version}}"
+        image_version: "{{neo4j_version}}"
         container_image_url: "{{ ecr_repo }}/{{ container_name }}"
         tier: "{{ tier }}"
         ecs_cluster_name: "{{ project_name }}-{{ tier }}-ecs"
