@@ -1,5 +1,5 @@
 @Library('datacommons-jenkins-shared-library') _
-deployApp(
+deployNeo4jDB(
     label: "cicd_microservice",
     playbook: "ansible/deploy-neo4j-microservice.yml",
     inventory: "ansible/hosts",
