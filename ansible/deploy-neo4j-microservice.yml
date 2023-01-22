@@ -34,7 +34,9 @@
         project_name: "{{project_name}}"
         platform: aws
         container_name: "neo4j"
-        image_version: "4.2.19-community"
+        neo4j_version: "{{ lookup('env','NEO4J_VERSION') }}"
+        image_version: "{{image_version}}"
+        container_image_url: "{{ ecr_repo }}/{{ container_name }}"
         tier: "{{ tier }}"
         ecs_cluster_name: "{{ project_name }}-{{ tier }}-ecs"
         newrelic_license_key: "{{ lookup('amazon.aws.aws_secret', 'monitoring/newrelic.api_key', nested=true, region='us-east-1' ) }}"
