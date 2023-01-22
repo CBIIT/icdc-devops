@@ -113,3 +113,5 @@ public_ssh_key_ssm_parameter_name = "ssh_public_key"
 database_instance_type = "t3.large"
 #dns
 create_dns_record = true
+#create neo4j container
+create_neo4j_db = true

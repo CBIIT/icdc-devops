@@ -413,3 +413,9 @@ variable "replication_destination_account_id" {
   description = "replication account id"
   
 }
+variable "create_neo4j_db" {
+  type = bool
+  default = false
+  description = "choose to add neo4j container or not"
+
+}
