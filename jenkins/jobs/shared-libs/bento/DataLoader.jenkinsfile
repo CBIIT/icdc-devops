@@ -17,7 +17,7 @@ loadData(
     slackSecretName: "bento_slack_url",
     modelRepoUrl: "https://github.com/CBIIT/BENTO-TAILORx-model",
     modelCheckoutDirectory: "bento-model",
-    useDockerAgent: false
+    useDockerAgent: yes
     agentImage: "cbiitssrepo/cicd-microservices-ecs",
     dockerRegistryUrl: "https://registry.hub.docker.com",
     registryCredentialsId: "dockerhub"
