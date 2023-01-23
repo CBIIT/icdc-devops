@@ -19,6 +19,6 @@ loadData(
     modelCheckoutDirectory: "bento-model",
     useDockerAgent: true,
     agentImage: "cbiitssrepo/cicd-microservices-ecs",
-    dockerRegistryUrl: "https://registry.hub.docker.com",
+    dockerRegistryUrl: "docker.io",
     registryCredentialsId: "dockerhub"
 )
