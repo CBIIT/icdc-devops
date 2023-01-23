@@ -1,6 +1,6 @@
 @Library('datacommons-jenkins-shared-library') _
 loadData(
-    label: "cicd_microservice",
+    label: "data-loader",
     playbook: "ansible/load-data-microservice.yml",
     inventory: "ansible/hosts",
     tier: "${params.Environment}",
