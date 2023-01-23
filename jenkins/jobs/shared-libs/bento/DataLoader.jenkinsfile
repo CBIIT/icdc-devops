@@ -15,10 +15,7 @@ loadData(
     property_file: "props-bento-ext.yml",
     slackSecretPath: "notification/slack",
     slackSecretName: "bento_slack_url",
-    modelRepoUrl: "https://github.com/CBIIT/bento-model",
+    modelRepoUrl: "https://github.com/CBIIT/BENTO-TAILORx-model",
     modelCheckoutDirectory: "bento-model",
-    useDockerAgent: false,
-    extraAnsibleVars: [
-       load_neo4j_container: "${params.LoadNeo4jContainer}"
-    ],
+    useDockerAgent: false
 )
