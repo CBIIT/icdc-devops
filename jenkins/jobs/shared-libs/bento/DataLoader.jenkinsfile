@@ -1,0 +1,24 @@
+@Library('datacommons-jenkins-shared-library') _
+loadData(
+    label: "cicd_microservice",
+    playbook: "ansible/load-data-microservice.yml",
+    inventory: "ansible/hosts",
+    tier: "${params.Environment}",
+    projectName: "${params.ProjectName}",
+    s3_folder: "${params.S3Folder}",
+    wipe_db: "${params.WipeDB}",
+    cheat_mode: "${params.CheatMode}",
+    data_bucket: "${params.DataBucket}",
+    split_transactions: "${params.SplitTransactions}",
+    model_file1: "bento_tailorx_model_file.yaml",
+    model_file2: "bento_tailorx_model_properties.yaml",
+    property_file: "props-bento-ext.yml",
+    slackSecretPath: "notification/slack",
+    slackSecretName: "bento_slack_url",
+    modelRepoUrl: "https://github.com/CBIIT/bento-model",
+    modelCheckoutDirectory: "bento-model",
+    useDockerAgent: false,
+    extraAnsibleVars: [
+       load_neo4j_container: "${params.LoadNeo4jContainer}"
+    ],
+)
