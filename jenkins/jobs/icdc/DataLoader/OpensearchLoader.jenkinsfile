@@ -107,15 +107,14 @@ pipeline {
  		environment {
  			SLACK_URL = "${SLACK_URL}"
 		    TIER = "${params.Environment}"
-			PROJECT_NAME = "ctdc"
+			PROJECT_NAME = "icdc"
  		}
  		steps {
  			wrap([$class: 'AnsiColorBuildWrapper', colorMapName: "xterm"]) {
 			ansiblePlaybook( 
             	playbook: '${WORKSPACE}/icdc-devops/ansible/icdc-opensearch-loader.yml',
 					inventory: '${WORKSPACE}/icdc-devops/ansible/hosts',
-            		colorized: true,
-					extras: '-vvv') 
+            		colorized: true) 
  			}
  		}
     }
