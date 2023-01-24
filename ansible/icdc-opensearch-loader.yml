@@ -21,7 +21,7 @@
         name: bento.common.neo4j_ip
       vars:
         ansible_python_interpreter: /usr/bin/python3
-        project_name:  "{{ lookup('env','PROJECT_NAME') }}"Z
+        project_name:  "{{ lookup('env','PROJECT_NAME') }}"
         tier: "{{ lookup('env','TIER') }}"
         database_name: "{{ lookup('amazon.aws.aws_secret', 'bento/{{ project_name }}/{{ tier }}.neo4j_ip', nested=true, region='us-east-1' ) }}"
 
