@@ -2,7 +2,7 @@ pipeline {
 	agent {
 		node {
 			//label 'data-loader'
-			label 'slave-ncias-d2957-c'
+			label 'slave-ncias-d2789-c'
 		}
 	}
 	parameters {
