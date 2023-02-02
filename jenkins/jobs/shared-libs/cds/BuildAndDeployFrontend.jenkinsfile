@@ -2,6 +2,7 @@
 buildAndDeploy(
     label: "slave-ncias-d2943-c",
     parameterName: "FrontendTag",
+    nodeMemory: "8192"
     codeRepoUrl: "https://github.com/CBIIT/bento-cds-frontend",
     checkoutDirectory: "cds-frontend",
     buildPlaybook: "ansible/build-frontend-microservice.yml",
