@@ -9,9 +9,9 @@ node('slave-ncias-d2789-c') {
 		}
 	stage('set agent'){
 		if (params.Environment.equals('stage') || params.Environment.equals('prod')) {
-			AGENT_LABEL = "slave-ncias-d2789-c"
+			AGENT_LABEL = "commons-docker-ncias-p2790-c"
 			} else {
-				AGENT_LABEL = "slave-ncias-d2790-c"
+				AGENT_LABEL = "slave-ncias-d2789-c"
 				}
 		}
 	}
