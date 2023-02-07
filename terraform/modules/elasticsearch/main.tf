@@ -70,14 +70,14 @@ resource "aws_elasticsearch_domain" "es" {
   snapshot_options {
     automated_snapshot_start_hour = 23
   }
-  log_publishing_options {
-    cloudwatch_log_group_arn = aws_cloudwatch_log_group.cloudwatch_log_group.arn
-    log_type                 = "INDEX_SLOW_LOGS"
-  }
+//  log_publishing_options {
+//    cloudwatch_log_group_arn = aws_cloudwatch_log_group.cloudwatch_log_group.arn
+//    log_type                 = "INDEX_SLOW_LOGS"
+//  }
   tags = var.tags
 }
 
-
+/*
 resource "aws_cloudwatch_log_group" "cloudwatch_log_group" {
   name = "${var.stack_name}-${terraform.workspace}-es-log-group"
 }
@@ -105,3 +105,4 @@ resource "aws_cloudwatch_log_resource_policy" "cloudwatch_policy" {
 }
 CONFIG
 }
+*/

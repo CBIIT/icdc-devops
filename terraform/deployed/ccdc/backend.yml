@@ -1,6 +1,6 @@
 ---
 - name: backend
-  image: cbiitssrepo/bento-backend:release
+  image: cbiitssrepo/ccdc-webservice:latest
   essential: true
   portMappings:
     - protocol: tcp
