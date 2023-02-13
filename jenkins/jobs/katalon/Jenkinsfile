@@ -114,7 +114,6 @@ pipeline {
 							RESULTS_EMAIL="${results_email}"
                             }
                         break
-					}
 
 					case ~/[\w\/]+CCDC$/:
 						PROJECT="CCDC"
