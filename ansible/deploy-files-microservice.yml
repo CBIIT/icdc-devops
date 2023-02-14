@@ -22,6 +22,36 @@
       vars:
         region: us-east-1
 
+    - name: get neo4j container ip
+      block:
+        - name: list tasks
+          shell: >
+            aws ecs list-tasks --service-name {{project_name}}-{{tier}}-neo4j 
+            --region us-east-1 --cluster {{project_name}}-{{tier}}-ecs 
+            --query 'taskArns[0]' --output text
+          register: task_facts
+
+        - name: set task_fact
+          set_fact:
+            task_arn: "{{task_facts.stdout_lines | first}}"
+
+        - name: get task ip
+          shell: >
+            aws ecs describe-tasks 
+            --tasks {{task_arn}}
+            --region us-east-1 --cluster {{project_name}}-{{tier}}-ecs 
+            --query "tasks[0].attachments[0].details[?name=='privateIPv4Address'].value |[0]"
+            --output text
+          register: task_facts
+
+        - name: set task_fact
+          set_fact:
+            task_ip: "{{task_facts.stdout_lines | first}}"
+
+        - name: show container ip
+          debug:
+            msg: "{{task_ip}}"
+      when: use_neo4j_container == "yes"
 
 
     #deploy files
@@ -46,7 +76,8 @@
         files_version: "{{ lookup('env','FILES_VERSION') }}"
         image_version: "{{ files_version}}"
         tier: "{{ tier }}"
-        neo4j_ip: "{{ lookup('amazon.aws.aws_secret', 'bento/{{ project_name }}/{{ tier }}.neo4j_ip', nested=true, region='us-east-1' ) }}"
+        neo4j_ec2_db_ip: "{{ lookup('amazon.aws.aws_secret', 'bento/{{ project_name }}/{{ tier }}.neo4j_ip', nested=true, region='us-east-1' ) }}"
+        neo4j_ip: "{% if task_ip is defined  %}{{task_ip}}{% else %}{{neo4j_ec2_db_ip}}{% endif %}"
         mysql_host: "{{ lookup('amazon.aws.aws_secret', 'bento/{{project_name}}/{{tier}}.mysql_host', nested=true, region='us-east-1' ) }}"
         mysql_user: "{{ lookup('amazon.aws.aws_secret', 'bento/{{project_name}}/{{tier}}.mysql_user', nested=true, region='us-east-1' ) }}"
         mysql_password: "{{ lookup('amazon.aws.aws_secret', 'bento/{{project_name}}/{{tier}}.mysql_password', nested=true, region='us-east-1' ) }}"
