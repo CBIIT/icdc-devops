@@ -14,7 +14,8 @@ deployApp(
     deploymentFile: "bento-deployments/deployments.yaml",
     extraAnsibleVars: [
         subdomain: "bento",
-        domain_name: "bento-tools.org"
+        domain_name: "bento-tools.org",
+        use_neo4j_container: "yes"
     ],
     service: "auth"
 )
