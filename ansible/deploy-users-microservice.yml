@@ -4,6 +4,9 @@
   gather_facts: yes
   become: yes
 
+  vars:
+    - use_neo4j_container: no
+
   tasks:
     #install collections
     - name: install aws collection
