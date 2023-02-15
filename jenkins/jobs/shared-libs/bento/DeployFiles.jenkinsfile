@@ -15,7 +15,7 @@ deployApp(
     extraAnsibleVars: [
         subdomain: "bento",
         domain_name: "bento-tools.org",
-        use_neo4j_container: "yes"
+        // use_neo4j_container: "yes"
     ],
     service: "files"
 )
