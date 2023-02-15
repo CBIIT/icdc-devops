@@ -4,7 +4,7 @@
   gather_facts: no
 #  become: yes
   vars: 
-    - load_neo4j_container: no
+    - use_neo4j_container: no
   tasks:
     #install collections
     - name: install aws collection
@@ -44,7 +44,7 @@
         - name: show container ip
           debug:
             msg: "{{task_ip}}"
-      when: load_neo4j_container == "yes"
+      when: use_neo4j_container == "yes"
     
     #run data loader
     - name: data loader stage
