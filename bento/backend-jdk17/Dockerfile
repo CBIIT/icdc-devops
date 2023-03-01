@@ -1,0 +1,32 @@
+FROM alpine:3.17.2
+MAINTAINER ESI Devops Team
+
+ENV TOMCAT_MAJOR=10
+ENV TOMCAT_VERSION=10.1.6
+ENV CATALINA_HOME=/usr/local/tomcat 
+ENV TOMCAT_URL=https://archive.apache.org/dist/tomcat/tomcat-"$TOMCAT_MAJOR"/v"$TOMCAT_VERSION"/bin/apache-tomcat-"$TOMCAT_VERSION".tar.gz 
+ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk  
+ENV TOMCAT_USER=tomcat 
+ENV TOMCAT_GROUP=tomcat 
+ENV PATH=$CATALINA_HOME/bin:$JAVA_HOME/bin:$PATH
+ENV JAVA_OPTS $JAVA_OPTS -XX:InitialRAMPercentage=25 -XX:MaxRAMPercentage=70
+ENV TZ America/New_York
+
+WORKDIR $CATALINA_HOME
+
+RUN apk upgrade --update \
+ && apk --no-cache add openjdk17-jdk tzdata --repository=https://dl-cdn.alpinelinux.org/alpine/v3.17/community
+RUN mkdir -p "$CATALINA_HOME" \
+ && addgroup -g 3001 -S ${TOMCAT_GROUP} \
+ && adduser --disabled-password --ingroup "${TOMCAT_USER}" --uid 3001 ${TOMCAT_USER} \
+ && echo ${TOMCAT_URL} \
+ && wget -O tomcat.tar.gz $TOMCAT_URL \
+ && tar -xf tomcat.tar.gz --strip-components=1 -C $CATALINA_HOME \
+ && rm -rf tomcat.tar.gz \
+ && chown -R ${TOMCAT_USER}:${TOMCAT_GROUP} ${CATALINA_HOME} \
+ && chmod +x ${CATALINA_HOME}/bin/*.sh 
+ 
+USER ${TOMCAT_USER} 
+
+EXPOSE 8080
+CMD ["catalina.sh","run"]
