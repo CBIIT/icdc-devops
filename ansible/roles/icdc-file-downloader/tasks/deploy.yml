@@ -7,7 +7,7 @@
 
 - name: remove frontend container
   docker_container:
-    name: file-downloader
+    name: files
     state: absent
 
 - name: clean up 
