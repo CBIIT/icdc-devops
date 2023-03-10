@@ -6,6 +6,8 @@ buildAndDeploy(
     codeRepoUrl: "https://github.com/CBIIT/bento-RI-backend",
     buildPlaybook: "ansible/build-bento-reference-microservice.yml",
     deployPlaybook: "ansible/deploy-backend-microservice.yml",
+	playbookRepoUrl: "https://github.com/CBIIT/icdc-devops",
+	playbookRepoBranch: "jdk17",
     inventory: "ansible/hosts",
     tier: "${params.Environment}",
     projectName: "${params.ProjectName}",
