@@ -1,6 +1,6 @@
 ARG ECR_REPO
 #FROM ${ECR_REPO}/base-images:backend
-FROM ${ECR_REPO}/bento-backend-jdk17:release
+FROM ${ECR_REPO}/base-images:backend-jdk17
 MAINTAINER icdc devops team
 RUN rm -rf /usr/local/tomcat/webapps/ROOT
 COPY target/ROOT.war /usr/local/tomcat/webapps/
