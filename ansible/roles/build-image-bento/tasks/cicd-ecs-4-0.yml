@@ -21,11 +21,13 @@
     build:
       path: "{{ item | dirname }}"
       #dockerfile: "jenkins-agent-microservices-ecs-4.0"
-      dockerfile: "{{ item | dirname | basename }}"
+      #dockerfile: "{{ item | dirname | basename }}"
+      dockerfile: "{{ item | basename }}"
       pull: yes
       nocache: yes
     #name: "{{ dockerhub_path }}/cicd-ansible_4.0"
-    name: "{{ dockerhub_path }}/{{ item | dirname | basename }}"
+    #name: "{{ dockerhub_path }}/{{ item | dirname | basename }}"
+    name: "{{ dockerhub_path }}/{{ item | basename }}"
     tag: "latest"
     push: yes
     force_source: yes
