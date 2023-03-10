@@ -1,21 +1,3 @@
-//node('cicd_microservice') {
-//	parameters {
-//		extendedChoice( 
-//			name: 'Browser', 
-//			defaultValue: 'Firefox', 
-//			description: 'Choose the browser (headless) to use', 
-//			type: 'PT_SINGLE_SELECT',
-//			value: 'Chrome,Firefox' )
-//		}
-//	stage('set agent'){
-//		if (params.Browser == 'Firefox') {
-//			AGENT_LABEL = "docker-katalon-ff"
-//			} else {
-//				AGENT_LABEL = "docker-katalon-ch"
-//				}
-//		}
-//	}
-
 pipeline {
 	agent {
         node {
@@ -67,12 +49,11 @@ pipeline {
         name: 'EmailRecipients')
 
         }
-    // options {
-    // 	ansiColor('xterm')
-    // }
+
     tools {
         jdk 'Default' 
         }
+
     stages{
         stage('checkout'){
             steps {

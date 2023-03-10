@@ -1,25 +1,6 @@
-//node('docker-katalon-ch') {
-//	parameters {
-//		extendedChoice( 
-//			name: 'Browser', 
-//			defaultValue: 'Chrome', 
-//			description: 'Choose the browser (headless) to use', 
-//			type: 'PT_SINGLE_SELECT',
-//			value: 'Chrome,Firefox' )
-//		}
-//	stage('set agent'){
-//		if (params.Browser == 'Firefox') {
-//			AGENT_LABEL = "docker-katalon-ff"
-//			} else {
-//				AGENT_LABEL = "docker-katalon-ch"
-//				}
-//		}
-//	}
-
 pipeline {
 	agent {
         node { 
-            //label "${AGENT_LABEL}"
 			label "docker-katalon-ch"
             }
         }
@@ -44,29 +25,18 @@ pipeline {
         description: 'Enter the Katalon Suite Path (not including the test suite file):', 
         name: 'KatalonSuite')
 
-    extendedChoice( 
-        name: 'Browser', 
-        defaultValue: 'Chrome', 
-        description: 'Choose the browser (headless) to use', 
-        type: 'PT_SINGLE_SELECT',
-        value: 'Chrome,Firefox' )
-		
 	extendedChoice( 
         name: 'Profile', 
         defaultValue: 'QA_ICDC', 
         description: 'Choose the profile to use', 
         type: 'PT_SINGLE_SELECT',
-        value: 'DEV_ICDC,QA_ICDC,STAGE_ICDC,PROD_ICDC,QA_CTDC,QA_MTP,QA_INS' )
+        value: 'DEV_ICDC,QA_ICDC,STAGE_ICDC,PROD_ICDC,QA_CTDC,QA_MTP,QA_INS,QA_CCDC' )
 
 	string(defaultValue: "gayathri.radhakrishnan@nih.gov,laxmi.lolla@nih.gov,sohil.sohil@nih.gov", 
         description: 'Enter a list of email addresses to notify in case of test failures:', 
         name: 'EmailRecipients')
 
         }
-
-    // options {
-    // 	ansiColor('xterm')
-    // }
 
     stages{
         stage('checkout'){
@@ -114,8 +84,17 @@ pipeline {
 							RESULTS_EMAIL="${results_email}"
                             }
                         break
+
+					case ~/[\w\/]+CCDC$/:
+						PROJECT="CCDC"
+						withCredentials([string(credentialsId: 'Sharepoint_Email', variable: 'results_email'),
+						  string(credentialsId: 'Sharepoint_Url_CCDC', variable: 'sharepoint_url')]) {
+                            RESULTS_URL="${sharepoint_url}"
+							RESULTS_EMAIL="${results_email}"
+                            }
+                        break
 					}
-					
+
 					switch("${params.Profile}") {
                     case "DEV_ICDC":
 						TIER="DEV"
@@ -162,6 +141,14 @@ pipeline {
                             }
                         break
 
+                    case "QA_CCDC":
+						TIER="QA"
+						withCredentials([file(credentialsId: 'Katalon_QA_CCDC', variable: 'pass_file')]) {
+							PROFILE="${pass_file}"
+							sh "cp ${pass_file} ${WORKSPACE}/Profiles/"
+                            }
+                        break
+
 					case "QA_CTDC":
 						WIKI_PAGE="289178298"
 						PROJECT="CTDC"
@@ -181,7 +168,7 @@ pipeline {
 			}
 		stage('run tests'){
             environment {
-				KATALON_BROWSER     =   "${params.Browser}"
+				KATALON_BROWSER     =   "Chrome"
 				KATALON_PROFILE     =   "${params.Profile}"
                 KATALON_PRJ         =   "${params.KatalonPrj}"
                 KATALON_SUITE_PATH  =   "${params.KatalonSuite}"
@@ -253,54 +240,7 @@ pipeline {
 					body: "Katalon Test Results - ${PROJECT}.${TIER}.${BUILD_NUMBER}",
                     subject: "Katalon Test Results - ${PROJECT}.${TIER}.${BUILD_NUMBER}",
                     to: "${RESULTS_EMAIL}")
-				
-//				script {
-//
-//					withCredentials([usernamePassword(credentialsId: 'Katalon_wiki_results', passwordVariable: 'passwd', usernameVariable: 'user')]) {
-//
-//						sh label: 'Katalon-Results-Confluence', script: '''#!/bin/bash
-//
-//						inputFile=$(exec find $WORKSPACE/results -type f -name "*.xml")
-//						resultsFile=$(basename results/*.zip)
-//						project=''' + PROJECT + '''
-//						tier=''' + TIER + '''
-//						pageID=''' + WIKI_PAGE + '''
-//						pageName="$project Automated Test Results"
-//						creds="\'$user:$passwd\'"
-//
-//						# get updated page text
-//						totalTestCases="$(grep -c '<testcase' $inputFile)"
-//						passedTestCases="$(grep '<testcase' $inputFile | grep -c 'PASSED')"
-//						failedTestCases="$(grep '<testcase' $inputFile | grep -c 'FAILED')"
-//						errorTestCases="$(grep '<testcase' $inputFile | grep -c 'ERROR')"
-//						pageMessage="<p>Test results from the latest Katalon Test on $project $tier: $resultsFile  (browser tested: $Browser): <br /><br /> Total Tests Cases:     $totalTestCases <br /> Passed Test Cases:     $passedTestCases <br /> Failed Test Cases:     $failedTestCases <br /> Errored Test Cases:    $errorTestCases </p><p><br /></p><p>"
-//						curlCMD="curl -D- -u $creds https://collaborate.nci.nih.gov/rest/api/content/$pageID?expand=body.storage | grep -o -P '(?<=<p>).*(?=</p>)' | grep -o -P '(?=<ac).*'"
-//						pageText=$(eval $curlCMD)
-//						pageMessage="$pageMessage $pageText </p>"
-//
-//						# get page version
-//						curlCMD="curl -D- -u $creds https://collaborate.nci.nih.gov/rest/api/content/$pageID?expand=version.number | grep -oP '(?<=number\\\":).*' | awk -F, '{print \\$1}'"
-//						pageVer=$(eval $curlCMD)
-//						pageVer="$((pageVer+1))"
-//
-//						# update page content
-//						curlCMD="curl -u $creds -X PUT -H 'Content-Type: application/json' -d \'{\\\"id\\\":\\\"$pageID\\\",\\\"type\\\":\\\"page\\\",\\\"title\\\":\\\"$pageName\\\",\\\"body\\\":{\\\"storage\\\":{\\\"value\\\":\\\"$pageMessage\\\",\\\"representation\\\":\\\"storage\\\"}},\\\"version\\\":{\\\"number\\\":$pageVer}}\' https://collaborate.nci.nih.gov/rest/api/content/$pageID"
-//						curlError=$(eval $curlCMD)
-//						echo "Confluence Error:   $curlError"
-//
-//						# add latest results as attachment
-//						resultsURL="https://collaborate.nci.nih.gov/rest/api/content/$pageID/child/attachment"
-//						resultsFile=$(basename results/*.html)
-//						curlCMD="curl -D- -u $creds -X POST -H \\\"X-Atlassian-Token: nocheck\\\" -F \\\"file=@results/$resultsFile\\\" $resultsURL"
-//						curlError=$(eval $curlCMD)
-//						echo "Confluence Error:   $curlError"
-//
-//						'''
-//
-//						}
-//
-//					}
-					
+
 				script {
 				
 				    ERROR_OUTPUT = sh (label: 'Katalon-Results-Parsing', script: '''#!/bin/bash

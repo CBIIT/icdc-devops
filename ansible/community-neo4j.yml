@@ -1,6 +1,6 @@
 ---
 - name: setup neo4j database
-  hosts: all
+  hosts: no
   connection: local
   become: yes
   gather_facts: yes

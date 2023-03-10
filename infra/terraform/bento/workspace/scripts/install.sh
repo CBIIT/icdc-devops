@@ -10,4 +10,7 @@ cd infra/terraform/bento
 
 ###########
 terraform init -reconfigure -backend-config=workspace/cds/cds-prod.tfbackend
+terraform workspace select stage
+terraform plan -var-file=workspace/cds/cds-stage.tfvars
+
 terraform workspace new stage

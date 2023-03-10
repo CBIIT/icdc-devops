@@ -99,3 +99,10 @@ resource "aws_lambda_permission" "cloudwatch_invoke_lambda" {
   principal = "events.amazonaws.com"
   source_arn = aws_cloudwatch_event_rule.every_7am.arn
 }
+
+variable "listof" {
+  type = list(object({
+    
+  }))
+  
+}

@@ -2,6 +2,7 @@
 buildAndDeploy(
     label: "slave-ncias-d2943-c",
     parameterName: "FrontendTag",
+    nodeMemory: "8192",
     codeRepoUrl: "https://github.com/CBIIT/bento-cds-frontend",
     checkoutDirectory: "cds-frontend",
     buildPlaybook: "ansible/build-frontend-microservice.yml",
@@ -22,7 +23,7 @@ buildAndDeploy(
         domain_name: "datacommons.cancer.gov",
         about_content_url: " https://raw.githubusercontent.com/CBIIT/bento-cds-frontend/2.0.0/src/content/${params.Environment}/aboutPagesContent.yaml"
     ],
-    useDockerAgent: false,
+    useDockerAgent: true,
     agentImage: "ncidockerhub.nci.nih.gov/icdc/cicd-microservices-ecs",
     dockerRegistryUrl: "https://ncidockerhub.nci.nih.gov",
     registryCredentialsId: "ncidockerhub"

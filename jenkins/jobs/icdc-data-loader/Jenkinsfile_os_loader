@@ -1,8 +1,27 @@
+node('slave-ncias-d2789-c') {
+	parameters {
+		xtendedChoice( 
+        name: 'Environment', 
+        defaultValue: 'dev', 
+        description: 'Choose the environment to build', 
+        type: 'PT_SINGLE_SELECT',
+        value: 'dev,qa,stage,prod' )
+		}
+	stage('set agent'){
+		if (params.Environment.equals('stage') || params.Environment.equals('prod')) {
+			AGENT_LABEL = "commons-docker-ncias-p2790-c"
+			} else {
+				AGENT_LABEL = "slave-ncias-d2789-c"
+				}
+		}
+	}
+
 pipeline {
 	agent {
 		node {
 			//label 'slave-ncias-d2320-c'
-			label 'slave-ncias-d2789-c'
+			//label 'slave-ncias-d2789-c'
+			label "${AGENT_LABEL}"
 		}
 	}
 	parameters {

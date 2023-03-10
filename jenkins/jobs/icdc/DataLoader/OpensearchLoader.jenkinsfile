@@ -2,6 +2,7 @@ pipeline {
 	agent {
 		node {
 			//label 'data-loader'
+			//label 'slave-ncias-d2320-c'
 			label 'slave-ncias-d2789-c'
 		}
 	}
@@ -107,15 +108,14 @@ pipeline {
  		environment {
  			SLACK_URL = "${SLACK_URL}"
 		    TIER = "${params.Environment}"
-			PROJECT_NAME = "ctdc"
+			PROJECT_NAME = "icdc"
  		}
  		steps {
  			wrap([$class: 'AnsiColorBuildWrapper', colorMapName: "xterm"]) {
 			ansiblePlaybook( 
             	playbook: '${WORKSPACE}/icdc-devops/ansible/icdc-opensearch-loader.yml',
 					inventory: '${WORKSPACE}/icdc-devops/ansible/hosts',
-            		colorized: true,
-					extras: '-vvv') 
+            		colorized: true) 
  			}
  		}
     }
@@ -123,11 +123,11 @@ pipeline {
  }
  
   post {
-  
+
     always {
 	  cleanWs()
     }
-	
+
   }
-  
+
 }

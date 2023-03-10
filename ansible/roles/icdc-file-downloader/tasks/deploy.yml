@@ -7,7 +7,7 @@
 
 - name: remove frontend container
   docker_container:
-    name: file-downloader
+    name: files
     state: absent
 
 - name: clean up 
@@ -54,7 +54,7 @@
 - name: launch the new file-downloader
   docker_container:
     name: file-downloader
-    image: ncidockerhub.nci.nih.gov/icdc/icdc-filedownloader:{{downloader_version}}
+    image: ncidockerhub.nci.nih.gov/icdc/icdc-files:{{downloader_version}}
     env: "{{ docker_env }}"
 
 #    env:
