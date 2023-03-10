@@ -1,6 +1,7 @@
 @Library('datacommons-jenkins-shared-library') _
 buildAndDeploy(
-    label: "cicd_microservice",
+    //label: "cicd_microservice",
+	label: "cicd_ansible_4.0_jdk17",
     parameterName: "BackendTag",
     codeRepoUrl: "https://github.com/CBIIT/bento-RI-backend",
     buildPlaybook: "ansible/build-bento-reference-microservice.yml",
