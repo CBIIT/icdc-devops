@@ -10,7 +10,7 @@
       command: ansible-galaxy collection install {{item}}
       loop:
         -  community.docker
-        -  git+https://github.com/CBIIT/datacommons-devops.git#/ansible/collections/bento/common/,main
+        -  git+https://github.com/CBIIT/datacommons-devops.git#/ansible/collections/bento/common/,v1.0
 
     #docker login
     - name: docker login
