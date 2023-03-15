@@ -106,11 +106,18 @@ create_db_instance = true
 db_subnet_id = "subnet-09b0c7407416d4730"
 db_instance_volume_size = 80
 ssh_user = "bento"
-db_private_ip = "172.18.11.232"
 db_iam_instance_profile_name = "bento-dev-ecs-instance-profile"
 ssh_key_name = "devops"
 public_ssh_key_ssm_parameter_name = "ssh_public_key"
 database_instance_type = "t3.large"
+db_instances = {
+  data = {
+    private_ip = "172.18.11.232"
+  },
+  users = {
+    private_ip = "172.18.11.237"
+  }
+}
 #dns
 create_dns_record = true
 #create neo4j container
