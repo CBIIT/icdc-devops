@@ -169,11 +169,11 @@ variable "ssh_user" {
   description = "name of the ec2 user"
   default = "bento"
 }
-#variable "db_private_ip" {
-#  description = "private ip of the db instance"
-#  type = string
-#  default = "10.0.0.2"
-#}
+variable "db_private_ip" {
+  description = "private ip of the db instance"
+  type = string
+  default = "10.0.0.2"
+}
 variable "ssh_key_name" {
   description = "name of the ssh key to manage the instances"
   type = string
@@ -425,9 +425,8 @@ variable "create_neo4j_db" {
   default = false
   description = "choose to add neo4j container or not"
 }
-variable "db_instances" {
-  type = map(object({
-    private_ip = string
-  }))
-  default = null
+variable "user_neo4j_db_private_ip" {
+  type = string
+  description = "private ip"
+  default = "10.1.1.1"
 }
