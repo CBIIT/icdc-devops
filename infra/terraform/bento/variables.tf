@@ -430,3 +430,13 @@ variable "user_neo4j_db_private_ip" {
   description = "private ip"
   default = "10.1.1.1"
 }
+variable "db_iam_profile_name" {
+  type = string
+  default = null
+  description = "name of db iam profile"
+}
+variable "db_security_group_id" {
+  type = string
+  description = "provide existing security group"
+  default = null
+}

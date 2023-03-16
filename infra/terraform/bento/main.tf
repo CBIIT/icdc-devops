@@ -103,7 +103,7 @@ module "neo4j" {
 
 module "user_neo4j" {
   count = var.create_db_instance ? 1: 0
-  source = "git::https://github.com/CBIIT/datacommons-devops.git//terraform/modules/neo4j"
+  source = "git::https://github.com/CBIIT/datacommons-devops.git//terraform/modules/neo4j?ref=neo4j"
   env = terraform.workspace
   vpc_id = var.vpc_id
   db_subnet_id = var.db_subnet_id
@@ -113,6 +113,11 @@ module "user_neo4j" {
   db_private_ip = var.user_neo4j_db_private_ip
   database_instance_type = var.database_instance_type
   tags = var.tags
+  database_name = "neo4j-user"
+  create_instance_profile = false
+  create_security_group = false
+  db_iam_profile_name = var.db_iam_profile_name
+  db_security_group_id = var.db_security_group_id
 }
 
 

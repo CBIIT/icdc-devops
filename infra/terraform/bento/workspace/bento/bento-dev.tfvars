@@ -115,4 +115,6 @@ user_neo4j_db_private_ip = "172.18.11.233"
 #dns
 create_dns_record = true
 #create neo4j container
-create_neo4j_db = true
+create_neo4j_db = false
+db_iam_profile_name = "bento-dev-database-instance-profile"
+db_security_group_id = "sg-0b34954e567d74614"
