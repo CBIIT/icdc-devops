@@ -117,7 +117,7 @@ module "user_neo4j" {
   create_instance_profile = false
   create_security_group = false
   db_iam_profile_name = var.db_iam_profile_name
-  db_security_group_id = var.db_security_group_id
+  db_security_group_name = var.db_security_group_name
 }
 
 
