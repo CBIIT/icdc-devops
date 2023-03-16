@@ -111,10 +111,11 @@ db_iam_instance_profile_name = "bento-dev-ecs-instance-profile"
 ssh_key_name = "devops"
 public_ssh_key_ssm_parameter_name = "ssh_public_key"
 database_instance_type = "t3.large"
-user_neo4j_db_private_ip = "172.18.11.233"
+user_neo4j_db_private_ip = "172.18.11.234"
 #dns
 create_dns_record = true
 #create neo4j container
 create_neo4j_db = false
 db_iam_profile_name = "bento-dev-database-instance-profile"
 db_security_group_name = "bento-dev-database-sg"
+db_boostrap_ssm_document = "bento-dev-setup-database"

@@ -440,3 +440,8 @@ variable "db_security_group_name" {
   description = "provide existing security group"
   default = null
 }
+variable "db_boostrap_ssm_document" {
+  type = string
+  default = null
+  description = "ssm document for db boostrap"
+}

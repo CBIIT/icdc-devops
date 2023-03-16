@@ -116,8 +116,10 @@ module "user_neo4j" {
   database_name = "neo4j-user"
   create_instance_profile = false
   create_security_group = false
+  create_bootstrap_script = false
   db_iam_profile_name = var.db_iam_profile_name
   db_security_group_name = var.db_security_group_name
+  db_boostrap_ssm_document  = var.db_boostrap_ssm_document
 }
 
 
