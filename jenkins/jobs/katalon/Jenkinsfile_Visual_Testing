@@ -238,7 +238,7 @@ pipeline {
 //					totalTestCases="$(grep -c '<testcase' $inputFile)"
 //					passedTestCases="$(grep '<testcase' $inputFile | grep -c 'PASSED')"
 //					failedTestCases="$(grep '<testcase' $inputFile | grep -c 'FAILED')"
-/					errorTestCases="$(grep '<testcase' $inputFile | grep -c 'ERROR')"
+//					errorTestCases="$(grep '<testcase' $inputFile | grep -c 'ERROR')"
 //
 //					# function to read output file: JUnit.xml
 //					parse_results_xml(){
