@@ -15,7 +15,7 @@ pipeline {
         selectedValue: 'DEFAULT', 
         sortMode: 'ASCENDING_SMART', 
         tagFilter: '*', 
-        useRepository: 'https://github.com/CBIIT/active-testing')
+        useRepository: 'https://github.com/CBIIT/active-testing.git')
 
     string(defaultValue: "VT_Test.prj", 
         description: 'Enter the Katalon Project file (include the path relative to the repo root):', 
