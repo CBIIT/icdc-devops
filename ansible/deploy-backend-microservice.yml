@@ -34,6 +34,7 @@
         platform: aws
         region: us-east-1
         container_name: "backend"
+        service_name: "{{ project_name }}-{{ tier }}-backend"
         auth_enabled: "true"
         image_version: "{{ lookup('env','BE_VERSION') }}"
         tier: "{{ lookup('env','TIER') }}"
