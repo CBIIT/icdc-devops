@@ -118,7 +118,8 @@ pipeline {
 								#echo "projectPath=$WORKSPACE/$KATALON_PRJ testSuitePath=$KATALON_SUITE_PATH executionProfile=$profile_name filename=$profile_file"
 								
 								# Run Katalon Tests
-								katalonc -noSplash -runMode=console --config -projectPath="$WORKSPACE/$KATALON_PRJ" -retry=0 -testSuitePath="$KATALON_SUITE_PATH" -executionProfile="default" -browserType="$KATALON_BROWSER" -reportFolder="results" -reportFileName="$reportFile" -apiKey="$api_key" -orgID="$org_id"
+								#katalonc -noSplash -runMode=console --config -projectPath="$WORKSPACE/$KATALON_PRJ" -retry=0 -testSuitePath="$KATALON_SUITE_PATH" -executionProfile="default" -browserType="$KATALON_BROWSER" -reportFolder="results" -reportFileName="$reportFile" -apiKey="$api_key" -orgID="$org_id"
+								katalonc -noSplash -runMode=console --config -projectPath="$WORKSPACE/$KATALON_PRJ" -testSuitePath="$KATALON_SUITE_PATH" -retry=0 -statusDelay=15 -browserType="TestCloud" -testcloudTunnel="false" -apiKey="$api_key" -orgID="$org_id"
 
 								'''
 
