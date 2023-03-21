@@ -26,7 +26,7 @@ ecr_repo_names = ["orion"]
 #ecs
 application_subdomain = "prefect"
 microservices  = {
-  frontend = {
+  orion = {
     name = "orion"
     port = 4200
     health_check_path = "/"
