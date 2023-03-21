@@ -1,0 +1,5 @@
+bucket = "fnl-nonprod-manager-terraform"
+key = "infra/prefect/terraform.tfstate"
+workspace_key_prefix = "env"
+region = "us-east-1"
+encrypt = true
