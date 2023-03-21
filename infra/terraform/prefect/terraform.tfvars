@@ -21,7 +21,7 @@ domain_name = "datacommons.cancer.gov"
 
 #ecr
 create_ecr_repos = true
-ecr_repo_names = ["prefect"]
+ecr_repo_names = ["orion"]
 
 #ecs
 application_subdomain = "prefect"
