@@ -29,7 +29,6 @@ module "ecs" {
   stack_name = var.stack_name
   tags = var.tags
   vpc_id = var.vpc_id
-  add_opensearch_permission = var.add_opensearch_permission
   ecs_subnet_ids = var.private_subnet_ids
   application_url = local.application_url
   env = terraform.workspace
@@ -37,7 +36,6 @@ module "ecs" {
   alb_https_listener_arn = module.alb.alb_https_listener_arn
   target_account_cloudone = var.target_account_cloudone
   allow_cloudwatch_stream = var.allow_cloudwatch_stream
-  create_neo4j_db = var.create_neo4j_db
 }
 
 #create ecr
@@ -49,10 +47,6 @@ module "ecr" {
   tags = var.tags
   create_env_specific_repo = var.create_env_specific_repo
   env = terraform.workspace
-  enable_ecr_replication = var.enable_ecr_replication
-  replication_destination_registry_id = var.replication_destination_registry_id
-  replication_source_registry_id = var.replication_source_registry_id
-  allow_ecr_replication = var.allow_ecr_replication
 }
 
 #aurora
