@@ -1,7 +1,7 @@
 public_subnet_ids = []
 private_subnet_ids = [
   "subnet-8832f6d5",
-  "subnet-409a0424"
+  "subnet-819c02e5"
 ]
 vpc_id = "vpc-dca724a4"
 stack_name = "prefect"
