@@ -206,3 +206,8 @@ variable "new_relic_account_id" {
   type = string
   default = null
 }
+variable "allow_cloudwatch_stream" {
+  type = bool
+  default = true
+  description = "allow cloudwatch stream for the containers"
+}
