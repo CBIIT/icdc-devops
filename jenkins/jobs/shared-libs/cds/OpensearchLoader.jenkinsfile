@@ -1,7 +1,7 @@
 @Library('datacommons-jenkins-shared-library') _
 loadOpensearch(
-    // label: "slave-ncias-d2943-c",
-    label: "slave-ncias-s2979-c",
+    label: "slave-ncias-d2943-c",
+    // label: "slave-ncias-s2979-c",
     playbook: "ansible/load-opensearch-microservice.yml",
     inventory: "ansible/hosts",
     tier: "${params.Environment}",
