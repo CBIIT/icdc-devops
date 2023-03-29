@@ -48,6 +48,20 @@ microservices  = {
     memory = 1024
     path = ["/v1/graphql/*","/version"]
     number_container_replicas = 1
+    use_service = true
+    task_definition =  jsonencode([
+    {
+      name      = "backend"
+      image     = "cbiitssrepo/bento-backend:latest"
+      essential = true
+      # portMappings = [
+      #   {
+      #     protocol      = "tcp"
+      #     containerPort = each.value.port
+      #   }
+      # ]
+    }
+  ])
   }
 }
 
