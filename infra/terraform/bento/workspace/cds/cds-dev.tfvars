@@ -21,7 +21,7 @@ domain_name = "datacommons.cancer.gov"
 
 #ecr
 create_ecr_repos = true
-ecr_repo_names = ["backend","frontend"]
+ecr_repo_names = ["backend","frontend","files"]
 
 #ecs
 add_opensearch_permission = true
