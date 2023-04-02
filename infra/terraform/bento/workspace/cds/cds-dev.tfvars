@@ -48,21 +48,18 @@ microservices  = {
     memory = 1024
     path = ["/v1/graphql/*","/version"]
     number_container_replicas = 1
-    use_service = true
-    task_definition =  jsonencode([
-    {
-      name      = "backend"
-      image     = "cbiitssrepo/bento-backend:latest"
-      essential = true
-      # portMappings = [
-      #   {
-      #     protocol      = "tcp"
-      #     containerPort = each.value.port
-      #   }
-      # ]
-    }
-  ])
-  }
+  },
+  files = {
+    name = "files"
+    port = 8081
+    health_check_path = "/api/files/ping"
+    priority_rule_number = 19
+    image_url = "cbiitssrepo/bento-auth:latest"
+    cpu = 256
+    memory = 512
+    path = ["/api/files/*"]
+    number_container_replicas = 1
+  },
 }
 
 #opensearch
@@ -88,8 +85,8 @@ target_account_cloudone = true
 create_instance_profile = true
 
 #cloudfront
-create_cloudfront = false
-create_files_bucket = false
+create_cloudfront = true
+create_files_bucket = true
 cloudfront_distribution_bucket_name = "cds-nonprod-annotation-files"
 cloudfront_slack_channel_name = "cds-cloudfront-wafv2"
 alarms = {

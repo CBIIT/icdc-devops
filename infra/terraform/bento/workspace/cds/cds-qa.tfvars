@@ -48,7 +48,18 @@ microservices  = {
     memory = 1024
     path = ["/v1/graphql/*","/version"]
     number_container_replicas = 1
-  }
+  },
+  files = {
+    name = "files"
+    port = 8081
+    health_check_path = "/api/files/ping"
+    priority_rule_number = 19
+    image_url = "cbiitssrepo/bento-auth:latest"
+    cpu = 256
+    memory = 512
+    path = ["/api/files/*"]
+    number_container_replicas = 1
+  },
 }
 
 #opensearch
