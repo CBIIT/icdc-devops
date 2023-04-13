@@ -1,8 +1,8 @@
 pipeline {
 	agent {
         node { 
-			//label "docker-katalon-vt"
-			label "docker-katalon-ch"
+			label "docker-katalon-vt-ec2"
+			//label "docker-katalon-ch"
             }
         }
 
