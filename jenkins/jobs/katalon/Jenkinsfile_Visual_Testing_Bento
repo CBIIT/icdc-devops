@@ -127,6 +127,7 @@ pipeline {
 								
                                 echo "API Key:     $api_key" > tmp
                                 echo "Org ID:      $org_id" >> tmp
+								echo "Command:     katalonc -noSplash -runMode=console --config -projectPath=$WORKSPACE/$KATALON_PRJ -testSuitePath=$KATALON_SUITE_PATH -retry=0 -statusDelay=15 -browserType=TestCloud -testcloudTunnel=false -testcloudEnvironmentId=49 -executionProfile=default -apiKey=$api_key -orgID=$org_id" >> tmp
 								cat tmp
 								
 								# Run Katalon Tests
