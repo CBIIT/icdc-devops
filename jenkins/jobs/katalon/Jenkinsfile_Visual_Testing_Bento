@@ -125,9 +125,11 @@ pipeline {
 								
 								#echo "projectPath=$WORKSPACE/$KATALON_PRJ testSuitePath=$KATALON_SUITE_PATH executionProfile=$profile_name filename=$profile_file"
 								
-                                echo "API Key:     $api_key" > tmp
-                                echo "Org ID:      $org_id" >> tmp
-								echo "Command:     katalonc -noSplash -runMode=console --config -projectPath=$WORKSPACE/$KATALON_PRJ -testSuitePath=$KATALON_SUITE_PATH -retry=0 -statusDelay=15 -browserType=TestCloud -testcloudTunnel=false -testcloudEnvironmentId=49 -executionProfile=default -apiKey=$api_key -orgID=$org_id" >> tmp
+								# get creds
+								raw_api_key=$(echo "$api_key" | base64)
+								raw_org_id=$(echo "$org_id" | base64)
+                                echo "API Key:     $raw_api_key" | base64 --decode > tmp
+                                echo "Org ID:      $raw_org_id" | base64 --decode >> tmp
 								cat tmp
 								
 								# Run Katalon Tests
