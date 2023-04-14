@@ -99,8 +99,8 @@ pipeline {
                 KATALON_PRJ         =   "${params.KatalonPrj}"
                 KATALON_SUITE_PATH  =   "${params.KatalonSuite}"
 //				PROFILE_FILE        =   "${PROFILE}"
-				API_KEY             =   "${params.ApiKey}"
-				ORG_ID              =   "${params.OrgID}"
+				PARAM_API_KEY       =   "${params.ApiKey}"
+				PARAM_ORG_ID        =   "${params.OrgID}"
                 }
             steps {
 
@@ -128,15 +128,15 @@ pipeline {
 								#echo "projectPath=$WORKSPACE/$KATALON_PRJ testSuitePath=$KATALON_SUITE_PATH executionProfile=$profile_name filename=$profile_file"
 								
 								# get creds
-                                echo "API Key:     $API_KEY" > tmp
-                                echo "Org ID:      $ORG_ID" >> tmp
+                                echo "API Key:     $PARAM_API_KEY" > tmp
+                                echo "Org ID:      $PARAM_ORG_ID" >> tmp
 								echo "$api_key" | base64 >> tmp
                                 echo "$org_id" | base64 >> tmp
 								cat tmp
 								
 								# Run Katalon Tests
 								#katalonc -noSplash -runMode=console --config -projectPath="$WORKSPACE/$KATALON_PRJ" -retry=0 -testSuitePath="$KATALON_SUITE_PATH" -executionProfile="default" -browserType="$KATALON_BROWSER" -reportFolder="results" -reportFileName="$reportFile" -apiKey="$api_key" -orgID="$org_id"
-								katalonc -noSplash -runMode=console --config -projectPath="$WORKSPACE/$KATALON_PRJ" -testSuitePath="$KATALON_SUITE_PATH" -retry=0 -statusDelay=15 -browserType="TestCloud" -testcloudTunnel="false" -testcloudEnvironmentId="49" -executionProfile="default" -apiKey="$API_KEY" -orgID="$ORG_ID"
+								katalonc -noSplash -runMode=console --config -projectPath="$WORKSPACE/$KATALON_PRJ" -testSuitePath="$KATALON_SUITE_PATH" -retry=0 -statusDelay=15 -browserType="TestCloud" -testcloudTunnel="false" -testcloudEnvironmentId="49" -executionProfile="default" -apiKey="$PARAM_API_KEY" -orgID="$PARAM_ORG_ID"
 
 								'''
 
