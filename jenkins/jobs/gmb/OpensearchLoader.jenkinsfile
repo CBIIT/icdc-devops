@@ -76,7 +76,7 @@ pipeline {
 				branches: [[name: "${params.Frontend_Branch}"]],
 				doGenerateSubmoduleConfigurations: false,
 				extensions: [[$class: 'RelativeTargetDirectory',
-				relativeTargetDir: 'gmb-frontend']],
+				relativeTargetDir: 'bento-gmb-frontend']],
 				submoduleCfg: [],
 				userRemoteConfigs: 
 				[[url: 'https://github.com/CBIIT/bento-gmb-frontend']]])
@@ -85,7 +85,7 @@ pipeline {
 				branches: [[name: "${params.Backend_Branch}"]],
 				doGenerateSubmoduleConfigurations: false,
 				extensions: [[$class: 'RelativeTargetDirectory',
-				relativeTargetDir: 'bento-backend']],
+				relativeTargetDir: 'gmb-backend']],
 				submoduleCfg: [],
 				userRemoteConfigs: 
 				[[url: 'https://github.com/CBIIT/gmb-backend']]])
