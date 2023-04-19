@@ -9,7 +9,7 @@ pipeline {
     parameters {
 
     gitParameter(branchFilter: 'origin/(.*)', 
-        defaultValue: 'master', 
+        defaultValue: 'main', 
         name: 'Branch', 
         type: 'PT_BRANCH_TAG',
         quickFilterEnabled: false, 
