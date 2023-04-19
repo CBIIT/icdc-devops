@@ -22,6 +22,6 @@
         model_file1: "{{workspace}}/gmb-model/model-desc/000048_Model.yml"
         model_file2: "{{workspace}}/gmb-model/model-desc/000048_Model_Props.yml"
         property_file: "config/props-gmb-mock.yml"
-        about_file: "{{ workspace }}/gmb-frontend/src/content/{{ tier }}/aboutPagesContent.yaml"
-        indices_file: "{{ workspace }}/gmb-backend/src/main/resources/yaml/es_indices_gmb.yml"
+        about_file: "{{ workspace }}/bento-gmb-frontend/src/content/{{ tier }}/aboutPagesContent.yaml"
+        indices_file: "{{ workspace }}/gmb-backend/src/main/resources/yaml/es_indices_bento.yml"
         # ansible_python_interpreter: /bin/python3
