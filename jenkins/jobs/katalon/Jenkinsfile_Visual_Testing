@@ -1,7 +1,6 @@
 pipeline {
 	agent {
         node { 
-			//label "docker-katalon-vt"
 			label "docker-katalon-ch"
             }
         }
@@ -87,7 +86,6 @@ pipeline {
 		stage('run tests'){
             environment {
 				KATALON_BROWSER     =   "Chrome"
-//				KATALON_BROWSER     =   "Firefox"
 //				KATALON_PROFILE     =   "${params.Profile}"
                 KATALON_PRJ         =   "${params.KatalonPrj}"
                 KATALON_SUITE_PATH  =   "${params.KatalonSuite}"
