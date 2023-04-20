@@ -141,21 +141,21 @@ pipeline {
 //					reportName: 'HTML Report',
 //					reportTitles: ''])
 
-				script {
-
-					sh label: 'Zip-Katalon-Results', script: '''#!/bin/bash
-
-					mv /etc/apt/sources.list.d/google-chrome.list /etc/apt/sources.list.d/google-chrome.list.bak && apt-get update && apt-get install -y zip
-					
-					resultsFile=$(basename results/*.html)
-					zipFile=$(basename -s .html results/*.html)
-					
-					zip -r results/$zipFile.zip OutputFiles
-					zip -u results/$zipFile.zip results/$resultsFile
-
-					'''
-
-				}
+//				script {
+//
+//					sh label: 'Zip-Katalon-Results', script: '''#!/bin/bash
+//
+//					mv /etc/apt/sources.list.d/google-chrome.list /etc/apt/sources.list.d/google-chrome.list.bak && apt-get update && apt-get install -y zip
+//
+//					resultsFile=$(basename results/*.html)
+//					zipFile=$(basename -s .html results/*.html)
+//
+//					zip -r results/$zipFile.zip OutputFiles
+//					zip -u results/$zipFile.zip results/$resultsFile
+//
+//					'''
+//
+//				}
 				
 //				emailext(attachmentsPattern: 'results/*.zip',
 //					body: "Katalon Test Results - ${PROJECT}.${TIER}.${BUILD_NUMBER}",
@@ -218,11 +218,11 @@ pipeline {
 
 					}
 
-				emailext(attachmentsPattern: 'results/*.zip',
-					mimeType: 'text/html',
-					body: "${EMAIL_BODY}",
-					subject: 'Katalon Tests: results attached',
-					to: "${EmailRecipients}")
+//				emailext(attachmentsPattern: 'results/*.zip',
+//					mimeType: 'text/html',
+//					body: "${EMAIL_BODY}",
+//					subject: 'Katalon Tests: results attached',
+//					to: "${EmailRecipients}")
 					
 				
 				}
