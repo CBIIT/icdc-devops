@@ -16,15 +16,14 @@
         - community.docker
         - amazon.aws
         - community.aws:<=3.2.0
-        - git+https://github.com/CBIIT/datacommons-devops.git#/ansible/collections/bento/common/,main
-
+    
     - name: shutdown ecs service
       community.aws.application_autoscaling_policy:
         state: present
-        policy_name: "{{project_name}}-{{ecs_service_name}}-shutdown-policy"
+        policy_name: '{{project_name}}-{{ecs_service_name}}-shutdown-policy'
         service_namespace: ecs
-        resource_id: "service/{{ecs_cluster_name}}/{{ecs_service_name}}"
-        scalable_dimension: ecs:service:DesiredCount
+        resource_id: 'service/{{ecs_cluster_name}}/{{ecs_service_name}}'
+        scalable_dimension: 'ecs:service:DesiredCount'
         policy_type: TargetTrackingScaling
         minimum_tasks: 0
         maximum_tasks: 0
