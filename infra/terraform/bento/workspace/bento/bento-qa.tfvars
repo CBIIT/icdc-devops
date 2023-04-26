@@ -115,3 +115,6 @@ user_neo4j_db_private_ip = "172.18.11.234"
 #dns
 create_dns_record = true
 create_instance_profile = false
+db_iam_profile_name = "bento-qa-database-instance-profile"
+db_security_group_name = "bento-qa-database-sg"
+db_boostrap_ssm_document = "bento-qa-setup-database"
