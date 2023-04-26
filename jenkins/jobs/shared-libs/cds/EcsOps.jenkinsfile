@@ -1,5 +1,5 @@
 @Library('datacommons-jenkins-shared-library') _
-runETL(
+runEcsOps(
     // label: "slave-ncias-d2943-c",
     label: "slave-ncias-s2979-c",
     playbook: "ansible/ecs_service_shutdown.yml",
