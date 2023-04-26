@@ -1,4 +1,4 @@
-#!/bin/sh
+c#!/bin/sh
 
 WWW_DIR=/usr/share/nginx/html
 INJECT_FILE_SRC="${WWW_DIR}/inject.template.js"
