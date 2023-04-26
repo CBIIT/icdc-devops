@@ -142,6 +142,7 @@ module "aurora" {
 
 #cloudfront
 module "cloudfront" {
+  for_each =
   count = var.create_cloudfront ? 1 : 0
   source = "git::https://github.com/CBIIT/datacommons-devops.git//terraform/modules/cloudfront"
   alarms = var.alarms

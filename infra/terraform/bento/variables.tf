@@ -445,3 +445,11 @@ variable "db_boostrap_ssm_document" {
   default = null
   description = "ssm document for db boostrap"
 }
+
+variable "cloudfront_distributions" {
+  type = map(object({
+    bucket_name = string
+    create_files_bucket = bool
+  }))
+  
+}
