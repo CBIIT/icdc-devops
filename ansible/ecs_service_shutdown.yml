@@ -20,6 +20,7 @@
     - name: shutdown ecs service
       aws_application_scaling_policy:
         state: present
+        region: us-east-1
         policy_name: '{{project_name}}-{{ecs_service_name}}-shutdown-policy'
         service_namespace: ecs
         resource_id: 'service/{{ecs_cluster_name}}/{{ecs_service_name}}'
