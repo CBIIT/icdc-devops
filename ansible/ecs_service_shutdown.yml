@@ -18,7 +18,7 @@
         - community.aws:<=3.2.0
     
     - name: shutdown ecs service
-      community.aws.application_autoscaling_policy:
+      aws_application_scaling_policy:
         state: present
         policy_name: '{{project_name}}-{{ecs_service_name}}-shutdown-policy'
         service_namespace: ecs
