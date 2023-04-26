@@ -6,7 +6,7 @@
 
   vars:
     - ecs_cluster_name: "{{ project_name }}-{{ tier }}-ecs"
-    - ecs_service_name: "service_name"
+    - ecs_service_name: "{{service_name}}"
 
   tasks:
     #install collections
@@ -18,9 +18,6 @@
         - community.aws:<=3.2.0
         - git+https://github.com/CBIIT/datacommons-devops.git#/ansible/collections/bento/common/,main
 
-
-
-    #deploy backend
     - name: shutdown ecs service
       community.aws.application_autoscaling_policy:
         state: present
