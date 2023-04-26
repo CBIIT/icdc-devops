@@ -6,7 +6,7 @@ runETL(
     inventory: "ansible/hosts",
     tier: "${params.Environment}",
     projectName: "${params.ProjectName}",
-    service_name: "${params.EcsServiceName}"
+    service_name: "${params.EcsServiceName}",
     useDockerAgent: true,
     agentImage: "ncidockerhub.nci.nih.gov/icdc/jenkins-agent-ansible",
     dockerRegistryUrl: "https://ncidockerhub.nci.nih.gov",
