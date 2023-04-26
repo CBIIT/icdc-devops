@@ -1,0 +1,14 @@
+@Library('datacommons-jenkins-shared-library') _
+runETL(
+    // label: "slave-ncias-d2943-c",
+    label: "slave-ncias-s2979-c",
+    playbook: "ansible/ecs_service_shutdown.yml",
+    inventory: "ansible/hosts",
+    tier: "${params.Environment}",
+    projectName: "${params.ProjectName}",
+    service_name: "${params.EcsServiceName}"
+    useDockerAgent: true,
+    agentImage: "ncidockerhub.nci.nih.gov/icdc/jenkins-agent-ansible",
+    dockerRegistryUrl: "https://ncidockerhub.nci.nih.gov",
+    registryCredentialsId: "ncidockerhub"
+)
