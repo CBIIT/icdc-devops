@@ -58,21 +58,111 @@ pipeline {
                 }
 			steps {
                 script {
-                    switch("${params.Profile}") {
-					case "Katalon_Dev_ICDC":
-					    withCredentials([file(credentialsId: 'Katalon_Dev_ICDC', variable: 'pass_file')]) {
-                            PROFILE="${pass_file}"
+				    switch("${params.Profile}") {
+                    case ~/[\w\/]+ICDC$/:
+						PROJECT="ICDC"
+						withCredentials([string(credentialsId: 'Sharepoint_Email', variable: 'results_email'),
+						  string(credentialsId: 'Sharepoint_Url_ICDC', variable: 'sharepoint_url')]) {
+                            RESULTS_URL="${sharepoint_url}"
+							RESULTS_EMAIL="${results_email}"
+                            }
+                        break
+
+					case ~/[\w\/]+MTP$/:
+						PROJECT="MTP"
+						withCredentials([string(credentialsId: 'Sharepoint_Email', variable: 'results_email'),
+						  string(credentialsId: 'Sharepoint_Url_MTP', variable: 'sharepoint_url')]) {
+                            RESULTS_URL="${sharepoint_url}"
+							RESULTS_EMAIL="${results_email}"
+                            }
+                        break
+
+					case ~/[\w\/]+INS$/:
+						PROJECT="INS"
+						withCredentials([string(credentialsId: 'Sharepoint_Email', variable: 'results_email'),
+						  string(credentialsId: 'Sharepoint_Url_INS', variable: 'sharepoint_url')]) {
+                            RESULTS_URL="${sharepoint_url}"
+							RESULTS_EMAIL="${results_email}"
+                            }
+                        break
+
+					case ~/[\w\/]+CCDC$/:
+						PROJECT="CCDC"
+						withCredentials([string(credentialsId: 'Sharepoint_Email', variable: 'results_email'),
+						  string(credentialsId: 'Sharepoint_Url_CCDC', variable: 'sharepoint_url')]) {
+                            RESULTS_URL="${sharepoint_url}"
+							RESULTS_EMAIL="${results_email}"
+                            }
+                        break
+					}
+
+					switch("${params.Profile}") {
+                    case "DEV_ICDC":
+						TIER="DEV"
+						withCredentials([file(credentialsId: 'Katalon_Dev_ICDC', variable: 'pass_file')]) {
+							PROFILE="${pass_file}"
+							sh "cp ${pass_file} ${WORKSPACE}/Profiles/"
+                            }
+                        break
+                    case "QA_ICDC":
+						TIER="QA"
+						withCredentials([file(credentialsId: 'Katalon_QA_ICDC', variable: 'pass_file')]) {
+							PROFILE="${pass_file}"
+							sh "cp ${pass_file} ${WORKSPACE}/Profiles/"
+                            }
+                        break
+                    case "STAGE_ICDC":
+						TIER="STAGE"
+						withCredentials([file(credentialsId: 'Katalon_STAGE_ICDC', variable: 'pass_file')]) {
+							PROFILE="${pass_file}"
+							sh "cp ${pass_file} ${WORKSPACE}/Profiles/"
+                            }
+                        break
+                    case "PROD_ICDC":
+						TIER="PROD"
+						withCredentials([file(credentialsId: 'Katalon_PROD_ICDC', variable: 'pass_file')]) {
+							PROFILE="${pass_file}"
 							sh "cp ${pass_file} ${WORKSPACE}/Profiles/"
                             }
                         break
 
-					case "Katalon_Dev_CTDC":
-                        withCredentials([file(credentialsId: 'Katalon_Dev_CTDC', variable: 'pass_file')]) {
-                            PROFILE="${pass_file}"
+                    case "QA_MTP":
+						TIER="QA"
+						withCredentials([file(credentialsId: 'Katalon_QA_MTP', variable: 'pass_file')]) {
+							PROFILE="${pass_file}"
 							sh "cp ${pass_file} ${WORKSPACE}/Profiles/"
                             }
                         break
-						
+
+                    case "QA_INS":
+						TIER="QA"
+						withCredentials([file(credentialsId: 'Katalon_QA_INS', variable: 'pass_file')]) {
+							PROFILE="${pass_file}"
+							sh "cp ${pass_file} ${WORKSPACE}/Profiles/"
+                            }
+                        break
+
+                    case "QA_CCDC":
+						TIER="QA"
+						withCredentials([file(credentialsId: 'Katalon_QA_CCDC', variable: 'pass_file')]) {
+							PROFILE="${pass_file}"
+							sh "cp ${pass_file} ${WORKSPACE}/Profiles/"
+                            }
+                        break
+
+					case "QA_CTDC":
+						WIKI_PAGE="289178298"
+						PROJECT="CTDC"
+						TIER="QA"
+						withCredentials([string(credentialsId: 'Box_Email_QA_CTDC', variable: 'box_email'),
+						  string(credentialsId: 'Box_Url_QA_CTDC', variable: 'box_url'),
+						  file(credentialsId: 'Katalon_QA_CTDC', variable: 'pass_file')]) {
+                            RESULTS_URL="${box_url}"
+							RESULTS_EMAIL="${box_email}"
+							PROFILE="${pass_file}"
+							sh "cp ${pass_file} ${WORKSPACE}/Profiles/"
+                            }
+                        break
                        }
                     }
 				}
