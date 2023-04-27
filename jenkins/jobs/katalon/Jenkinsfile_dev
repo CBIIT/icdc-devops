@@ -30,7 +30,7 @@ pipeline {
         defaultValue: 'Katalon_Dev_ICDC', 
         description: 'Choose the profile to use', 
         type: 'PT_SINGLE_SELECT',
-        value: 'Katalon_Dev_ICDC,Katalon_Dev_CTDC' )
+        value: 'DEV_ICDC,QA_ICDC,STAGE_ICDC,PROD_ICDC,QA_CTDC,QA_MTP,QA_INS,QA_CCDC' )
 
 	string(defaultValue: "gayathri.radhakrishnan@nih.gov,sohil.sohil@nih.gov", 
         description: 'Enter a list of email addresses to notify in case of test failures:', 
