@@ -166,6 +166,7 @@ pipeline {
                     }
 				}
 			}
+
 		stage('run tests'){
             environment {
 				KATALON_BROWSER     =   "Chrome"
