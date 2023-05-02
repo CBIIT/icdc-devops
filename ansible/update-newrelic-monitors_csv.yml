@@ -8,7 +8,7 @@
     - name: install aws collection
       command: ansible-galaxy collection install {{item}}
       loop:
-        - git+https://github.com/CBIIT/datacommons-devops.git#/ansible/collections/bento/common/,newrelic_scripts_csv
+        - git+https://github.com/CBIIT/datacommons-devops.git#/ansible/collections/bento/common/,v1.4
 
     #update monitoring
     - name: update monitoring configurations
