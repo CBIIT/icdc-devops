@@ -19,7 +19,7 @@
           environment:
             NR_ACCT_ID: "{{ lookup('amazon.aws.aws_secret', 'monitoring/newrelic.account_id', nested=true, region='us-east-1') }}"
             EMAIL: "{{ lookup('amazon.aws.aws_secret', 'monitoring/newrelic.alert_email', nested=true, region='us-east-1') }}"
-            SLACK_CHANNEL: "{{ lookup('amazon.aws.aws_secret', 'monitoring/newrelic.nonprod_slack_channel', nested=true, region='us-east-1') }}"
+            #SLACK_CHANNEL: "{{ lookup('amazon.aws.aws_secret', 'monitoring/newrelic.nonprod_slack_channel', nested=true, region='us-east-1') }}"
             KEY: "{{ lookup('amazon.aws.aws_secret', 'monitoring/newrelic.user_key', nested=true, region='us-east-1') }}"
             LOCATION: "{{ lookup('amazon.aws.aws_secret', 'monitoring/newrelic.private_location_id', nested=true, region='us-east-1') }}"
             LOCATION_KEY: "{{ lookup('amazon.aws.aws_secret', 'monitoring/newrelic.private_location_key', nested=true, region='us-east-1') }}"
