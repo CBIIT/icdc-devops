@@ -1,0 +1,80 @@
+@Library('datacommons-jenkins-shared-library@v1.1') _
+
+pipeline {
+	agent {
+		node {
+			label 'cicd_microservice'
+		}
+	}
+
+	parameters {
+
+        string(
+	        defaultValue: 'https://raw.githubusercontent.com/CBIIT/datacommons-devops/main/monitoring/FNL-Monitoring-List.csv',
+		    description: 'The file to read monitoring configurations from',
+		    name: 'Input_File')
+
+  }
+
+  options {
+  	ansiColor('xterm')
+	timestamps()
+  }
+
+  stages{
+  	stage('checkout'){
+  		steps {
+
+  		checkout([$class: 'GitSCM',
+			branches: [[name: '*/main']],
+			doGenerateSubmoduleConfigurations: false,
+			extensions: [[$class: 'RelativeTargetDirectory',
+			relativeTargetDir: "playbooks"]],
+			submoduleCfg: [],
+			userRemoteConfigs:
+			[[url: 'https://github.com/CBIIT/icdc-devops']]])
+
+        }
+
+  	}
+
+  	stage('Update Newrelic Monitors'){
+
+ 		steps {
+
+			wrap([$class: 'AnsiColorBuildWrapper', colorMapName: "xterm"]) {
+                ansiblePlaybook(
+					playbook: "${WORKSPACE}/ansible/update-newrelic-monitors_csv.yml", 
+            		inventory: "${WORKSPACE}/ansible/hosts",
+                    extraVars: [
+                        input_file: "${params.Input_File}",
+						],
+                    colorized: true)
+ 			}
+
+ 		}
+
+  	}
+
+  }
+
+  post {
+
+    always {
+
+        notify(
+            secretPath: "notification/slack",
+            secretName: "ctdc_slack_url"
+        ) 
+
+    }
+
+    cleanup {
+
+        cleanWs()
+
+    }
+
+  }
+
+}

@@ -1,0 +1,28 @@
+- name: update monitoring configurations
+  hosts: all
+  connection: local
+  gather_facts: true
+
+  tasks:
+    #install collections
+    - name: install aws collection
+      command: ansible-galaxy collection install {{item}}
+      loop:
+        - git+https://github.com/CBIIT/datacommons-devops.git#/ansible/collections/bento/common/,newrelic_scripts_csv
+
+    #update monitoring
+    - name: update monitoring configurations
+      include_role:
+        name: bento.common.monitor_scripts
+        tasks_from: csv
+        apply:
+          environment:
+            NR_ACCT_ID: "{{ lookup('amazon.aws.aws_secret', 'monitoring/newrelic.account_id', nested=true, region='us-east-1') }}"
+            EMAIL: "{{ lookup('amazon.aws.aws_secret', 'monitoring/newrelic.alert_email', nested=true, region='us-east-1') }}"
+            SLACK_CHANNEL: "{{ lookup('amazon.aws.aws_secret', 'monitoring/newrelic.nonprod_slack_channel', nested=true, region='us-east-1') }}"
+            KEY: "{{ lookup('amazon.aws.aws_secret', 'monitoring/newrelic.user_key', nested=true, region='us-east-1') }}"
+            LOCATION: "{{ lookup('amazon.aws.aws_secret', 'monitoring/newrelic.private_location_id', nested=true, region='us-east-1') }}"
+            LOCATION_KEY: "{{ lookup('amazon.aws.aws_secret', 'monitoring/newrelic.private_location_key', nested=true, region='us-east-1') }}"
+      vars:
+        ansible_python_interpreter: "/usr/bin/python3"
+        input_file: "{{ input_file }}"
