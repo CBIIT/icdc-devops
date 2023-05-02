@@ -78,7 +78,7 @@ pipeline {
 
 		stage('run tests'){
             environment {
-				KATALON_BROWSER     =   "${params.Browser}"
+				KATALON_BROWSER     =   "Chrome"
 				KATALON_PROFILE     =   "${params.Profile}"
                 KATALON_PRJ         =   "${params.KatalonPrj}"
                 KATALON_SUITE_PATH  =   "${params.KatalonSuite}"
