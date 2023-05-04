@@ -8,6 +8,14 @@
       "tag:Environment": "{{ tier }}"
   register: neo4j
 
+- name: debug - db name
+  debug:
+    msg: "{{ database_name }}"
+
+- name: debug - db instance
+  debug:
+    msg: "{{ neo4j }}"
+
 - name: set instance name
   set_fact:
     neo4j_ip: "{{ neo4j.instances[0].network_interfaces[0].private_ip_address }}"
