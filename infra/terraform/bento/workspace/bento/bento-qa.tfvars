@@ -111,7 +111,7 @@ db_iam_instance_profile_name = "bento-dev-ecs-instance-profile"
 ssh_key_name = "devops"
 public_ssh_key_ssm_parameter_name = "ssh_public_key"
 database_instance_type = "t3.large"
-user_neo4j_db_private_ip = "172.18.11.234"
+user_neo4j_db_private_ip = "172.18.11.236"
 #dns
 create_dns_record = true
 create_instance_profile = false
