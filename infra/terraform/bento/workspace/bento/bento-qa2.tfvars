@@ -13,7 +13,7 @@ tags = {
   Project = "bento"
   CreatedWith = "Terraform"
   POC = "ye.wu@nih.gov"
-  Environment = "local"
+  Environment = "qa2"
 }
 region = "us-east-1"
 

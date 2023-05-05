@@ -445,3 +445,13 @@ variable "db_boostrap_ssm_document" {
   default = null
   description = "ssm document for db boostrap"
 }
+variable "neo4j_database_name" {
+  type = string 
+  description = "neo4j database name"
+  default = "neo4j-4"
+}
+variable "neo4j_db_ami" {
+  type = string
+  description = "neo4j db ami"
+  default = "ami-0464d49b8794eba32"
+}
