@@ -112,7 +112,7 @@ ssh_key_name = "devops"
 public_ssh_key_ssm_parameter_name = "ssh_public_key"
 database_instance_type = "t3.large"
 user_neo4j_db_private_ip = "172.18.11.237"
-db_iam_profile_name = "bento-qa2-database-instance-profile"
+db_iam_profile_name = "bento-qa-database-instance-profile"
 db_security_group_name = "bento-qa2-database-sg"
 db_boostrap_ssm_document = "bento-qa2-setup-database"
 #dns
