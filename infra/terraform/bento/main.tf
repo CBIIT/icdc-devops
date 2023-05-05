@@ -42,7 +42,7 @@ module "ecs" {
 #create ecr
 module "ecr" {
    count = var.create_ecr_repos ? 1: 0
-   source = "git::https://github.com/CBIIT/datacommons-devops.git//terraform/modules/ecr"
+   source = "git::https://github.com/CBIIT/datacommons-devops.git//terraform/modules/ecr?ref=neo4j"
    stack_name = var.stack_name
    ecr_repo_names = var.ecr_repo_names
    tags = var.tags
