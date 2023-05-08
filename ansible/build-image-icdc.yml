@@ -11,4 +11,4 @@
     - name: build ICDC image
       include_role:
         name: build-image-bento
-        tasks_from: icdc
+        tasks_from: bento-icdc

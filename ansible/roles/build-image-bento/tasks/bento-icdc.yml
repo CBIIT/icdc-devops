@@ -1,0 +1,55 @@
+---
+# tasks file for build-image-bento
+- name: list all dockerfiles in backend directory
+  find: 
+    paths: ../bento/backend,../bento/backend-jdk17
+    patterns: 'Dockerfile'
+    file_type: file
+  register: backend_dockerfile
+
+- name: set name of backend dockerfiles
+  set_fact:
+    backendfiles: "{{ backend_dockerfile.files | json_query('[*].path')}}"
+
+- name: merge file lists
+  set_fact:
+    dockerfiles: "{{ backendfiles }}"
+
+#- name: log into DockerHub
+#  docker_login:
+#    username: "{{docker_user}}"
+#    password: "{{docker_password}}"
+
+#- name: Get the current caller identity information
+##  aws_caller_info:
+  register: caller_info
+
+#- name: set ECR registry name
+#  set_fact:
+#    ecr_repo: "{{ caller_info.account }}.dkr.ecr.{{ region }}.amazonaws.com"
+
+- name: log into ncidockerhub
+  community.docker.docker_login:
+    username: "{{ lookup('amazon.aws.aws_secret', 'cbiit/docker.username', nested=true, region='us-east-1') }}"
+    password: "{{ lookup('amazon.aws.aws_secret', 'cbiit/docker.password', nested=true, region='us-east-1') }}"
+    registry: https://ncidockerhub.nci.nih.gov
+
+- name: login into ecr
+  shell: "docker login -u AWS -p $(aws ecr get-login-password --region {{ region }}) {{ecr_repo}}"
+  ignore_errors: True
+  register: ecr_login
+
+- name: build all the docker images
+  docker_image:
+    build:
+      path: "{{ item | dirname }}"
+      dockerfile: "Dockerfile"
+      pull: yes
+      nocache: yes
+    #name: "{{ ecr_repo }}/base-images"
+    name: "ncidockerhub.nci.nih.gov/icdc/bento-icdc-backend"
+    tag: "{{ item | dirname | basename }}"
+    push: yes
+    force_source: yes
+    source: build
+  loop: "{{ dockerfiles }}"
