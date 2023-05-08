@@ -21,8 +21,8 @@
 #    password: "{{docker_password}}"
 
 #- name: Get the current caller identity information
-##  aws_caller_info:
-  register: caller_info
+#  aws_caller_info:
+#  register: caller_info
 
 #- name: set ECR registry name
 #  set_fact:
@@ -33,11 +33,6 @@
     username: "{{ lookup('amazon.aws.aws_secret', 'cbiit/docker.username', nested=true, region='us-east-1') }}"
     password: "{{ lookup('amazon.aws.aws_secret', 'cbiit/docker.password', nested=true, region='us-east-1') }}"
     registry: https://ncidockerhub.nci.nih.gov
-
-- name: login into ecr
-  shell: "docker login -u AWS -p $(aws ecr get-login-password --region {{ region }}) {{ecr_repo}}"
-  ignore_errors: True
-  register: ecr_login
 
 - name: build all the docker images
   docker_image:
