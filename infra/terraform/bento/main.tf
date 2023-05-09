@@ -86,10 +86,8 @@ module "dns" {
 }
 
 module "neo4j" {
-  ami = var.neo4j_db_ami
-  use_custom_ami = true
   count = var.create_db_instance ? 1: 0
-  source = "git::https://github.com/CBIIT/datacommons-devops.git//terraform/modules/neo4j?ref=neo4j"
+  source = "git::https://github.com/CBIIT/datacommons-devops.git//terraform/modules/neo4j"
   env = terraform.workspace
   vpc_id = var.vpc_id
   db_subnet_id = var.db_subnet_id
