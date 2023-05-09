@@ -127,7 +127,7 @@ pipeline {
 								# backup and replace chromedriver
 								mv opt/katalonstudio/configuration/resources/drivers/chromedriver_linux64/chromedriver opt/katalonstudio/configuration/resources/drivers/chromedriver_linux64/chromedriver.bak
 								unzip chromedriver_linux64.zip
-								mv chromedriver opt/katalonstudio/configuration/resources/drivers/chromedriver_linux64/chromedriver
+								mv chromedriver opt/katalonstudio/configuration/resources/drivers/chromedriver_linux64/
 								
 								#############################################################################################
 								
