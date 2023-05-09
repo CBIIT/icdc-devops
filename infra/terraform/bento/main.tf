@@ -144,7 +144,7 @@ module "aurora" {
 #cloudfront
 module "cloudfront" {
   count = var.create_cloudfront ? 1 : 0
-  source = "git::https://github.com/CBIIT/datacommons-devops.git//terraform/modules/cloudfront"
+  source = "git::https://github.com/CBIIT/datacommons-devops.git//terraform/modules/cloudfront?ref=cds-stage"
   alarms = var.alarms
   domain_name = var.domain_name
   cloudfront_distribution_bucket_name = var.cloudfront_distribution_bucket_name
