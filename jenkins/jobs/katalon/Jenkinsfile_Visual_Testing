@@ -25,6 +25,10 @@ pipeline {
         description: 'Enter the Katalon Suite Path (not including the test suite file):', 
         name: 'KatalonSuite')
 
+    string(defaultValue: "", 
+        description: 'Enter the Katalon TestOPS Collection ID to compare images against:', 
+        name: 'TestOpsID')
+
 //	extendedChoice( 
 //        name: 'Profile', 
 //        defaultValue: 'default', 
@@ -85,11 +89,12 @@ pipeline {
 
 		stage('run tests'){
             environment {
-				KATALON_BROWSER     =   "Chrome"
-//				KATALON_PROFILE     =   "${params.Profile}"
-                KATALON_PRJ         =   "${params.KatalonPrj}"
-                KATALON_SUITE_PATH  =   "${params.KatalonSuite}"
-//				PROFILE_FILE        =   "${PROFILE}"
+				KATALON_BROWSER       =   "Chrome"
+//				KATALON_PROFILE       =   "${params.Profile}"
+                KATALON_PRJ           =   "${params.KatalonPrj}"
+                KATALON_SUITE_PATH    =   "${params.KatalonSuite}"
+				TESTOPS_COLLECTION_ID =   "${params.TestOpsID}"
+//				PROFILE_FILE          =   "${PROFILE}"
                 }
             steps {
 
@@ -118,7 +123,7 @@ pipeline {
 								
 								# Run Katalon Tests
 								#katalonc -noSplash -runMode=console --config -projectPath="$WORKSPACE/$KATALON_PRJ" -retry=0 -testSuitePath="$KATALON_SUITE_PATH" -executionProfile="default" -browserType="$KATALON_BROWSER" -reportFolder="results" -reportFileName="$reportFile" -apiKey="$api_key" -orgID="$org_id"
-								xvfb-run katalonc -noSplash -runMode=console --config -projectPath="$WORKSPACE/$KATALON_PRJ" -testSuitePath="$KATALON_SUITE_PATH" -executionProfile="default" -retry=0 -statusDelay=15 -browserType="$KATALON_BROWSER" -apiKey="$api_key" -orgID="$org_id"
+								xvfb-run katalonc -noSplash -runMode=console --config -projectPath="$WORKSPACE/$KATALON_PRJ" -testSuitePath="$KATALON_SUITE_PATH" -executionProfile="default" -retry=0 -statusDelay=15 -testOps.baselineCollectionId="$TESTOPS_COLLECTION_ID" -browserType="$KATALON_BROWSER" -apiKey="$api_key" -orgID="$org_id"
 
 								'''
 
