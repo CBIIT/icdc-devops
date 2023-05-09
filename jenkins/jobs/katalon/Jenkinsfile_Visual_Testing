@@ -123,7 +123,7 @@ pipeline {
 								
 								# Run Katalon Tests
 								#katalonc -noSplash -runMode=console --config -projectPath="$WORKSPACE/$KATALON_PRJ" -retry=0 -testSuitePath="$KATALON_SUITE_PATH" -executionProfile="default" -browserType="$KATALON_BROWSER" -reportFolder="results" -reportFileName="$reportFile" -apiKey="$api_key" -orgID="$org_id"
-								xvfb-run katalonc -noSplash -runMode=console --config -projectPath="$WORKSPACE/$KATALON_PRJ" -testSuitePath="$KATALON_SUITE_PATH" -executionProfile="default" -retry=0 -statusDelay=15 -testOps.baselineCollectionId="$TESTOPS_COLLECTION_ID" -browserType="$KATALON_BROWSER" -apiKey="$api_key" -orgID="$org_id"
+								xvfb-run katalonc -noSplash -runMode=console -testOps.baselineCollectionId="$TESTOPS_COLLECTION_ID"  --config -projectPath="$WORKSPACE/$KATALON_PRJ" -testSuitePath="$KATALON_SUITE_PATH" -executionProfile="default" -retry=0 -statusDelay=15 -browserType="$KATALON_BROWSER" -apiKey="$api_key" -orgID="$org_id"
 
 								'''
 
