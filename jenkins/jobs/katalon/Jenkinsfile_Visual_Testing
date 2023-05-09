@@ -119,11 +119,23 @@ pipeline {
 								#profile_file=$(basename $PROFILE_FILE)
 								#profile_name="${profile_file%.*}"
 								
+								#################### UPDATE CHROME DRIVER (v108 - for Katalonstudio 5.5) ####################
+								
+								# get chromedriver v108.x
+								wget https://chromedriver.storage.googleapis.com/108.0.5359.71/chromedriver_linux64.zip
+								
+								# backup and replace chromedriver
+								mv opt/katalonstudio/configuration/resources/drivers/chromedriver_linux64/chromedriver opt/katalonstudio/configuration/resources/drivers/chromedriver_linux64/chromedriver.bak
+								unzip chromedriver_linux64.zip
+								mv chromedriver opt/katalonstudio/configuration/resources/drivers/chromedriver_linux64/chromedriver
+								
+								#############################################################################################
+								
 								#echo "projectPath=$WORKSPACE/$KATALON_PRJ testSuitePath=$KATALON_SUITE_PATH executionProfile=$profile_name filename=$profile_file"
 								
 								# Run Katalon Tests
 								#katalonc -noSplash -runMode=console --config -projectPath="$WORKSPACE/$KATALON_PRJ" -retry=0 -testSuitePath="$KATALON_SUITE_PATH" -executionProfile="default" -browserType="$KATALON_BROWSER" -reportFolder="results" -reportFileName="$reportFile" -apiKey="$api_key" -orgID="$org_id"
-								xvfb-run katalonc -noSplash -runMode=console -testOps.baselineCollectionId="$TESTOPS_COLLECTION_ID"  --config -webui.autoUpdateDrivers=true -projectPath="$WORKSPACE/$KATALON_PRJ" -testSuitePath="$KATALON_SUITE_PATH" -executionProfile="default" -retry=0 -statusDelay=15 -browserType="$KATALON_BROWSER" -apiKey="$api_key" -orgID="$org_id"
+								xvfb-run katalonc -noSplash -runMode=console -testOps.baselineCollectionId="$TESTOPS_COLLECTION_ID"  --config -projectPath="$WORKSPACE/$KATALON_PRJ" -testSuitePath="$KATALON_SUITE_PATH" -executionProfile="default" -retry=0 -statusDelay=15 -browserType="$KATALON_BROWSER" -apiKey="$api_key" -orgID="$org_id"
 
 								'''
 
