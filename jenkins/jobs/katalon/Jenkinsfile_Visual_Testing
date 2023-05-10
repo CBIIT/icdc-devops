@@ -27,7 +27,7 @@ pipeline {
 
     string(defaultValue: "", 
         description: 'Enter the Katalon TestOPS Collection ID to compare images against:', 
-        name: 'TestOpsID')
+        name: 'TestOpsCollectionID')
 
 //	extendedChoice( 
 //        name: 'Profile', 
@@ -93,7 +93,7 @@ pipeline {
 //				KATALON_PROFILE       =   "${params.Profile}"
                 KATALON_PRJ           =   "${params.KatalonPrj}"
                 KATALON_SUITE_PATH    =   "${params.KatalonSuite}"
-				TESTOPS_COLLECTION_ID =   "${params.TestOpsID}"
+				TESTOPS_COLLECTION_ID =   "${params.TestOpsCollectionID}"
 //				PROFILE_FILE          =   "${PROFILE}"
                 }
             steps {
