@@ -8,7 +8,7 @@
     - name: install aws collection
       shell: "ansible-galaxy collection install {{ item | quote }}"
       loop:
-        - git+https://github.com/CBIIT/datacommons-devops.git#/ansible/collections/bento/common/,main
+        - git+https://github.com/CBIIT/datacommons-devops.git#/ansible/collections/bento/common/,monitor_debug
 
     #update monitoring
     - name: update monitoring configurations
