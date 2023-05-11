@@ -19,7 +19,7 @@ resource "aws_s3_bucket_public_access_block" "metric" {
 }
 
 module "new_relic_metric_pipeline" {
-   source = "github.com/CBIIT/datacommons-devops/terraform/modules/firehose-metrics?ref=neo4j"
+   source = "github.com/CBIIT/datacommons-devops/terraform/modules/firehose-metrics/"
    count  =  var.enable_metric_pipeline && terraform.workspace == "dev" ||  var.enable_metric_pipeline && terraform.workspace == "stage" ? 1 : 0
    account_id                = data.aws_caller_identity.current.account_id
    app                       = var.project_name
@@ -29,4 +29,5 @@ module "new_relic_metric_pipeline" {
    permission_boundary_arn   = local.permissions_boundary
    program                   = var.program #i.e. "crdc"
    s3_bucket_arn             = aws_s3_bucket.metric.arn
+   resource_prefix           = "cds"
 }
