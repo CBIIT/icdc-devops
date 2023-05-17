@@ -1,7 +1,8 @@
 pipeline {
 	agent {
         node { 
-			label "docker-katalon-ch"
+			//label "docker-katalon-ch"
+			label 'slave-ncias-d2947-c'
             }
         }
 
@@ -88,7 +89,16 @@ pipeline {
 //			}
 
 		stage('run tests'){
-            environment {
+            
+			agent {
+                docker {
+                    image 'katalonstudio/katalon:8.5.5'
+                    //args '--net=host -u root -v /var/run/docker.sock:/var/run/docker.sock'
+                    reuseNode true
+                }
+            }
+			
+			environment {
 				KATALON_BROWSER       =   "Chrome"
 //				KATALON_PROFILE       =   "${params.Profile}"
                 KATALON_PRJ           =   "${params.KatalonPrj}"
