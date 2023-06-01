@@ -260,7 +260,7 @@ pipeline {
 					
 					zip -r results/$zipFile.zip OutputFiles
 					#zip -u results/$zipFile.zip results/$resultsFile
-					zip -u results/$zipFile.zip results
+					zip -u -r results/$zipFile.zip results
 
 					'''
 
