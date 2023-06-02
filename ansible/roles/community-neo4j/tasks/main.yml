@@ -54,6 +54,12 @@
   tasks:
     - name: Generate CSR
       command: openssl req -new -nodes -out "/var/lib/neo4j/certificates/neo4j.csr" -keyout "/var/lib/neo4j/certificates/neo4j.key" -subj "/CN=localhost"
+      
+#- name: Generate an OpenSSL Certificate Signing Request with Subject information
+  #openssl_csr:
+    #path: "/var/lib/neo4j/certificates/neo4j.csr"
+    #privatekey_path: "/var/lib/neo4j/certificates/neo4j.key"
+    #common_name: "localhost"      
 
 - name: Generate a Self Signed OpenSSL certificate
   openssl_certificate:
