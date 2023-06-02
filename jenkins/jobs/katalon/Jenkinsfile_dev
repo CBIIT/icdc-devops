@@ -57,7 +57,12 @@ pipeline {
                 KATALON_PRJ         =   "${params.KatalonPrj}"
                 }
 			steps {
-                script {
+                
+				script {
+					currentBuild.displayName = "#${env.BUILD_NUMBER} (${params.KatalonSuite} - ${params.Profile})"
+					}
+
+				script {
 				    switch("${params.Profile}") {
                     case ~/[\w\/]+ICDC$/:
 						PROJECT="ICDC"
@@ -198,7 +203,29 @@ pipeline {
 								# Update profile filename
 								profile_file=$(basename $PROFILE_FILE)
 								profile_name="${profile_file%.*}"
+
+								#################### UPDATE CHROME DRIVER (v108 - for Katalonstudio 5.5) ####################
+
+								# Echo versions
+								#echo "Pre Update:"
+								google-chrome --version
+								/opt/katalonstudio/configuration/resources/drivers/chromedriver_linux64/chromedriver --version
 								
+								# get chromedriver v108.x
+								#wget https://chromedriver.storage.googleapis.com/108.0.5359.71/chromedriver_linux64.zip
+								
+								# backup and replace chromedriver
+								mv /opt/katalonstudio/configuration/resources/drivers/chromedriver_linux64/chromedriver /opt/katalonstudio/configuration/resources/drivers/chromedriver_linux64/chromedriver.bak
+								#unzip chromedriver_linux64.zip
+								#mv chromedriver /opt/katalonstudio/configuration/resources/drivers/chromedriver_linux64/
+								
+								# Echo versions
+								#echo "Post Update:"
+								#google-chrome --version
+								#/opt/katalonstudio/configuration/resources/drivers/chromedriver_linux64/chromedriver --version
+								
+								#############################################################################################
+
 								#echo "projectPath=$KATALON_PRJ testSuitePath=$KATALON_SUITE_PATH executionProfile=$profile_name filename=$profile_file"
 								
 								# Run Katalon Tests
