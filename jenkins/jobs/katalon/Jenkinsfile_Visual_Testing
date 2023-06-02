@@ -56,11 +56,16 @@ pipeline {
 
                 }
             }
-//		stage('set Profile'){
+		stage('set Profile'){
 //		    environment {
 //                KATALON_PRJ         =   "${params.KatalonPrj}"
 //                }
-//			steps {
+			steps {
+
+				script {
+					currentBuild.displayName = "#${env.BUILD_NUMBER} (${params.KatalonSuite})"
+					}
+
 //                script {
 //				    switch("${params.Profile}") {
 //					case ~/[\w\/]+MTP$/:
@@ -85,8 +90,8 @@ pipeline {
 //
 //                       }
 //                    }
-//				}
-//			}
+				}
+			}
 
 		stage('run tests'){
             
