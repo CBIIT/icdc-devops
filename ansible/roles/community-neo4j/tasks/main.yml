@@ -31,7 +31,10 @@
     enabled: yes
 
 - name: install open-jdk-11
-  command: amazon-linux-extras install java-openjdk11
+  yum:
+        name: java-11-openjdk
+        state: presen
+  #command: amazon-linux-extras install java-openjdk11
 
 - name: install neo4j community {{ neo4j_version }} and java 11 JRE
   yum:
