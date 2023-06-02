@@ -223,22 +223,22 @@ pipeline {
 								#################### UPDATE CHROME DRIVER (v108 - for Katalonstudio 5.5) ####################
 								
 								# Echo versions
-								#echo "Pre Update:"
+								echo "Pre Update:"
 								google-chrome --version
 								/opt/katalonstudio/configuration/resources/drivers/chromedriver_linux64/chromedriver --version
 								
 								# get chromedriver v108.x
-								#wget https://chromedriver.storage.googleapis.com/108.0.5359.71/chromedriver_linux64.zip
+								wget https://chromedriver.storage.googleapis.com/108.0.5359.71/chromedriver_linux64.zip
 								
 								# backup and replace chromedriver
 								mv /opt/katalonstudio/configuration/resources/drivers/chromedriver_linux64/chromedriver /opt/katalonstudio/configuration/resources/drivers/chromedriver_linux64/chromedriver.bak
-								#unzip chromedriver_linux64.zip
-								#mv chromedriver /opt/katalonstudio/configuration/resources/drivers/chromedriver_linux64/
+								unzip chromedriver_linux64.zip
+								mv chromedriver /opt/katalonstudio/configuration/resources/drivers/chromedriver_linux64/
 								
 								# Echo versions
-								#echo "Post Update:"
-								#google-chrome --version
-								#/opt/katalonstudio/configuration/resources/drivers/chromedriver_linux64/chromedriver --version
+								echo "Post Update:"
+								google-chrome --version
+								/opt/katalonstudio/configuration/resources/drivers/chromedriver_linux64/chromedriver --version
 								
 								#############################################################################################
 
@@ -277,6 +277,7 @@ pipeline {
 					
 					zip -r results/$zipFile.zip OutputFiles
 					#zip -u results/$zipFile.zip results/$resultsFile
+					zip -u -r results/$zipFile.zip Reports
 					zip -u -r results/$zipFile.zip results
 
 					'''
