@@ -30,7 +30,7 @@ pipeline {
         defaultValue: 'QA_ICDC', 
         description: 'Choose the profile to use', 
         type: 'PT_SINGLE_SELECT',
-        value: 'DEV_ICDC,QA_ICDC,STAGE_ICDC,PROD_ICDC,QA_CTDC,QA_MTP,STAGE_MTP,QA_INS,QA_CCDC,QA_CDS' )
+        value: 'DEV_ICDC,QA_ICDC,STAGE_ICDC,PROD_ICDC,QA_CTDC,QA_MTP,STAGE_MTP,PROD_MTP,QA_INS,QA_CCDC,QA_CDS' )
 
 	string(defaultValue: "gayathri.radhakrishnan@nih.gov,laxmi.lolla@nih.gov,sohil.sohil@nih.gov", 
         description: 'Enter a list of email addresses to notify in case of test failures:', 
@@ -111,7 +111,9 @@ pipeline {
 					}
 
 					switch("${params.Profile}") {
-                    case "DEV_ICDC":
+
+					// ICDC
+					case "DEV_ICDC":
 						TIER="DEV"
 						withCredentials([file(credentialsId: 'Katalon_Dev_ICDC', variable: 'pass_file')]) {
 							PROFILE="${pass_file}"
@@ -140,14 +142,14 @@ pipeline {
                             }
                         break
 
-                    case "QA_MTP":
+                    // MTP
+					case "QA_MTP":
 						TIER="QA"
 						withCredentials([file(credentialsId: 'Katalon_QA_MTP', variable: 'pass_file')]) {
 							PROFILE="${pass_file}"
 							sh "cp ${pass_file} ${WORKSPACE}/Profiles/"
                             }
                         break
-						
 					case "STAGE_MTP":
 						TIER="STAGE"
 						withCredentials([file(credentialsId: 'Katalon_STAGE_MTP', variable: 'pass_file')]) {
@@ -155,8 +157,16 @@ pipeline {
 							sh "cp ${pass_file} ${WORKSPACE}/Profiles/"
                             }
                         break
+					case "PROD_MTP":
+						TIER="PROD"
+						withCredentials([file(credentialsId: 'Katalon_PROD_MTP', variable: 'pass_file')]) {
+							PROFILE="${pass_file}"
+							sh "cp ${pass_file} ${WORKSPACE}/Profiles/"
+                            }
+                        break
 
-                    case "QA_INS":
+                    // INS
+					case "QA_INS":
 						TIER="QA"
 						withCredentials([file(credentialsId: 'Katalon_QA_INS', variable: 'pass_file')]) {
 							PROFILE="${pass_file}"
@@ -164,7 +174,8 @@ pipeline {
                             }
                         break
 
-                    case "QA_CCDC":
+                    // CCDC
+					case "QA_CCDC":
 						TIER="QA"
 						withCredentials([file(credentialsId: 'Katalon_QA_CCDC', variable: 'pass_file')]) {
 							PROFILE="${pass_file}"
@@ -172,6 +183,7 @@ pipeline {
                             }
                         break
 
+					// CDS
 					case "QA_CDS":
 						TIER="QA"
 						withCredentials([file(credentialsId: 'Katalon_QA_CDS', variable: 'pass_file')]) {
@@ -180,6 +192,7 @@ pipeline {
                             }
                         break
 
+					// CTDC
 					case "QA_CTDC":
 						WIKI_PAGE="289178298"
 						PROJECT="CTDC"
