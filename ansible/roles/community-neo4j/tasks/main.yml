@@ -33,7 +33,7 @@
 - name: install open-jdk-11
   yum:
         name: java-11-openjdk
-        state: presen
+        state: present
   #command: amazon-linux-extras install java-openjdk11
 
 - name: install neo4j community {{ neo4j_version }} and java 11 JRE
