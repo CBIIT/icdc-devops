@@ -6,5 +6,5 @@ newrelic: no
 #graphql_version: 3.5.15.5
 neo4j_version: "4.4.19"
 #neo4j_version: "4.2.19"
-apoc_version: "4.4.0.18-core"
+apoc_version: "4.4.0.15-core"
 #apoc_version: "4.2.0.11-core"
