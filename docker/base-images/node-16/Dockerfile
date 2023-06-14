@@ -1,5 +1,5 @@
 #FROM alpine:3.16
-FROM 019211168375.dkr.ecr.us-east-1.amazonaws.com/cbiit-base-docker-images:cbiit-alpine-linux
+FROM alpine:latest
 
 ENV NODE_VERSION 16.17.0
 
