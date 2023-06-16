@@ -1,7 +1,7 @@
 @Library('datacommons-jenkins-shared-library') _
 buildAndDeploy(
-    // label: "slave-ncias-d2943-c",
-    label: "slave-ncias-s2979-c",
+    label: "slave-ncias-d2943-c",
+    // label: "slave-ncias-s2979-c",
     parameterName: "FrontendTag",
     nodeMemory: "8192",
     codeRepoUrl: "https://github.com/CBIIT/bento-cds-frontend",
