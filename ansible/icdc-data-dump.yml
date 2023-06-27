@@ -2,6 +2,7 @@
 - name: dump data from neo4j db
   hosts: icdc-neo4j
   #gather_facts: yes
+  gather_facts: no
   #become: yes
     
   tasks:
