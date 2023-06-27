@@ -27,7 +27,7 @@ def sendSlackMessage() {
     }
 }
 
-node('slave-ncias-d2789-c') {
+node('slave-ncias-d2320-c') {
 	parameters {
 		xtendedChoice( 
         name: 'Environment', 
@@ -171,7 +171,7 @@ pipeline {
 			ansiblePlaybook( 
                 playbook: '${WORKSPACE}/icdc-devops/ansible/icdc-data-dump-push.yml',
                 inventory: '${WORKSPACE}/icdc-devops/ansible/hosts',
-				credentialsId: 'commonsdocker',
+				        credentialsId: 'commonsdocker',
                 colorized: true)
 
 		}
