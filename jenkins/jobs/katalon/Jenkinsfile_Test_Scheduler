@@ -66,12 +66,8 @@ pipeline {
 
 					csv_content = readCSV file: 'jenkins/jobs/katalon/Test-Schedule.csv', format: CSVFormat.DEFAULT.withHeader()
 
-					//println java.time.LocalDateTime.now()
 					def now = new Date()
 					def this_hour = now.format("HH", TimeZone.getTimeZone('America/New_York'))
-					println this_hour
-
-					println csv_content
 
 					for (def record : csv_content) {
 
