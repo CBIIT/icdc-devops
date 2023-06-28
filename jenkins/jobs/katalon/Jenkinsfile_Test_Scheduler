@@ -98,6 +98,9 @@ pipeline {
 					csv_content = readCSV file: 'jenkins/jobs/katalon/Test-Schedule.csv' format: CSVFormat.DEFAULT.withHeader()
 					println csv_content
 
+					map_content = csv_content.toMap()
+					println map_content
+
 			   }
 
             }
