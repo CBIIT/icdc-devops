@@ -1,0 +1,100 @@
+pipeline {
+	agent {
+        node { 
+			label "docker-katalon-ch"
+        }
+    }
+
+//     parameters {
+
+//     gitParameter(branchFilter: 'origin/(.*)', 
+//         defaultValue: 'main', 
+//         name: 'Branch', 
+//         type: 'PT_BRANCH_TAG',
+//         quickFilterEnabled: false, 
+//         selectedValue: 'DEFAULT', 
+//         sortMode: 'ASCENDING_SMART', 
+//         tagFilter: '*', 
+//         useRepository: 'https://github.com/CBIIT/active-testing-v2.git')
+
+//     string(defaultValue: "VT_Test.prj", 
+//         description: 'Enter the Katalon Project file (include the path relative to the repo root):', 
+//         name: 'KatalonPrj')
+
+//     string(defaultValue: "Test Suites/DEMO_Anita", 
+//         description: 'Enter the Katalon Suite Path (not including the test suite file):', 
+//         name: 'KatalonSuite')
+
+//     string(defaultValue: "", 
+//         description: 'Enter the Katalon TestOPS Collection ID to compare images against:', 
+//         name: 'TestOpsCollectionID')
+
+// //	extendedChoice( 
+// //        name: 'Profile', 
+// //        defaultValue: 'default', 
+// //        description: 'Choose the profile to use', 
+// //        type: 'PT_SINGLE_SELECT',
+// //        value: 'DEV_ICDC,QA_ICDC,STAGE_ICDC,PROD_ICDC,QA_CTDC,QA_MTP,QA_INS,QA_CCDC' )
+
+// 	string(defaultValue: "", 
+//         description: 'Enter a list of email addresses to notify in case of test failures:', 
+//         name: 'EmailRecipients')
+
+//         }
+
+    stages{
+        // stage('checkout'){
+        //     steps {
+
+        //         checkout([$class: 'GitSCM', 
+        //             branches: [[name: "${params.Branch}"]], 
+        //             doGenerateSubmoduleConfigurations: false,
+		// 			extensions: [],
+		// 			submoduleCfg: [], 
+        //             userRemoteConfigs: [[url: 'https://github.com/CBIIT/active-testing-v2.git']]])
+
+        //         }
+        //     }
+
+
+		stage('run tests'){
+            
+            steps {
+
+				script {
+  			
+					def convertResultFile(String filename) {
+						def testsResults = [:]
+						def csv_content = readCSV file: filename
+						
+						for (def record : csv_content) {
+						
+							testsResults[record[0]] = record[1]
+						
+						}
+
+						println testsResults
+	
+					}
+
+					convertResultsFile Test-Schedule.csv
+
+			   }
+
+            }
+
+        }
+
+    }
+
+	post {
+
+		cleanup {
+
+	        cleanWs()
+
+	    }
+
+	}
+
+}
