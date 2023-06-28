@@ -92,7 +92,8 @@ pipeline {
 
 					//convertResultsFile Test-Schedule.csv
 
-					sh(label: 'List Files', returnStdout: true, script: "ls -la")
+					listing = sh(label: 'List Files', returnStdout: true, script: "ls -la")
+					println listing
 
 					csv_content = readCSV file: './Test-Schedule.csv'
 					println csv_content
