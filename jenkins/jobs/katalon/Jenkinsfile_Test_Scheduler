@@ -61,7 +61,7 @@ pipeline {
             
             steps {
 
-				//script {
+				script {
   			
 					// def convertResultFile(String filename) {
 					// 	def testsResults = [:]
@@ -79,10 +79,10 @@ pipeline {
 
 					//convertResultsFile Test-Schedule.csv
 
-					def csv_content = readCSV file: Test-Schedule.csv
+					csv_content = readCSV file: "Test-Schedule.csv"
 					println csv_content
 
-			   //}
+			   }
 
             }
 
