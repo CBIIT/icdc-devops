@@ -95,32 +95,18 @@ pipeline {
 					// listing = sh(label: 'List Files', returnStdout: true, script: "ls -la jenkins/jobs/katalon/")
 					// println listing
 
-					// csv_content = readCSV file: 'jenkins/jobs/katalon/Test-Schedule.csv' //, format: CSVFormat.DEFAULT.withHeader()
-					// println csv_content
-
-					// map_content = [:]
+					csv_content = readCSV file: 'jenkins/jobs/katalon/Test-Schedule.csv', format: CSVFormat.DEFAULT.withHeader()
+					println csv_content
 					
-					// for (def record : csv_content) {
-						
-					// 	//map_content[record[0]] = record[1]
-					// 	map_content = record.toMap()
-						
-					// }
+					for (def record : csv_content) {
 
-					// println map_content
+						println record.get('Branch')
+						println record.get('Katalon_Project')
+						println record.get('Katalon_Suite')
+						println record.get('Profile')
+						println record.get('Email_Recipients')
 
-
-					def reader = new CSVReader(new FileReader(new File('jenkins/jobs/katalon/Test-Schedule.csv')))
-					def output = reader.collect { it[0].split(';') }.with { rows ->
-						def header = rows.head()
-						def dataRows = rows.tail()
-						
-						dataRows.collect { row ->
-						[header, row].transpose().collectEntries()
-						}
 					}
-
-					println output
 
 			   }
 
