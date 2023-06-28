@@ -66,7 +66,7 @@ pipeline {
 
 					csv_content = readCSV file: 'jenkins/jobs/katalon/Test-Schedule.csv', format: CSVFormat.DEFAULT.withHeader()
 
-					println $BUILD_TIMESTAMP
+					println ${BUILD_TIMESTAMP}
 					println csv_content
 
 					for (def record : csv_content) {
