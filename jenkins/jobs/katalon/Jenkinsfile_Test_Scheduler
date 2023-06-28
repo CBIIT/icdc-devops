@@ -56,6 +56,19 @@ pipeline {
         //         }
         //     }
 
+		stage('checkout'){
+            steps {
+
+                checkout([$class: 'GitSCM', 
+                    branches: [[name: 'test_schedule']], 
+                    doGenerateSubmoduleConfigurations: false,
+					extensions: [],
+					submoduleCfg: [], 
+                    userRemoteConfigs: [[url: 'https://github.com/CBIIT/icdc-devops.git']]])
+
+                }
+            }
+
 
 		stage('run tests'){
             
