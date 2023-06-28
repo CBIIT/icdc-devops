@@ -1,2 +1,2 @@
-﻿Branch,Katalon_Project,Katalon_Suite,Profile,Email_Recipients
-main,test_project,test_suite,test_profile,test@email.com
+﻿Project,Branch,Katalon_Project,Katalon_Suite,Profile,Email_Recipients
+TEST,main,test_project,test_suite,test_profile,test@email.com
