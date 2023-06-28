@@ -63,21 +63,24 @@ pipeline {
 
 				script {
   			
-					def convertResultFile(String filename) {
-						def testsResults = [:]
-						def csv_content = readCSV file: filename
+					// def convertResultFile(String filename) {
+					// 	def testsResults = [:]
+					// 	def csv_content = readCSV file: filename
 						
-						for (def record : csv_content) {
+					// 	for (def record : csv_content) {
 						
-							testsResults[record[0]] = record[1]
+					// 		testsResults[record[0]] = record[1]
 						
-						}
+					// 	}
 
-						println testsResults
+					// 	println testsResults
 	
-					}
+					// }
 
-					convertResultsFile Test-Schedule.csv
+					//convertResultsFile Test-Schedule.csv
+
+					csv_content = readCSV file: Test-Schedule.csv
+					println csv_content
 
 			   }
 
