@@ -100,11 +100,11 @@ pipeline {
 					
 					for (def record : csv_content) {
 
-						println record.get('Branch')
-						println record.get('Katalon_Project')
-						println record.get('Katalon_Suite')
-						println record.get('Profile')
-						println record.get('Email_Recipients')
+						println record.get(Branch)
+						println record.get(Katalon_Project)
+						println record.get(Katalon_Suite)
+						println record.get(Profile)
+						println record.get(Email_Recipients)
 
 					}
 
