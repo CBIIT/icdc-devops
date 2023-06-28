@@ -95,7 +95,7 @@ pipeline {
 					listing = sh(label: 'List Files', returnStdout: true, script: "ls -la jenkins/jobs/katalon/")
 					println listing
 
-					csv_content = readCSV file: 'jenkins/jobs/katalon/Test-Schedule.csv'
+					csv_content = readCSV file: 'jenkins/jobs/katalon/Test-Schedule.csv' format: CSVFormat.DEFAULT.withHeader()
 					println csv_content
 
 			   }
