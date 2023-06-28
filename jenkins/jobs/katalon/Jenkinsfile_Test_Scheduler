@@ -68,18 +68,22 @@ pipeline {
 
 					//println java.time.LocalDateTime.now()
 					def now = new Date()
-					println now.format("yyMMdd.HHmm", TimeZone.getTimeZone('America/New_York'))
-
+					def this_hour now.format("HH", TimeZone.getTimeZone('America/New_York'))
+					println this_hour
 
 					println csv_content
 
 					for (def record : csv_content) {
 
-						println record.get('Branch')
-						println record.get('Katalon_Project')
-						println record.get('Katalon_Suite')
-						println record.get('Profile')
-						println record.get('Email_Recipients')
+						if (this_hour == record.get('Time')) {
+						
+						    println record.get('Branch')
+						    println record.get('Katalon_Project')
+						    println record.get('Katalon_Suite')
+						    println record.get('Profile')
+						    println record.get('Email_Recipients')
+
+						}
 
 					}
 
