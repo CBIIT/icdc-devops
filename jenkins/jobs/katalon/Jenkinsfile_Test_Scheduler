@@ -68,7 +68,7 @@ pipeline {
 
 					//println java.time.LocalDateTime.now()
 					def now = new Date()
-					def this_hour now.format("HH", TimeZone.getTimeZone('America/New_York'))
+					def this_hour = now.format("HH", TimeZone.getTimeZone('America/New_York'))
 					println this_hour
 
 					println csv_content
