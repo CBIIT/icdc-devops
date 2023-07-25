@@ -80,7 +80,7 @@ pipeline {
  			script {
 
                 // get date string
-				env.DATE_STRING = sh(label: 'Get Date', returnStdout: true, script: '$(date +%m%d%Y)').trim()
+				env.DATE_STRING = sh(label: 'Get Date', returnStdout: true, script: 'echo \$(date +%m%d%Y)').trim()
 				
 				// set ECR account number
 				env.ECR_ACCOUNT = sh(label: 'Get ECR account', returnStdout: true, script: '$(aws sts get-caller-identity --query "Account" --output text)').trim()
