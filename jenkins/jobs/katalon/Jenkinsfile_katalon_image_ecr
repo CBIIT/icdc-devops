@@ -1,0 +1,159 @@
+
+import groovy.json.JsonOutput
+
+def sendSlackMessage() {
+  jenkins_image = ":jenkins:"
+  beer_image = ":beer:"
+  long epoch = System.currentTimeMillis()/1000
+  def BUILD_COLORS = ['SUCCESS': 'good', 'FAILURE': 'danger', 'UNSTABLE': 'danger', 'ABORTED': 'danger']
+  
+  def slack = JsonOutput.toJson(
+      [
+            icon_emoji: jenkins_image,
+            attachments: [[
+              title: "Jenkins Job Alert - ${currentBuild.currentResult}",
+              text:  "Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}  ${beer_image}\n Details at: ${env.BUILD_URL}console",
+              fallback: "Bento Jenkins Build",
+              color: "${BUILD_COLORS[currentBuild.currentResult]}",
+              footer: "bento devops",
+              ts: epoch,
+              mrkdwn_in: ["footer", "title"],
+           ]]
+        ]
+    )
+    try {
+        sh "curl -X POST -H 'Content-type: application/json' --data '${slack}'  '${SLACK_URL}'"
+    } catch (err) {
+        echo "${err} Slack notify failed"
+    }
+}
+
+
+pipeline {
+
+	agent {
+		node {
+			label 'cicd_microservice'
+		}
+	}
+
+  options {
+
+  	timestamps()
+
+  }
+
+  environment {
+
+	  ECR_REPO        = "katalon"
+	  IMAGE_NAME      = "jenkins-katalon"
+	  REGION          = "us-east-1"
+	  REPO_NAME       = "icdc-devops"
+	  DOCKERFILE_PATH = "bento/katalon"
+
+  }
+
+  stages{
+  	stage('checkout'){
+  		steps {
+
+  			checkout( changelog:false,
+				poll: false,
+				scm: [$class: 'GitSCM', 
+				branches: [[name: '*/master']], 
+				doGenerateSubmoduleConfigurations: false, 
+				extensions: [[$class: 'DisableRemotePoll'],
+				[$class: 'PathRestriction', excludedRegions: '*'], 
+				[$class: 'RelativeTargetDirectory', 
+				relativeTargetDir: "${env.REPO_NAME}"]], 
+				submoduleCfg: [], 
+				userRemoteConfigs: 
+				[[url: "https://github.com/CBIIT/${env.REPO_NAME}.git"]]
+				])
+        }
+  	}
+
+  	stage('Set Environment Variables'){
+
+ 		steps {
+
+ 			script {
+
+                // get date string
+				env.DATE_STRING = sh(label: 'Get Date', returnStdout: true, script: "$(date +%m%d%Y)").trim()
+				
+				// set ECR account number
+				env.ECR_ACCOUNT = sh(label: 'Get ECR account', returnStdout: true, script: '$(aws sts get-caller-identity --query "Account" --output text)').trim()
+
+				// set repo URL
+				env.REPO_URL = "${ECR_ACCOUNT}.dkr.ecr.${REGION}.amazonaws.com/${ECR_REPO}"
+
+			}
+
+ 		}
+
+  	}
+	
+	stage('Build'){
+
+ 		steps {
+
+ 			script {
+
+			    sh label: 'Docker-Build', script: '''#!/bin/bash
+
+				# build katalon Docker container
+				echo "Building: $ECR_REPO:$IMAGE_NAME.$DATE_STRING"
+
+				#cd $WORKSPACE/$REPO_NAME/$DOCKERFILE_PATH && DOCKER_BUILDKIT=1 docker build --no-cache -t $ECR_REPO:$IMAGE_NAME.$DATE_STRING .
+
+				'''
+
+			}
+
+ 		}
+
+  	}
+
+  	// stage('push to ECR'){
+
+ 	// 	steps {
+
+ 	// 		script {
+
+	// 		    sh label: 'Docker-Push', script: '''#!/bin/bash
+
+	// 			# push CTDC Docker container to ECR
+	// 			echo "Pushing: $ECR_REPO:$CODE_BRANCH.$BUILD_NUMBER"
+
+	// 			# login and push to ECR
+	// 			docker login -u AWS -p $(aws ecr get-login-password --region $REGION) $REPO_URL
+	// 			docker push $REPO_URL:$CODE_BRANCH.$BUILD_NUMBER
+
+    //             # tag as latest and push to ECR
+	// 			docker tag $REPO_URL:$CODE_BRANCH.$BUILD_NUMBER $REPO_URL:latest
+    //             docker push $REPO_URL:latest
+
+	// 			'''
+
+	// 		}
+
+ 	// 	}
+
+  	// }
+
+  }
+  post {
+    always {
+      
+      sendSlackMessage()
+
+    }
+
+	cleanup {
+	
+		cleanWs()
+    
+	}
+  }
+}
