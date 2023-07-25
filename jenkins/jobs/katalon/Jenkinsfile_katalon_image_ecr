@@ -105,7 +105,7 @@ pipeline {
 				# build katalon Docker container
 				echo "Building: $ECR_REPO:$IMAGE_NAME.$DATE_STRING"
 
-				cd $WORKSPACE/$REPO_NAME/$DOCKERFILE_PATH && DOCKER_BUILDKIT=1 docker build --no-cache -t $ECR_REPO:$IMAGE_NAME.$DATE_STRING .
+				cd $WORKSPACE/$REPO_NAME/$DOCKERFILE_PATH && DOCKER_BUILDKIT=1 docker build --no-cache -t $REPO_URL:$IMAGE_NAME.$DATE_STRING .
 
 				'''
 
@@ -115,32 +115,28 @@ pipeline {
 
   	}
 
-  	// stage('push to ECR'){
+  	 stage('push to ECR'){
 
- 	// 	steps {
+ 		steps {
 
- 	// 		script {
+ 			script {
 
-	// 		    sh label: 'Docker-Push', script: '''#!/bin/bash
+			    sh label: 'Docker-Push', script: '''#!/bin/bash
 
-	// 			# push CTDC Docker container to ECR
-	// 			echo "Pushing: $ECR_REPO:$CODE_BRANCH.$BUILD_NUMBER"
+				# push CTDC Docker container to ECR
+				echo "Pushing: $ECR_REPO:$CODE_BRANCH.$BUILD_NUMBER"
 
-	// 			# login and push to ECR
-	// 			docker login -u AWS -p $(aws ecr get-login-password --region $REGION) $REPO_URL
-	// 			docker push $REPO_URL:$CODE_BRANCH.$BUILD_NUMBER
+				# login and push to ECR
+				docker login -u AWS -p $(aws ecr get-login-password --region $REGION) $REPO_URL
+				docker push $REPO_URL:$CODE_BRANCH.$BUILD_NUMBER
 
-    //             # tag as latest and push to ECR
-	// 			docker tag $REPO_URL:$CODE_BRANCH.$BUILD_NUMBER $REPO_URL:latest
-    //             docker push $REPO_URL:latest
+				'''
 
-	// 			'''
+			}
 
-	// 		}
+ 		}
 
- 	// 	}
-
-  	// }
+  	}
 
   }
   post {
