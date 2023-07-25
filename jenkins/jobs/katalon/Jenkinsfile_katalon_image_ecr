@@ -105,7 +105,7 @@ pipeline {
 				# build katalon Docker container
 				echo "Building: $ECR_REPO:$IMAGE_NAME.$DATE_STRING"
 
-				#cd $WORKSPACE/$REPO_NAME/$DOCKERFILE_PATH && DOCKER_BUILDKIT=1 docker build --no-cache -t $ECR_REPO:$IMAGE_NAME.$DATE_STRING .
+				cd $WORKSPACE/$REPO_NAME/$DOCKERFILE_PATH && DOCKER_BUILDKIT=1 docker build --no-cache -t $ECR_REPO:$IMAGE_NAME.$DATE_STRING .
 
 				'''
 
