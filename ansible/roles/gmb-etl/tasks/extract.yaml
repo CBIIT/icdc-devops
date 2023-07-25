@@ -4,4 +4,4 @@
     name: common
     tasks_from: etl
   vars:
-    etl_command: "python3 {{workspace}}/{{project_name}}-extraction.py {{workspace}}/{{project_name}}_config.yml --extract-only"
+    etl_command: "python3 {{workspace}}/{{project_name}}_extraction.py {{workspace}}/{{project_name}}_config.yml --extract-only"
