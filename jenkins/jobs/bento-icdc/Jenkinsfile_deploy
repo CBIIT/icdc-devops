@@ -317,6 +317,8 @@ pipeline {
         VERSION = "${params.Frontend_Tag}"
         FE_VERSION = "${params.Frontend_Tag}"
         BE_VERSION = "${params.Backend_Tag}"
+        FILES_VERSION = "${params.Files_Tag}"
+        INTEROPERATION_VERSION = "${params.Interoperation_Tag}"
       }
 
       steps{
