@@ -71,6 +71,66 @@ services:
     #links:
     # - "data-dictionary:dictionary"
 
+##########################################################
+# files container
+##########################################################   
+
+  bento-files:
+    container_name: files
+    image: ncidockerhub.nci.nih.gov/icdc/icdc-files:{{files_version}}
+    environment:
+      NEO4J_URI: "bolt://{{ neo4j_ip }}:7687"  
+      NEO4J_USER: "{{ neo4j_user }}"
+      NEO4J_PASSWORD: "{{ neo4j_password }}"
+      VERSION: "{{ files_version }}"
+      PROJECT: "{{ project_name }}"
+      CF_URL: "https://{{ cloudfront_domain_name }}"
+      CF_PRIVATE_KEY: "{{ cloudfront_private_key }}"
+      CF_KEY_PAIR_ID: "{{ cloudfront_key_group_id }}"
+      URL_SRC: "{{ url_src }}"
+      AUTH_ENABLED: "{{ auth_enabled }}"
+      AUTH_URL: "{% if tier == 'prod'  and project_name == 'bento' %}https://{{domain_name}}/api/auth/authenticated{% elif tier == 'prod' %}https://{{subdomain}}.{{domain_name}}/api/auth/authenticated{% else %}https://{{subdomain}}-{{tier}}.{{domain_name}}/api/auth/authenticated{% endif %}"
+      BACKEND_URL: "{% if tier == 'prod'  and project_name == 'bento' %}https://{{domain_name}}/v1/graphql/{% elif tier == 'prod' %}https://{{subdomain}}.{{domain_name}}/v1/graphql/{% else %}https://{{subdomain}}-{{tier}}.{{domain_name}}/v1/graphql/{% endif %}"
+      INDEXD_URL: "{{ indexd_url }}"
+      NEW_RELIC_LICENSE_KEY: "{{ newrelic_license_key }}"
+      NEW_RELIC_APP_NAME: "{{ project_name }}-{{ tier }}-files-{{ ansible_hostname }}"
+    ports:
+      - "8081:8081"
+    restart: always
+    #links:
+    # - "data-dictionary:dictionary"
+
+##########################################################
+# interoperation container
+##########################################################   
+
+  bento-interoperation:
+    container_name: interoperation
+    image: ncidockerhub.nci.nih.gov/icdc/icdc-interoperation:{{ interoperation_version }}
+    environment:
+      VERSION: "{{ interoperation_version }}"
+      PROJECT: "{{ project_name }}"
+      BENTO_BACKEND_GRAPHQL_URI: "{% if tier == 'prod' and project_name == 'bento' %}https://{{domain_name}}/v1/graphql/{% elif tier == 'prod' %}https://{{subdomain}}.{{domain_name}}/v1/graphql/{% else %}https://{{subdomain}}-{{tier}}.{{domain_name}}/v1/graphql/{% endif %}"
+      NEW_RELIC_LICENSE_KEY: "{{ newrelic_license_key }}"
+      NEW_RELIC_APP_NAME: "{{ project_name }}-{{ tier }}-interoperation-{{ ansible_hostname }}"
+      REDIS_ENABLE: "{{ enable_redis }}"
+      REDIS_USE_CLUSTER: "{{ use_cluster }}"
+      REDIS_HOST: "{{ redis_host }}"
+      REDIS_PORT: "{{ redis_port }}"
+      REDIS_FILTER_ENABLE: "false"
+      S3_ACCESS_KEY_ID: "{{ s3_access_key_id }}"
+      S3_SECRET_ACCESS_KEY: "{{ s3_secret_access_key }}"
+      FILE_MANIFEST_BUCKET_NAME: "{{ file_manifest_bucket_name }}"
+      CLOUDFRONT_KEY_PAIR_ID: "{{ cloudfront_key_pair_id }}"
+      CLOUDFRONT_PRIVATE_KEY: "{{ cloudfront_private_key }}"
+      CLOUDFRONT_DOMAIN: "{{ cloudfront_domain }}"
+      SIGNED_URL_EXPIRY_SECONDS: "86400" 
+    ports:
+      - "4030:4030"
+    restart: always
+    #links:
+    # - "data-dictionary:dictionary"
+
   #data-dictionary:
   #  container_name: data-dictionary
   #  image: ncidockerhub.nci.nih.gov/icdc/data-dictionary:changedBaseRoute-28
