@@ -287,28 +287,28 @@ pipeline {
           }
         }
     }
-    stage('copy static content') {
-      when {
-           expression {
-              params.Environment == "prod" || params.Environment == "stage"
-           }
+    // stage('copy static content') {
+    //   when {
+    //        expression {
+    //           params.Environment == "prod" || params.Environment == "stage"
+    //        }
 
-      }
-      steps {
-      wrap([$class: 'AnsiColorBuildWrapper', colorMapName: "xterm"]) {
-        withCredentials([string(credentialsId: 'git_credential_token',variable: 'git_token'),
-        ]) {
+    //   }
+    //   steps {
+    //   wrap([$class: 'AnsiColorBuildWrapper', colorMapName: "xterm"]) {
+    //     withCredentials([string(credentialsId: 'git_credential_token',variable: 'git_token'),
+    //     ]) {
 
-          ansiblePlaybook(
-                  playbook: '${WORKSPACE}/icdc-devops/ansible/git-copy.yml',
-                  inventory: '${WORKSPACE}/icdc-devops/ansible/hosts',
-                  colorized: true,
-                  extraVars: [ project: "icdc"]
-                  )
-        }
-      }
-    }
-    }
+    //       ansiblePlaybook(
+    //               playbook: '${WORKSPACE}/icdc-devops/ansible/git-copy.yml',
+    //               inventory: '${WORKSPACE}/icdc-devops/ansible/hosts',
+    //               colorized: true,
+    //               extraVars: [ project: "icdc"]
+    //               )
+    //     }
+    //   }
+    // }
+    // }
 
   	stage('deploy'){
       environment {
