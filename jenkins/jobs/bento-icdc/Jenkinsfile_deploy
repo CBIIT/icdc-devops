@@ -233,8 +233,8 @@ pipeline {
                 }
               break
               case "stage":
-                withCredentials([string(credentialsId: 'stage_bearer', variable: 'BEARER'),
-                string(credentialsId: 'icdc_es_stage_host', variable: 'ES_HOST'),
+                withCredentials([string(credentialsId: 'qa_bearer', variable: 'BEARER'),
+                string(credentialsId: 'icdc_es_qa_host', variable: 'ES_HOST'),
                     usernamePassword(credentialsId: 'neo4j_user', passwordVariable: 'NEO4J_PASS', usernameVariable: 'NEO4J_USER')]) {
                   env.TIER        = "stage"
                   env.NEO4J_IP    = "${NEO4J_ICDC_STAGE_IP}"
