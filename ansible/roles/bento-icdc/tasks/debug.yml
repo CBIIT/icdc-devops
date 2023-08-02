@@ -1,14 +1,14 @@
 ---
-- name: log into DockerHub
-  docker_login:
-    username: "{{ docker_user }}"
-    password: "{{ docker_password }}"
-    registry: https://ncidockerhub.nci.nih.gov
+# - name: log into DockerHub
+#   docker_login:
+#     username: "{{ docker_user }}"
+#     password: "{{ docker_password }}"
+#     registry: https://ncidockerhub.nci.nih.gov
     
-- name: verify host
-  file: 
-    path: /tmp/myworkspace
-    state: directory
+# - name: verify host
+#   file: 
+#     path: /tmp/myworkspace
+#     state: directory
 
 
 ###################################################################
