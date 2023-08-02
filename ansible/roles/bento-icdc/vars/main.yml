@@ -99,9 +99,10 @@ react_app_readme_url:
 files_version: "{{ lookup('env','FILES_VERSION') }}"
 project_name: icdc
 url_src: "{% if tier == 'prod' or tier == 'stage' %}CLOUD_FRONT{% else %}indexd{% endif %}"
-indexd_url: "{{ lookup('aws_secret', 'bento/{{ project_name }}/{{ tier }}.indexd_url', nested=true, region='us-east-1') }}"
+#indexd_url: "{{ lookup('aws_secret', 'bento/{{ project_name }}/{{ tier }}.indexd_url', nested=true, region='us-east-1') }}"
 auth_enabled: "false"
 interoperation_version: "{{ lookup('env','INTEROPERATION_VERSION') }}"
+indexd_url: "{{ lookup('env','indexd_url') }}"
 s3_access_key_id: "{{ lookup('env','s3_access_key_id') }}"
 3_secret_access_key: "{{ lookup('env','s3_secret_access_key') }}"
 file_manifest_bucket_name: "{{ lookup('env','file_manifest_bucket_name') }}"

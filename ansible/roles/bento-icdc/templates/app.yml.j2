@@ -88,10 +88,10 @@ services:
       CF_PRIVATE_KEY: "{{ cloudfront_private_key }}"
       CF_KEY_PAIR_ID: "{{ cloudfront_key_group_id }}"
       URL_SRC: "{{ url_src }}"
+      INDEXD_URL: "{{ indexd_url }}"
       AUTH_ENABLED: "{{ auth_enabled }}"
       AUTH_URL: "{% if tier == 'prod'  and project_name == 'bento' %}https://{{domain_name}}/api/auth/authenticated{% elif tier == 'prod' %}https://{{subdomain}}.{{domain_name}}/api/auth/authenticated{% else %}https://{{subdomain}}-{{tier}}.{{domain_name}}/api/auth/authenticated{% endif %}"
       BACKEND_URL: "{% if tier == 'prod'  and project_name == 'bento' %}https://{{domain_name}}/v1/graphql/{% elif tier == 'prod' %}https://{{subdomain}}.{{domain_name}}/v1/graphql/{% else %}https://{{subdomain}}-{{tier}}.{{domain_name}}/v1/graphql/{% endif %}"
-      INDEXD_URL: "{{ indexd_url }}"
       NEW_RELIC_LICENSE_KEY: "{{ newrelic_license_key }}"
       NEW_RELIC_APP_NAME: "{{ project_name }}-{{ tier }}-files-{{ ansible_hostname }}"
     ports:
