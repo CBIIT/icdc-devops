@@ -168,7 +168,8 @@ pipeline {
   			checkout( changelog:false,
 				poll: false,
 				scm: [$class: 'GitSCM',
-				branches: [[name: '*/master']],
+				//branches: [[name: '*/master']],
+        branches: [[name: '*/icdc_debug']],
 				doGenerateSubmoduleConfigurations: false,
 				extensions: [[$class: 'DisableRemotePoll'],
 				[$class: 'PathRestriction', excludedRegions: '*'],
@@ -333,7 +334,7 @@ pipeline {
          ]){
              sh "cp ${host_file} ${WORKSPACE}/icdc-devops/ansible/hosts"
              ansiblePlaybook(
-                playbook: '${WORKSPACE}/icdc-devops/ansible/deploy-bento-icdc.yml',
+                playbook: '${WORKSPACE}/icdc-devops/ansible/deploy-bento-icdc-debug.yml',
                 inventory: '${WORKSPACE}/icdc-devops/ansible/hosts',
                 credentialsId: 'commonsdocker',
                 extraVars: [
@@ -357,35 +358,35 @@ pipeline {
       }
     }
 
-	stage('clear redis cache'){
-	  when {
-		expression { params.Flush_Redis }
-		}
+	// stage('clear redis cache'){
+	//   when {
+	// 	expression { params.Flush_Redis }
+	// 	}
 
- 	  environment {
-		TIER = "${params.Environment}"
-		}
+ 	//   environment {
+	// 	TIER = "${params.Environment}"
+	// 	}
 
-	  steps{
-		wrap([$class: 'AnsiColorBuildWrapper', colorMapName: "xterm"]) {
+	//   steps{
+	// 	wrap([$class: 'AnsiColorBuildWrapper', colorMapName: "xterm"]) {
 
-			script {
-              sh label: 'database-hosts', script: '''#!/bin/bash
-                echo "Creating inventory file"
-                echo "[icdc]" > ${WORKSPACE}/icdc-devops/ansible/redis_hosts
-                echo ${NEO4J_IP} >> ${WORKSPACE}/icdc-devops/ansible/redis_hosts
+	// 		script {
+  //             sh label: 'database-hosts', script: '''#!/bin/bash
+  //               echo "Creating inventory file"
+  //               echo "[icdc]" > ${WORKSPACE}/icdc-devops/ansible/redis_hosts
+  //               echo ${NEO4J_IP} >> ${WORKSPACE}/icdc-devops/ansible/redis_hosts
 
-              '''
+  //             '''
 
-            }
+  //           }
 
-			ansiblePlaybook(
-               playbook: '${WORKSPACE}/icdc-devops/ansible/redis_icdc.yml',
-               inventory: '${WORKSPACE}/icdc-devops/ansible/redis_hosts',
-               credentialsId: 'commonsdocker',
-			   colorized: true)
-			}
-		}
+	// 		ansiblePlaybook(
+  //              playbook: '${WORKSPACE}/icdc-devops/ansible/redis_icdc.yml',
+  //              inventory: '${WORKSPACE}/icdc-devops/ansible/redis_hosts',
+  //              credentialsId: 'commonsdocker',
+	// 		   colorized: true)
+	// 		}
+	// 	}
 	}
 
   }
