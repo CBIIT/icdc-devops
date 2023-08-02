@@ -387,7 +387,7 @@ pipeline {
 	// 		   colorized: true)
 	// 		}
 	// 	}
-	}
+	//}
 
   }
   post {
