@@ -110,7 +110,7 @@ cloudfront_key_pair_id: "{{ lookup('env','cloudfront_key_pair_id') }}"
 cloudfront_private_key: "{{ lookup('env','cloudfront_private_key') }}"
 cloudfront_domain: "{{ lookup('env','cloudfront_domain',') }}"
 cloudfront_key_group_id: "{{ lookup('env','key_group_id',') }}"
-cloudfront_domain_name: "{{ lookup('env', 'domain_name') }}
+cloudfront_domain_name: "{{ lookup('env', 'domain_name') }}"
 
 #s3_access_key_id: "{{ lookup('aws_secret', 'bento/icdc/stage.s3_access_key_id', nested=true, region='us-east-1') }}"
 #s3_secret_access_key: "{{ lookup('aws_secret', 'bento/icdc/stage.s3_secret_access_key', nested=true, region='us-east-1') }}"
