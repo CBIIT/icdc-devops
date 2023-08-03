@@ -126,6 +126,7 @@ services:
       CLOUDFRONT_PRIVATE_KEY: "{{ cloudfront_private_key }}"
       CLOUDFRONT_DOMAIN: "{{ cloudfront_domain }}"
       SIGNED_URL_EXPIRY_SECONDS: "86400" 
+      REGION: us-east-1
     ports:
       - "4030:4030"
     restart: always
