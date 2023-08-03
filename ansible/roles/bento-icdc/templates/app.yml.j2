@@ -45,6 +45,7 @@ services:
       REACT_APP_BACKEND_API: "{% if tier == 'prod' %}https://caninecommons.cancer.gov/v1/graphql/{% else %}https://caninecommons-{{ tier }}.cancer.gov/v1/graphql/{% endif %}"
       REACT_APP_BACKEND_GETUSERINFO_API: "{{ backend_user_info }}"
       REACT_APP_FILE_SERVICE_API: "{% if tier == 'prod' %}https://caninecommons.cancer.gov/api/files/{% else %}https://caninecommons-{{ tier }}.cancer.gov/api/files/{% endif %}"
+      REACT_APP_INTEROP_SERVICE_URL: "{% if tier == 'prod' %}https://caninecommons.cancer.gov/api/interoperation/graphql{% else %}https://caninecommons-{{ tier }}.cancer.gov/api/interoperation/graphql{% endif %}"
       REACT_APP_LOGIN_URL: "{{ backend_fence_login }}"
       REACT_APP_USER_LOGOUT_URL: "{{ backend_fence_logout }}"
       REACT_APP_ABOUT_CONTENT_URL: "{{ react_app_about_data[tier] }}"
@@ -90,8 +91,8 @@ services:
       URL_SRC: "{{ url_src }}"
       INDEXD_URL: "{{ indexd_url }}"
       AUTH_ENABLED: "{{ auth_enabled }}"
-      AUTH_URL: "{% if tier == 'prod'  and project_name == 'bento' %}https://{{domain_name}}/api/auth/authenticated{% elif tier == 'prod' %}https://{{subdomain}}.{{domain_name}}/api/auth/authenticated{% else %}https://{{subdomain}}-{{tier}}.{{domain_name}}/api/auth/authenticated{% endif %}"
-      BACKEND_URL: "{% if tier == 'prod'  and project_name == 'bento' %}https://{{domain_name}}/v1/graphql/{% elif tier == 'prod' %}https://{{subdomain}}.{{domain_name}}/v1/graphql/{% else %}https://{{subdomain}}-{{tier}}.{{domain_name}}/v1/graphql/{% endif %}"
+      AUTH_URL: "{% if tier == 'prod' %}https://caninecommons.cancer.gov/api/auth/authenticated{% else %}https://caninecommons-{{ tier }}.cancer.gov/api/auth/authenticated{% endif %}"
+      BACKEND_URL: "{% if tier == 'prod' %}https://caninecommons.cancer.gov/v1/graphql/{% else %}https://caninecommons-{{ tier }}.cancer.gov/v1/graphql/{% endif %}"
       NEW_RELIC_LICENSE_KEY: "{{ newrelic_license_key }}"
       NEW_RELIC_APP_NAME: "{{ project_name }}-{{ tier }}-files-{{ ansible_hostname }}"
     ports:
@@ -110,7 +111,7 @@ services:
     environment:
       VERSION: "{{ interoperation_version }}"
       PROJECT: "{{ project_name }}"
-      BENTO_BACKEND_GRAPHQL_URI: "{% if tier == 'prod' and project_name == 'bento' %}https://{{domain_name}}/v1/graphql/{% elif tier == 'prod' %}https://{{subdomain}}.{{domain_name}}/v1/graphql/{% else %}https://{{subdomain}}-{{tier}}.{{domain_name}}/v1/graphql/{% endif %}"
+      BENTO_BACKEND_GRAPHQL_URI: "{% if tier == 'prod' %}https://caninecommons.cancer.gov/v1/graphql/{% else %}https://caninecommons-{{ tier }}.cancer.gov/v1/graphql/{% endif %}"
       NEW_RELIC_LICENSE_KEY: "{{ newrelic_license_key }}"
       NEW_RELIC_APP_NAME: "{{ project_name }}-{{ tier }}-interoperation-{{ ansible_hostname }}"
       REDIS_ENABLE: "{{ enable_redis }}"
