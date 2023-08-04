@@ -43,6 +43,7 @@ services:
     image: ncidockerhub.nci.nih.gov/icdc/icdc-frontend:{{frontend_version}}
     environment:
       REACT_APP_BACKEND_API: "{% if tier == 'prod' %}https://caninecommons.cancer.gov/v1/graphql/{% else %}https://caninecommons-{{ tier }}.cancer.gov/v1/graphql/{% endif %}"
+      REACT_APP_FOOTER_PRIVACY_POLICY: "https://raw.githubusercontent.com/CBIIT/icdc-readMe-content/{{ tier }}/Privacy_Policy.md"
       REACT_APP_BACKEND_GETUSERINFO_API: "{{ backend_user_info }}"
       REACT_APP_FILE_SERVICE_API: "{% if tier == 'prod' %}https://caninecommons.cancer.gov/api/files/{% else %}https://caninecommons-{{ tier }}.cancer.gov/api/files/{% endif %}"
       REACT_APP_INTEROP_SERVICE_URL: "{% if tier == 'prod' %}https://caninecommons.cancer.gov/api/interoperation/graphql{% else %}https://caninecommons-{{ tier }}.cancer.gov/api/interoperation/graphql{% endif %}"
@@ -64,6 +65,7 @@ services:
       REACT_APP_BE_VERSION: "{{ bento_api_version }}"
       REACT_APP_FE_VERSION: "{{ backend_frontend_version }}"
       REACT_APP_GA_TRACKING_ID: "{{ backend_google_analytics_id }}"
+      REACT_APP_FILE_CENTRIC_CART_README: "https://raw.githubusercontent.com/CBIIT/icdc-readMe-content/{{ tier }}/My_Files_Cart_Page_README.md"
     volumes:
       - "/local/content/k9dc/nginx:/var/log/nginx"
     ports:
