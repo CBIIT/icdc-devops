@@ -234,7 +234,7 @@ pipeline {
               case "stage":
                 withCredentials([string(credentialsId: 'stage_bearer', variable: 'BEARER'),
                 string(credentialsId: 'icdc_es_stage_host', variable: 'ES_HOST'),
-                string(credentialsId: 'cloudfront_private_key', variable: 'CLOUDFRONT_PRIVATE_KEY'),
+                string(credentialsId: 'cloudfront_private_key', variable: 'CF_PRIVATE_KEY'),
                     usernamePassword(credentialsId: 'neo4j_user', passwordVariable: 'NEO4J_PASS', usernameVariable: 'NEO4J_USER')]) {
                   env.TIER        = "stage"
                   env.NEO4J_IP    = "${NEO4J_ICDC_STAGE_IP}"
@@ -330,9 +330,11 @@ pipeline {
 		 string(credentialsId: 'sumo_access_key', variable: 'SUMO_ACCESS_KEY'),
 		 string(credentialsId: 'bento_syslog_host', variable: 'SYSLOG_HOST'),
 		 string(credentialsId: 'tls_hostname', variable: 'TLS_HOSTNAME'),
+     string(credentialsId: 'cloudfront_private_key', variable: 'CF_PRIVATE_KEY'),
          file(credentialsId: 'ansible_host_file', variable: 'host_file'),
          ]){
              sh "cp ${host_file} ${WORKSPACE}/icdc-devops/ansible/hosts"
+             sh "echo $CF_PRIVATE_KEY"
              ansiblePlaybook(
                 playbook: '${WORKSPACE}/icdc-devops/ansible/deploy-bento-icdc.yml',
                 inventory: '${WORKSPACE}/icdc-devops/ansible/hosts',
