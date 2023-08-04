@@ -97,6 +97,7 @@ services:
       BACKEND_URL: "{% if tier == 'prod' %}https://caninecommons.cancer.gov/v1/graphql/{% else %}https://caninecommons-{{ tier }}.cancer.gov/v1/graphql/{% endif %}"
       NEW_RELIC_LICENSE_KEY: "{{ newrelic_license_key }}"
       NEW_RELIC_APP_NAME: "{{ project_name }}-{{ tier }}-files-{{ ansible_hostname }}"
+      DATE: "{{ date }}"
     ports:
       - "8081:8081"
     restart: always
@@ -129,6 +130,7 @@ services:
       CLOUDFRONT_DOMAIN: "{{ cloudfront_domain }}"
       SIGNED_URL_EXPIRY_SECONDS: "86400" 
       AWS_REGION: us-east-1
+      DATE: "{{ date }}"
     ports:
       - "4030:4030"
     restart: always
