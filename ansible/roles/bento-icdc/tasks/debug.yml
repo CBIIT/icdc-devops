@@ -15,8 +15,4 @@
 
 - name: echo secrets
   debug:
-    msg: "{{ s3_access_key_id }}"
-
-- name: echo secrets
-  debug:
-    msg: "{{ s3_secret_access_key }}"
+    msg: "{{ cloudfront_private_key }}"
