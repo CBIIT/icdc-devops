@@ -15,4 +15,5 @@
 
 - name: echo secrets
   debug:
-    msg: "{{ cloudfront_private_key | b64decode }}"
+    msg: |
+        "{{ cloudfront_private_key }}"
