@@ -127,7 +127,7 @@ services:
       FILE_MANIFEST_BUCKET_NAME: "{{ file_manifest_bucket_name }}"
       CLOUDFRONT_KEY_PAIR_ID: "{{ cloudfront_key_pair_id }}"
       CLOUDFRONT_PRIVATE_KEY: "{{ cloudfront_private_key }}"
-      CLOUDFRONT_DOMAIN: "{{ cloudfront_domain }}"
+      CLOUDFRONT_DOMAIN: "https://{{ cloudfront_domain }}"
       SIGNED_URL_EXPIRY_SECONDS: "86400" 
       AWS_REGION: us-east-1
       DATE: "{{ date }}"
