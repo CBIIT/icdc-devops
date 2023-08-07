@@ -332,7 +332,6 @@ pipeline {
          file(credentialsId: 'ansible_host_file', variable: 'host_file'),
          ]){
              sh "cp ${host_file} ${WORKSPACE}/icdc-devops/ansible/hosts"
-             sh "echo $CF_PRIVATE_KEY"
              ansiblePlaybook(
                 playbook: '${WORKSPACE}/icdc-devops/ansible/deploy-bento-icdc.yml',
                 inventory: '${WORKSPACE}/icdc-devops/ansible/hosts',
