@@ -30,7 +30,7 @@ pipeline {
         defaultValue: 'QA_ICDC', 
         description: 'Choose the profile to use', 
         type: 'PT_SINGLE_SELECT',
-        value: 'DEV_ICDC,QA_ICDC,STAGE_ICDC,PROD_ICDC,QA_CTDC,QA_MTP,STAGE_MTP,PROD_MTP,QA_INS,QA_CCDC,QA_CDS,QA_CCDI_HUB' )
+        value: 'DEV_ICDC,QA_ICDC,STAGE_ICDC,PROD_ICDC,QA_CTDC,QA_MTP,STAGE_MTP,PROD_MTP,QA_INS,QA_CCDC,QA_CDS,QA_CCDI_HUB,QA_CRDC_DH,STAGE_CRDC_DH' )
 
 	string(defaultValue: "gayathri.radhakrishnan@nih.gov,laxmi.lolla@nih.gov,sohil.sohil@nih.gov", 
         description: 'Enter a list of email addresses to notify in case of test failures:', 
@@ -112,6 +112,15 @@ pipeline {
 						PROJECT="CCDI_HUB"
 						withCredentials([string(credentialsId: 'Sharepoint_Email', variable: 'results_email'),
 						  string(credentialsId: 'Sharepoint_Url_CCDI_HUB', variable: 'sharepoint_url')]) {
+                            RESULTS_URL="${sharepoint_url}"
+							RESULTS_EMAIL="${results_email}"
+                            }
+                        break
+
+					case ~/[\w\/]+CRDC-DH$/:
+						PROJECT="CRDC-DH"
+						withCredentials([string(credentialsId: 'Sharepoint_Email', variable: 'results_email'),
+						  string(credentialsId: 'Sharepoint_Url_CRDC_DH', variable: 'sharepoint_url')]) {
                             RESULTS_URL="${sharepoint_url}"
 							RESULTS_EMAIL="${results_email}"
                             }
@@ -205,6 +214,23 @@ pipeline {
 					case "QA_CCDI_HUB":
 						TIER="QA"
 						withCredentials([file(credentialsId: 'Katalon_QA_CCDI_HUB', variable: 'pass_file')]) {
+							PROFILE="${pass_file}"
+							sh "cp ${pass_file} ${WORKSPACE}/Profiles/"
+                            }
+                        break
+
+					// CRDC Hub
+					case "QA_CRDC_DH":
+						TIER="QA"
+						withCredentials([file(credentialsId: 'Katalon_QA_CRDC_DH', variable: 'pass_file')]) {
+							PROFILE="${pass_file}"
+							sh "cp ${pass_file} ${WORKSPACE}/Profiles/"
+                            }
+                        break
+
+					case "STAGE_CRDC_DH":
+						TIER="STAGE"
+						withCredentials([file(credentialsId: 'Katalon_STAGE_CRDC_DH', variable: 'pass_file')]) {
 							PROFILE="${pass_file}"
 							sh "cp ${pass_file} ${WORKSPACE}/Profiles/"
                             }
