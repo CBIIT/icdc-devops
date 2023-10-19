@@ -30,7 +30,7 @@ pipeline {
         defaultValue: 'Katalon_Dev_ICDC', 
         description: 'Choose the profile to use', 
         type: 'PT_SINGLE_SELECT',
-        value: 'DEV_ICDC,QA_ICDC,STAGE_ICDC,PROD_ICDC,QA_CTDC,QA_MTP,QA_INS,QA_CCDC,QA_CRDC_DH,STAGE_CRDC_DH' )
+        value: 'DEV_ICDC,QA_ICDC,STAGE_ICDC,PROD_ICDC,QA_CTDC,QA_MTP,QA_INS,QA_CCDC,QA_CRDC_DH,STAGE_CRDC_DH,QA_CCDI' )
 
 	string(defaultValue: "gayathri.radhakrishnan@nih.gov,sohil.sohil@nih.gov", 
         description: 'Enter a list of email addresses to notify in case of test failures:', 
@@ -108,6 +108,15 @@ pipeline {
 							RESULTS_EMAIL="${results_email}"
                             }
                         break
+
+					case ~/[\w\/]+CCDI$/:
+						PROJECT="CCDI"
+						withCredentials([string(credentialsId: 'Sharepoint_Email', variable: 'results_email'),
+						  string(credentialsId: 'Sharepoint_Url_CCDI', variable: 'sharepoint_url')]) {
+                            RESULTS_URL="${sharepoint_url}"
+							RESULTS_EMAIL="${results_email}"
+                            }
+                        break
 					}
 
 					switch("${params.Profile}") {
@@ -175,6 +184,15 @@ pipeline {
 					case "STAGE_CRDC_DH":
 						TIER="STAGE"
 						withCredentials([file(credentialsId: 'Katalon_STAGE_CRDC_DH', variable: 'pass_file')]) {
+							PROFILE="${pass_file}"
+							sh "cp ${pass_file} ${WORKSPACE}/Profiles/"
+                            }
+                        break
+
+					// CCDI
+					case "QA_CCDI":
+						TIER="QA"
+						withCredentials([file(credentialsId: 'Katalon_QA_CCDI', variable: 'pass_file')]) {
 							PROFILE="${pass_file}"
 							sh "cp ${pass_file} ${WORKSPACE}/Profiles/"
                             }
