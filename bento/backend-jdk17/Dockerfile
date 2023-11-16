@@ -1,7 +1,7 @@
 FROM alpine:3.18.4
 
 ENV TOMCAT_MAJOR=10
-ENV TOMCAT_VERSION=10.1.15
+ENV TOMCAT_VERSION=10.1.16
 ENV CATALINA_HOME=/usr/local/tomcat 
 ENV TOMCAT_URL=https://archive.apache.org/dist/tomcat/tomcat-"$TOMCAT_MAJOR"/v"$TOMCAT_VERSION"/bin/apache-tomcat-"$TOMCAT_VERSION".tar.gz 
 ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk  
