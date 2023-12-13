@@ -121,7 +121,7 @@ pipeline {
               break
               case "stage":
                 withCredentials([usernamePassword(credentialsId: 'neo4j_icdc_stage_cred', passwordVariable: 'neo4j_password', usernameVariable: 'neo4j_user'),
-				     string(credentialsId: 'icdc_es_stage_host', variable: 'ES_HOST')]) {
+				     string(credentialsId: 'icdc_es_stage_host_lower', variable: 'ES_HOST')]) {
                   env.ES_HOST        = "https://${ES_HOST}"
 				  env.PROJECT        = "icdc"
 				  env.TIER           = "${params.Environment}"
