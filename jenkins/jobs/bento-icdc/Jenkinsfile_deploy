@@ -247,7 +247,7 @@ pipeline {
               case "prod":
                 withCredentials([string(credentialsId: 'prod_bearer', variable: 'BEARER'),
                 string(credentialsId: 'icdc_es_prod_host', variable: 'ES_HOST'),
-                   usernamePassword(credentialsId: 'neo4j_user', passwordVariable: 'NEO4J_PASS', usernameVariable: 'NEO4J_USER')]) {
+                   usernamePassword(credentialsId: 'neo4j_user_prod', passwordVariable: 'NEO4J_PASS', usernameVariable: 'NEO4J_USER')]) {
                 // withCredentials([string(credentialsId: 'icdc_es_prod_host', variable: 'ES_HOST'),
                 //     usernamePassword(credentialsId: 'neo4j_user', passwordVariable: 'NEO4J_PASS', usernameVariable: 'NEO4J_USER')]) {
                   env.TIER        = "prod"
