@@ -7,6 +7,7 @@ services:
   bento-backend:
     container_name: backend
     image: ncidockerhub.nci.nih.gov/icdc/icdc-backend:{{backend_version}}
+    user: root
     environment:
       NEO4J_URL: bolt://{{ neo4j_ip }}:7687
       NEO4J_USER: "{{ neo4j_user }}"
