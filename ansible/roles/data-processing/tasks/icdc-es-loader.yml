@@ -8,7 +8,8 @@
 
 - name: set content location
   set_fact:
-    content_location: "{% if tier == 'dev' or tier == 'qa' %}pre-prod{% else %}prod{% endif %}"
+    #content_location: "{% if tier == 'dev' or tier == 'qa' %}pre-prod{% else %}prod{% endif %}"
+    content_location: "pre-prod"
 
 - name: set about_file location for icdc
   set_fact:
