@@ -13,7 +13,8 @@
 
 - name: set about_file location for icdc
   set_fact:
-    about_file: "{{workspace}}/bento-icdc-frontend/src/content/{{ content_location }}/aboutPagesContent.yaml"
+    #about_file: "{{workspace}}/bento-icdc-frontend/src/content/{{ content_location }}/aboutPagesContent.yaml"
+    about_file: "{{workspace}}/bento-icdc-frontend/blob/main/src/content/pre-prod/aboutPagesContent.yaml"
 
 - name: update indices file
   template:
