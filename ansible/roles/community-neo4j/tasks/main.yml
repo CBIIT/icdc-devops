@@ -73,7 +73,17 @@
     - { regexp: '^#dbms.ssl.policy.bolt.private_key=private.key', line: 'dbms.ssl.policy.bolt.private_key=neo4j.key' }
     - { regexp: '^#dbms.ssl.policy.bolt.public_certificate=public.crt', line: 'dbms.ssl.policy.bolt.public_certificate=neo4j.cert' }
     - { regexp: '^#dbms.ssl.policy.bolt.client_auth=NONE', line: 'dbms.ssl.policy.bolt.client_auth=NONE' }
+    - { regexp: '^#dbms.memory.heap.initial_size=512m', line: 'dbms.memory.heap.initial_size=4g' }
+    - { regexp: '^#dbms.memory.heap.max_size=512m', line: 'dbms.memory.heap.max_size=4g' }
+    
 
+- name: set temp dir for neo4j 
+  ansible.builtin.lineinfile:
+    path: /etc/neo4j/neo4j.conf
+    line: "dbms.jvm.additional=-Djava.io.tmpdir=/home/neo4j"
+    insertafter: '#dbms.directories.transaction.logs.root=data/transactions'
+#dbms.memory.heap.initial_size=512m
+#dbms.memory.heap.max_size=512m
 - name: add APOC
   copy:
     remote_src: yes
