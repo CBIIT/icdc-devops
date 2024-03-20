@@ -7,17 +7,21 @@ pipeline {
 
     parameters {
 
-    gitParameter(branchFilter: 'origin/(.*)', 
-        defaultValue: 'master', 
-        name: 'Tag', 
-        type: 'PT_BRANCH_TAG',
-        quickFilterEnabled: false, 
-        selectedValue: 'DEFAULT', 
-        sortMode: 'ASCENDING_SMART', 
-        tagFilter: '*', 
-        useRepository: 'https://github.com/CBIIT/Commons_Automation')
+    // gitParameter(branchFilter: 'origin/(.*)', 
+    //     defaultValue: 'master', 
+    //     name: 'Tag', 
+    //     type: 'PT_BRANCH_TAG',
+    //     quickFilterEnabled: false, 
+    //     selectedValue: 'DEFAULT', 
+    //     sortMode: 'ASCENDING_SMART', 
+    //     tagFilter: '*', 
+    //     useRepository: 'https://github.com/CBIIT/Commons_Automation')
 
-    string(defaultValue: "Commons_Automation.prj", 
+    choice(choices: ['Commons_Automation', 'qa-data-validation'],
+	    description: 'Select the test code repository to use',
+		name: 'Code_Repo')
+	
+	string(defaultValue: "Commons_Automation.prj", 
         description: 'Enter the Katalon Project file (include the path relative to the repo root):', 
         name: 'KatalonPrj')
 
@@ -37,20 +41,30 @@ pipeline {
         name: 'EmailRecipients')
 
         }
-
-    stages{
+	
+	stages{
         stage('checkout'){
             steps {
 
-                checkout([$class: 'GitSCM', 
+                // checkout([$class: 'GitSCM', 
+                //     branches: [[name: "${params.Tag}"]], 
+                //     doGenerateSubmoduleConfigurations: false,
+				// 	extensions: [],
+				// 	submoduleCfg: [], 
+                //     userRemoteConfigs: [[url: 'https://github.com/CBIIT/Commons_Automation']]])
+
+                // }
+
+				checkout([$class: 'GitSCM', 
                     branches: [[name: "${params.Tag}"]], 
                     doGenerateSubmoduleConfigurations: false,
 					extensions: [],
 					submoduleCfg: [], 
-                    userRemoteConfigs: [[url: 'https://github.com/CBIIT/Commons_Automation']]])
+                    userRemoteConfigs: [[url: "https://github.com/CBIIT/${params.Code_Repo}"]]])
 
                 }
             }
+
 		stage('set Profile'){
 		    environment {
                 KATALON_PRJ         =   "${params.KatalonPrj}"
