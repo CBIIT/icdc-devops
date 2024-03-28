@@ -42,7 +42,7 @@
         backend_version: "{{ lookup('env','BE_VERSION') }}"
         image_version: "{{ frontend_version }}"
         tier: "{{ lookup('env','TIER') }}"
-        ecs_cluster_name: "{{ project_name }}-{{ tier }}"
+        ecs_cluster_name: "{{ project_name }}-{{ tier }}-ecs"
         execution_role: "{{ project_name }}-{{ tier }}-task-execution-role"
         task_role: "{{ project_name }}-{{ tier }}-task-role"
         sumo_collector_endpoint: "{{ lookup('amazon.aws.aws_secret', 'bento/{{ project_name }}/{{ tier }}.sumo_collector_endpoint', nested=true, region='us-east-1' ) }}"

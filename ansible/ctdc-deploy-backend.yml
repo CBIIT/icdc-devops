@@ -56,7 +56,7 @@
         container_image_url: "{{ ecr_repo }}/{{ project_name }}-{{ container_name }}"
         #Elasticsearch
         es_host: "{{ lookup('amazon.aws.aws_secret', 'bento/{{ project_name }}/{{ tier }}.es_host', nested=true, region='us-east-1' ) }}"
-        ecs_cluster_name: "{{ project_name }}-{{ tier }}"
+        ecs_cluster_name: "{{ project_name }}-{{ tier }}-ecs"
         es_schema: "es-schema-{{ project_name }}.graphql"
         enable_es_filter: "true"
         #Redis vars
