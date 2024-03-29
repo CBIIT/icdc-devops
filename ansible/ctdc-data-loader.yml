@@ -22,6 +22,17 @@
     #     project_name: ctdc
     #     database_name: "{{ project_name }}-{{ tier }}-neo4j-4"
 
+    - name: checkout specified commit
+      shell: "git checkout {{ dataloader_commit_id }}"
+      args:
+        chdir: "{{ workspace }}"
+
+    
+    - name: checkout specified commit
+      shell: "git checkout {{ model_commit_id }}"
+      args:
+        chdir: "{{ workspace }}/ctdc-model"
+    
     #load data
     - name: perform data loading
       include_role:
