@@ -25,13 +25,13 @@
     - name: checkout specified commit
       shell: "git checkout {{ dataloader_commit_id }}"
       args:
-        chdir: "{{ workspace }}"
+        chdir: "{{ lookup('env','WORKSPACE') }}"
 
     
     - name: checkout specified commit
       shell: "git checkout {{ model_commit_id }}"
       args:
-        chdir: "{{ workspace }}/ctdc-model"
+        chdir: "{{ lookup('env','WORKSPACE') }}/ctdc-model"
     
     #load data
     - name: perform data loading
