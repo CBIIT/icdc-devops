@@ -120,7 +120,8 @@ pipeline {
 				
           sh 'git submodule update --init'
   			dir('icdc-devops'){
-  				git branch: 'master',
+  				//git branch: 'master',
+          git branch: 'bento-dataloader-ecs',
     				url: 'https://github.com/CBIIT/icdc-devops.git'
   			}
         dir('bento-model'){
