@@ -71,6 +71,9 @@ pipeline {
         sortMode: 'ASCENDING_SMART', 
         tagFilter: '*', 
         useRepository: 'https://github.com/CBIIT/bento-frontend')
+    string(defaultValue: "", 
+        description: 'model commit', 
+        name: 'modelCommit')
 	
   }
   // options {
@@ -318,6 +321,7 @@ pipeline {
             			inventory: '${WORKSPACE}/icdc-devops/ansible/hosts',
                   extraVars: [
                     neo4j_ip: "${NEO4J_IP}",
+                    commit_id: "${params.modelCommit}"
                   ], 
             			colorized: true) 
  			}
