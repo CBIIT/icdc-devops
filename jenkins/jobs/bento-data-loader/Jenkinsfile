@@ -19,7 +19,7 @@ pipeline {
         defaultValue: 'dev', 
         description: 'Choose the environment to build', 
         type: 'PT_SINGLE_SELECT',
-        value: 'demo,gdc,dev,qa,perf,icdc,prod,poc,gitlab,qa2' )
+        value: 'demo,gdc,dev,qa,perf,icdc,prod,poc,gitlab,qa2,dev-ecs' )
     extendedChoice( 
         name: 'ProjectName', 
         defaultValue: 'bento', 
@@ -80,6 +80,14 @@ pipeline {
   	maven 'Default' 
     jdk 'Default' 
   }
+
+  environment {
+
+	PROJECT      = "${params.ProjectName}"
+	ENV          = "${params.Environment}"
+
+  }
+
   stages{
   	stage('checkout'){
   		steps {
@@ -180,6 +188,20 @@ pipeline {
                   env.PROJECT         = "${params.ProjectName}"
                   env.SPLIT           = "${params.SplitTransactions}"
                 }
+              break
+              case "dev-ecs":
+                //withCredentials([usernamePassword(credentialsId: "${params.ProjectName}_${params.Environment}_neo4j_user", passwordVariable: 'neo4j_password', usernameVariable: 'neo4j_user')]) {
+                  //env.NEO4J_IP        = "${${params.ProjectName}_${params.Environment}_neo4j_ip}"
+                  env.NEO4J_IP        = sh(label: 'Get Neo4j Host', returnStdout: true, script: "aws secretsmanager get-secret-value --region $REGION --secret-id bento/$PROJECT/$ENV --query SecretString --output text | jq -r '.neo4j_ip'").trim()
+                  env.S3_FOLDER       = "${params.S3Folder}"
+                  env.TIER            = "${params.Environment}"
+                  env.WIPE_DB         = "${params.WipeDB}"
+                  // env.NEO4J_PASSWORD  = "${neo4j_password}"
+                  env.NEO4J_PASSWORD  = sh(label: 'Get Neo4j Password', returnStdout: true, script: "aws secretsmanager get-secret-value --region $REGION --secret-id bento/$PROJECT/$ENV --query SecretString --output text | jq -r '.neo4j_pass'").trim()
+                  env.CHEAT_MODE      = "${params.CheatMode}"
+                  env.PROJECT         = "${params.ProjectName}"
+                  env.SPLIT           = "${params.SplitTransactions}"
+                //}
               break
               case "poc":
                 withCredentials([usernamePassword(credentialsId: "${params.ProjectName}_${params.Environment}_neo4j_user", passwordVariable: 'neo4j_password', usernameVariable: 'neo4j_user')]) {
@@ -291,24 +313,27 @@ pipeline {
  			wrap([$class: 'AnsiColorBuildWrapper', colorMapName: "xterm"]) {
  					ansiblePlaybook( 
             			playbook: '${WORKSPACE}/icdc-devops/ansible/bento-data-loader.yml', 
-            			inventory: '${WORKSPACE}/icdc-devops/ansible/hosts', 
+            			inventory: '${WORKSPACE}/icdc-devops/ansible/hosts',
+                  extraVars: [
+                    neo4j_ip: "${NEO4J_IP}",
+                  ], 
             			colorized: true) 
  			}
  		}
     }
-    stage('flush_redis'){
-	  environment {
-       TIER = "${params.Environment}"
-      }
-      steps{
-        wrap([$class: 'AnsiColorBuildWrapper', colorMapName: "xterm"]) {
-          ansiblePlaybook( 
-                playbook: '${WORKSPACE}/icdc-devops/ansible/redis.yml', 
-                inventory: '${WORKSPACE}/icdc-devops/ansible/hosts', 
-                colorized: true)
-        }
-      }
-    }
+    // stage('flush_redis'){
+	  // environment {
+    //    TIER = "${params.Environment}"
+    //   }
+    //   steps{
+    //     wrap([$class: 'AnsiColorBuildWrapper', colorMapName: "xterm"]) {
+    //       ansiblePlaybook( 
+    //             playbook: '${WORKSPACE}/icdc-devops/ansible/redis.yml', 
+    //             inventory: '${WORKSPACE}/icdc-devops/ansible/hosts', 
+    //             colorized: true)
+    //     }
+    //   }
+    // }
   }
   post {
     success {
