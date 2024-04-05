@@ -126,26 +126,26 @@ pipeline {
           git branch: 'master',
           url: 'https://github.com/CBIIT/BENTO-TAILORx-model'
         }
-        dir('ccdi-model'){
-          git branch: 'main',
-          url: 'https://github.com/CBIIT/CCDI-Portal-ETL.git'
-        }
-        dir('gmb-model'){
-          git branch: 'utf8',
-          url: 'https://github.com/CBIIT/gmb-model.git'
-        }
-        dir('c3dc-model'){
-            git branch: 'master',
-            url: 'https://github.com/CBIIT/c3dc-model.git'
-         }
-        dir('ins-model'){
-          git branch: 'main',
-          url: 'https://github.com/CBIIT/INS-ETL.git'
-        }
-       dir('ctdc-model'){
-          git branch: 'master',
-          url: 'https://github.com/CBIIT/ctdc-model'
-        }
+      //   dir('ccdi-model'){
+      //     git branch: 'main',
+      //     url: 'https://github.com/CBIIT/CCDI-Portal-ETL.git'
+      //   }
+      //   dir('gmb-model'){
+      //     git branch: 'utf8',
+      //     url: 'https://github.com/CBIIT/gmb-model.git'
+      //   }
+      //   dir('c3dc-model'){
+      //       git branch: 'master',
+      //       url: 'https://github.com/CBIIT/c3dc-model.git'
+      //    }
+      //   dir('ins-model'){
+      //     git branch: 'main',
+      //     url: 'https://github.com/CBIIT/INS-ETL.git'
+      //   }
+      //  dir('ctdc-model'){
+      //     git branch: 'master',
+      //     url: 'https://github.com/CBIIT/ctdc-model'
+      //   }
   		}
  
   	}
