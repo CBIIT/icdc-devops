@@ -74,8 +74,7 @@
     - { regexp: '^#dbms.ssl.policy.bolt.public_certificate=public.crt', line: 'dbms.ssl.policy.bolt.public_certificate=neo4j.cert' }
     - { regexp: '^#dbms.ssl.policy.bolt.client_auth=NONE', line: 'dbms.ssl.policy.bolt.client_auth=NONE' }
     - { regexp: '^#dbms.memory.heap.initial_size=512m', line: 'dbms.memory.heap.initial_size=8g' }
-    - { regexp: '^#dbms.memory.heap.max_size=512m', line: 'dbms.memory.heap.max_size=4g' }
-    - { regexp: '^dbms.directories.data=/var/lib/neo4j/data', line: 'dbms.directories.data=/neo4j/data' }
+    - { regexp: '^#dbms.memory.heap.max_size=512m', line: 'dbms.memory.heap.max_size=8g' }
     
 
 - name: set temp dir for neo4j 
