@@ -15,6 +15,12 @@ pipeline {
         sortMode: 'ASCENDING_SMART', 
         tagFilter: '*', 
         useRepository: 'https://github.com/CBIIT/icdc-dataloader')
+    string(defaultValue: "", 
+        description: 'Commit ID for Data Loader', 
+        name: 'DataLoaderCommit')
+    string(defaultValue: "", 
+        description: 'Commit ID for Model', 
+        name: 'ModelCommit')
     extendedChoice( 
         name: 'Environment', 
         defaultValue: 'dev', 
@@ -96,7 +102,11 @@ pipeline {
  			ansiblePlaybook(
                 playbook: '${WORKSPACE}/icdc-devops/ansible/ctdc-data-loader.yml',
             	inventory: '${WORKSPACE}/icdc-devops/ansible/hosts',
-            	colorized: true)
+            	extraVars: [
+                dataloader_commit_id: "${params.DataLoaderCommit}",
+                model_commit_id: "${params.ModelCommit}"
+              ],
+              colorized: true)
  			}
  		}
     }
