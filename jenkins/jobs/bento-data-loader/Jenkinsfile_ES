@@ -46,6 +46,15 @@ pipeline {
   	maven 'Default' 
     jdk 'Default' 
   }
+
+  environment {
+
+	PROJECT      = "bento"
+	ENV          = "${params.Environment}"
+  REGION       = "us-east-1"
+
+  }
+
   stages{
 
   	stage('checkout'){
