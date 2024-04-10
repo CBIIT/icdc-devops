@@ -80,7 +80,8 @@ pipeline {
   			sh 'cd bento-backend && git submodule update --init --recursive'
 
 			checkout([$class: 'GitSCM',
-				branches: [[name: "master"]],
+				//branches: [[name: "master"]],
+        branches: [[name: "bento-dataloader-ecs"]],
 				doGenerateSubmoduleConfigurations: false,
 				extensions: [[$class: 'RelativeTargetDirectory',
 				relativeTargetDir: 'icdc-devops']],
@@ -113,11 +114,13 @@ pipeline {
               case "dev":
                 withCredentials([usernamePassword(credentialsId: 'bento_dev_neo4j_user', passwordVariable: 'neo4j_password', usernameVariable: 'neo4j_user'),
 				     string(credentialsId: 'es_dev_host', variable: 'ES_HOST')]) {
-                  env.ES_HOST        = "https://${ES_HOST}"
-				  env.PROJECT        = "bento"
-				  env.TIER           = "${params.Environment}"
-				  env.NEO4J_PASSWORD = "${neo4j_password}"
-				  env.NEO4J_IP       = "${NEO4J_DEV_IP}"
+                  ES_NAME            = sh(label: 'Get Neo4j Host', returnStdout: true, script: "aws secretsmanager get-secret-value --region $REGION --secret-id bento/$PROJECT/$ENV --query SecretString --output text | jq -r '.es_host'").trim()
+                  env.ES_HOST        = "https://${ES_NAME}"
+				          env.PROJECT        = "bento"
+				          env.TIER           = "${params.Environment}"
+				          env.NEO4J_PASSWORD = "${neo4j_password}"
+				          //env.NEO4J_IP       = "${NEO4J_DEV_IP}"
+                  env.NEO4J_IP        = sh(label: 'Get Neo4j Host', returnStdout: true, script: "aws secretsmanager get-secret-value --region $REGION --secret-id bento/$PROJECT/$ENV --query SecretString --output text | jq -r '.neo4j_ip'").trim()
                 }
               break
               case "qa":
