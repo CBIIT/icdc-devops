@@ -1,7 +1,8 @@
 pipeline {
 	agent {
         node {
-			label "docker-katalon-ch"
+			//label "docker-katalon-ch"
+			label "slave-ncias-d2940-c"
             }
         }
 
@@ -243,7 +244,16 @@ pipeline {
 				PROFILE_FILE        =   "${PROFILE}"
                 }
 				
-            steps {
+            agent {
+                docker {
+                    image 'katalonstudio/katalon:8.5.5'
+                    //args '--net=host -u root -v /var/run/docker.sock:/var/run/docker.sock'
+                    args '--net=host'
+                    reuseNode true
+                }
+            }
+			
+			steps {
 
 				script {
 						withCredentials([string(credentialsId: 'Katalon_API_Key', variable: 'api_key'),
