@@ -277,6 +277,9 @@ pipeline {
 
 								#################### UPDATE CHROME DRIVER (v108 - for Katalonstudio 5.5) ####################
 
+								# add unzip package
+								apt-get update && apt-get install -y unzip
+								
 								# Echo versions
 								echo "Pre Update:"
 								google-chrome --version
