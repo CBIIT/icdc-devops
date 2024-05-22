@@ -1,0 +1,47 @@
+pipeline {
+    agent {
+        node {
+            label "cicd_microservice"
+        }
+    }
+
+    stages{
+
+        stage('Echo Branch'){
+            
+            steps {
+
+                echo "Branch:   ${branch}"
+
+            }
+
+        }
+
+        stage('Check Regex'){
+
+            when { 
+
+                branch pattern: "releases\/[0-9]+(\.[0-9]+)*[0-9]*?$", comparator: "REGEXP"
+
+            }
+
+            steps {
+
+                echo "Branch:   ${branch}"
+
+            }
+            
+        }
+
+    }
+
+    post {
+
+        cleanup {
+
+            cleanWs()
+
+        }	
+
+  }
+}
