@@ -11,7 +11,7 @@ pipeline {
             
             steps {
 
-                echo "Branch:   ${branch}"
+                echo "Branch:   ${GIT_BRANCH}"
 
             }
 
