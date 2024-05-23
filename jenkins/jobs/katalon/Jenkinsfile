@@ -1,7 +1,8 @@
 pipeline {
 	agent {
         node { 
-			label "docker-katalon-ch"
+			//label "docker-katalon-ch"
+			label "slave-ncias-d2940-c"
             }
         }
 
@@ -279,7 +280,17 @@ pipeline {
                 KATALON_PRJ         =   "${params.KatalonPrj}"
                 KATALON_SUITE_PATH  =   "${params.KatalonSuite}"
 				PROFILE_FILE        =   "${PROFILE}"
+            }
+
+			agent {
+                docker {
+                    image 'katalonstudio/katalon:8.5.5'
+                    //args '--net=host -u root -v /var/run/docker.sock:/var/run/docker.sock'
+                    args '--net=host -u root'
+                    reuseNode true
                 }
+            }
+
             steps {
 
 				script {
@@ -304,6 +315,9 @@ pipeline {
 								
 								#################### UPDATE CHROME DRIVER (v108 - for Katalonstudio 5.5) ####################
 								
+								# add unzip package
+								apt-get update && apt-get install -y unzip zip
+
 								# Echo versions
 								echo "Pre Update:"
 								google-chrome --version
