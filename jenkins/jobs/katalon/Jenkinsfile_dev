@@ -268,6 +268,13 @@ pipeline {
 
 							sh label: 'Katalon-Tests', script: '''#!/bin/bash
 								
+								#############################################################################################
+
+								# add script dependencies
+								apt-get update && apt-get install -y unzip zip python3-pip
+
+								#############################################################################################
+
 								# Set datestamp for results file
 								dateStamp=$(date +%Y%m%d)
 								reportFile="${KATALON_PROFILE}_${dateStamp}_build_${BUILD_NUMBER}"
@@ -284,9 +291,6 @@ pipeline {
 
 								#################### UPDATE CHROME DRIVER (v108 - for Katalonstudio 5.5) ####################
 
-								# add unzip package
-								apt-get update && apt-get install -y unzip zip
-								
 								# Echo versions
 								echo "Pre Update:"
 								google-chrome --version
@@ -313,7 +317,7 @@ pipeline {
 									echo " "
 									echo "Requirements file found - installing python dependencies"
 									echo " "
-									apt-get update && apt-get install -y python3-pip
+									#apt-get update && apt-get install -y python3-pip
 									which pip
 									pip --version
 									which pip3
