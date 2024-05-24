@@ -270,6 +270,9 @@ pipeline {
 								
 								#############################################################################################
 
+								# remove chrome repo since it is unsigned
+								mv /etc/apt/sources.list.d/google-chrome.list /etc/apt/sources.list.d/google-chrome.list.bak
+
 								# add script dependencies
 								apt-get update && apt-get install -y unzip zip python3-pip
 
