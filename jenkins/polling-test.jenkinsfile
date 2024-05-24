@@ -35,13 +35,13 @@ pipeline {
 
     }
 
-    post {
+//     post {
 
-        cleanup {
+//         cleanup {
 
-            cleanWs()
+//             cleanWs()
 
-        }	
+//         }	
 
-  }
+//   }
 }
