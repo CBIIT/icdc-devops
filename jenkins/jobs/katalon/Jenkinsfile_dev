@@ -308,9 +308,17 @@ pipeline {
 								#############################################################################################
 								# Python Dependencies
 
+								ls -la requirements.txt
 								if [ -f requirements.txt ]; then
+									echo " "
+									echo "Requirements file found - installing python dependencies"
+									echo " "
 									apt-get update && apt-get install -y python3-pip
-									pip install -r requirements.txt
+									which pip
+									pip --version
+									which pip3
+									pip3 --version
+								#	pip install -r requirements.txt
 								fi
 								
 								#############################################################################################
