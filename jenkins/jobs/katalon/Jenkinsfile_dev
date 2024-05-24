@@ -268,7 +268,7 @@ pipeline {
 
 							sh label: 'Katalon-Tests', script: '''#!/bin/bash
 								
-								#############################################################################################
+								############################## SCRIPT DEPENDENCIES ##########################################
 
 								# remove chrome repo since it is unsigned
 								mv /etc/apt/sources.list.d/google-chrome.list /etc/apt/sources.list.d/google-chrome.list.bak
@@ -312,20 +312,13 @@ pipeline {
 								google-chrome --version
 								/opt/katalonstudio/configuration/resources/drivers/chromedriver_linux64/chromedriver --version
 								
-								#############################################################################################
-								# Python Dependencies
+								############################## PYTHON DEPENDENCIES ##########################################
 
-								ls -la requirements.txt
 								if [ -f requirements.txt ]; then
 									echo " "
 									echo "Requirements file found - installing python dependencies"
 									echo " "
-									#apt-get update && apt-get install -y python3-pip
-									which pip
-									pip --version
-									which pip3
-									pip3 --version
-								#	pip install -r requirements.txt
+									pip install -r requirements.txt
 								fi
 								
 								#############################################################################################
