@@ -329,7 +329,7 @@ pipeline {
 								katalonc -noSplash -runMode=console --config -projectPath="$WORKSPACE/$KATALON_PRJ" -retry=0 -testSuitePath="$KATALON_SUITE_PATH" -executionProfile="$profile_name" -browserType="$KATALON_BROWSER (headless)" -reportFolder="results" -reportFileName="$reportFile" -apiKey="$api_key" -orgID="$org_id"
 
 								# Fix file permissions in the workspace
-								chown -R commonsdocker:commonsdocker $WORKSPACE
+								#chown -R commonsdocker:commonsdocker $WORKSPACE
 								
 								'''
 
@@ -356,6 +356,9 @@ pipeline {
 
 					#mv /etc/apt/sources.list.d/google-chrome.list /etc/apt/sources.list.d/google-chrome.list.bak && apt-get update && apt-get install -y zip
 					#apt-get update && apt-get install -y zip
+
+					# Fix file permissions in the workspace
+					sudo chown -R commonsdocker:commonsdocker $WORKSPACE
 					
 					resultsFile=$(basename results/*.html)
 					zipFile=$(basename -s .html results/*.html)
