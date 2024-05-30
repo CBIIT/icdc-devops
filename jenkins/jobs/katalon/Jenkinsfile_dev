@@ -373,10 +373,10 @@ pipeline {
 
 			}
 			
-			cleanup {
+			// cleanup {
 
-	            cleanWs()
+	        //     cleanWs()
 
-	            }
+	        //     }
 	}
 }	
