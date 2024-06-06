@@ -1,7 +1,8 @@
 pipeline {
 	agent {
         node {
-			label "docker-katalon-ch"
+			//label "docker-katalon-ch"
+			label "build-agent"
             }
         }
 
@@ -86,14 +87,14 @@ pipeline {
 				PROFILE_FILE        =   "${PROFILE}"
                 }
             
-			// agent {
-            //     docker {
-            //         image 'katalonstudio/katalon:8.5.5'
-            //         //args '--net=host -u root -v /var/run/docker.sock:/var/run/docker.sock'
-            //         args '--net=host -u root'
-            //         reuseNode true
-            //     }
-            // }
+			agent {
+                docker {
+                    image 'katalonstudio/katalon:8.5.5'
+                    //args '--net=host -u root -v /var/run/docker.sock:/var/run/docker.sock'
+                    args '--net=host -u root'
+                    reuseNode true
+                }
+            }
 			
 			steps {
 
@@ -174,7 +175,7 @@ pipeline {
 					#apt-get update && apt-get install -y zip
 
 					# Fix file permissions in the workspace
-					#chown -R bento:bento $WORKSPACE
+					chown -R bento:bento $WORKSPACE
 					
 					resultsFile=$(basename results/*.html)
 					zipFile=$(basename -s .html results/*.html)
