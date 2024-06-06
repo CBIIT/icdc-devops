@@ -1,4 +1,5 @@
-FROM jenkins/inbound-agent:latest-jdk8 as jnlp
+#FROM jenkins/inbound-agent:latest-jdk8 as jnlp
+FROM jenkins/inbound-agent:latest-jdk11 as jnlp
 
 FROM katalonstudio/katalon:8.5.5
 
