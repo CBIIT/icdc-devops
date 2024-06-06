@@ -1,7 +1,8 @@
 pipeline {
 	agent {
         node {
-			label "docker-katalon-ch"
+			//label "docker-katalon-ch"
+			label "build-agent"
             }
         }
 
@@ -84,7 +85,17 @@ pipeline {
                 KATALON_SUITE_PATH  =   "${params.KatalonSuite}"
 				PROFILE_FILE        =   "${PROFILE}"
                 }
-            steps {
+            
+			agent {
+                docker {
+                    image 'katalonstudio/katalon:8.5.5'
+                    //args '--net=host -u root -v /var/run/docker.sock:/var/run/docker.sock'
+                    args '--net=host -u root'
+                    reuseNode true
+                }
+            }
+			
+			steps {
 
 				script {
 						withCredentials([string(credentialsId: 'Katalon_API_Key', variable: 'api_key'),
@@ -108,7 +119,10 @@ pipeline {
 								
 								#################### UPDATE CHROME DRIVER (v108 - for Katalonstudio 5.5) ####################
 
-								# Echo versions
+								# add unzip package
+								apt-get update && apt-get install -y unzip zip
+                                
+                                # Echo versions
 								echo "Pre Update:"
 								google-chrome --version
 								/opt/katalonstudio/configuration/resources/drivers/chromedriver_linux64/chromedriver --version
@@ -128,9 +142,10 @@ pipeline {
 								
 								#############################################################################################
 								
-								#echo "projectPath=$KATALON_PRJ testSuitePath=$KATALON_SUITE_PATH executionProfile=$profile_name filename=$profile_file"
+								#echo "projectPath=$WORKSPACE/$KATALON_PRJ testSuitePath=$KATALON_SUITE_PATH executionProfile=$profile_name filename=$profile_file"
 								
 								# Run Katalon Tests
+								#katalonc -noSplash -runMode=console --config -webui.autoUpdateDrivers=true -projectPath="$WORKSPACE/$KATALON_PRJ" -retry=0 -testSuitePath="$KATALON_SUITE_PATH" -executionProfile="$profile_name" -browserType="$KATALON_BROWSER (headless)" -reportFolder="results" -reportFileName="$reportFile" -apiKey="$api_key" -orgID="$org_id"
 								katalonc -noSplash -runMode=console --config -projectPath="$WORKSPACE/$KATALON_PRJ" -retry=0 -testSuitePath="$KATALON_SUITE_PATH" -executionProfile="$profile_name" -browserType="$KATALON_BROWSER (headless)" -reportFolder="results" -reportFileName="$reportFile" -apiKey="$api_key" -orgID="$org_id"
 
 								'''
@@ -156,7 +171,10 @@ pipeline {
 
 					sh label: 'Zip-Katalon-Results', script: '''#!/bin/bash
 
-					apt-get update && apt-get install -y zip
+					#apt-get update && apt-get install -y zip
+
+					# Fix file permissions in the workspace
+					chown -R bento:bento $WORKSPACE
 					
 					resultsFile=$(basename results/*.html)
 					zipFile=$(basename -s .html results/*.html)
