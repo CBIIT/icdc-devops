@@ -66,7 +66,8 @@ pipeline {
                     switch("${params.Profile}") {
 
 					case "Katalon_DEV":
-                        withCredentials([file(credentialsId: 'Katalon_DEV', variable: 'pass_file')]) {
+                        //withCredentials([file(credentialsId: 'Katalon_DEV', variable: 'pass_file')]) {
+						withCredentials([file(credentialsId: 'Katalon_PERF_PROD', variable: 'pass_file')]) {
                             PROFILE="${pass_file}"
 							sh "cp ${pass_file} ${WORKSPACE}/Profiles/"
                             }
