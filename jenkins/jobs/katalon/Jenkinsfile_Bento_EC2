@@ -1,7 +1,8 @@
 pipeline {
 	agent {
         node {
-			label "build-agent"
+			//label "build-agent"
+			label "bento-agents"
             }
         }
 	environment { 
