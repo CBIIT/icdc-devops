@@ -2,7 +2,8 @@ pipeline {
 	agent {
         node {
 			//label "docker-katalon-ch"
-			label "build-agent"
+			//label "build-agent"
+			label "bento-agents"
             }
         }
 
