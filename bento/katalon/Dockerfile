@@ -2,7 +2,8 @@
 FROM jenkins/inbound-agent:latest-jdk11 as jnlp
 
 #FROM katalonstudio/katalon:8.5.5
-FROM katalonstudio/katalon:8.6.9
+#FROM katalonstudio/katalon:8.6.9
+FROM katalonstudio/katalon:9.3.2
 
 COPY --from=jnlp /usr/local/bin/jenkins-agent /usr/local/bin/jenkins-agent
 COPY --from=jnlp /usr/share/jenkins/agent.jar /usr/share/jenkins/agent.jar
