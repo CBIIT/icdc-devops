@@ -357,8 +357,8 @@ pipeline {
 								# Run Katalon Tests
 								katalonc -noSplash -runMode=console --config -projectPath="$WORKSPACE/$KATALON_PRJ" -retry=0 -testSuitePath="$KATALON_SUITE_PATH" -executionProfile="$profile_name" -browserType="$KATALON_BROWSER (headless)" -reportFolder="results" -reportFileName="$reportFile" -apiKey="$api_key" -orgID="$org_id"
 
-								# Set permissions on results folder
-								chown -R commonsdocker:commonsdocker results
+								# set results folder to open access
+								chmod 777 -R results
 
 								'''
 
