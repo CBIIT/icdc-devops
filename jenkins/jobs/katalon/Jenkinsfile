@@ -358,7 +358,7 @@ pipeline {
 								katalonc -noSplash -runMode=console --config -projectPath="$WORKSPACE/$KATALON_PRJ" -retry=0 -testSuitePath="$KATALON_SUITE_PATH" -executionProfile="$profile_name" -browserType="$KATALON_BROWSER (headless)" -reportFolder="results" -reportFileName="$reportFile" -apiKey="$api_key" -orgID="$org_id"
 
 								# set results folder to open access
-								chmod 777 -R results
+								#chmod 777 -R results
 
 								'''
 
@@ -366,6 +366,33 @@ pipeline {
 						}
 
                 }
+            }
+
+			stage('set results permissions'){
+
+				agent {
+					docker {
+						image 'katalonstudio/katalon:8.5.5'
+						//args '--net=host -u root -v /var/run/docker.sock:/var/run/docker.sock'
+						args '--net=host -u root'
+						reuseNode true
+					}
+				}
+
+				steps {
+
+					script {
+
+						sh label: 'Fix-Results_permissions', script: '''#!/bin/bash
+
+							# set results folder to open access
+							chmod 777 -R results
+
+							'''
+
+					}
+
+				}
             }
         }
 		post {
