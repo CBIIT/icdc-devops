@@ -368,35 +368,45 @@ pipeline {
                 }
             }
 
-			stage('set results permissions'){
+			// stage('set results permissions'){
 
-				agent {
-					docker {
-						image 'katalonstudio/katalon:8.5.5'
-						//args '--net=host -u root -v /var/run/docker.sock:/var/run/docker.sock'
-						args '--net=host -u root'
-						reuseNode true
-					}
-				}
+			// 	agent {
+			// 		docker {
+			// 			image 'katalonstudio/katalon:8.5.5'
+			// 			//args '--net=host -u root -v /var/run/docker.sock:/var/run/docker.sock'
+			// 			args '--net=host -u root'
+			// 			reuseNode true
+			// 		}
+			// 	}
 
-				steps {
+			// 	steps {
 
-					script {
+			// 		script {
 
-						sh label: 'Fix-Results_permissions', script: '''#!/bin/bash
+			// 			sh label: 'Fix-Results_permissions', script: '''#!/bin/bash
 
-							# set results folder to open access
-							chmod 777 -R results
+			// 				# set results folder to open access
+			// 				chmod 777 -R results
 
-							'''
+			// 				'''
 
-					}
+			// 		}
 
-				}
-            }
+			// 	}
+            // }
         }
 		post {
 			always {
+
+				script {
+
+					docker.image('katalonstudio/katalon:8.5.5').inside("-u root") {
+
+						sh "chmod 777 -R results"
+
+					}
+
+				}
 
 				publishHTML([allowMissing: true,
 					alwaysLinkToLastBuild: false,
