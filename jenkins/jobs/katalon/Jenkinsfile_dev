@@ -350,9 +350,6 @@ pipeline {
 								
 								#################### UPDATE PYTHON (3.9) ####################################################
 								
-								echo "PYTHON_VERSION:    ${PY_VER}"
-								echo "PYTHON_VERSION:    "$PY_VER
-
 								# If python 3.9 is selected install this
 								if [[ "$PY_VER" == "3.9" ]]
 								then
@@ -364,7 +361,6 @@ pipeline {
 								
 								# Install pip
 								apt-get update && apt-get install -y python3-pip
-								which pip
 								echo "pip version:"
 								pip --version
 
