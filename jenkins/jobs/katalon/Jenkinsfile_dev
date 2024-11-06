@@ -39,7 +39,7 @@ pipeline {
         defaultValue: 'QA_ICDC', 
         description: 'Choose the profile to use', 
         type: 'PT_SINGLE_SELECT',
-        value: 'DEV_ICDC,QA_ICDC,STAGE_ICDC,PROD_ICDC,QA_CTDC,QA_MTP,STAGE_MTP,PROD_MTP,QA_INS,QA_CCDC,QA_CDS,QA_CCDI_HUB,QA_CRDC_DH,STAGE_CRDC_DH,QA_CCDI' )
+        value: 'DEV_ICDC,QA_ICDC,STAGE_ICDC,PROD_ICDC,QA_CTDC,QA_MTP,STAGE_MTP,PROD_MTP,QA_INS,QA_CCDC,QA_CDS,QA_CCDI_HUB,QA_CRDC_DH,STAGE_CRDC_DH,QA_CCDI,QA_FEDERATION' )
 
 	string(defaultValue: "gayathri.radhakrishnan@nih.gov,laxmi.lolla@nih.gov,sohil.sohil@nih.gov", 
         description: 'Enter a list of email addresses to notify in case of test failures:', 
@@ -272,6 +272,15 @@ pipeline {
                             }
                         break
 
+					// Federation
+					case "QA_FEDERATION":
+						TIER="QA"
+						withCredentials([file(credentialsId: 'Katalon_QA_FEDERATION', variable: 'pass_file')]) {
+							PROFILE="${pass_file}"
+							sh "cp ${pass_file} ${WORKSPACE}/Profiles/"
+                            }
+                        break
+					
 					// CTDC
 					case "QA_CTDC":
 						WIKI_PAGE="289178298"
