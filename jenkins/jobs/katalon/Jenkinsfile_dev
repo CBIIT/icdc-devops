@@ -298,7 +298,8 @@ pipeline {
 
 			agent {
                 docker {
-                    image 'katalonstudio/katalon:8.5.5'
+                    // image 'katalonstudio/katalon:8.5.5'
+					image 'katalonstudio/katalon:9.3.1'
                     //args '--net=host -u root -v /var/run/docker.sock:/var/run/docker.sock'
                     args '--net=host -u root'
                     reuseNode true
@@ -330,25 +331,25 @@ pipeline {
 								#################### UPDATE CHROME DRIVER (v108 - for Katalonstudio 5.5) ####################
 								
 								# add unzip package
-								apt-get update && apt-get install -y unzip zip
+								#apt-get update && apt-get install -y unzip zip
 								
 								# Echo versions
-								echo "Pre Update:"
-								google-chrome --version
-								/opt/katalonstudio/configuration/resources/drivers/chromedriver_linux64/chromedriver --version
+								#echo "Pre Update:"
+								#google-chrome --version
+								#/opt/katalonstudio/configuration/resources/drivers/chromedriver_linux64/chromedriver --version
 								
 								# get chromedriver v108.x
-								wget https://chromedriver.storage.googleapis.com/108.0.5359.71/chromedriver_linux64.zip
+								#wget https://chromedriver.storage.googleapis.com/108.0.5359.71/chromedriver_linux64.zip
 								
 								# backup and replace chromedriver
-								mv /opt/katalonstudio/configuration/resources/drivers/chromedriver_linux64/chromedriver /opt/katalonstudio/configuration/resources/drivers/chromedriver_linux64/chromedriver.bak
-								unzip chromedriver_linux64.zip
-								mv chromedriver /opt/katalonstudio/configuration/resources/drivers/chromedriver_linux64/
+								#mv /opt/katalonstudio/configuration/resources/drivers/chromedriver_linux64/chromedriver /opt/katalonstudio/configuration/resources/drivers/chromedriver_linux64/chromedriver.bak
+								#unzip chromedriver_linux64.zip
+								#mv chromedriver /opt/katalonstudio/configuration/resources/drivers/chromedriver_linux64/
 								
 								# Echo versions
-								echo "Post Update:"
-								google-chrome --version
-								/opt/katalonstudio/configuration/resources/drivers/chromedriver_linux64/chromedriver --version
+								#echo "Post Update:"
+								#google-chrome --version
+								#/opt/katalonstudio/configuration/resources/drivers/chromedriver_linux64/chromedriver --version
 								
 								#############################################################################################
 
