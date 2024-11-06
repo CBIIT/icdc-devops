@@ -350,7 +350,8 @@ pipeline {
 								
 								#################### UPDATE PYTHON (3.9) ####################################################
 								
-								echo "PYTHON_VERSION:    $PYTHON_VERSION"
+								echo "PYTHON_VERSION:    ${PYTHON_VERSION}"
+								echo "PYTHON_VERSION:    "$PYTHON_VERSION
 
 								# If python 3.9 is selected install this
 								if [[ "$PYTHON_VERSION" == "3.9" ]]
