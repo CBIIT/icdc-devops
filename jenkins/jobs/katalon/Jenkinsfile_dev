@@ -358,6 +358,9 @@ pipeline {
 								
 								# Install pip
 								apt-get update && apt-get install -y python3-pip
+								which pip
+								echo "pip version:"
+								pip --version
 
 								#################### UPDATE CHROME DRIVER (v108 - for Katalonstudio 5.5) ####################
 								
