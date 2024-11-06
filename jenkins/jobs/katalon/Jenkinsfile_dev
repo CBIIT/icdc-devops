@@ -307,8 +307,7 @@ pipeline {
                 KATALON_PRJ         =   "${params.KatalonPrj}"
                 KATALON_SUITE_PATH  =   "${params.KatalonSuite}"
 				PROFILE_FILE        =   "${PROFILE}"
-				//PYTHON_VERSION      =   "${params.Python_Version}"
-				PY_VER      =   "3.9"
+				PY_VER              =   "${params.Python_Version}"
             }
 
 			agent {
@@ -355,7 +354,7 @@ pipeline {
 								echo "PYTHON_VERSION:    "$PY_VER
 
 								# If python 3.9 is selected install this
-								if [[ "$PYTHON_VERSION" == "3.9" ]]
+								if [[ "$PY_VER" == "3.9" ]]
 								then
 									echo "Installing Python 3.9"
 									apt-get update && apt-get install -y python3.9
