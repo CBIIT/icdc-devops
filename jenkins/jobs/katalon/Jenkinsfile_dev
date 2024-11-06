@@ -298,8 +298,8 @@ pipeline {
 
 			agent {
                 docker {
-                    // image 'katalonstudio/katalon:8.5.5'
-					image 'katalonstudio/katalon:9.3.1'
+                    image 'katalonstudio/katalon:8.5.5'
+					//image 'katalonstudio/katalon:9.3.1'
                     //args '--net=host -u root -v /var/run/docker.sock:/var/run/docker.sock'
                     args '--net=host -u root'
                     reuseNode true
