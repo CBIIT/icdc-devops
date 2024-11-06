@@ -1,23 +1,28 @@
 pipeline {
 	agent {
-        node {
-			label "docker-katalon-ch"
+        node { 
+			//label "docker-katalon-ch"
+			label "slave-ncias-d2940-c"
             }
         }
 
     parameters {
 
-    gitParameter(branchFilter: 'origin/(.*)', 
-        defaultValue: 'master', 
-        name: 'Tag', 
-        type: 'PT_BRANCH_TAG',
-        quickFilterEnabled: false, 
-        selectedValue: 'DEFAULT', 
-        sortMode: 'ASCENDING_SMART', 
-        tagFilter: '*', 
-        useRepository: 'https://github.com/CBIIT/Commons_Automation')
+    // gitParameter(branchFilter: 'origin/(.*)', 
+    //     defaultValue: 'master', 
+    //     name: 'Tag', 
+    //     type: 'PT_BRANCH_TAG',
+    //     quickFilterEnabled: false, 
+    //     selectedValue: 'DEFAULT', 
+    //     sortMode: 'ASCENDING_SMART', 
+    //     tagFilter: '*', 
+    //     useRepository: 'https://github.com/CBIIT/Commons_Automation')
 
-    string(defaultValue: "Commons_Automation.prj", 
+    choice(choices: ['Commons_Automation', 'qa-data-validation'],
+	    description: 'Select the test code repository to use',
+		name: 'Code_Repo')
+	
+	string(defaultValue: "Commons_Automation.prj", 
         description: 'Enter the Katalon Project file (include the path relative to the repo root):', 
         name: 'KatalonPrj')
 
@@ -27,27 +32,36 @@ pipeline {
 
 	extendedChoice( 
         name: 'Profile', 
-        defaultValue: 'Katalon_Dev_ICDC', 
+        defaultValue: 'QA_ICDC', 
         description: 'Choose the profile to use', 
         type: 'PT_SINGLE_SELECT',
-        value: 'DEV_ICDC,QA_ICDC,STAGE_ICDC,PROD_ICDC,QA_CTDC,QA_MTP,QA_INS,QA_CCDC,QA_CRDC_DH,STAGE_CRDC_DH,QA_CCDI' )
+        value: 'DEV_ICDC,QA_ICDC,STAGE_ICDC,PROD_ICDC,QA_CTDC,QA_MTP,STAGE_MTP,PROD_MTP,QA_INS,QA_CCDC,QA_CDS,QA_CCDI_HUB,QA_CRDC_DH,STAGE_CRDC_DH,QA_CCDI' )
 
-	string(defaultValue: "gayathri.radhakrishnan@nih.gov,sohil.sohil@nih.gov", 
+	string(defaultValue: "gayathri.radhakrishnan@nih.gov,laxmi.lolla@nih.gov,sohil.sohil@nih.gov", 
         description: 'Enter a list of email addresses to notify in case of test failures:', 
         name: 'EmailRecipients')
 
         }
-
-    stages{
+	
+	stages{
         stage('checkout'){
             steps {
 
-                checkout([$class: 'GitSCM', 
+                // checkout([$class: 'GitSCM', 
+                //     branches: [[name: "${params.Tag}"]], 
+                //     doGenerateSubmoduleConfigurations: false,
+				// 	extensions: [],
+				// 	submoduleCfg: [], 
+                //     userRemoteConfigs: [[url: 'https://github.com/CBIIT/Commons_Automation']]])
+
+                // }
+
+				checkout([$class: 'GitSCM', 
                     branches: [[name: "${params.Tag}"]], 
                     doGenerateSubmoduleConfigurations: false,
 					extensions: [],
 					submoduleCfg: [], 
-                    userRemoteConfigs: [[url: 'https://github.com/CBIIT/Commons_Automation']]])
+                    userRemoteConfigs: [[url: "https://github.com/CBIIT/${params.Code_Repo}"]]])
 
                 }
             }
@@ -61,7 +75,7 @@ pipeline {
 				script {
 					currentBuild.displayName = "#${env.BUILD_NUMBER} (${params.KatalonSuite} - ${params.Profile})"
 					}
-
+				
 				script {
 				    switch("${params.Profile}") {
                     case ~/[\w\/]+ICDC$/:
@@ -100,6 +114,24 @@ pipeline {
                             }
                         break
 
+					case ~/[\w\/]+CDS$/:
+						PROJECT="CDS"
+						withCredentials([string(credentialsId: 'Sharepoint_Email', variable: 'results_email'),
+						  string(credentialsId: 'Sharepoint_Url_CDS', variable: 'sharepoint_url')]) {
+                            RESULTS_URL="${sharepoint_url}"
+							RESULTS_EMAIL="${results_email}"
+                            }
+                        break
+
+					case ~/[\w\/]+CCDI_HUB$/:
+						PROJECT="CCDI_HUB"
+						withCredentials([string(credentialsId: 'Sharepoint_Email', variable: 'results_email'),
+						  string(credentialsId: 'Sharepoint_Url_CCDI_HUB', variable: 'sharepoint_url')]) {
+                            RESULTS_URL="${sharepoint_url}"
+							RESULTS_EMAIL="${results_email}"
+                            }
+                        break
+
 					case ~/[\w\/]+CRDC-DH$/:
 						PROJECT="CRDC-DH"
 						withCredentials([string(credentialsId: 'Sharepoint_Email', variable: 'results_email'),
@@ -120,7 +152,9 @@ pipeline {
 					}
 
 					switch("${params.Profile}") {
-                    case "DEV_ICDC":
+
+					// ICDC
+					case "DEV_ICDC":
 						TIER="DEV"
 						withCredentials([file(credentialsId: 'Katalon_Dev_ICDC', variable: 'pass_file')]) {
 							PROFILE="${pass_file}"
@@ -149,15 +183,31 @@ pipeline {
                             }
                         break
 
-                    case "QA_MTP":
+                    // MTP
+					case "QA_MTP":
 						TIER="QA"
 						withCredentials([file(credentialsId: 'Katalon_QA_MTP', variable: 'pass_file')]) {
 							PROFILE="${pass_file}"
 							sh "cp ${pass_file} ${WORKSPACE}/Profiles/"
                             }
                         break
+					case "STAGE_MTP":
+						TIER="STAGE"
+						withCredentials([file(credentialsId: 'Katalon_STAGE_MTP', variable: 'pass_file')]) {
+							PROFILE="${pass_file}"
+							sh "cp ${pass_file} ${WORKSPACE}/Profiles/"
+                            }
+                        break
+					case "PROD_MTP":
+						TIER="PROD"
+						withCredentials([file(credentialsId: 'Katalon_PROD_MTP', variable: 'pass_file')]) {
+							PROFILE="${pass_file}"
+							sh "cp ${pass_file} ${WORKSPACE}/Profiles/"
+                            }
+                        break
 
-                    case "QA_INS":
+                    // INS
+					case "QA_INS":
 						TIER="QA"
 						withCredentials([file(credentialsId: 'Katalon_QA_INS', variable: 'pass_file')]) {
 							PROFILE="${pass_file}"
@@ -165,7 +215,8 @@ pipeline {
                             }
                         break
 
-                    case "QA_CCDC":
+                    // CCDC
+					case "QA_CCDC":
 						TIER="QA"
 						withCredentials([file(credentialsId: 'Katalon_QA_CCDC', variable: 'pass_file')]) {
 							PROFILE="${pass_file}"
@@ -173,6 +224,25 @@ pipeline {
                             }
                         break
 
+					// CDS
+					case "QA_CDS":
+						TIER="QA"
+						withCredentials([file(credentialsId: 'Katalon_QA_CDS', variable: 'pass_file')]) {
+							PROFILE="${pass_file}"
+							sh "cp ${pass_file} ${WORKSPACE}/Profiles/"
+                            }
+                        break
+
+					// CCDI_HUB
+					case "QA_CCDI_HUB":
+						TIER="QA"
+						withCredentials([file(credentialsId: 'Katalon_QA_CCDI_HUB', variable: 'pass_file')]) {
+							PROFILE="${pass_file}"
+							sh "cp ${pass_file} ${WORKSPACE}/Profiles/"
+                            }
+                        break
+
+					// CRDC Hub
 					case "QA_CRDC_DH":
 						TIER="QA"
 						withCredentials([file(credentialsId: 'Katalon_QA_CRDC_DH', variable: 'pass_file')]) {
@@ -198,6 +268,7 @@ pipeline {
                             }
                         break
 
+					// CTDC
 					case "QA_CTDC":
 						WIKI_PAGE="289178298"
 						PROJECT="CTDC"
@@ -223,8 +294,17 @@ pipeline {
                 KATALON_PRJ         =   "${params.KatalonPrj}"
                 KATALON_SUITE_PATH  =   "${params.KatalonSuite}"
 				PROFILE_FILE        =   "${PROFILE}"
+            }
+
+			agent {
+                docker {
+                    image 'katalonstudio/katalon:8.5.5'
+                    //args '--net=host -u root -v /var/run/docker.sock:/var/run/docker.sock'
+                    args '--net=host -u root'
+                    reuseNode true
                 }
-				
+            }
+
             steps {
 
 				script {
@@ -246,9 +326,12 @@ pipeline {
 								# Update profile filename
 								profile_file=$(basename $PROFILE_FILE)
 								profile_name="${profile_file%.*}"
-
+								
 								#################### UPDATE CHROME DRIVER (v108 - for Katalonstudio 5.5) ####################
-
+								
+								# add unzip package
+								apt-get update && apt-get install -y unzip zip
+								
 								# Echo versions
 								echo "Pre Update:"
 								google-chrome --version
@@ -269,10 +352,11 @@ pipeline {
 								
 								#############################################################################################
 
-								#echo "projectPath=$KATALON_PRJ testSuitePath=$KATALON_SUITE_PATH executionProfile=$profile_name filename=$profile_file"
+								#echo "projectPath=$WORKSPACE/$KATALON_PRJ testSuitePath=$KATALON_SUITE_PATH executionProfile=$profile_name filename=$profile_file"
 								
 								# Run Katalon Tests
 								katalonc -noSplash -runMode=console --config -projectPath="$WORKSPACE/$KATALON_PRJ" -retry=0 -testSuitePath="$KATALON_SUITE_PATH" -executionProfile="$profile_name" -browserType="$KATALON_BROWSER (headless)" -reportFolder="results" -reportFileName="$reportFile" -apiKey="$api_key" -orgID="$org_id"
+
 
 								'''
 
@@ -281,9 +365,20 @@ pipeline {
 
                 }
             }
+
         }
 		post {
 			always {
+
+				script {
+
+					docker.image('katalonstudio/katalon:8.5.5').inside("-u root") {
+
+						sh "chmod 777 -R results"
+
+					}
+
+				}
 
 				publishHTML([allowMissing: true,
 					alwaysLinkToLastBuild: false,
@@ -292,7 +387,7 @@ pipeline {
 					reportFiles: '*.html',
 					reportName: 'HTML Report',
 					reportTitles: ''])
-				
+
 				script {
 
 					sh label: 'Zip-Katalon-Results', script: '''#!/bin/bash
@@ -310,18 +405,19 @@ pipeline {
 					'''
 
 				}
-
+				
 				emailext(attachmentsPattern: 'results/*.zip',
-                    body: 'Katalon Test Results',
-                    subject: 'Katalon Test Results',
-                    to: "${params.EmailRecipients}")
+					body: "Katalon Test Results - ${PROJECT}.${TIER}.${BUILD_NUMBER}",
+                    subject: "Katalon Test Results - ${PROJECT}.${TIER}.${BUILD_NUMBER}",
+                    to: "${EmailRecipients}")
+
+				}
+				
+			cleanup {
+	
+	            cleanWs()
+    
+	            }
 
 			}
-			
-			cleanup {
-
-	            cleanWs()
-
-	            }
 	}
-}	
