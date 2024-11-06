@@ -21,6 +21,10 @@ pipeline {
     choice(choices: ['Commons_Automation', 'qa-data-validation'],
 	    description: 'Select the test code repository to use',
 		name: 'Code_Repo')
+
+	choice(choices: ['3.8', '3.9'],
+	    description: 'Select the Python version to use',
+		name: 'Python_Version')
 	
 	string(defaultValue: "Commons_Automation.prj", 
         description: 'Enter the Katalon Project file (include the path relative to the repo root):', 
@@ -294,6 +298,7 @@ pipeline {
                 KATALON_PRJ         =   "${params.KatalonPrj}"
                 KATALON_SUITE_PATH  =   "${params.KatalonSuite}"
 				PROFILE_FILE        =   "${PROFILE}"
+				PYTHON_VERSION      =   "${params.Python_Version}"
             }
 
 			agent {
@@ -328,10 +333,26 @@ pipeline {
 								profile_file=$(basename $PROFILE_FILE)
 								profile_name="${profile_file%.*}"
 								
-								#################### UPDATE CHROME DRIVER (v108 - for Katalonstudio 5.5) ####################
-								
 								# add unzip package
-								#apt-get update && apt-get install -y unzip zip
+								apt-get update && apt-get install -y unzip zip
+								
+								#################### UPDATE PYTHON (3.9) ####################################################
+								
+								# If python 3.9 is selected install this
+								if [ $PYTHON_VERSION == "3.9" ]
+								then
+									echo "Installing Python 3.9"
+									apt-get update && apt-get install -y python3.9
+									rm -rf /usr/bin/python3
+									ln -s /usr/bin/python3.9 /usr/bin/python3
+								fi
+								
+								# Install pip
+								apt-get update && apt-get install -y python3-pip
+								
+								#############################################################################################
+
+								#################### UPDATE CHROME DRIVER (v108 - for Katalonstudio 5.5) ####################
 								
 								# Echo versions
 								#echo "Pre Update:"
