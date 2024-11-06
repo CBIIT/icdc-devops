@@ -308,7 +308,7 @@ pipeline {
                 KATALON_SUITE_PATH  =   "${params.KatalonSuite}"
 				PROFILE_FILE        =   "${PROFILE}"
 				//PYTHON_VERSION      =   "${params.Python_Version}"
-				PYTHON_VERSION      =   "3.9"
+				PY_VER      =   "3.9"
             }
 
 			agent {
@@ -351,8 +351,8 @@ pipeline {
 								
 								#################### UPDATE PYTHON (3.9) ####################################################
 								
-								echo "PYTHON_VERSION:    ${PYTHON_VERSION}"
-								echo "PYTHON_VERSION:    "$PYTHON_VERSION
+								echo "PYTHON_VERSION:    ${PY_VER}"
+								echo "PYTHON_VERSION:    "$PY_VER
 
 								# If python 3.9 is selected install this
 								if [[ "$PYTHON_VERSION" == "3.9" ]]
