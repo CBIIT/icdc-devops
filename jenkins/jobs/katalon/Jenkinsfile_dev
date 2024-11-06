@@ -351,7 +351,7 @@ pipeline {
 								#################### UPDATE PYTHON (3.9) ####################################################
 								
 								# If python 3.9 is selected install this
-								if [ $PYTHON_VERSION == "3.9" ]
+								if [[] "$PYTHON_VERSION" == "3.9" ]]
 								then
 									echo "Installing Python 3.9"
 									apt-get update && apt-get install -y python3.9
