@@ -307,6 +307,7 @@ pipeline {
                 KATALON_PRJ         =   "${params.KatalonPrj}"
                 KATALON_SUITE_PATH  =   "${params.KatalonSuite}"
 				PROFILE_FILE        =   "${PROFILE}"
+				PY_VER              =   "${params.Python_Version}"
             }
 
 			agent {
