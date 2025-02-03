@@ -22,6 +22,10 @@ pipeline {
 	    description: 'Select the test code repository to use',
 		name: 'Code_Repo')
 	
+	choice(choices: ['3.8', '3.9'],
+	    description: 'Select the Python version to use',
+		name: 'Python_Version')
+	
 	string(defaultValue: "Commons_Automation.prj", 
         description: 'Enter the Katalon Project file (include the path relative to the repo root):', 
         name: 'KatalonPrj')
@@ -336,6 +340,22 @@ pipeline {
 								profile_file=$(basename $PROFILE_FILE)
 								profile_name="${profile_file%.*}"
 								
+								#################### UPDATE PYTHON (3.9) ####################################################
+								
+								# If python 3.9 is selected install this
+								if [[ "$PY_VER" == "3.9" ]]
+								then
+									echo "Installing Python 3.9"
+									apt-get update && apt-get install -y python3.9
+									rm -rf /usr/bin/python3
+									ln -s /usr/bin/python3.9 /usr/bin/python3
+								fi
+								
+								# Install pip
+								apt-get update && apt-get install -y python3-pip
+								echo "pip version:"
+								pip --version
+								
 								#################### UPDATE CHROME DRIVER (v108 - for Katalonstudio 5.5) ####################
 								
 								# add unzip package
@@ -358,6 +378,15 @@ pipeline {
 								echo "Post Update:"
 								google-chrome --version
 								/opt/katalonstudio/configuration/resources/drivers/chromedriver_linux64/chromedriver --version
+								
+								############################## PYTHON DEPENDENCIES ##########################################
+
+								if [ -f requirements.txt ]; then
+									echo " "
+									echo "Requirements file found - installing python dependencies"
+									echo " "
+									pip install -r requirements.txt
+								fi
 								
 								#############################################################################################
 
