@@ -341,6 +341,12 @@ pipeline {
 								profile_file=$(basename $PROFILE_FILE)
 								profile_name="${profile_file%.*}"
 								
+								# remove chrome repo since it is unsigned
+								mv /etc/apt/sources.list.d/google-chrome.list /etc/apt/sources.list.d/google-chrome.list.bak
+								
+								# add unzip package
+								apt-get update && apt-get install -y unzip zip
+								
 								#################### UPDATE PYTHON (3.9) ####################################################
 								
 								# If python 3.9 is selected install this
