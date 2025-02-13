@@ -154,6 +154,15 @@ pipeline {
                             }
                         break
 
+					case ~/[\w\/]+FEDERATION$/:
+						PROJECT="FEDERATION"
+						withCredentials([string(credentialsId: 'Sharepoint_Email', variable: 'results_email'),
+						  string(credentialsId: 'Sharepoint_Url_CCDI', variable: 'sharepoint_url')]) {
+                            RESULTS_URL="${sharepoint_url}"
+							RESULTS_EMAIL="${results_email}"
+                            }
+                        break
+
 					case ~/[\w\/]+BENTO$/:
 						PROJECT="BENTO"
 						withCredentials([string(credentialsId: 'Sharepoint_Email', variable: 'results_email'),
