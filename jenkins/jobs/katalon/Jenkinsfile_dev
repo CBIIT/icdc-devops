@@ -136,8 +136,8 @@ pipeline {
                             }
                         break
 
-					case ~/[\w\/]+CRDC-DH$/:
-						PROJECT="CRDC-DH"
+					case ~/[\w\/]+CRDC_DH$/:
+						PROJECT="CRDC_DH"
 						withCredentials([string(credentialsId: 'Sharepoint_Email', variable: 'results_email'),
 						  string(credentialsId: 'Sharepoint_Url_CRDC_DH', variable: 'sharepoint_url')]) {
                             RESULTS_URL="${sharepoint_url}"
