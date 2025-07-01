@@ -18,7 +18,10 @@ pipeline {
     //     tagFilter: '*', 
     //     useRepository: 'https://github.com/CBIIT/Commons_Automation')
 
-    choice(choices: ['Commons_Automation', 'qa-data-validation'],
+    string(description: 'Enter the branch of the test repo you want to use (leave blank for the default branch):', 
+        name: 'Tag')
+	
+	choice(choices: ['Commons_Automation', 'qa-data-validation'],
 	    description: 'Select the test code repository to use',
 		name: 'Code_Repo')
 
