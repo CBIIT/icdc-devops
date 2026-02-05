@@ -140,6 +140,8 @@ pipeline {
 							sh label: 'Katalon-Tests', script: '''#!/bin/bash
 								
 								# Set datestamp for results file
+								echo "Setting date stamp for results file"
+
 								dateStamp=$(date +%Y%m%d)
 								reportFile="${KATALON_PROFILE}_${dateStamp}_build_${BUILD_NUMBER}"
 
@@ -160,7 +162,8 @@ pipeline {
 								apt-get update && apt-get install -y unzip zip
 								
 								#################### UPDATE PYTHON (3.9) ####################################################
-								
+								echo "Setting up Python version: $PY_VER"
+
 								# If python 3.9 is selected install this
 								if [[ "$PY_VER" == "3.9" ]]
 								then
@@ -196,6 +199,7 @@ pipeline {
 								#/opt/katalonstudio/configuration/resources/drivers/chromedriver_linux64/chromedriver --version
 								
 								############################## PYTHON DEPENDENCIES ##########################################
+								echo "Checking for requirements.txt file and installing python dependencies if found"
 
 								if [ -f requirements.txt ]; then
 									echo " "
@@ -205,6 +209,8 @@ pipeline {
 								fi
 								
 								#############################################################################################
+								echo "Running Katalon Tests with the following parameters:"
+								echo "Browser: $KATALON_BROWSER (headless)"
 
 								#echo "projectPath=$WORKSPACE/$KATALON_PRJ testSuitePath=$KATALON_SUITE_PATH executionProfile=$profile_name filename=$profile_file"
 								
