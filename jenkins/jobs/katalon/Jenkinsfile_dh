@@ -93,7 +93,7 @@ pipeline {
 						TIER="QA"
 						withCredentials([file(credentialsId: 'Katalon_QA_CRDC_DH', variable: 'pass_file')]) {
 							PROFILE="${pass_file}"
-							sh "cp ${pass_file} ${WORKSPACE}/Profiles/"
+							sh "mkdir -p ${WORKSPACE}/Profiles/ && cp ${pass_file} ${WORKSPACE}/Profiles/"
                             }
                         break
 
@@ -101,7 +101,7 @@ pipeline {
 						TIER="STAGE"
 						withCredentials([file(credentialsId: 'Katalon_STAGE_CRDC_DH', variable: 'pass_file')]) {
 							PROFILE="${pass_file}"
-							sh "cp ${pass_file} ${WORKSPACE}/Profiles/"
+							sh "mkdir -p ${WORKSPACE}/Profiles/ && cp ${pass_file} ${WORKSPACE}/Profiles/"
                             }
                         break
 
