@@ -68,7 +68,7 @@ pipeline {
                     doGenerateSubmoduleConfigurations: false,
 					extensions: [],
 					submoduleCfg: [], 
-                    userRemoteConfigs: [[credentialsId: 'github-token-dh', url: "https://github.com/CBIIT/${params.Code_Repo}"]]])
+                    userRemoteConfigs: [[url: "https://github.com/CBIIT/${params.Code_Repo}"]]])
 
                 }
             }
