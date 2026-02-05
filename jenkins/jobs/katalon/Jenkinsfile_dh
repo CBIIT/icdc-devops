@@ -59,7 +59,7 @@ pipeline {
 					extensions: [],
 					submoduleCfg: [], 
                     // userRemoteConfigs: [[url: "https://github.com/CBIIT/${params.Code_Repo}"]]])
-					userRemoteConfigs: [[url: "https://github.com/CBIIT/crdc-dh-automation"]]])
+					userRemoteConfigs: [[credentialsId: 'github-token-dh', url: "https://github.com/CBIIT/crdc-dh-automation"]]])
 
                 }
             }
