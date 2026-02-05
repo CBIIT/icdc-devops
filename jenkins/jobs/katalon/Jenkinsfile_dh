@@ -1,0 +1,277 @@
+pipeline {
+	agent {
+        node { 
+			//label "docker-katalon-ch"
+			label "slave-ncias-d2940-c"
+            }
+        }
+
+    parameters {
+
+    string(description: 'Enter the branch of the test repo you want to use (leave blank for the default branch):', 
+        name: 'Tag')
+	
+	// choice(choices: ['crdc-dh-automation'],
+	//     description: 'Select the test code repository to use',
+	// 	name: 'Code_Repo')
+
+	// choice(choices: ['3.8', '3.9'],
+	//     description: 'Select the Python version to use',
+	// 	name: 'Python_Version')
+	
+	string(defaultValue: "Commons_Automation.prj", 
+        description: 'Enter the Katalon Project file (include the path relative to the repo root):', 
+        name: 'KatalonPrj')
+
+    string(defaultValue: "Test Suites/CRDC_Regression", 
+        description: 'Enter the Katalon Suite Path (not including the test suite file):', 
+        name: 'KatalonSuite')
+
+	extendedChoice( 
+        name: 'Profile', 
+        defaultValue: '', 
+        description: 'Choose the profile to use', 
+        type: 'PT_SINGLE_SELECT',
+        value: 'QA_CRDC_DH,STAGE_CRDC_DH' )
+
+	string(defaultValue: "laxmi.lolla@nih.gov,sohil.sohil@nih.gov", 
+        description: 'Enter a list of email addresses to notify in case of test failures:', 
+        name: 'EmailRecipients')
+
+        }
+	
+	stages{
+        stage('checkout'){
+            steps {
+
+                // checkout([$class: 'GitSCM', 
+                //     branches: [[name: "${params.Tag}"]], 
+                //     doGenerateSubmoduleConfigurations: false,
+				// 	extensions: [],
+				// 	submoduleCfg: [], 
+                //     userRemoteConfigs: [[url: 'https://github.com/CBIIT/Commons_Automation']]])
+
+                // }
+
+				checkout([$class: 'GitSCM', 
+                    branches: [[name: "${params.Tag}"]], 
+                    doGenerateSubmoduleConfigurations: false,
+					extensions: [],
+					submoduleCfg: [], 
+                    // userRemoteConfigs: [[url: "https://github.com/CBIIT/${params.Code_Repo}"]]])
+					userRemoteConfigs: [[url: "https://github.com/CBIIT/crdc-dh-automation"]]])
+
+                }
+            }
+
+		stage('set Profile'){
+		    environment {
+                KATALON_PRJ         =   "${params.KatalonPrj}"
+                }
+			steps {
+                
+				script {
+					currentBuild.displayName = "#${env.BUILD_NUMBER} (${params.KatalonSuite} - ${params.Profile})"
+					}
+				
+				script {
+				    switch("${params.Profile}") {
+					case ~/[\w\/]+CRDC_DH$/:
+						PROJECT="CRDC_DH"
+						withCredentials([string(credentialsId: 'Sharepoint_Email', variable: 'results_email'),
+						  string(credentialsId: 'Sharepoint_Url_CRDC_DH', variable: 'sharepoint_url')]) {
+                            RESULTS_URL="${sharepoint_url}"
+							RESULTS_EMAIL="${results_email}"
+                            }
+                        break
+					}
+
+					switch("${params.Profile}") {
+
+					// CRDC Hub
+					case "QA_CRDC_DH":
+						TIER="QA"
+						withCredentials([file(credentialsId: 'Katalon_QA_CRDC_DH', variable: 'pass_file')]) {
+							PROFILE="${pass_file}"
+							sh "cp ${pass_file} ${WORKSPACE}/Profiles/"
+                            }
+                        break
+
+					case "STAGE_CRDC_DH":
+						TIER="STAGE"
+						withCredentials([file(credentialsId: 'Katalon_STAGE_CRDC_DH', variable: 'pass_file')]) {
+							PROFILE="${pass_file}"
+							sh "cp ${pass_file} ${WORKSPACE}/Profiles/"
+                            }
+                        break
+
+                       }
+                    }
+				}
+			}
+
+		stage('run tests'){
+            environment {
+				KATALON_BROWSER     =   "Chrome"
+				KATALON_PROFILE     =   "${params.Profile}"
+                KATALON_PRJ         =   "${params.KatalonPrj}"
+                KATALON_SUITE_PATH  =   "${params.KatalonSuite}"
+				PROFILE_FILE        =   "${PROFILE}"
+				// PY_VER              =   "${params.Python_Version}"
+				PY_VER              =   "3.9"
+            }
+
+			agent {
+                docker {
+                    image 'katalonstudio/katalon:8.5.5'
+					//image 'katalonstudio/katalon:9.7.2'
+                    //args '--net=host -u root -v /var/run/docker.sock:/var/run/docker.sock'
+                    args '--net=host -u root'
+                    reuseNode true
+                }
+            }
+
+            steps {
+
+				script {
+						withCredentials([string(credentialsId: 'Katalon_API_Key', variable: 'api_key'),
+						    string(credentialsId: 'Katalon_Org_ID', variable: 'org_id')]) {
+
+							sh label: 'Katalon-Tests', script: '''#!/bin/bash
+								
+								# Set datestamp for results file
+								dateStamp=$(date +%Y%m%d)
+								reportFile="${KATALON_PROFILE}_${dateStamp}_build_${BUILD_NUMBER}"
+
+								# Recreate the results directory
+								rm -rf results && mkdir results
+								
+								# Create the output files directory (required for writing excel files)
+								rm -rf OutputFiles && mkdir OutputFiles
+								
+								# Update profile filename
+								profile_file=$(basename $PROFILE_FILE)
+								profile_name="${profile_file%.*}"
+								
+								# remove chrome repo since it is unsigned
+								mv /etc/apt/sources.list.d/google-chrome.list /etc/apt/sources.list.d/google-chrome.list.bak
+								
+								# add unzip package
+								apt-get update && apt-get install -y unzip zip
+								
+								#################### UPDATE PYTHON (3.9) ####################################################
+								
+								# If python 3.9 is selected install this
+								if [[ "$PY_VER" == "3.9" ]]
+								then
+									echo "Installing Python 3.9"
+									apt-get update && apt-get install -y python3.9
+									rm -rf /usr/bin/python3
+									ln -s /usr/bin/python3.9 /usr/bin/python3
+								fi
+								
+								# Install pip
+								apt-get update && apt-get install -y python3-pip
+								echo "pip version:"
+								pip --version
+
+								#################### UPDATE CHROME DRIVER (v108 - for Katalonstudio 5.5) ####################
+								
+								# Echo versions
+								#echo "Pre Update:"
+								#google-chrome --version
+								#/opt/katalonstudio/configuration/resources/drivers/chromedriver_linux64/chromedriver --version
+								
+								# get chromedriver v108.x
+								#wget https://chromedriver.storage.googleapis.com/108.0.5359.71/chromedriver_linux64.zip
+								
+								# backup and replace chromedriver
+								#mv /opt/katalonstudio/configuration/resources/drivers/chromedriver_linux64/chromedriver /opt/katalonstudio/configuration/resources/drivers/chromedriver_linux64/chromedriver.bak
+								#unzip chromedriver_linux64.zip
+								#mv chromedriver /opt/katalonstudio/configuration/resources/drivers/chromedriver_linux64/
+								
+								# Echo versions
+								#echo "Post Update:"
+								#google-chrome --version
+								#/opt/katalonstudio/configuration/resources/drivers/chromedriver_linux64/chromedriver --version
+								
+								############################## PYTHON DEPENDENCIES ##########################################
+
+								if [ -f requirements.txt ]; then
+									echo " "
+									echo "Requirements file found - installing python dependencies"
+									echo " "
+									pip install -r requirements.txt
+								fi
+								
+								#############################################################################################
+
+								#echo "projectPath=$WORKSPACE/$KATALON_PRJ testSuitePath=$KATALON_SUITE_PATH executionProfile=$profile_name filename=$profile_file"
+								
+								# Run Katalon Tests
+								katalonc -noSplash -runMode=console --config -projectPath="$WORKSPACE/$KATALON_PRJ" -retry=0 -testSuitePath="$KATALON_SUITE_PATH" -executionProfile="$profile_name" -browserType="$KATALON_BROWSER (headless)" -reportFolder="results" -reportFileName="$reportFile" -apiKey="$api_key" -orgID="$org_id"
+
+
+								'''
+
+							}
+						}
+
+                }
+            }
+
+        }
+		post {
+			always {
+
+				script {
+
+					docker.image('katalonstudio/katalon:8.5.5').inside("-u root") {
+
+						sh "chmod 777 -R results"
+
+					}
+
+				}
+
+				publishHTML([allowMissing: true,
+					alwaysLinkToLastBuild: false,
+					keepAll: false,
+					reportDir: 'results',
+					reportFiles: '*.html',
+					reportName: 'HTML Report',
+					reportTitles: ''])
+
+				script {
+
+					sh label: 'Zip-Katalon-Results', script: '''#!/bin/bash
+
+					mv /etc/apt/sources.list.d/google-chrome.list /etc/apt/sources.list.d/google-chrome.list.bak && apt-get update && apt-get install -y zip
+					
+					resultsFile=$(basename results/*.html)
+					zipFile=$(basename -s .html results/*.html)
+					
+					zip -r results/$zipFile.zip OutputFiles
+					#zip -u results/$zipFile.zip results/$resultsFile
+					zip -u -r results/$zipFile.zip Reports
+					zip -u -r results/$zipFile.zip results
+
+					'''
+
+				}
+				
+				emailext(attachmentsPattern: 'results/*.zip',
+					body: "Katalon Test Results - ${PROJECT}.${TIER}.${BUILD_NUMBER}",
+                    subject: "Katalon Test Results - ${PROJECT}.${TIER}.${BUILD_NUMBER}",
+                    to: "${EmailRecipients}")
+
+				}
+				
+			cleanup {
+	
+	            cleanWs()
+    
+	            }
+
+			}
+	}
