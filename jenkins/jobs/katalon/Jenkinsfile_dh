@@ -15,9 +15,9 @@ pipeline {
 	//     description: 'Select the test code repository to use',
 	// 	name: 'Code_Repo')
 
-	// choice(choices: ['3.8', '3.9'],
-	//     description: 'Select the Python version to use',
-	// 	name: 'Python_Version')
+	choice(choices: ['3.9', '3.11'],
+	    description: 'Select the Python version to use',
+		name: 'Python_Version')
 	
 	string(defaultValue: "Commons_Automation.prj", 
         description: 'Enter the Katalon Project file (include the path relative to the repo root):', 
@@ -117,8 +117,8 @@ pipeline {
                 KATALON_PRJ         =   "${params.KatalonPrj}"
                 KATALON_SUITE_PATH  =   "${params.KatalonSuite}"
 				PROFILE_FILE        =   "${PROFILE}"
-				// PY_VER              =   "${params.Python_Version}"
-				PY_VER              =   "3.9"
+				PY_VER              =   "${params.Python_Version}"
+				// PY_VER              =   "3.11"
             }
 
 			agent {
