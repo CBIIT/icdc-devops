@@ -15,7 +15,7 @@ pipeline {
 	//     description: 'Select the test code repository to use',
 	// 	name: 'Code_Repo')
 
-	choice(choices: ['3.9', '3.11'],
+	choice(choices: ['3.9', '3.11', '3.13'],
 	    description: 'Select the Python version to use',
 		name: 'Python_Version')
 	
