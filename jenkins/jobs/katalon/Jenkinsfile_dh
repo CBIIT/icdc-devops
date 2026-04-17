@@ -123,8 +123,8 @@ pipeline {
 
 			agent {
                 docker {
-                    image 'katalonstudio/katalon:8.5.5'
-					//image 'katalonstudio/katalon:9.7.2'
+                    // image 'katalonstudio/katalon:8.5.5'
+					image 'katalonstudio/katalon:9.7.4'
                     //args '--net=host -u root -v /var/run/docker.sock:/var/run/docker.sock'
                     args '--net=host -u root'
                     reuseNode true
@@ -138,6 +138,10 @@ pipeline {
 						    string(credentialsId: 'Katalon_Org_ID', variable: 'org_id')]) {
 
 							sh label: 'Katalon-Tests', script: '''#!/bin/bash
+								
+								# Set timezone to EST
+								timedatectl set-timezone America/New_York
+								timedatectl
 								
 								# Set datestamp for results file
 								echo "Setting date stamp for results file"
