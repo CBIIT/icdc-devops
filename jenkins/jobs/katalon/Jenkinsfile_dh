@@ -32,7 +32,7 @@ pipeline {
         defaultValue: '', 
         description: 'Choose the profile to use', 
         type: 'PT_SINGLE_SELECT',
-        value: 'QA_CRDC_DH,STAGE_CRDC_DH' )
+        value: 'QA_CRDC_DH,QA2_CRDC_DH,STAGE_CRDC_DH' )
 
 	string(defaultValue: "laxmi.lolla@nih.gov,sohil.sohil@nih.gov", 
         description: 'Enter a list of email addresses to notify in case of test failures:', 
@@ -92,6 +92,14 @@ pipeline {
 					case "QA_CRDC_DH":
 						TIER="QA"
 						withCredentials([file(credentialsId: 'Katalon_QA_CRDC_DH', variable: 'pass_file')]) {
+							PROFILE="${pass_file}"
+							sh "mkdir -p ${WORKSPACE}/Profiles/ && cp ${pass_file} ${WORKSPACE}/Profiles/"
+                            }
+                        break
+
+					case "QA2_CRDC_DH":
+						TIER="QA2"
+						withCredentials([file(credentialsId: 'Katalon_QA2_CRDC_DH', variable: 'pass_file')]) {
 							PROFILE="${pass_file}"
 							sh "mkdir -p ${WORKSPACE}/Profiles/ && cp ${pass_file} ${WORKSPACE}/Profiles/"
                             }
