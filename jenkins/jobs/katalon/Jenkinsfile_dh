@@ -9,6 +9,7 @@ pipeline {
     parameters {
 
     string(description: 'Enter the branch of the test repo you want to use (leave blank for the default branch):', 
+		defaultValue: 'develop', 
         name: 'Tag')
 	
 	// choice(choices: ['crdc-dh-automation'],
@@ -25,16 +26,17 @@ pipeline {
 
     string(defaultValue: "Test Suites/CRDC_Regression", 
         description: 'Enter the Katalon Suite Path (not including the test suite file):', 
+		defaultValue: 'CRDC_Smoke', 
         name: 'KatalonSuite')
 
 	extendedChoice( 
         name: 'Profile', 
-        defaultValue: '', 
+        defaultValue: 'QA2_CRDC_DH', 
         description: 'Choose the profile to use', 
         type: 'PT_SINGLE_SELECT',
         value: 'QA_CRDC_DH,QA2_CRDC_DH,STAGE_CRDC_DH' )
 
-	string(defaultValue: "laxmi.lolla@nih.gov,sohil.sohil@nih.gov", 
+	string(defaultValue: "laxmi.lolla@nih.gov,sohil.sohil@nih.gov,vincent.leung@nih.gov", 
         description: 'Enter a list of email addresses to notify in case of test failures:', 
         name: 'EmailRecipients')
 
