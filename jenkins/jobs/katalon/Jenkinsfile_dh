@@ -8,37 +8,36 @@ pipeline {
 
     parameters {
 
-    string(description: 'Enter the branch of the test repo you want to use (leave blank for the default branch):', 
-		defaultValue: 'develop', 
-        name: 'Tag')
+    string(name: 'Tag',
+		description: 'Enter the branch of the test repo you want to use (leave blank for the default branch):', 
+		defaultValue: 'develop')
 	
-	// choice(choices: ['crdc-dh-automation'],
+	// choice(name: 'Code_Repo',
+	// choices: ['crdc-dh-automation'],
 	//     description: 'Select the test code repository to use',
-	// 	name: 'Code_Repo')
+	// 	)
 
-	choice(choices: ['3.9', '3.11', '3.13'],
-	    description: 'Select the Python version to use',
-		name: 'Python_Version')
+	choice(name: 'Python_Version',
+		description: 'Select the Python version to use',
+		choices: ['3.9', '3.11', '3.13'])
 	
-	string(defaultValue: "Commons_Automation.prj", 
-        description: 'Enter the Katalon Project file (include the path relative to the repo root):', 
-        name: 'KatalonPrj')
+	string(name: 'KatalonPrj',
+		description: 'Enter the Katalon Project file (include the path relative to the repo root):', 
+		defaultValue: "Commons_Automation.prj")
 
-    string(defaultValue: "Test Suites/CRDC_Regression", 
+    string(name: 'KatalonSuite',
         description: 'Enter the Katalon Suite Path (not including the test suite file):', 
-		defaultValue: 'CRDC_Smoke', 
-        name: 'KatalonSuite')
+        defaultValue: "Test Suites/CRDC_Smoke")
 
-	extendedChoice( 
-        name: 'Profile', 
+	extendedChoice(name: 'Profile',
+		description: 'Select the Katalon execution profile to use for the test run:',
         defaultValue: 'QA2_CRDC_DH', 
-        description: 'Choose the profile to use', 
         type: 'PT_SINGLE_SELECT',
         value: 'QA_CRDC_DH,QA2_CRDC_DH,STAGE_CRDC_DH' )
 
-	string(defaultValue: "laxmi.lolla@nih.gov,sohil.sohil@nih.gov,vincent.leung@nih.gov", 
-        description: 'Enter a list of email addresses to notify in case of test failures:', 
-        name: 'EmailRecipients')
+	string(name: 'EmailRecipients',
+		description: 'Enter a list of email addresses to notify in case of test failures:', 
+		defaultValue: "laxmi.lolla@nih.gov,sohil.sohil@nih.gov,vincent.leung@nih.gov")
 
         }
 	
