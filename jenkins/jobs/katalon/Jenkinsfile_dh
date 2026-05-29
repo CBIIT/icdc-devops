@@ -31,7 +31,7 @@ pipeline {
 
 	extendedChoice(name: 'Profile',
 		description: 'Select the Katalon execution profile to use for the test run:',
-        defaultValue: 'QA2_CRDC_DH', 
+        defaultValue: 'QA_CRDC_DH', 
         type: 'PT_SINGLE_SELECT',
         value: 'QA_CRDC_DH,QA2_CRDC_DH,STAGE_CRDC_DH' )
 
